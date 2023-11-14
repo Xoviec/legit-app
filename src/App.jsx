@@ -3,6 +3,8 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import { supabase } from './components/supabaseClient';
 import { User } from '@supabase/supabase-js';
+import { Register } from './components/register';
+import { Login } from './components/login';
 
 
 
@@ -15,16 +17,20 @@ function App() {
   const [user, setUser] = useState(null)
 
 
-  const login = async()=>{
-    const { data, error } = await supabase.auth.refreshSession()
-    await supabase.auth.signInWithOAuth({
-      provider: "github"
-    })
-  }
+  // const login = async()=>{
+  //   await supabase.auth.signInWithOAuth({
+  //     provider: "github"
+  //   })
+  // }
 
+ 
+  const handleSetUser = (newUser) =>{
+    setUser(newUser)
+  }
 
   const logout = async()=>{
     await supabase.auth.signOut()
+    setUser(null)
   }
 
 
@@ -43,22 +49,25 @@ function App() {
 
     essa()
 
-    supabase.auth.onAuthStateChange((event, session)=>{
+    // supabase.auth.onAuthStateChange((event, session)=>{
 
-      switch(event){
-        case "SIGNED_IN":
-          setUser(user)
-          break;
+    //   switch(event){
+    //     case "SIGNED_IN":
+    //       setUser(user)
+    //       break;
 
-        case "SIGNED_OUT":
-          setUser(null)
-          break
-      }
+    //     case "SIGNED_OUT":
+    //       console.log('pizdunio')
+    //       setUser(null)
+    //       break
+    //   }
 
-    })
+    // })
 
 
   }, [])
+
+  console.log(user)
 
   return (
     <div className="App">
@@ -69,14 +78,18 @@ function App() {
           Wyloguj się
         </button>
         :
-        <button onClick={login}>Login with github</button>
+        <>
+          Rejestracja<Register/>
+          Logowanie<Login handleSetUser={handleSetUser}/>
+        </>
+        // <button onClick={login}>Login with github</button>
 
       }
 
 
       {
         user && 
-        <div>Witaj, {user.identities[0].identity_data.preferred_username}</div>
+        <div>Witaj, {user.id}</div>
       }
     </div>
   );
