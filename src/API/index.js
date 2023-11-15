@@ -17,8 +17,23 @@ const supabase = createClient(
 
 
 app.get('/nicknames', async function (req, res) {
-    const { data, error } = await supabase.from('users').select('id, nickname')
+    const { data, error } = await supabase.from('users').select('id, nickname, avatar, items_list, is_verified, account_type')
     res.send(data)
 })
+
+app.get('/items', async function (req, res) {
+    const { data, error } = await supabase.from('items').select()
+    res.send(data)
+})
+
+const xd =async() =>{
+
+    let { data: items, error } = await supabase
+    .from('items')
+    .select('*')
+                console.log(items)
+}
+
+xd()
 
 app.listen(PORT, ()=> console.log('working'))

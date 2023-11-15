@@ -15,6 +15,7 @@ function App() {
 
 
   const [user, setUser] = useState(null)
+  const [userList, setUserList] = useState()
 
 
 
@@ -24,6 +25,7 @@ function App() {
       try {
         const response = await fetch('http://localhost:8000/nicknames'); // Zastąp tym adresem URL swoim adresem serwera
         const data = await response.json();
+        setUserList(data)
         console.log(data);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -106,7 +108,13 @@ function App() {
 
       {
         user && 
-        <div>Witaj, {user.id}</div>
+        <div>Witaj, {user?.id}</div>
+      }
+      {
+        
+        userList?.map((appUser)=>(
+          <div className={`${appUser?.id===user?.id ? `user` : null}`}>{appUser.nickname}</div>
+        ))
       }
     </div>
   );
