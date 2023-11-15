@@ -17,6 +17,23 @@ function App() {
   const [user, setUser] = useState(null)
 
 
+
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch('http://localhost:8000/nicknames'); // Zastąp tym adresem URL swoim adresem serwera
+        const data = await response.json();
+        console.log(data);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+
   // const login = async()=>{
   //   await supabase.auth.signInWithOAuth({
   //     provider: "github"

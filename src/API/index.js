@@ -1,8 +1,13 @@
 const { createClient } = require('@supabase/supabase-js');
 const express = require('express')
-const app = express()
-const PORT = 8000
+const cors = require('cors')
+
 require('dotenv').config()
+
+const app = express()
+app.use(cors())
+
+const PORT = 8000
 
 
 const supabase = createClient(
@@ -11,23 +16,9 @@ const supabase = createClient(
 );
 
 
-app.get('/xd', async function (req, res) {
-    const { data, error } = await supabase.from('users').select('nickname')
+app.get('/nicknames', async function (req, res) {
+    const { data, error } = await supabase.from('users').select('id, nickname')
     res.send(data)
-//     console.log(data)
-//     console.log(error)
-//     console.log('[izda')
-//   res.send('Hello World')
 })
 
-app.listen(PORT)
-
-const xd = async() =>{
-    const { data, error } = await supabase.from('users').select('nickname')
-    console.log('xddsad',data)
-
-}
-
-xd()
-
-console.log('xd')
+app.listen(PORT, ()=> console.log('working'))
