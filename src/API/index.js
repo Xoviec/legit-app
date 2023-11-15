@@ -6,6 +6,8 @@ require('dotenv').config()
 
 const app = express()
 app.use(cors())
+app.use(express.json());
+
 
 const PORT = 8000
 
@@ -21,9 +23,23 @@ app.get('/nicknames', async function (req, res) {
     res.send(data)
 })
 
+
 app.get('/items', async function (req, res) {
     const { data, error } = await supabase.from('items').select()
     res.send(data)
+})
+
+app.post('/items', async function (req, res){
+    console.log(req.body)
+    console.log(req.body.accountType)
+    if(req.body.accountType==='admin'){
+        const { error } = await supabase
+        .from('items')
+        .insert({ name: req.body.itemData.name, sku: req.body.itemData.sku, brand: req.body.itemData.brand,   })
+    // return res.json(req.body)
+    }
+ 
+
 })
 
 const xd =async() =>{

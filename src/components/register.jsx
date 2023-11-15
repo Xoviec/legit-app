@@ -1,7 +1,12 @@
 import { useState } from "react"
 import { supabase } from "./supabaseClient"
+import { useNavigate} from 'react-router-dom';
+
 
 export const Register = () =>{
+
+    const navigate = useNavigate();
+
 
 
     const [formData, setFormData] = useState(
@@ -39,6 +44,8 @@ export const Register = () =>{
     
                 }}}
             )
+            if(!error)navigate('/');
+
             if (error) throw error
             // alert(error)
         }  catch(error){

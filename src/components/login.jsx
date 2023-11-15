@@ -1,7 +1,33 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { supabase } from "./supabaseClient"
+import { useNavigate} from 'react-router-dom';
+
 
 export const Login = ({handleSetUser}) =>{
+
+    const navigate = useNavigate();
+
+
+
+    // const checkIsLogged = async () =>{
+
+    //     const { data: { user } } = await supabase.auth.getUser()
+
+    //     if(user)navigate('/');
+
+
+    // }
+
+
+    // useEffect(()=>{
+
+    //     const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
+    //     if(item)navigate('/');
+    //     console.log(item)
+    //     // checkIsLogged()
+
+    // }, [])
+
 
 
     const [formData, setFormData] = useState(
@@ -28,7 +54,7 @@ export const Login = ({handleSetUser}) =>{
         const { data, error } = await supabase.auth.getSession()
     
 
-        handleSetUser(user)
+        // handleSetUser(user)
     
         console.log(user)
         console.log(data)
@@ -46,8 +72,9 @@ export const Login = ({handleSetUser}) =>{
               })
 
 
-            essa()
 
+            essa()
+            if(!error)navigate('/')
             if (error) throw error
             alert('udao sie')
         }  catch(error){
@@ -62,7 +89,7 @@ export const Login = ({handleSetUser}) =>{
     return(
         <form onSubmit={handleSubmit} onChange={handleChange}>
             <input type="text" placeholder="email" name="email"/>
-            <input type="text" placeholder="password" name="password"/>
+            <input type="password" placeholder="password" name="password"/>
             <button type="submit">Submit</button>
         </form>
     )
