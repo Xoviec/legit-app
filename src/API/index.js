@@ -23,6 +23,19 @@ app.get('/nicknames', async function (req, res) {
     res.send(data)
 })
 
+app.get('/nicknames/:nickname', async function (req, res) {
+    const { nickname } = req.params;
+        // const { data, error } = await supabase.from('users').select('id, nickname, avatar, items_list, is_verified, account_type').where
+
+    const { data, error } = await supabase.from('users').select('id, nickname, avatar, items_list, is_verified, account_type').ilike('nickname', nickname);
+
+    if (error) {
+        return res.status(500).send(error.message);
+    }
+
+    res.send(data);
+});
+
 
 app.get('/items', async function (req, res) {
     const { data, error } = await supabase.from('items').select()
@@ -30,8 +43,8 @@ app.get('/items', async function (req, res) {
 })
 
 app.post('/items', async function (req, res){
-    console.log(req.body)
-    console.log(req.body.accountType)
+    // console.log(req.body)
+    // console.log(req.body.accountType)
     if(req.body.accountType==='admin'){
         const { error } = await supabase
         .from('items')
@@ -42,14 +55,14 @@ app.post('/items', async function (req, res){
 
 })
 
-const xd =async() =>{
+// const xd =async() =>{
 
-    let { data: items, error } = await supabase
-    .from('items')
-    .select('*')
-                console.log(items)
-}
+//     let { data: items, error } = await supabase
+//     .from('items')
+//     .select('*')
+//                 console.log(items)
+// }
 
-xd()
+// xd()
 
 app.listen(PORT, ()=> console.log('working'))

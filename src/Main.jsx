@@ -4,6 +4,7 @@ import App from "./App";
 import { Login } from "./components/login";
 import { Register } from "./components/register";
 import { Anonymous } from "./components/anonymous";
+import { UserPage } from "./components/userPage";
 
 
 export const Main = () =>{
@@ -11,7 +12,8 @@ export const Main = () =>{
     return(
         <Routes>
             <Route path='/' element={<App/>}/>
-  
+            <Route path='/users/:id' element={<UserPage/>}/>
+
             <Route element={<Anonymous />}>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Login />} />
