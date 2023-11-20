@@ -23,7 +23,6 @@ export const UserPage = (key) =>{
                 const data = await response.json();
                 console.log(data);
                 setUser(data[0])
-                // Tutaj możesz obsłużyć dane zwrotne
             } catch (error) {
                 console.error('Błąd podczas pobierania danych:', error);
             }

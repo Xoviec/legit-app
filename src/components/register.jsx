@@ -28,6 +28,11 @@ export const Register = () =>{
         })
     }
 
+
+    const handleCheckUser = () =>{
+        
+    }
+
     
 
     const handleSubmit = async (e) =>{
