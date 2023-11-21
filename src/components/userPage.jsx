@@ -37,6 +37,7 @@ export const UserPage = (key) =>{
     userItemsList?.map(item=>{
 
         console.log(item)
+        // console.log(item.ownersHistory[item.ownersHistory.length-1])
     })
     
     // Przykładowe użycie
@@ -70,7 +71,8 @@ export const UserPage = (key) =>{
                 {
                     userItemsList?.map((item)=>(
                         <div>
-                            <p key={item.id}>{item.name}</p>
+                            <p key={item.id}>{item.name} registered {item.ownersHistory[0].registerDate}</p>
+                            <p>It belongs to {user.nickname} since {item.ownersHistory[item.ownersHistory.length-1].registerDate}</p>
                             <img src={item.image} alt="" />
                             <button onClick={()=>handleDeleteItem(item)}>X</button>
 
