@@ -105,14 +105,35 @@ function App() {
 
       }
     }
-
   }
-  // const login = async()=>{
-  //   await supabase.auth.signInWithOAuth({
-  //     provider: "github"
-  //   })
-  // }
 
+  const handleRegisterItem = async (e) =>{
+    e.preventDefault()
+    if(user){
+      const data = 
+      {
+        'ogItemId': e.target.ogItemId.value,
+        'ownerHistory': e.target.ownerHistory.value,
+      }
+      try{
+        await Promise.all([
+          axios.post('http://localhost:8000/register-item', {
+            itemData: data,
+            accountType: publicUser.account_type,
+          }),
+          // axios.post('http://localhost:8000/assign-item', {
+          //   itemData: data,
+          //   accountType: publicUser.account_type,
+          // }),
+        ]);
+
+      }catch(err){
+        console.log(err)
+        // setItemsList((previousArr) => (previousArr.slice(0, -1)));
+
+      }
+    }
+  }
  
   const handleSetUser = (newUser) =>{
     setUser(newUser)
@@ -124,29 +145,6 @@ function App() {
     setPublicUser(null)
   }
 
-
-
-
-  useEffect(()=>{
-
-
-    // supabase.auth.onAuthStateChange((event, session)=>{
-
-    //   switch(event){
-    //     case "SIGNED_IN":
-    //       setUser(user)
-    //       break;
-
-    //     case "SIGNED_OUT":
-    //       console.log('pizdunio')
-    //       setUser(null)
-    //       break
-    //   }
-
-    // })
-
-
-  }, [])
 
   console.log(user)
 
@@ -204,11 +202,17 @@ function App() {
         <input type="text" placeholder='brand' name='brand'/>
         <button type='submit'>add item</button>
       </form>
+      <form onSubmit={handleRegisterItem}>
+        <input type="text" placeholder='og item id' name='ogItemId'/>
+        <input type="text" placeholder='owner id' name='ownerHistory'/>
+        <button type='submit'>register item</button>
+
+      </form>
       <p>Items:</p>
       {
         
         itemsList?.map((item)=>(
-          <div>{item.name}</div>
+          <div>{item.name} - {item.id}</div>
         ))
       }
     </div>

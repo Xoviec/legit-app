@@ -1,6 +1,8 @@
+const { v4: uuidv4 } = require('uuid');
 const { createClient } = require('@supabase/supabase-js');
 const express = require('express')
 const cors = require('cors')
+
 
 require('dotenv').config()
 
@@ -69,20 +71,119 @@ app.post('/items', async function (req, res){
     }
 })
 
+// zarejestrowanie unikalnego itemu i przypisanie go uzytkownikowi
+app.post('/register-item', async function(req, res){
+    console.log(req.body.accountType)
+    console.log(req.body.itemData.ogItemId)
+    console.log(req.body.itemData.ownerHistory)
+    let date = new Date().toJSON();
+    const newUUID = uuidv4()
+
+    if(req.body.accountType==='admin'){
+        const { error } = await supabase
+            .from('legited_items')
+            .insert({ 
+                id: newUUID,
+                og_item_id: req.body.itemData.ogItemId, 
+                owners_history: [
+                    { [req.body.itemData.ownerHistory]: date },
+                ]
+            })
+        if(error){
+            console.log(error)
+            // res.send(error)
+        return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji nickname.' });
+        }
+
+        const { data: existingData, error: fetchDataError } = await supabase
+                .from('users')
+                .select('items_list')
+                .eq('id', req.body.itemData.ownerHistory);
+
+            if (fetchDataError) {
+                console.error(fetchDataError);
+                return res.status(500).json({ error: 'Wystąpił błąd podczas pobierania danych.' });
+            }
+
+            // Utwórz nową listę właścicieli
+            const newUserItems = existingData[0]?.items_list || [];
+            newUserItems.push(newUUID );
+
+            // Zaktualizuj dane w bazie danych
+            const { error: updateError } = await supabase
+                .from('users')
+                .update({
+                    items_list: newUserItems,
+                })
+                .eq('id', req.body.itemData.ownerHistory);
+
+            if (updateError) {
+                console.error(updateError);
+                return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji danych.' });
+            }
+
+            // Dodaj odpowiednią odpowiedź w przypadku powodzenia
+            return res.status(200).json({ message: 'Pomyślnie przypisano przedmiot' });
+    }
+})
+
+// przypisanie uzytkownikowi itema chyba nieuzyeczne juz
+// app.post('/assign-item', async function(req, res){
+//     console.log(req.body.itemData)
+//     console.log('xdd')
+//     const { data: existingData, error: fetchDataError } = await supabase
+//             .from('users')
+//             .select('items_list')
+//             .eq('id', req.body.itemData.ownerHistory);
+
+//         if (fetchDataError) {
+//             console.error(fetchDataError);
+//             return res.status(500).json({ error: 'Wystąpił błąd podczas pobierania danych.' });
+//         }
+
+//         // Utwórz nową listę właścicieli
+//         const newOwnersHistory = existingData[0]?.items_list || [];
+//         newOwnersHistory.push(req.body.itemData.ogItemId );
+
+//         // Zaktualizuj dane w bazie danych
+//         const { error: updateError } = await supabase
+//             .from('users')
+//             .update({
+//                 items_list: newOwnersHistory,
+//             })
+//             .eq('id', req.body.itemData.ownerHistory);
+
+//         if (updateError) {
+//             console.error(updateError);
+//             return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji danych.' });
+//         }
+
+//         // Dodaj odpowiednią odpowiedź w przypadku powodzenia
+//         return res.status(200).json({ message: 'Pomyślnie przypisano przedmiot' });
+// })
+
+// wyswietla wszystkie zarejestrowane itemy
+app.get('/legited-items', async function (req, res){
+    const { data, error } = await supabase.from('legited_items').select()
+    res.send(data)
+})
+
+
+// update nicku
 app.post('/update-nickname', async function (req, res){
     console.log(req.body.id)
     console.log(req.body.newNickname)
     const { error } = await supabase
-    .from('users')
-    .update({ nickname: req.body.newNickname })
-    .eq('id', req.body.id)
+        .from('users')
+        .update({ nickname: req.body.newNickname })
+        .eq('id', req.body.id)
     if(error){
         // console.log(error)
         // res.send(error)
     return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji nickname.' });
-
-
     }
 })
+
+
 
 app.listen(PORT, ()=> console.log('working'))
