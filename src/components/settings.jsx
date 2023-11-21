@@ -34,18 +34,40 @@ export const Settings = () =>{
     }
 
     const handleSubmit = async (e) =>{
+
         e.preventDefault()
 
-        console.log(nickname)
-        console.log(publicUser.id)
+
         try{
+            
+            const { data, error } = await supabase.auth.updateUser({
+                data: { full_name: nickname }
+            })
             await axios.post('http://localhost:8000/update-nickname', {
                 newNickname: nickname,
-              id: publicUser.id,
+                id: publicUser.id,
             });
-          }catch(err){
-            console.log(err)
-          }
+            if (error) throw error
+            // alert(error)
+        }  catch(error){
+            console.log(error)
+        }
+
+
+
+        
+        // e.preventDefault()
+
+        // console.log(nickname)
+        // console.log(publicUser.id)
+        // try{
+        //     await axios.post('http://localhost:8000/update-nickname', {
+        //         newNickname: nickname,
+        //         id: publicUser.id,
+        //     });
+        //   }catch(err){
+        //     console.log(err)
+        //   }
     }
 
     console.log(nickname)

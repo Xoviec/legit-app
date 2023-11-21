@@ -77,7 +77,11 @@ app.post('/update-nickname', async function (req, res){
     .update({ nickname: req.body.newNickname })
     .eq('id', req.body.id)
     if(error){
-        console.log(error)
+        // console.log(error)
+        // res.send(error)
+    return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji nickname.' });
+
+
     }
 })
 

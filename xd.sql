@@ -2,7 +2,7 @@
 create table users (
   id uuid references auth.users not null primary key,
   email text,
-  nickname text,
+  nickname VARCHAR(255) UNIQUE,
   account_type text default 'user',
   avatar text default null,
   items_list jsonb[] default '{}'::jsonb[],
