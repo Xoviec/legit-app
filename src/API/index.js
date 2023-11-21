@@ -59,6 +59,81 @@ app.get('/items', async function (req, res) {
     res.send(data)
 })
 
+// lista itemów danego uzytkownika
+// app.get('/:nickname/items', async function(req, res){
+//     const {nickname} = req.params;
+//     const { data, error } = await supabase.from('users').select('items_list').ilike('nickname', nickname);
+//     if (error) {
+//         return res.status(500).send(error.message);
+//     }
+//     // res.send(data)
+//     const itemsList = data && Array.isArray(data[0]?.items_list) ? data[0].items_list : [];
+
+//     // Wyodrębnij tylko wartości UUID
+//     const uuidArray = itemsList.map(item => item);
+
+//     res.send(uuidArray);
+// })
+
+
+
+// przedmioty uzytkownika
+app.get('/user-items/:nickname', async function(req, res) {
+    const { nickname } = req.params;
+    let itemsData = [];
+
+    try {
+        const { data: userItemsData, error: userItemsError } = await supabase
+            .from('users')
+            .select('items_list')
+            .eq('nickname', nickname);
+
+        if (userItemsError) {
+            throw userItemsError;
+        }
+
+        const userItemsList = userItemsData[0].items_list;
+
+        console.log('xd');
+
+        // Użyj Promise.all do oczekiwania na zakończenie wszystkich asynchronicznych operacji
+        await Promise.all(userItemsList.map(async (id) => {
+            console.log(id);
+
+            const { data, error } = await supabase
+                .from('legited_items')
+                .select('og_item_id')
+                .eq('id', id);
+
+            console.log(data[0].og_item_id);
+
+            const { data: ogItemData, error: ogItemError } = await supabase
+                .from('items')
+                .select()
+                .eq('id', data[0].og_item_id);
+
+            console.log(ogItemData);
+
+            // Dodaj dane do tablicy wynikowej używając spread operatora
+            itemsData = [...itemsData, ...ogItemData];
+        }));
+
+        console.log('----');
+        console.log(itemsData);
+        console.log('----');
+
+        res.status(200).json(itemsData);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Wystąpił błąd podczas pobierania danych użytkownika.');
+    }
+});
+
+
+
+
+
+
 // dodanie itemów
 app.post('/items', async function (req, res){
     // console.log(req.body)
@@ -107,7 +182,7 @@ app.post('/register-item', async function(req, res){
 
             // Utwórz nową listę właścicieli
             const newUserItems = existingData[0]?.items_list || [];
-            newUserItems.push(newUUID );
+            newUserItems.push(newUUID);
 
             // Zaktualizuj dane w bazie danych
             const { error: updateError } = await supabase

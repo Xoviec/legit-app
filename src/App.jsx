@@ -180,7 +180,7 @@ function App() {
 
       {
         publicUser && 
-        <div>Witaj, {publicUser?.nickname}</div>
+        <div>Witaj, {publicUser?.nickname} - {publicUser?.id}</div>
       }
       <div>
         <Link state={publicUser}to={`/settings`}>Ustawienia</Link>

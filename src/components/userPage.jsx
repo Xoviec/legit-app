@@ -8,20 +8,20 @@ import { useEffect, useState } from 'react';
 export const UserPage = (key) =>{
 
     const[user, setUser] = useState()
-
+    const[userItemsList, setUserItemsList] = useState()
 
     const location = useLocation();
     const pathSegments = location.pathname.split('/');
     const usernameFromPath = pathSegments[2];
-    console.log(usernameFromPath)
 
     useEffect(()=>{
         const getNicknameData = async (nickname) => {
             try {
-                console.log(nickname)
                 const response = await fetch(`http://localhost:8000/nicknames/${usernameFromPath}`);
+                const userItemsListResponse = await fetch(`http://localhost:8000/user-items/${usernameFromPath}`);
+                const userItemsList = await userItemsListResponse.json()
                 const data = await response.json();
-                console.log(data);
+                setUserItemsList(userItemsList)
                 setUser(data[0])
             } catch (error) {
                 console.error('Błąd podczas pobierania danych:', error);
@@ -32,6 +32,12 @@ export const UserPage = (key) =>{
     }, [])
 
 
+    console.log(userItemsList)
+
+    userItemsList?.map(item=>{
+
+        console.log(item)
+    })
     
     // Przykładowe użycie
 
@@ -41,6 +47,15 @@ export const UserPage = (key) =>{
         <div>
             {usernameFromPath}-{user?.id}
 
+
+            <p>Przedmioty uzytkownika {usernameFromPath}</p>
+            <div>
+                {
+                    userItemsList?.map((item)=>(
+                        <p key={item.id}>{item.name}</p>
+                    ))
+                }
+            </div>
         </div>
     )
 }
