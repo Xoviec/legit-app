@@ -64,7 +64,15 @@ function App() {
 
         setUserList(usersData)
         setItemsList(itemsData)
-        setPublicUser(usersData?.find(profile=>profile.id===user?.id))
+        console.log(user.email)
+        console.log(user.id)
+        
+        const publicUserResponse = await fetch(`http://localhost:8000/secret/${user.id}`); // Zastąp tym adresem URL swoim adresem serwera
+        const publicUserData = await publicUserResponse.json();
+        console.log(publicUserData[0])
+        setPublicUser(publicUserData[0])
+
+        // setPublicUser(usersData?.find(profile=>profile.id===user?.id))
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -176,6 +184,10 @@ function App() {
         publicUser && 
         <div>Witaj, {publicUser?.nickname}</div>
       }
+      <div>
+        <Link state={publicUser}to={`/settings`}>Ustawienia</Link>
+
+      </div>
       {
         
         userList?.map((appUser)=>(
@@ -184,6 +196,8 @@ function App() {
           // <div className={`${appUser?.id===user?.id ? `user` : null}`}>{appUser.nickname}</div>
         ))
       }
+  
+  
       <form onSubmit={handleAddItem}>
         <input type="text" placeholder='name' name='name'/>
         <input type="text" placeholder='sku' name='sku'/>

@@ -5,6 +5,7 @@ import { Login } from "./components/login";
 import { Register } from "./components/register";
 import { Anonymous } from "./components/anonymous";
 import { UserPage } from "./components/userPage";
+import { Settings } from "./components/settings";
 
 
 export const Main = () =>{
@@ -13,6 +14,8 @@ export const Main = () =>{
         <Routes>
             <Route path='/' element={<App/>}/>
             <Route path='/users/:id' element={<UserPage/>}/>
+            <Route path='/settings' element={<Settings/>}/>
+
 
             <Route element={<Anonymous />}>
                 <Route path="/register" element={<Register />} />

@@ -17,11 +17,14 @@ const supabase = createClient(
     process.env.REACT_APP_SUPABASE_ANON_KEY
 );
 
+//wszyscy uzytkownicy
 
 app.get('/nicknames', async function (req, res) {
     const { data, error } = await supabase.from('users').select('id, nickname, avatar, items_list, is_verified, account_type')
     res.send(data)
 })
+
+//konkretny uzytkownik bez wrazliwych danych
 
 app.get('/nicknames/:nickname', async function (req, res) {
     const { nickname } = req.params;
@@ -36,12 +39,25 @@ app.get('/nicknames/:nickname', async function (req, res) {
     res.send(data);
 });
 
+// konkretny uzytkownik z wrazliwymi danymi
+app.get('/secret/:id', async function (req, res){
+    const { id } = req.params;
+    const { data, error } = await supabase.from('users').select().eq('id', id);
+    if (error) {
+        return res.status(500).send(error.message);
+    }
 
+    res.send(data);
+})
+
+
+// wszystkie itemy
 app.get('/items', async function (req, res) {
     const { data, error } = await supabase.from('items').select()
     res.send(data)
 })
 
+// dodanie itemów
 app.post('/items', async function (req, res){
     // console.log(req.body)
     // console.log(req.body.accountType)
@@ -51,18 +67,18 @@ app.post('/items', async function (req, res){
         .insert({ name: req.body.itemData.name, sku: req.body.itemData.sku, brand: req.body.itemData.brand,   })
     // return res.json(req.body)
     }
- 
-
 })
 
-// const xd =async() =>{
-
-//     let { data: items, error } = await supabase
-//     .from('items')
-//     .select('*')
-//                 console.log(items)
-// }
-
-// xd()
+app.post('/update-nickname', async function (req, res){
+    console.log(req.body.id)
+    console.log(req.body.newNickname)
+    const { error } = await supabase
+    .from('users')
+    .update({ nickname: req.body.newNickname })
+    .eq('id', req.body.id)
+    if(error){
+        console.log(error)
+    }
+})
 
 app.listen(PORT, ()=> console.log('working'))
