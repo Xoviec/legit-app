@@ -121,16 +121,9 @@ function App() {
             itemData: data,
             accountType: publicUser.account_type,
           }),
-          // axios.post('http://localhost:8000/assign-item', {
-          //   itemData: data,
-          //   accountType: publicUser.account_type,
-          // }),
         ]);
-
       }catch(err){
         console.log(err)
-        // setItemsList((previousArr) => (previousArr.slice(0, -1)));
-
       }
     }
   }

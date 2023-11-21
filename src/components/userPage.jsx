@@ -52,7 +52,10 @@ export const UserPage = (key) =>{
             <div>
                 {
                     userItemsList?.map((item)=>(
-                        <p key={item.id}>{item.name}</p>
+                        <div>
+                            <p key={item.id}>{item.name}</p>
+                            <img src={item.image} alt="" />
+                        </div>
                     ))
                 }
             </div>

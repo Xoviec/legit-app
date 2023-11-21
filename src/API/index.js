@@ -94,33 +94,24 @@ app.get('/user-items/:nickname', async function(req, res) {
 
         const userItemsList = userItemsData[0].items_list;
 
-        console.log('xd');
 
         // Użyj Promise.all do oczekiwania na zakończenie wszystkich asynchronicznych operacji
         await Promise.all(userItemsList.map(async (id) => {
-            console.log(id);
 
             const { data, error } = await supabase
                 .from('legited_items')
                 .select('og_item_id')
                 .eq('id', id);
 
-            console.log(data[0].og_item_id);
 
             const { data: ogItemData, error: ogItemError } = await supabase
                 .from('items')
                 .select()
                 .eq('id', data[0].og_item_id);
 
-            console.log(ogItemData);
-
-            // Dodaj dane do tablicy wynikowej używając spread operatora
             itemsData = [...itemsData, ...ogItemData];
         }));
 
-        console.log('----');
-        console.log(itemsData);
-        console.log('----');
 
         res.status(200).json(itemsData);
     } catch (error) {
