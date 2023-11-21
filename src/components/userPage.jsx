@@ -40,7 +40,24 @@ export const UserPage = (key) =>{
     })
     
     // Przykładowe użycie
+    const handleDeleteItem = async (item) =>{
+        
+        const currentOwner = item.ownersHistory[item.ownersHistory.length-1]
+        // console.log(item.ownersHistory[item.ownersHistory.length-1])
 
+        try{
+            await axios.post('http://localhost:8000/change-owner', {
+                registerID: item.registerID,
+                currentOwner: currentOwner.ownerID,
+                // currentOwner: '0b972e35-c28d-4052-a4cd-260b5c2c965b',
+                newOwner: '2a572792-97fe-4efb-9f9f-060700e58154',
+            });
+        }catch(error){
+            console.log(error)
+        }
+
+        
+    }
 
 
     return(
@@ -55,6 +72,8 @@ export const UserPage = (key) =>{
                         <div>
                             <p key={item.id}>{item.name}</p>
                             <img src={item.image} alt="" />
+                            <button onClick={()=>handleDeleteItem(item)}>X</button>
+
                         </div>
                     ))
                 }

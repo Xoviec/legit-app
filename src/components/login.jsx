@@ -8,28 +8,6 @@ export const Login = ({handleSetUser}) =>{
     const navigate = useNavigate();
 
 
-
-    // const checkIsLogged = async () =>{
-
-    //     const { data: { user } } = await supabase.auth.getUser()
-
-    //     if(user)navigate('/');
-
-
-    // }
-
-
-    // useEffect(()=>{
-
-    //     const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
-    //     if(item)navigate('/');
-    //     console.log(item)
-    //     // checkIsLogged()
-
-    // }, [])
-
-
-
     const [formData, setFormData] = useState(
         {
             email: '',

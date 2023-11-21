@@ -59,24 +59,6 @@ app.get('/items', async function (req, res) {
     res.send(data)
 })
 
-// lista itemów danego uzytkownika
-// app.get('/:nickname/items', async function(req, res){
-//     const {nickname} = req.params;
-//     const { data, error } = await supabase.from('users').select('items_list').ilike('nickname', nickname);
-//     if (error) {
-//         return res.status(500).send(error.message);
-//     }
-//     // res.send(data)
-//     const itemsList = data && Array.isArray(data[0]?.items_list) ? data[0].items_list : [];
-
-//     // Wyodrębnij tylko wartości UUID
-//     const uuidArray = itemsList.map(item => item);
-
-//     res.send(uuidArray);
-// })
-
-
-
 // przedmioty uzytkownika
 app.get('/user-items/:nickname', async function(req, res) {
     const { nickname } = req.params;
@@ -92,38 +74,39 @@ app.get('/user-items/:nickname', async function(req, res) {
             throw userItemsError;
         }
 
+        console.log('es')
         const userItemsList = userItemsData[0].items_list;
 
-
         // Użyj Promise.all do oczekiwania na zakończenie wszystkich asynchronicznych operacji
-        await Promise.all(userItemsList.map(async (id) => {
-
+        await Promise.all(userItemsList.map(async (id, i) => {
             const { data, error } = await supabase
                 .from('legited_items')
-                .select('og_item_id')
+                .select('og_item_id, owners_history')
                 .eq('id', id);
-
-
-            const { data: ogItemData, error: ogItemError } = await supabase
+        
+            let { data: ogItemData, error: ogItemError } = await supabase
                 .from('items')
                 .select()
                 .eq('id', data[0].og_item_id);
 
-            itemsData = [...itemsData, ...ogItemData];
+                // console.log(userItemsList[i])
+            // Dodaj nowy klucz 'registerID' z wartością z userItemsList[i]
+            ogItemData[0].registerID = userItemsList[i];
+            ogItemData[0].ownersHistory = data[0].owners_history
+            // console.log(data[0].owners_history)
+
+
+        
+            itemsData.push(ogItemData[0]);
         }));
 
-
+        // Zwróć itemsData jako tablicę obiektów JSON
         res.status(200).json(itemsData);
     } catch (error) {
         console.error(error);
         res.status(500).send('Wystąpił błąd podczas pobierania danych użytkownika.');
     }
 });
-
-
-
-
-
 
 // dodanie itemów
 app.post('/items', async function (req, res){
@@ -135,6 +118,89 @@ app.post('/items', async function (req, res){
         .insert({ name: req.body.itemData.name, sku: req.body.itemData.sku, brand: req.body.itemData.brand,   })
     // return res.json(req.body)
     }
+})
+
+app.post('/change-owner', async function (req, res){
+
+
+    let date = new Date().toJSON();
+    const currentOwner = req.body.currentOwner
+    const newOwner = req.body.newOwner
+    const registerID= req.body.registerID
+
+    console.log('xd')
+    console.log(currentOwner, newOwner, registerID)
+
+    try{
+        const { data: ownersHistory, error: fetchDataError } = await supabase
+            .from('legited_items')
+            .select('owners_history')
+            .eq('id', registerID)
+
+        console.log(ownersHistory[0].owners_history)
+
+        const newHistoryObj = {
+            ownerID: newOwner,
+            registerDate: date
+        }
+
+        let newOwnersHistory = [...ownersHistory[0].owners_history, newHistoryObj]
+
+
+        //dodanie nowego user history do itemka
+        const {error} = await supabase
+            .from('legited_items')
+            .update({owners_history: newOwnersHistory})
+            .eq('id', registerID)
+
+
+        //usuwanie itemku z listy itemów uzytkownika
+        const { data: prevUserData, error: fetchPrevUserDataError } = await supabase
+            .from('users')
+            .select('items_list')
+            .eq('id', currentOwner)
+
+        console.log(prevUserData[0].items_list)
+
+        const newItemsList = prevUserData[0].items_list.filter((itemID)=>itemID!==registerID)
+
+        const {error: deleteUserItemError} = await supabase
+            .from('users')
+            .update({items_list: newItemsList})
+            .eq('id', currentOwner)
+
+
+        //dodanie itemku nowemu ownerowi
+
+        const { data: newUserData, error: fetchnewUserDataError } = await supabase
+            .from('users')
+            .select('items_list')
+            .eq('id', newOwner)
+
+
+        console.log('new user data')
+        console.log(newUserData[0].items_list)
+
+        const newItemOwnerList = [...newUserData[0].items_list, registerID]
+
+
+        console.log('xd')
+        console.log(newItemOwnerList)
+
+        const {error: addUserItemError} = await supabase
+            .from('users')
+            .update({items_list: newItemOwnerList})
+            .eq('id', newOwner)
+
+        
+
+            
+    }catch(err){
+        console.log(err)
+    }
+
+
+        
 })
 
 // zarejestrowanie unikalnego itemu i przypisanie go uzytkownikowi
@@ -152,12 +218,15 @@ app.post('/register-item', async function(req, res){
                 id: newUUID,
                 og_item_id: req.body.itemData.ogItemId, 
                 owners_history: [
-                    { [req.body.itemData.ownerHistory]: date },
+                    {
+                        ownerID: req.body.itemData.ownerHistory,
+                        registerDate: date
+                    }
                 ]
             })
         if(error){
             console.log(error)
-            // res.send(error)
+            
         return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji nickname.' });
         }
 
@@ -193,47 +262,11 @@ app.post('/register-item', async function(req, res){
     }
 })
 
-// przypisanie uzytkownikowi itema chyba nieuzyeczne juz
-// app.post('/assign-item', async function(req, res){
-//     console.log(req.body.itemData)
-//     console.log('xdd')
-//     const { data: existingData, error: fetchDataError } = await supabase
-//             .from('users')
-//             .select('items_list')
-//             .eq('id', req.body.itemData.ownerHistory);
-
-//         if (fetchDataError) {
-//             console.error(fetchDataError);
-//             return res.status(500).json({ error: 'Wystąpił błąd podczas pobierania danych.' });
-//         }
-
-//         // Utwórz nową listę właścicieli
-//         const newOwnersHistory = existingData[0]?.items_list || [];
-//         newOwnersHistory.push(req.body.itemData.ogItemId );
-
-//         // Zaktualizuj dane w bazie danych
-//         const { error: updateError } = await supabase
-//             .from('users')
-//             .update({
-//                 items_list: newOwnersHistory,
-//             })
-//             .eq('id', req.body.itemData.ownerHistory);
-
-//         if (updateError) {
-//             console.error(updateError);
-//             return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji danych.' });
-//         }
-
-//         // Dodaj odpowiednią odpowiedź w przypadku powodzenia
-//         return res.status(200).json({ message: 'Pomyślnie przypisano przedmiot' });
-// })
-
 // wyswietla wszystkie zarejestrowane itemy
 app.get('/legited-items', async function (req, res){
     const { data, error } = await supabase.from('legited_items').select()
     res.send(data)
 })
-
 
 // update nicku
 app.post('/update-nickname', async function (req, res){
