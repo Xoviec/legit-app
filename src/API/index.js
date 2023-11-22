@@ -26,8 +26,36 @@ app.get('/nicknames', async function (req, res) {
     res.send(data)
 })
 
-//konkretny uzytkownik bez wrazliwych danych
+//znajdz uzytkownika
+app.get('/search-users', async (req, res) => {
+    // Pobierz litery z parametru zapytania
+    const searchLetters = req.query.letters;
+  
+    // Jeśli parametr nie został przekazany, zwróć błąd
+    if (!searchLetters) {
+      return res.status(400).json({ error: 'Parametr "letters" jest wymagany.' });
+    }
+  
+    try {
+      // Wyszukaj użytkowników, których nick zawiera przekazane litery
+      const { data, error } = await supabase
+        .from('users')
+        .select('id, nickname, avatar, items_list, is_verified, account_type')
+        .ilike('nickname', `%${searchLetters}%`);
+  
+      if (error) {
+        return res.status(500).send(error.message);
+      }
+  
+      // Zwróć znalezione użytkowników
+      res.json(data);
+    } catch (error) {
+      console.error('Błąd podczas wyszukiwania użytkowników:', error.message);
+      res.status(500).json({ error: 'Wystąpił błąd podczas przetwarzania żądania.' });
+    }
+  });
 
+//konkretny uzytkownik bez wrazliwych danych
 app.get('/nicknames/:nickname', async function (req, res) {
     const { nickname } = req.params;
         // const { data, error } = await supabase.from('users').select('id, nickname, avatar, items_list, is_verified, account_type').where
@@ -147,11 +175,7 @@ app.post('/change-owner', async function (req, res){
         let newOwnersHistory = [...ownersHistory[0].owners_history, newHistoryObj]
 
 
-        //dodanie nowego user history do itemka
-        const {error} = await supabase
-            .from('legited_items')
-            .update({owners_history: newOwnersHistory})
-            .eq('id', registerID)
+
 
 
         //usuwanie itemku z listy itemów uzytkownika
@@ -180,17 +204,29 @@ app.post('/change-owner', async function (req, res){
 
         console.log('new user data')
         console.log(newUserData[0].items_list)
+        
 
-        const newItemOwnerList = [...newUserData[0].items_list, registerID]
+        //zabezpieczenie zeby nie dodac jednego zarejestrowanego itemu kilka razy
+        if((!newItemsList.includes(registerID))&&!(newUserData[0].items_list.includes(registerID))){
+            const newItemOwnerList = [...newUserData[0].items_list, registerID]
+            const {error: addUserItemError} = await supabase
+                .from('users')
+                .update({items_list: newItemOwnerList})
+                .eq('id', newOwner)
+            
+            //dodanie nowego user history do itemka
+            const {error} = await supabase
+                .from('legited_items')
+                .update({owners_history: newOwnersHistory})
+                .eq('id', registerID)
+        }
 
 
-        console.log('xd')
-        console.log(newItemOwnerList)
 
-        const {error: addUserItemError} = await supabase
-            .from('users')
-            .update({items_list: newItemOwnerList})
-            .eq('id', newOwner)
+        // console.log('xd')
+        // console.log(newItemOwnerList)
+
+
 
         
 
