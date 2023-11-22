@@ -20,6 +20,13 @@ function App() {
   const [publicUser, setPublicUser] = useState()
   const [userList, setUserList] = useState()
   const [itemsList, setItemsList] = useState()
+  const [ogItemIdVal, setOgItemIdVal] = useState('')
+  const [ownerId, setOwnerId] = useState('')
+  const [foundUsers, setFoundUsers] = useState()
+  const [foundItems, setFoundItems] = useState()
+  const[newOwner, setNewOwner] = useState()
+  const[assignedItem, setAssignedItem] = useState()
+
 
 
   const essa = async()=>{
@@ -107,14 +114,61 @@ function App() {
     }
   }
 
+
+  const handleRegisterChange = (e) =>{
+    //zmiana state do szukania usera
+    if(e.target.name==='ownerHistory'){
+      console.log(e.target.value)
+      setOwnerId(e.target.value)
+      handleUpdateFoundUsers(e.target.value)
+    }
+    //zmiana state do szukania itemu 
+    else{
+      setOgItemIdVal(e.target.value)
+      handleUpdateFoundItems(e.target.value)
+    }
+  }
+
+  const handleUpdateFoundUsers = async (nickname) =>{
+        const response = await fetch(`http://localhost:8000/search-users?letters=${nickname}`);
+        const data = await response.json();
+
+        console.log(data)
+        setFoundUsers(data)
+
+    try{
+
+    }catch(err){
+        console.log(err)
+    }
+}
+
+const handleUpdateFoundItems = async (item) =>{
+  const response = await fetch(`http://localhost:8000/search-items?letters=${item}`);
+  const data = await response.json();
+
+  console.log(data)
+  setFoundItems(data)
+
+try{
+
+}catch(err){
+  console.log(err)
+}
+}
+
   const handleRegisterItem = async (e) =>{
     e.preventDefault()
     if(user){
       const data = 
       {
-        'ogItemId': e.target.ogItemId.value,
-        'ownerHistory': e.target.ownerHistory.value,
+        'ogItemId': assignedItem,
+        'ownerHistory': newOwner,
       }
+      // {
+      //   'ogItemId': e.target.ogItemId.value,
+      //   'ownerHistory': e.target.ownerHistory.value,
+      // }
       try{
         await Promise.all([
           axios.post('http://localhost:8000/register-item', {
@@ -139,8 +193,6 @@ function App() {
   }
 
 
-  console.log(user)
-
   return (
     <div className="App">
       {
@@ -162,12 +214,6 @@ function App() {
             </button>
           </Link>
         </div>
-        // <>
-        //   Rejestracja<Register/>
-        //   Logowanie<Login handleSetUser={handleSetUser}/>
-        // </>
-        // <button onClick={login}>Login with github</button>
-
       }
 
 
@@ -195,12 +241,42 @@ function App() {
         <input type="text" placeholder='brand' name='brand'/>
         <button type='submit'>add item</button>
       </form>
-      <form onSubmit={handleRegisterItem}>
-        <input type="text" placeholder='og item id' name='ogItemId'/>
-        <input type="text" placeholder='owner id' name='ownerHistory'/>
+
+
+      <form onChange={handleRegisterChange} onSubmit={handleRegisterItem}>
+        <input type="text" placeholder='og item id' name='ogItemId' value={ogItemIdVal}/>
+        <input type="text" placeholder='owner id' name='ownerHistory' value={ownerId}/>
         <button type='submit'>register item</button>
 
       </form>
+      <div>
+        <p>Wybierz uzytkownika:</p>
+        {
+            foundUsers?.length > 0 && 
+            foundUsers?.map((user)=>(
+                <div key={user.id}>
+                    <p>Nickname: {user.nickname}</p>
+                    <p>ID: {user.id}</p>
+                    <button onClick={(()=>setNewOwner(user.id))}>Wybierz uzytkownika</button>
+                </div>
+            ))
+    
+        }
+      </div>
+      <div>
+        <p>Wybierz item:</p>
+        {
+            foundItems?.length > 0 && 
+            foundItems?.map((item)=>(
+                <div key={item.id}>
+                    <p>Nazwa: {item.name}</p>
+                    <p>ID: {item.id}</p>
+                    <button onClick={(()=>setAssignedItem(item.id))}>Wybierz uzytkownika</button>
+                </div>
+            ))
+    
+        }
+      </div>
       <p>Items:</p>
       {
         

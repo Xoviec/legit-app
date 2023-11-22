@@ -26,6 +26,36 @@ app.get('/nicknames', async function (req, res) {
     res.send(data)
 })
 
+//znajdź przedmiot
+app.get('/search-items', async (req, res) => {
+    // Pobierz litery z parametru zapytania
+    const searchLetters = req.query.letters;
+  
+    // Jeśli parametr nie został przekazany, zwróć błąd
+    if (!searchLetters) {
+      return res.status(400).json({ error: 'Parametr "letters" jest wymagany.' });
+    }
+  
+    try {
+      // Wyszukaj użytkowników, których nick zawiera przekazane litery
+      const { data, error } = await supabase
+        .from('items')
+        .select()
+        .ilike('name', `%${searchLetters}%`);
+  
+      if (error) {
+        return res.status(500).send(error.message);
+      }
+  
+      // Zwróć znalezione użytkowników
+      res.json(data);
+    } catch (error) {
+      console.error('Błąd podczas wyszukiwania użytkowników:', error.message);
+      res.status(500).json({ error: 'Wystąpił błąd podczas przetwarzania żądania.' });
+    }
+  });
+
+
 //znajdz uzytkownika
 app.get('/search-users', async (req, res) => {
     // Pobierz litery z parametru zapytania
