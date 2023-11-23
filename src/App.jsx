@@ -271,7 +271,7 @@ try{
                 <div key={item.id}>
                     <p>Nazwa: {item.name}</p>
                     <p>ID: {item.id}</p>
-                    <button onClick={(()=>setAssignedItem(item.id))}>Wybierz uzytkownika</button>
+                    <button onClick={(()=>setAssignedItem(item.id))}>Wybierz przedmiot</button>
                 </div>
             ))
     
