@@ -42,18 +42,6 @@ function App() {
 
 
   useEffect(() => {
-    // const fetchUserData = async () => {
-    //   try {
-        
-    //     setUserList(data)
-    //     // console.log(data.find(user=>user.id===user.id))
-    //     // console.log(data);
-    //   } catch (error) {
-    //     console.error('Error fetching data:', error);
-    //   }
-    // };
-
-    
 
     const fetchData = async () => {
       // essa()
@@ -109,7 +97,6 @@ function App() {
       }catch(err){
         console.log(err)
         setItemsList((previousArr) => (previousArr.slice(0, -1)));
-
       }
     }
   }
@@ -129,6 +116,32 @@ function App() {
     }
   }
 
+  const handleUpdateFoundItems = async (item) =>{
+    const response = await fetch(`http://localhost:8000/search-items?letters=${item}`);
+    const data = await response.json();
+  
+    console.log(data)
+    setFoundItems(data)
+  
+  try{
+  
+  }catch(err){
+    console.log(err)
+  }
+  }
+
+  const handleSetFoundItem = (item) =>{
+    setAssignedItem(item.id)
+    setOgItemIdVal(item.name)
+    setFoundItems()
+  }
+
+  const handleSetNewOwner = (user) =>{
+    setNewOwner(user.id)  
+    setOwnerId(user.nickname)
+    setFoundUsers()
+  }
+
   const handleUpdateFoundUsers = async (nickname) =>{
         const response = await fetch(`http://localhost:8000/search-users?letters=${nickname}`);
         const data = await response.json();
@@ -143,19 +156,7 @@ function App() {
     }
 }
 
-const handleUpdateFoundItems = async (item) =>{
-  const response = await fetch(`http://localhost:8000/search-items?letters=${item}`);
-  const data = await response.json();
 
-  console.log(data)
-  setFoundItems(data)
-
-try{
-
-}catch(err){
-  console.log(err)
-}
-}
 
   const handleRegisterItem = async (e) =>{
     e.preventDefault()
@@ -165,10 +166,6 @@ try{
         'ogItemId': assignedItem,
         'ownerHistory': newOwner,
       }
-      // {
-      //   'ogItemId': e.target.ogItemId.value,
-      //   'ownerHistory': e.target.ownerHistory.value,
-      // }
       try{
         await Promise.all([
           axios.post('http://localhost:8000/register-item', {
@@ -234,6 +231,8 @@ try{
         ))
       }
   
+
+      {/* dodawanie nowego itemu */}
   
       <form onSubmit={handleAddItem}>
         <input type="text" placeholder='name' name='name'/>
@@ -242,13 +241,14 @@ try{
         <button type='submit'>add item</button>
       </form>
 
+      {/* rejestracja itemu */}
 
       <form onChange={handleRegisterChange} onSubmit={handleRegisterItem}>
         <input type="text" placeholder='og item id' name='ogItemId' value={ogItemIdVal}/>
         <input type="text" placeholder='owner id' name='ownerHistory' value={ownerId}/>
         <button type='submit'>register item</button>
-
       </form>
+
       <div>
         <p>Wybierz uzytkownika:</p>
         {
@@ -257,7 +257,7 @@ try{
                 <div key={user.id}>
                     <p>Nickname: {user.nickname}</p>
                     <p>ID: {user.id}</p>
-                    <button onClick={(()=>setNewOwner(user.id))}>Wybierz uzytkownika</button>
+                    <button onClick={(()=>handleSetNewOwner(user))}>Wybierz uzytkownika</button>
                 </div>
             ))
     
@@ -271,7 +271,8 @@ try{
                 <div key={item.id}>
                     <p>Nazwa: {item.name}</p>
                     <p>ID: {item.id}</p>
-                    <button onClick={(()=>setAssignedItem(item.id))}>Wybierz przedmiot</button>
+                    <button onClick={
+                      (()=>handleSetFoundItem(item))}>Wybierz przedmiot</button>
                 </div>
             ))
     
