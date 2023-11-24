@@ -2,6 +2,8 @@
 import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { supabase } from './supabaseClient';
+
 
 
 
@@ -11,10 +13,18 @@ export const UserPage = (key) =>{
     const[userItemsList, setUserItemsList] = useState()
     const[foundUsers, setFoundUsers] = useState()
     const[newOwner, setNewOwner] = useState()
+    const[userID, setUserID] = useState('none')
  
     const location = useLocation();
     const pathSegments = location.pathname.split('/');
     const usernameFromPath = pathSegments[2];
+
+
+    const getUserDataFromDB = async()=>{
+        const { data: { user } } = await supabase.auth.getUser()
+
+        setUserID(user?.id)
+    }
 
     useEffect(()=>{
         const getNicknameData = async (nickname) => {
@@ -30,6 +40,7 @@ export const UserPage = (key) =>{
             }
         };
 
+        getUserDataFromDB()
         getNicknameData()
     }, [])
 
@@ -49,37 +60,23 @@ export const UserPage = (key) =>{
         }
     }
 
-    console.log(userItemsList)
-
-    userItemsList?.map(item=>{
-
-        console.log(item)
-        // console.log(item.ownersHistory[item.ownersHistory.length-1])
-    })
-    
     // Przykładowe użycie
     const handleDeleteItem = async (item) =>{
         
         const currentOwner = item.ownersHistory[item.ownersHistory.length-1]
-        // console.log(item.ownersHistory[item.ownersHistory.length-1])
         if(item.registerID && currentOwner.ownerID && newOwner && newOwner!==currentOwner){
             try{
                 await axios.post('http://localhost:8000/change-owner', {
                     registerID: item.registerID,
                     currentOwner: currentOwner.ownerID,
-                    // currentOwner: '0b972e35-c28d-4052-a4cd-260b5c2c965b',
                     newOwner: newOwner,
+                    verifyID: userID
                 });
+            setNewOwner()
             }catch(error){
-                console.log(error)
+                console.log(error.response.data.error)
             }
         }
-
-
-        console.log('kasuje nowego ownera')
-        setNewOwner()
-
-        
     }
 
 
@@ -97,22 +94,6 @@ export const UserPage = (key) =>{
                             <p>It belongs to {user.nickname} since {item.ownersHistory[item.ownersHistory.length-1].registerDate}</p>
                             <img src={item.image} alt="" />
                             <button onClick={()=>handleDeleteItem(item)}>prześlij item</button>
-
-
-                            {/* <div>
-                                <p>Wybierz uzytkownika:</p>
-                                {
-                                    foundUsers?.length > 0 && 
-                                    foundUsers?.map((user)=>(
-                                        <div key={user.id}>
-                                            <p>Nickname: {user.nickname}</p>
-                                            <p>ID: {user.id}</p>
-                                            <button onClick={(()=>setNewOwner(user.id))}>Wybierz uzytkownika</button>
-                                        </div>
-                                    ))
-                            
-                                }
-                            </div> */}
                         </div>
                     ))
                 }

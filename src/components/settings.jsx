@@ -26,7 +26,6 @@ export const Settings = () =>{
         console.log(publicUserData[0])
         setPublicUser(publicUserData[0])
         setNickname(publicUserData[0].nickname)
-
     }
 
     const handleChange = (e) =>{
@@ -52,22 +51,6 @@ export const Settings = () =>{
         }  catch(error){
             console.log(error)
         }
-
-
-
-        
-        // e.preventDefault()
-
-        // console.log(nickname)
-        // console.log(publicUser.id)
-        // try{
-        //     await axios.post('http://localhost:8000/update-nickname', {
-        //         newNickname: nickname,
-        //         id: publicUser.id,
-        //     });
-        //   }catch(err){
-        //     console.log(err)
-        //   }
     }
 
     console.log(nickname)

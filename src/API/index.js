@@ -185,85 +185,84 @@ app.post('/change-owner', async function (req, res){
     const currentOwner = req.body.currentOwner
     const newOwner = req.body.newOwner
     const registerID= req.body.registerID
+    const verifyID= req.body.verifyID
+
 
     console.log('xd')
     console.log(currentOwner, newOwner, registerID)
 
-    try{
-        const { data: ownersHistory, error: fetchDataError } = await supabase
-            .from('legited_items')
-            .select('owners_history')
-            .eq('id', registerID)
-
-        console.log(ownersHistory[0].owners_history)
-
-        const newHistoryObj = {
-            ownerID: newOwner,
-            registerDate: date
-        }
-
-        let newOwnersHistory = [...ownersHistory[0].owners_history, newHistoryObj]
-
-
-
-
-
-        //usuwanie itemku z listy itemów uzytkownika
-        const { data: prevUserData, error: fetchPrevUserDataError } = await supabase
-            .from('users')
-            .select('items_list')
-            .eq('id', currentOwner)
-
-        console.log(prevUserData[0].items_list)
-
-        const newItemsList = prevUserData[0].items_list.filter((itemID)=>itemID!==registerID)
-
-        const {error: deleteUserItemError} = await supabase
-            .from('users')
-            .update({items_list: newItemsList})
-            .eq('id', currentOwner)
-
-
-        //dodanie itemku nowemu ownerowi
-
-        const { data: newUserData, error: fetchnewUserDataError } = await supabase
-            .from('users')
-            .select('items_list')
-            .eq('id', newOwner)
-
-
-        console.log('new user data')
-        console.log(newUserData[0].items_list)
-        
-
-        //zabezpieczenie zeby nie dodac jednego zarejestrowanego itemu kilka razy
-        if((!newItemsList.includes(registerID))&&!(newUserData[0].items_list.includes(registerID))){
-            const newItemOwnerList = [...newUserData[0].items_list, registerID]
-            const {error: addUserItemError} = await supabase
-                .from('users')
-                .update({items_list: newItemOwnerList})
-                .eq('id', newOwner)
-            
-            //dodanie nowego user history do itemka
-            const {error} = await supabase
+    if(verifyID===currentOwner){
+        try{
+            const { data: ownersHistory, error: fetchDataError } = await supabase
                 .from('legited_items')
-                .update({owners_history: newOwnersHistory})
+                .select('owners_history')
                 .eq('id', registerID)
-        }
-
-
-
-        // console.log('xd')
-        // console.log(newItemOwnerList)
-
-
-
-        
-
+    
+            console.log(ownersHistory[0].owners_history)
+    
+            const newHistoryObj = {
+                ownerID: newOwner,
+                registerDate: date
+            }
+    
+            let newOwnersHistory = [...ownersHistory[0].owners_history, newHistoryObj]
+    
+    
+    
+    
+    
+            //usuwanie itemku z listy itemów uzytkownika
+            const { data: prevUserData, error: fetchPrevUserDataError } = await supabase
+                .from('users')
+                .select('items_list')
+                .eq('id', currentOwner)
+    
+            console.log(prevUserData[0].items_list)
+    
+            const newItemsList = prevUserData[0].items_list.filter((itemID)=>itemID!==registerID)
+    
+            const {error: deleteUserItemError} = await supabase
+                .from('users')
+                .update({items_list: newItemsList})
+                .eq('id', currentOwner)
+    
+    
+            //dodanie itemku nowemu ownerowi
+    
+            const { data: newUserData, error: fetchnewUserDataError } = await supabase
+                .from('users')
+                .select('items_list')
+                .eq('id', newOwner)
+    
+    
+            console.log('new user data')
+            console.log(newUserData[0].items_list)
             
-    }catch(err){
-        console.log(err)
+    
+            //zabezpieczenie zeby nie dodac jednego zarejestrowanego itemu kilka razy
+            if((!newItemsList.includes(registerID))&&!(newUserData[0].items_list.includes(registerID))){
+                const newItemOwnerList = [...newUserData[0].items_list, registerID]
+                const {error: addUserItemError} = await supabase
+                    .from('users')
+                    .update({items_list: newItemOwnerList})
+                    .eq('id', newOwner)
+                
+                //dodanie nowego user history do itemka
+                const {error} = await supabase
+                    .from('legited_items')
+                    .update({owners_history: newOwnersHistory})
+                    .eq('id', registerID)
+            }
+                
+        }catch(err){
+            console.log(err)
+        }
+  
+    }else{
+        return res.status(500).json({ error: 'Nie możesz przekazać nie swojego przedmiotu' });
     }
+
+    
 
 
         
