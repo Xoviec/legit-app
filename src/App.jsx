@@ -139,7 +139,7 @@ function App() {
   const handleSetNewOwner = (user) =>{
     setNewOwner(user.id)  
     setOwnerId(user.nickname)
-    setFoundUsers()
+    setFoundUsers() 
   }
 
   const handleUpdateFoundUsers = async (nickname) =>{

@@ -14,6 +14,7 @@ export const UserPage = (key) =>{
     const[foundUsers, setFoundUsers] = useState()
     const[newOwner, setNewOwner] = useState()
     const[userID, setUserID] = useState('none')
+    const[commentsList, setCommentsList] = useState()
  
     const location = useLocation();
     const pathSegments = location.pathname.split('/');
@@ -21,9 +22,22 @@ export const UserPage = (key) =>{
 
 
     const getUserDataFromDB = async()=>{
-        const { data: { user } } = await supabase.auth.getUser()
 
+        const { data: { user } } = await supabase.auth.getUser()
         setUserID(user?.id)
+    }
+
+    const getComments = async () =>{
+
+        try{
+            const response = await fetch(`http://localhost:8000/get-comments/${usernameFromPath}`);
+            const data = await response.json();
+            console.log(data)
+            setCommentsList(data)
+
+        }catch(err){
+            console.log(err)
+        }
     }
 
     useEffect(()=>{
@@ -40,6 +54,7 @@ export const UserPage = (key) =>{
             }
         };
 
+        getComments()
         getUserDataFromDB()
         getNicknameData()
     }, [])
@@ -78,6 +93,29 @@ export const UserPage = (key) =>{
             }
         }
     }
+    
+    const handleAddComment = async (e) =>{
+
+        console.log(e.target.comment.value)
+
+        e.preventDefault()
+
+        try{
+            const userResponse = await fetch(`http://localhost:8000/secret/${userID}`)
+            const usersDataResponse = await userResponse.json()
+            console.log(usersDataResponse[0].nickname)
+
+            console.log('exdi')
+            await axios.post('http://localhost:8000/add-comment', {
+                commentBy: usersDataResponse[0].nickname,
+                commentOn: user.nickname,
+                content: e.target.comment.value,
+            });
+        setNewOwner()
+        }catch(error){
+            console.log(error.response.data.error)
+        }
+    }
 
 
     return(
@@ -103,19 +141,34 @@ export const UserPage = (key) =>{
                 <input onChange={handleUpdateFoundUsers} type="text" name="search" id="" />
 
                 <div>
-                                <p>Wybierz uzytkownika:</p>
-                                {
-                                    foundUsers?.length > 0 && 
-                                    foundUsers?.map((user)=>(
-                                        <div key={user.id}>
-                                            <p>Nickname: {user.nickname}</p>
-                                            <p>ID: {user.id}</p>
-                                            <button onClick={(()=>setNewOwner(user.id))}>Wybierz uzytkownika</button>
-                                        </div>
-                                    ))
-                            
-                                }
+                    <p>Wybierz uzytkownika:</p>
+                    {
+                        foundUsers?.length > 0 && 
+                        foundUsers?.map((user)=>(
+                            <div key={user.id}>
+                                <p>Nickname: {user.nickname}</p>
+                                <p>ID: {user.id}</p>
+                                <button onClick={(()=>setNewOwner(user.id))}>Wybierz uzytkownika</button>
                             </div>
+                        ))
+                
+                    }
+                </div>
+                <div>
+                    <p>Komentarze:</p>
+                    {
+                        commentsList?.map((comment)=>(
+                            <div>
+                                {comment.content}
+                            </div>
+                        ))
+                    }
+                    <p>Dodaj komentarz</p>
+                    <form onSubmit={handleAddComment}>
+                        <input name='comment' type="text" />
+                        <button type='submit'>Dodaj komentarz</button>
+                    </form>
+                </div>
             </div>
 
         </div>

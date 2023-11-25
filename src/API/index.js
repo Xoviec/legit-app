@@ -126,7 +126,7 @@ app.get('/user-items/:nickname', async function(req, res) {
         const { data: userItemsData, error: userItemsError } = await supabase
             .from('users')
             .select('items_list')
-            .eq('nickname', nickname);
+            .ilike('nickname', nickname);
 
         if (userItemsError) {
             throw userItemsError;
@@ -346,6 +346,36 @@ app.post('/update-nickname', async function (req, res){
         // res.send(error)
     return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji nickname.' });
     }
+})
+
+//szukanie komentarzy na profilu użytkownika
+app.get('/get-comments/:nickname', async function (req, res){
+    const { nickname } = req.params;
+
+    console.log(nickname)
+    const { data, error } = await supabase
+        .from('comments')
+        .select()
+        .ilike('comment_on', nickname);
+    if(error){
+        console.log(error)
+    }
+    console.log(data)
+    res.send(data)
+
+})
+
+//dodawanie komentarza
+app.post('/add-comment', async function (req, res){
+    console.log(req.body)
+    const { error } = await supabase
+    .from('comments')
+    .insert({ 
+        comment_by: req.body.commentBy,
+        comment_on: req.body.commentOn, 
+        content: req.body.content
+        
+    })
 })
 
 
