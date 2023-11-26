@@ -15,6 +15,7 @@ export const UserPage = (key) =>{
     const[newOwner, setNewOwner] = useState()
     const[userID, setUserID] = useState('none')
     const[commentsList, setCommentsList] = useState()
+    const[commentVal, setCommentVal] = useState()
  
     const location = useLocation();
     const pathSegments = location.pathname.split('/');
@@ -104,6 +105,7 @@ export const UserPage = (key) =>{
             const userResponse = await fetch(`http://localhost:8000/secret/${userID}`)
             const usersDataResponse = await userResponse.json()
             console.log(usersDataResponse[0].nickname)
+            setCommentVal('')
 
             console.log('exdi')
             await axios.post('http://localhost:8000/add-comment', {
@@ -111,7 +113,6 @@ export const UserPage = (key) =>{
                 commentOn: user.nickname,
                 content: e.target.comment.value,
             });
-        setNewOwner()
         }catch(error){
             console.log(error.response.data.error)
         }
@@ -165,7 +166,7 @@ export const UserPage = (key) =>{
                     }
                     <p>Dodaj komentarz</p>
                     <form onSubmit={handleAddComment}>
-                        <input name='comment' type="text" />
+                        <input name='comment' type="text" onChange={((e)=>setCommentVal(e.target.value))} value={commentVal}/>
                         <button type='submit'>Dodaj komentarz</button>
                     </form>
                 </div>
