@@ -114,8 +114,25 @@ export const UserPage = (key) =>{
                 content: e.target.comment.value,
             });
         }catch(error){
-            console.log(error.response.data.error)
+            console.log(error)
         }
+    }
+
+    const handleDeleteComment = async (event, id) =>{
+
+        console.log(event)
+        console.log(id)
+        event.preventDefault()
+
+     try{
+        await axios.post('http://localhost:8000/delete-comment', {
+            id: id,
+            // commentOn: user.nickname,
+            // content: e.target.comment.value,
+        });
+    }catch(err){
+        console.log(err)
+    }
     }
 
 
@@ -128,8 +145,8 @@ export const UserPage = (key) =>{
             <div>
                 {
                     userItemsList?.map((item)=>(
-                        <div>
-                            <p key={item.id}>{item.name} registered {item.ownersHistory[0].registerDate}</p>
+                        <div key={item.id}>
+                            <p>{item.name} registered {item.ownersHistory[0].registerDate}</p>
                             <p>It belongs to {user.nickname} since {item.ownersHistory[item.ownersHistory.length-1].registerDate}</p>
                             <img src={item.image} alt="" />
                             <button onClick={()=>handleDeleteItem(item)}>prześlij item</button>
@@ -159,8 +176,9 @@ export const UserPage = (key) =>{
                     <p>Komentarze:</p>
                     {
                         commentsList?.map((comment)=>(
-                            <div>
+                            <div key={comment.id}>
                                 {comment.content}
+                                <button onClick={(event)=>handleDeleteComment(event, comment.id)}>Wypierdol</button>
                             </div>
                         ))
                     }
@@ -175,3 +193,14 @@ export const UserPage = (key) =>{
         </div>
     )
 }
+
+
+// try{
+//     await axios.post('http://localhost:8000/delete-comment', {
+//         id: id,
+//         commentOn: user.nickname,
+//         content: e.target.comment.value,
+//     });
+// }catch(err){
+//     console.log(err)
+// }

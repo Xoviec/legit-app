@@ -379,6 +379,17 @@ app.post('/add-comment', async function (req, res){
     })
 })
 
+app.post('/delete-comment', async function (req, res){
+    console.log(req.body.id)
+    const commentID = req.body.id
+    
+    
+    const { error } = await supabase
+        .from('comments')
+        .delete()
+        .eq('id', commentID)
+})
+
 
 
 app.listen(PORT, ()=> console.log('working'))
