@@ -178,6 +178,7 @@ app.post('/items', async function (req, res){
     }
 })
 
+// zmiana własciciela
 app.post('/change-owner', async function (req, res){
 
 
