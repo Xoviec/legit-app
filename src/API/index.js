@@ -19,6 +19,9 @@ const supabase = createClient(
     process.env.REACT_APP_SUPABASE_ANON_KEY
 );
 
+
+
+
 //wszyscy uzytkownicy
 
 app.get('/nicknames', async function (req, res) {
@@ -132,14 +135,13 @@ app.get('/user-items/:nickname', async function(req, res) {
             throw userItemsError;
         }
 
-        console.log('es')
         const userItemsList = userItemsData[0].items_list;
 
         // Użyj Promise.all do oczekiwania na zakończenie wszystkich asynchronicznych operacji
         await Promise.all(userItemsList.map(async (id, i) => {
             const { data, error } = await supabase
                 .from('legited_items')
-                .select('og_item_id, owners_history')
+                .select('id, og_item_id, owners_history')
                 .eq('id', id);
         
             let { data: ogItemData, error: ogItemError } = await supabase
@@ -207,10 +209,6 @@ app.post('/change-owner', async function (req, res){
             }
     
             let newOwnersHistory = [...ownersHistory[0].owners_history, newHistoryObj]
-    
-    
-    
-    
     
             //usuwanie itemku z listy itemów uzytkownika
             const { data: prevUserData, error: fetchPrevUserDataError } = await supabase
@@ -382,12 +380,29 @@ app.post('/add-comment', async function (req, res){
 app.post('/delete-comment', async function (req, res){
     console.log(req.body.id)
     const commentID = req.body.id
-    
-    
-    const { error } = await supabase
+    const userNick = req.body.userNick
+
+
+    const { data, error: getComments } = await supabase
+        .from('comments')
+        .select()
+        .eq('id', commentID);
+
+    console.log('wisla to sstara kurwa')
+    console.log(data)
+    console.log(data[0]?.comment_by)
+    console.log(userNick)
+
+    if(data[0]?.comment_by === userNick){
+        const { error } = await supabase
         .from('comments')
         .delete()
         .eq('id', commentID)
+    }
+    else{
+        return res.status(500).json({ error: 'Nie mozesz usunac czyjegos komentarza' });    }
+    
+
 })
 
 

@@ -226,8 +226,6 @@ function App() {
         
         userList?.map((appUser)=>(
           <Link className={`${appUser?.id===user?.id ? `user` : null}`} key={appUser.name} to={`/Users/${appUser.nickname}`}>{appUser.nickname}</Link>
-
-          // <div className={`${appUser?.id===user?.id ? `user` : null}`}>{appUser.nickname}</div>
         ))
       }
   

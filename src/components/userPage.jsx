@@ -9,13 +9,13 @@ import { supabase } from './supabaseClient';
 
 export const UserPage = (key) =>{
 
-    const[user, setUser] = useState()
+    const[displayUser, setDisplayUser] = useState()
+    const[user, setUser] = useState('none') // user przeglądający strone 
     const[userItemsList, setUserItemsList] = useState()
     const[foundUsers, setFoundUsers] = useState()
     const[newOwner, setNewOwner] = useState()
-    const[userID, setUserID] = useState('none')
     const[commentsList, setCommentsList] = useState()
-    const[commentVal, setCommentVal] = useState()
+    const[commentVal, setCommentVal] = useState('')
  
     const location = useLocation();
     const pathSegments = location.pathname.split('/');
@@ -25,7 +25,15 @@ export const UserPage = (key) =>{
     const getUserDataFromDB = async()=>{
 
         const { data: { user } } = await supabase.auth.getUser()
-        setUserID(user?.id)
+        try{
+            const userResponse = await fetch(`http://localhost:8000/secret/${user?.id}`)
+            const usersDataResponse = await userResponse.json()
+            console.log(usersDataResponse[0].nickname)
+            setUser(usersDataResponse[0].id)
+        }
+        catch(err){
+            console.log(err)
+        }
     }
 
     const getComments = async () =>{
@@ -49,7 +57,7 @@ export const UserPage = (key) =>{
                 const userItemsList = await userItemsListResponse.json()
                 const data = await response.json();
                 setUserItemsList(userItemsList)
-                setUser(data[0])
+                setDisplayUser(data[0])
             } catch (error) {
                 console.error('Błąd podczas pobierania danych:', error);
             }
@@ -77,7 +85,7 @@ export const UserPage = (key) =>{
     }
 
     // Przykładowe użycie
-    const handleDeleteItem = async (item) =>{
+    const handleTradeItem = async (item) =>{
         
         const currentOwner = item.ownersHistory[item.ownersHistory.length-1]
         if(item.registerID && currentOwner.ownerID && newOwner && newOwner!==currentOwner){
@@ -86,7 +94,7 @@ export const UserPage = (key) =>{
                     registerID: item.registerID,
                     currentOwner: currentOwner.ownerID,
                     newOwner: newOwner,
-                    verifyID: userID
+                    verifyID: user
                 });
             setNewOwner()
             }catch(error){
@@ -102,7 +110,7 @@ export const UserPage = (key) =>{
         e.preventDefault()
 
         try{
-            const userResponse = await fetch(`http://localhost:8000/secret/${userID}`)
+            const userResponse = await fetch(`http://localhost:8000/secret/${user}`)
             const usersDataResponse = await userResponse.json()
             console.log(usersDataResponse[0].nickname)
             setCommentVal('')
@@ -110,7 +118,7 @@ export const UserPage = (key) =>{
             console.log('exdi')
             await axios.post('http://localhost:8000/add-comment', {
                 commentBy: usersDataResponse[0].nickname,
-                commentOn: user.nickname,
+                commentOn: displayUser.nickname,
                 content: e.target.comment.value,
             });
         }catch(error){
@@ -125,8 +133,13 @@ export const UserPage = (key) =>{
         event.preventDefault()
 
      try{
+
+        const userResponse = await fetch(`http://localhost:8000/secret/${user}`)
+        const usersDataResponse = await userResponse.json()
+        console.log(usersDataResponse[0].nickname)
         await axios.post('http://localhost:8000/delete-comment', {
             id: id,
+            userNick: usersDataResponse[0].nickname
             // commentOn: user.nickname,
             // content: e.target.comment.value,
         });
@@ -135,21 +148,20 @@ export const UserPage = (key) =>{
     }
     }
 
-
     return(
         <div>
-            {usernameFromPath}-{user?.id}
+            {usernameFromPath}-{displayUser?.id}
 
 
             <p>Przedmioty uzytkownika {usernameFromPath}</p>
             <div>
                 {
                     userItemsList?.map((item)=>(
-                        <div key={item.id}>
+                        <div key={item.registerID}>
                             <p>{item.name} registered {item.ownersHistory[0].registerDate}</p>
-                            <p>It belongs to {user.nickname} since {item.ownersHistory[item.ownersHistory.length-1].registerDate}</p>
+                            <p>It belongs to {displayUser.nickname} since {item.ownersHistory[item.ownersHistory.length-1].registerDate}</p>
                             <img src={item.image} alt="" />
-                            <button onClick={()=>handleDeleteItem(item)}>prześlij item</button>
+                            <button onClick={()=>handleTradeItem(item)}>prześlij item</button>
                         </div>
                     ))
                 }
@@ -177,7 +189,11 @@ export const UserPage = (key) =>{
                     {
                         commentsList?.map((comment)=>(
                             <div key={comment.id}>
+                                {comment.comment_by}: 
                                 {comment.content}
+                                {
+                                    // comment.comment_by===
+                                }
                                 <button onClick={(event)=>handleDeleteComment(event, comment.id)}>Wypierdol</button>
                             </div>
                         ))
