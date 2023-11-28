@@ -9,7 +9,7 @@ import { supabase } from './supabaseClient';
 
 export const UserPage = (key) =>{
 
-    const[displayUser, setDisplayUser] = useState()
+    const[displayUser, setDisplayUser] = useState() // user który jest wyswietlany na stronie
     const[user, setUser] = useState('none') // user przeglądający strone 
     const[userItemsList, setUserItemsList] = useState()
     const[foundUsers, setFoundUsers] = useState()
@@ -29,7 +29,7 @@ export const UserPage = (key) =>{
             const userResponse = await fetch(`http://localhost:8000/secret/${user?.id}`)
             const usersDataResponse = await userResponse.json()
             console.log(usersDataResponse[0].nickname)
-            setUser(usersDataResponse[0].id)
+            setUser(usersDataResponse[0])
         }
         catch(err){
             console.log(err)
@@ -94,7 +94,7 @@ export const UserPage = (key) =>{
                     registerID: item.registerID,
                     currentOwner: currentOwner.ownerID,
                     newOwner: newOwner,
-                    verifyID: user
+                    verifyID: user.id
                 });
             setNewOwner()
             }catch(error){
@@ -110,7 +110,7 @@ export const UserPage = (key) =>{
         e.preventDefault()
 
         try{
-            const userResponse = await fetch(`http://localhost:8000/secret/${user}`)
+            const userResponse = await fetch(`http://localhost:8000/secret/${user.id}`)
             const usersDataResponse = await userResponse.json()
             console.log(usersDataResponse[0].nickname)
             setCommentVal('')
@@ -134,7 +134,7 @@ export const UserPage = (key) =>{
 
      try{
 
-        const userResponse = await fetch(`http://localhost:8000/secret/${user}`)
+        const userResponse = await fetch(`http://localhost:8000/secret/${user.id}`)
         const usersDataResponse = await userResponse.json()
         console.log(usersDataResponse[0].nickname)
         await axios.post('http://localhost:8000/delete-comment', {
@@ -148,6 +148,7 @@ export const UserPage = (key) =>{
     }
     }
 
+    console.log(user)
     return(
         <div>
             {usernameFromPath}-{displayUser?.id}
@@ -191,10 +192,14 @@ export const UserPage = (key) =>{
                             <div key={comment.id}>
                                 {comment.comment_by}: 
                                 {comment.content}
+
+                                
                                 {
-                                    // comment.comment_by===
+                                    comment.comment_by===user.nickname && 
+
+                                    <button onClick={(event)=>handleDeleteComment(event, comment.id)}>usuń komentarz</button>
+
                                 }
-                                <button onClick={(event)=>handleDeleteComment(event, comment.id)}>Wypierdol</button>
                             </div>
                         ))
                     }
