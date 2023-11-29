@@ -1,0 +1,28 @@
+# Dockerfile.backend
+FROM node:14
+
+# Ustawiamy katalog roboczy w kontenerze
+WORKDIR /app
+
+# Kopiujemy pliki package.json i package-lock.json do katalogu roboczego
+# COPY package*.json ../
+COPY package*.json ./
+
+
+# Instalujemy zależności
+RUN npm install
+RUN npm install -g nodemon
+
+
+# Kopiujemy resztę kodu aplikacji do katalogu roboczego
+COPY . .
+
+
+ENV PORT=8000
+
+
+# Eksponujemy port 8000
+EXPOSE 8000
+
+# Komenda do uruchomienia aplikacji
+CMD ["npm", "run", "start:backend"]

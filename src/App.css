@@ -40,3 +40,64 @@
 .user{
   background-color: red;
 }
+
+
+/* Dodaj odpowiednie style dla klasy App */
+.App {
+  font-family: 'Arial', sans-serif;
+  padding: 20px;
+}
+
+/* Dodaj styl dla przycisków */
+button {
+  margin: 5px;
+  padding: 10px;
+  cursor: pointer;
+  background-color: #3498db;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Dodaj styl dla linków */
+.Link {
+  text-decoration: none;
+}
+
+/* Dodaj styl dla formularzy */
+form {
+  margin: 10px 0;
+}
+
+input {
+  margin: 5px;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Dodaj styl dla listy użytkowników */
+.user {
+  font-weight: bold;
+  color: #27ae60;
+}
+
+/* Dodaj styl dla sekcji wybierania użytkownika i przedmiotu */
+div p {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+/* Dodaj styl dla sekcji przedmiotów */
+div > div {
+  margin-top: 10px;
+}
+
+/* Dodaj ogólny styl dla divów z informacjami */
+div {
+  margin-bottom: 10px;
+}
