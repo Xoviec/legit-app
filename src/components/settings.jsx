@@ -6,6 +6,8 @@ import axios from 'axios';
 
 export const Settings = () =>{
 
+    const API = process.env.REACT_APP_API
+
 
     const location = useLocation();
     const props = location.state;
@@ -21,7 +23,7 @@ export const Settings = () =>{
     const getUserDataFromDB = async()=>{
         const { data: { user } } = await supabase.auth.getUser()
         setUserData(user)
-        const publicUserResponse = await fetch(`http://localhost:8000/secret/${user.id}`);
+        const publicUserResponse = await fetch(`${API}/secret/${user.id}`);
         const publicUserData = await publicUserResponse.json();
         console.log(publicUserData[0])
         setPublicUser(publicUserData[0])
@@ -42,7 +44,7 @@ export const Settings = () =>{
             const { data, error } = await supabase.auth.updateUser({
                 data: { full_name: nickname }
             })
-            await axios.post('http://localhost:8000/update-nickname', {
+            await axios.post(`${API}/update-nickname`, {
                 newNickname: nickname,
                 id: publicUser.id,
             });

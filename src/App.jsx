@@ -28,6 +28,9 @@ function App() {
   const[assignedItem, setAssignedItem] = useState()
 
 
+  const API = process.env.REACT_APP_API
+
+  console.log(API)
 
   const essa = async()=>{
     const { data: { user } } = await supabase.auth.getUser()
@@ -52,9 +55,9 @@ function App() {
       setUser(user)
 
       try {
-        const usersDataResponse = await fetch('http://localhost:8000/nicknames'); // Zastąp tym adresem URL swoim adresem serwera
+        const usersDataResponse = await fetch(`${API}/nicknames`); // Zastąp tym adresem URL swoim adresem serwera
         const usersData = await usersDataResponse.json();
-        const itemsResponse = await fetch('http://localhost:8000/items'); // Zastąp tym adresem URL swoim adresem serwera
+        const itemsResponse = await fetch(`${API}/items`); // Zastąp tym adresem URL swoim adresem serwera
         const itemsData = await itemsResponse.json();
 
         setUserList(usersData)
@@ -62,7 +65,7 @@ function App() {
         console.log(user.email)
         console.log(user.id)
         
-        const publicUserResponse = await fetch(`http://localhost:8000/secret/${user.id}`); // Zastąp tym adresem URL swoim adresem serwera
+        const publicUserResponse = await fetch(`${API}/secret/${user.id}`); // Zastąp tym adresem URL swoim adresem serwera
         const publicUserData = await publicUserResponse.json();
         console.log(publicUserData[0])
         setPublicUser(publicUserData[0])
@@ -90,7 +93,7 @@ function App() {
       setItemsList((prevItemsList) => [...prevItemsList, data]);
 
       try{
-        await axios.post('http://localhost:8000/items', {
+        await axios.post(`${API}/items`, {
           itemData: data,
           accountType: publicUser.account_type,
         });
@@ -117,7 +120,7 @@ function App() {
   }
 
   const handleUpdateFoundItems = async (item) =>{
-    const response = await fetch(`http://localhost:8000/search-items?letters=${item}`);
+    const response = await fetch(`${API}/search-items?letters=${item}`);
     const data = await response.json();
   
     console.log(data)
@@ -143,7 +146,7 @@ function App() {
   }
 
   const handleUpdateFoundUsers = async (nickname) =>{
-        const response = await fetch(`http://localhost:8000/search-users?letters=${nickname}`);
+        const response = await fetch(`${API}/search-users?letters=${nickname}`);
         const data = await response.json();
 
         console.log(data)
@@ -168,7 +171,7 @@ function App() {
       }
       try{
         await Promise.all([
-          axios.post('http://localhost:8000/register-item', {
+          axios.post(`${API}/register-item`, {
             itemData: data,
             accountType: publicUser.account_type,
           }),

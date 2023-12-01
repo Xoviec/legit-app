@@ -9,6 +9,9 @@ import { supabase } from './supabaseClient';
 
 export const UserPage = (key) =>{
 
+    const API = process.env.REACT_APP_API
+
+
     const[displayUser, setDisplayUser] = useState() // user który jest wyswietlany na stronie
     const[user, setUser] = useState('none') // user przeglądający strone 
     const[userItemsList, setUserItemsList] = useState()
@@ -26,7 +29,7 @@ export const UserPage = (key) =>{
 
         const { data: { user } } = await supabase.auth.getUser()
         try{
-            const userResponse = await fetch(`http://localhost:8000/secret/${user?.id}`)
+            const userResponse = await fetch(`${API}/secret/${user?.id}`)
             const usersDataResponse = await userResponse.json()
             console.log(usersDataResponse[0].nickname)
             setUser(usersDataResponse[0])
@@ -39,7 +42,7 @@ export const UserPage = (key) =>{
     const getComments = async () =>{
 
         try{
-            const response = await fetch(`http://localhost:8000/get-comments/${usernameFromPath}`);
+            const response = await fetch(`${API}/get-comments/${usernameFromPath}`);
             const data = await response.json();
             console.log(data)
             setCommentsList(data)
@@ -52,8 +55,8 @@ export const UserPage = (key) =>{
     useEffect(()=>{
         const getNicknameData = async (nickname) => {
             try {
-                const response = await fetch(`http://localhost:8000/nicknames/${usernameFromPath}`);
-                const userItemsListResponse = await fetch(`http://localhost:8000/user-items/${usernameFromPath}`);
+                const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
+                const userItemsListResponse = await fetch(`${API}/user-items/${usernameFromPath}`);
                 const userItemsList = await userItemsListResponse.json()
                 const data = await response.json();
                 setUserItemsList(userItemsList)
@@ -71,7 +74,7 @@ export const UserPage = (key) =>{
 
     const handleUpdateFoundUsers = async (e) =>{
         console.log(e.target.value)
-            const response = await fetch(`http://localhost:8000/search-users?letters=${e.target.value}`);
+            const response = await fetch(`${API}/search-users?letters=${e.target.value}`);
             const data = await response.json();
 
             console.log(data)
@@ -90,7 +93,7 @@ export const UserPage = (key) =>{
         const currentOwner = item.ownersHistory[item.ownersHistory.length-1]
         if(item.registerID && currentOwner.ownerID && newOwner && newOwner!==currentOwner){
             try{
-                await axios.post('http://localhost:8000/change-owner', {
+                await axios.post(`${API}/change-owner`, {
                     registerID: item.registerID,
                     currentOwner: currentOwner.ownerID,
                     newOwner: newOwner,
@@ -110,13 +113,13 @@ export const UserPage = (key) =>{
         e.preventDefault()
 
         try{
-            const userResponse = await fetch(`http://localhost:8000/secret/${user.id}`)
+            const userResponse = await fetch(`${API}/secret/${user.id}`)
             const usersDataResponse = await userResponse.json()
             console.log(usersDataResponse[0].nickname)
             setCommentVal('')
 
             console.log('exdi')
-            await axios.post('http://localhost:8000/add-comment', {
+            await axios.post(`${API}/add-comment`, {
                 commentBy: usersDataResponse[0].nickname,
                 commentOn: displayUser.nickname,
                 content: e.target.comment.value,
@@ -134,10 +137,10 @@ export const UserPage = (key) =>{
 
      try{
 
-        const userResponse = await fetch(`http://localhost:8000/secret/${user.id}`)
+        const userResponse = await fetch(`${API}/secret/${user.id}`)
         const usersDataResponse = await userResponse.json()
         console.log(usersDataResponse[0].nickname)
-        await axios.post('http://localhost:8000/delete-comment', {
+        await axios.post(`${API}/delete-comment`, {
             id: id,
             userNick: usersDataResponse[0].nickname
             // commentOn: user.nickname,
