@@ -286,7 +286,8 @@ app.post('/register-item', async function(req, res){
                         ownerID: req.body.itemData.ownerHistory,
                         registerDate: date
                     }
-                ]
+                ],
+                current_owner: req.body.itemData.ownerHistory
             })
         if(error){
             console.log(error)

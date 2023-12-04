@@ -47,7 +47,6 @@ function App() {
   useEffect(() => {
 
     const fetchData = async () => {
-      // essa()
 
       const { data: { user } } = await supabase.auth.getUser()
       const { data, error } = await supabase.auth.getSession()
