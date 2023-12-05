@@ -232,7 +232,7 @@ app.post('/change-owner', async function (req, res){
                 .from('users')
                 .select('items_list')
                 .eq('id', newOwner)
-    
+
     
             console.log('new user data')
             console.log(newUserData[0].items_list)
@@ -251,6 +251,12 @@ app.post('/change-owner', async function (req, res){
                     .from('legited_items')
                     .update({owners_history: newOwnersHistory})
                     .eq('id', registerID)
+
+                const {error:updateCurrentOwner} = await supabase
+                    .from('legited_items')
+                    .insert({current_owner: req.body.itemData.ownerHistory})
+                    .eq('id', registerID)
+
             }
                 
         }catch(err){

@@ -101,7 +101,8 @@ export const UserPage = (key) =>{
                 });
             setNewOwner()
             }catch(error){
-                console.log(error.response.data.error)
+                // console.log(error.response.data.error)
+                console.log(error.response ? error.response.data.error : error)
             }
         }
     }
@@ -162,6 +163,7 @@ export const UserPage = (key) =>{
                 {
                     userItemsList?.map((item)=>(
                         <div key={item.registerID}>
+                            <p>{item.id}</p>
                             <p>{item.name} registered {item.ownersHistory[0].registerDate}</p>
                             <p>It belongs to {displayUser.nickname} since {item.ownersHistory[item.ownersHistory.length-1].registerDate}</p>
                             <img src={item.image} alt="" />
