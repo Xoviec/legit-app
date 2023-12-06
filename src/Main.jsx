@@ -6,7 +6,7 @@ import { Register } from "./components/register";
 import { Anonymous } from "./components/anonymous";
 import { UserPage } from "./components/userPage";
 import { Settings } from "./components/settings";
-
+import {Mainpage} from "./components/Main";
 
 export const Main = () =>{
 
@@ -15,6 +15,8 @@ export const Main = () =>{
             <Route path='/' element={<App/>}/>
             <Route path='/users/:id' element={<UserPage/>}/>
             <Route path='/settings' element={<Settings/>}/>
+            <Route path='/main' element={<Mainpage/>}/>
+            
 
 
             <Route element={<Anonymous />}>
