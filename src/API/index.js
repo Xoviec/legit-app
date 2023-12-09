@@ -199,8 +199,6 @@ app.post('/items', async function (req, res){
 // zmiana własciciela
 app.post('/change-owner', async function (req, res){
 
-    console.log('zmiana auuu')
-
 
     let date = new Date().toJSON();
     const currentOwner = req.body.currentOwner
@@ -208,13 +206,6 @@ app.post('/change-owner', async function (req, res){
     const registerID= req.body.registerID
     const verifyID= req.body.verifyID
 
-
-    console.log('xd')
-    console.log(currentOwner, newOwner, registerID)
-
-    console.log('kurwa verifyID', verifyID)
-
-    console.log('kurwa current owner', currentOwner)
 
     if(verifyID===currentOwner){
 
@@ -230,14 +221,9 @@ app.post('/change-owner', async function (req, res){
                 ownerID: newOwner,
                 registerDate: date
             }
-            console.log('dupa', ownersHistory[0].owners_history[0])
     
             let newOwnersHistory = [...ownersHistory[0].owners_history, newHistoryObj]
    
-            console.log('xd')
-            console.log('ncxzlo', ownersHistory[0].current_owner)
-
-            console.log('ezaaa', currentOwner)
 
             if(ownersHistory[0].current_owner===currentOwner){
                 const {error: updateOwnersHistoryError} = await supabase
@@ -249,11 +235,6 @@ app.post('/change-owner', async function (req, res){
             .from('legited_items')
             .update({current_owner: newOwner})
             .eq('id', registerID)
-
-    
-
-                
-
                 
         }catch(err){
             console.log(err)

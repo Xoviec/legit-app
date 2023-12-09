@@ -103,7 +103,6 @@ export const UserPage = (key) =>{
                 });
             setNewOwner()
             }catch(error){
-                // console.log(error.response.data.error)
                 console.log(error.response ? error.response.data.error : error)
             }
         }
