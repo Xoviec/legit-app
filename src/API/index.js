@@ -238,37 +238,14 @@ app.post('/change-owner', async function (req, res){
             }
     
             let newOwnersHistory = [...ownersHistory[0].owners_history, newHistoryObj]
-    
-            //usuwanie itemku z listy itemów uzytkownika // do wypierdolenia
-    
-            //dodanie itemku nowemu ownerowi
-    
-     
-    
-            console.log('new user data')
-            console.log(newUserData[0].items_list)
-            
-    
-            //zabezpieczenie zeby nie dodac jednego zarejestrowanego itemu kilka razy
-            // if((!newItemsList.includes(registerID))&&!(newUserData[0].items_list.includes(registerID))){
-            //     const newItemOwnerList = [...newUserData[0].items_list, registerID]
-            //     const {error: addUserItemError} = await supabase
-            //         .from('users')
-            //         .update({items_list: newItemOwnerList})
-            //         .eq('id', newOwner)
+   
+            const {error: updateOwnersHistoryError} = await supabase
+                .from('legited_items')
+                .update({owners_history: newOwnersHistory})
+                .eq('id', registerID)
+
                 
-            //     //dodanie nowego user history do itemka
-            //     const {error} = await supabase
-            //         .from('legited_items')
-            //         .update({owners_history: newOwnersHistory})
-            //         .eq('id', registerID)
 
-            //     const {error:updateCurrentOwner} = await supabase
-            //         .from('legited_items')
-            //         .insert({current_owner: req.body.itemData.ownerHistory})
-            //         .eq('id', registerID)
-
-            // }
                 
         }catch(err){
             console.log(err)
