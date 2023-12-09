@@ -58,6 +58,7 @@ export const UserPage = (key) =>{
                 const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
                 const userItemsListResponse = await fetch(`${API}/user-items/${usernameFromPath}`);
                 const userItemsList = await userItemsListResponse.json()
+                console.log(userItemsList)
                 const data = await response.json();
                 setUserItemsList(userItemsList)
                 setDisplayUser(data[0])
@@ -90,7 +91,7 @@ export const UserPage = (key) =>{
     // Przykładowe użycie
     const handleTradeItem = async (item) =>{
         
-        const currentOwner = item.ownersHistory[item.ownersHistory.length-1]
+        const currentOwner = item.current_owner
         if(item.registerID && currentOwner.ownerID && newOwner && newOwner!==currentOwner){
             try{
                 await axios.post(`${API}/change-owner`, {
@@ -162,10 +163,12 @@ export const UserPage = (key) =>{
             <div>
                 {
                     userItemsList?.map((item)=>(
+
+                        // console.log(item.owners_history[item.owners_history.length-1].registerDate)
                         <div key={item.registerID}>
                             <p>{item.id}</p>
-                            <p>{item.name} registered {item.ownersHistory[0].registerDate}</p>
-                            <p>It belongs to {displayUser.nickname} since {item.ownersHistory[item.ownersHistory.length-1].registerDate}</p>
+                            <p>{item.name} registered {item.legited_at}</p>
+                            <p>It belongs to {item.owner_nickname} since {item.owners_history[item.owners_history.length-1].registerDate}</p>
                             <img src={item.image} alt="" />
                             <button onClick={()=>handleTradeItem(item)}>prześlij item</button>
                         </div>

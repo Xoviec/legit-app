@@ -128,39 +128,54 @@ app.get('/user-items/:nickname', async function(req, res) {
     try {
         const { data: userItemsData, error: userItemsError } = await supabase
             .from('users')
-            .select('items_list')
+            .select('id')
             .ilike('nickname', nickname);
 
         if (userItemsError) {
             throw userItemsError;
         }
 
-        const userItemsList = userItemsData[0].items_list;
+        const itemsOwner = userItemsData[0].id
 
-        // Użyj Promise.all do oczekiwania na zakończenie wszystkich asynchronicznych operacji
-        await Promise.all(userItemsList.map(async (id, i) => {
-            const { data, error } = await supabase
+
+            const {data, error} = await supabase
                 .from('legited_items')
-                .select('id, og_item_id, owners_history')
-                .eq('id', id);
-        
-            let { data: ogItemData, error: ogItemError } = await supabase
-                .from('items')
                 .select()
-                .eq('id', data[0].og_item_id);
+                .eq('current_owner', itemsOwner)
 
-                // console.log(userItemsList[i])
-            // Dodaj nowy klucz 'registerID' z wartością z userItemsList[i]
-            ogItemData[0].registerID = userItemsList[i];
-            ogItemData[0].ownersHistory = data[0].owners_history
-            // console.log(data[0].owners_history)
-
-
+            console.log(error)
         
-            itemsData.push(ogItemData[0]);
-        }));
 
-        // Zwróć itemsData jako tablicę obiektów JSON
+        itemsData = data.map((item)=>({
+            ...item,
+            owner_nickname: nickname
+        }))
+
+    
+    const fetchItemData = async (item) => {
+        const { data: ogItemData, error: ogItemError } = await supabase
+        .from('items')
+        .select(`name, brand, sku, image`)
+        .eq('id', item.og_item_id);
+    
+        return ogItemData[0]; 
+    };
+    
+    const fetchAllItemData = async (itemsData) => {
+        const itemDataArray = await Promise.all(itemsData.map(fetchItemData));
+        return itemDataArray;
+    };
+    
+    const updatedItemsData = await fetchAllItemData(itemsData);
+    
+    itemsData = itemsData.map((item, index) => ({
+        ...item,
+        name: updatedItemsData[index].name,
+        brand: updatedItemsData[index].brand,
+        sku: updatedItemsData[index].sku,
+        image: updatedItemsData[index].name,
+
+    }));
         res.status(200).json(itemsData);
     } catch (error) {
         console.error(error);
@@ -170,8 +185,7 @@ app.get('/user-items/:nickname', async function(req, res) {
 
 // dodanie itemów
 app.post('/items', async function (req, res){
-    // console.log(req.body)
-    // console.log(req.body.accountType)
+
     if(req.body.accountType==='admin'){
         const { error } = await supabase
         .from('items')
