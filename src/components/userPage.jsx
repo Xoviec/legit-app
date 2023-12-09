@@ -92,11 +92,12 @@ export const UserPage = (key) =>{
     const handleTradeItem = async (item) =>{
         
         const currentOwner = item.current_owner
-        if(item.registerID && currentOwner.ownerID && newOwner && newOwner!==currentOwner){
+
+        if(item.id && currentOwner && newOwner && newOwner!==currentOwner){
             try{
                 await axios.post(`${API}/change-owner`, {
-                    registerID: item.registerID,
-                    currentOwner: currentOwner.ownerID,
+                    registerID: item.id,
+                    currentOwner: currentOwner,
                     newOwner: newOwner,
                     verifyID: user.id
                 });
@@ -105,6 +106,9 @@ export const UserPage = (key) =>{
                 // console.log(error.response.data.error)
                 console.log(error.response ? error.response.data.error : error)
             }
+        }
+        else{
+            console.log("coś poszło nie tak")
         }
     }
     
@@ -200,13 +204,9 @@ export const UserPage = (key) =>{
                             <div key={comment.id}>
                                 {comment.comment_by}: 
                                 {comment.content}
-
-                                
                                 {
                                     comment.comment_by===user.nickname && 
-
                                     <button onClick={(event)=>handleDeleteComment(event, comment.id)}>usuń komentarz</button>
-
                                 }
                             </div>
                         ))

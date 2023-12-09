@@ -25,7 +25,9 @@ const supabase = createClient(
 //wszyscy uzytkownicy
 
 app.get('/nicknames', async function (req, res) {
-    const { data, error } = await supabase.from('users').select('id, nickname, avatar, items_list, is_verified, account_type')
+    const { data, error } = await supabase
+    .from('users')
+    .select('id, nickname, avatar, is_verified, account_type')
     res.send(data)
 })
 
@@ -73,7 +75,7 @@ app.get('/search-users', async (req, res) => {
       // Wyszukaj użytkowników, których nick zawiera przekazane litery
       const { data, error } = await supabase
         .from('users')
-        .select('id, nickname, avatar, items_list, is_verified, account_type')
+        .select('id, nickname, avatar, is_verified, account_type')
         .ilike('nickname', `%${searchLetters}%`);
   
       if (error) {
@@ -93,7 +95,7 @@ app.get('/nicknames/:nickname', async function (req, res) {
     const { nickname } = req.params;
         // const { data, error } = await supabase.from('users').select('id, nickname, avatar, items_list, is_verified, account_type').where
 
-    const { data, error } = await supabase.from('users').select('id, nickname, avatar, items_list, is_verified, account_type').ilike('nickname', nickname);
+    const { data, error } = await supabase.from('users').select('id, nickname, avatar, is_verified, account_type').ilike('nickname', nickname);
 
     if (error) {
         return res.status(500).send(error.message);
@@ -197,6 +199,8 @@ app.post('/items', async function (req, res){
 // zmiana własciciela
 app.post('/change-owner', async function (req, res){
 
+    console.log('zmiana auuu')
+
 
     let date = new Date().toJSON();
     const currentOwner = req.body.currentOwner
@@ -208,11 +212,22 @@ app.post('/change-owner', async function (req, res){
     console.log('xd')
     console.log(currentOwner, newOwner, registerID)
 
+    console.log('kurwa verifyID', verifyID)
+
+    console.log('kurwa current owner', currentOwner)
+
     if(verifyID===currentOwner){
+
+
         try{
             const { data: ownersHistory, error: fetchDataError } = await supabase
                 .from('legited_items')
                 .select('owners_history')
+                .eq('id', registerID)
+
+            const {error: updateCurrentOwnerError} = await supabase
+                .from('legited_items')
+                .update({current_owner: newOwner})
                 .eq('id', registerID)
     
             console.log(ownersHistory[0].owners_history)
@@ -224,54 +239,36 @@ app.post('/change-owner', async function (req, res){
     
             let newOwnersHistory = [...ownersHistory[0].owners_history, newHistoryObj]
     
-            //usuwanie itemku z listy itemów uzytkownika
-            const { data: prevUserData, error: fetchPrevUserDataError } = await supabase
-                .from('users')
-                .select('items_list')
-                .eq('id', currentOwner)
-    
-            console.log(prevUserData[0].items_list)
-    
-            const newItemsList = prevUserData[0].items_list.filter((itemID)=>itemID!==registerID)
-    
-            const {error: deleteUserItemError} = await supabase
-                .from('users')
-                .update({items_list: newItemsList})
-                .eq('id', currentOwner)
-    
+            //usuwanie itemku z listy itemów uzytkownika // do wypierdolenia
     
             //dodanie itemku nowemu ownerowi
     
-            const { data: newUserData, error: fetchnewUserDataError } = await supabase
-                .from('users')
-                .select('items_list')
-                .eq('id', newOwner)
-
+     
     
             console.log('new user data')
             console.log(newUserData[0].items_list)
             
     
             //zabezpieczenie zeby nie dodac jednego zarejestrowanego itemu kilka razy
-            if((!newItemsList.includes(registerID))&&!(newUserData[0].items_list.includes(registerID))){
-                const newItemOwnerList = [...newUserData[0].items_list, registerID]
-                const {error: addUserItemError} = await supabase
-                    .from('users')
-                    .update({items_list: newItemOwnerList})
-                    .eq('id', newOwner)
+            // if((!newItemsList.includes(registerID))&&!(newUserData[0].items_list.includes(registerID))){
+            //     const newItemOwnerList = [...newUserData[0].items_list, registerID]
+            //     const {error: addUserItemError} = await supabase
+            //         .from('users')
+            //         .update({items_list: newItemOwnerList})
+            //         .eq('id', newOwner)
                 
-                //dodanie nowego user history do itemka
-                const {error} = await supabase
-                    .from('legited_items')
-                    .update({owners_history: newOwnersHistory})
-                    .eq('id', registerID)
+            //     //dodanie nowego user history do itemka
+            //     const {error} = await supabase
+            //         .from('legited_items')
+            //         .update({owners_history: newOwnersHistory})
+            //         .eq('id', registerID)
 
-                const {error:updateCurrentOwner} = await supabase
-                    .from('legited_items')
-                    .insert({current_owner: req.body.itemData.ownerHistory})
-                    .eq('id', registerID)
+            //     const {error:updateCurrentOwner} = await supabase
+            //         .from('legited_items')
+            //         .insert({current_owner: req.body.itemData.ownerHistory})
+            //         .eq('id', registerID)
 
-            }
+            // }
                 
         }catch(err){
             console.log(err)
