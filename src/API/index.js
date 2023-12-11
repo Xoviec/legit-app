@@ -63,16 +63,13 @@ app.get('/search-items', async (req, res) => {
 
 //znajdz uzytkownika
 app.get('/search-users', async (req, res) => {
-    // Pobierz litery z parametru zapytania
     const searchLetters = req.query.letters;
   
-    // Jeśli parametr nie został przekazany, zwróć błąd
     if (!searchLetters) {
       return res.status(400).json({ error: 'Parametr "letters" jest wymagany.' });
     }
   
     try {
-      // Wyszukaj użytkowników, których nick zawiera przekazane litery
       const { data, error } = await supabase
         .from('users')
         .select('id, nickname, avatar, is_verified, account_type')
@@ -93,7 +90,6 @@ app.get('/search-users', async (req, res) => {
 //konkretny uzytkownik bez wrazliwych danych
 app.get('/nicknames/:nickname', async function (req, res) {
     const { nickname } = req.params;
-        // const { data, error } = await supabase.from('users').select('id, nickname, avatar, items_list, is_verified, account_type').where
 
     const { data, error } = await supabase.from('users').select('id, nickname, avatar, is_verified, account_type').ilike('nickname', nickname);
 
@@ -192,7 +188,6 @@ app.post('/items', async function (req, res){
         const { error } = await supabase
         .from('items')
         .insert({ name: req.body.itemData.name, sku: req.body.itemData.sku, brand: req.body.itemData.brand,   })
-    // return res.json(req.body)
     }
 })
 
@@ -288,11 +283,9 @@ app.post('/register-item', async function(req, res){
                 return res.status(500).json({ error: 'Wystąpił błąd podczas pobierania danych.' });
             }
 
-            // Utwórz nową listę właścicieli
             const newUserItems = existingData[0]?.items_list || [];
             newUserItems.push(newUUID);
 
-            // Zaktualizuj dane w bazie danych
             const { error: updateError } = await supabase
                 .from('users')
                 .update({
@@ -305,7 +298,6 @@ app.post('/register-item', async function(req, res){
                 return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji danych.' });
             }
 
-            // Dodaj odpowiednią odpowiedź w przypadku powodzenia
             return res.status(200).json({ message: 'Pomyślnie przypisano przedmiot' });
     }
 })
@@ -325,8 +317,7 @@ app.post('/update-nickname', async function (req, res){
         .update({ nickname: req.body.newNickname })
         .eq('id', req.body.id)
     if(error){
-        // console.log(error)
-        // res.send(error)
+
     return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji nickname.' });
     }
 })
