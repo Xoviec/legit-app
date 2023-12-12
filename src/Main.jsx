@@ -1,5 +1,6 @@
 import React from "react";
-import {Route, Routes} from 'react-router-dom';
+import {Route, Routes, useLocation} from 'react-router-dom';
+
 import App from "./App";
 import { Login } from "./components/login";
 import { Register } from "./components/register";
@@ -7,11 +8,26 @@ import { Anonymous } from "./components/anonymous";
 import { UserPage } from "./components/userPage";
 import { Settings } from "./components/settings";
 import {Mainpage} from "./components/Main";
+import { Navbar } from "./Navbar";
 
 export const Main = () =>{
 
+    const location = useLocation();
+    const path = location.pathname
+
+    console.log('xdd', path)
+
+    const excludedRoutes = ['/', '/login', '/register'];
+
     return(
+        <>
+        {/* {(path !== '/login' && path!== '/register') && <Navbar/>} */}
+        {/* {(!path && path !== '/login' && path !== '/register') && <Navbar />} */}
+        {!excludedRoutes.includes(location.pathname) && <Navbar />}
+
         <Routes>
+            
+
             <Route path='/' element={<App/>}/>
             <Route path='/users/:id' element={<UserPage/>}/>
             <Route path='/settings' element={<Settings/>}/>
@@ -27,5 +43,6 @@ export const Main = () =>{
             {/* <Route path='/users' element={<Users data={data} handleAddData={addData}/>}/>
             <Route path='/users/:id' element={<User data={data} setData={setData}/>}/> */}
          </Routes>
+        </>
     )
 }
