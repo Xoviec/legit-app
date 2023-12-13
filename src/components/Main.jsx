@@ -194,6 +194,8 @@ export const Mainpage =()=> {
 
   return (
     <div className="App">
+      <input placeholder='Szukaj uzytkownika' className="search-bar"/>
+
       {
         user ? 
         

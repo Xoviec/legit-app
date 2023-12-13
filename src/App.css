@@ -1,11 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+
 :root {
+
   --vh: 100vh;
   --vh: calc(100vh - env(safe-area-inset-bottom));
   color: #180202;
   background-color: #FAFAFA;
+
+
+  --main-bg-color: #FAFAFA;
+  --secondary-bg-color: #E6E6E5;
+  --main-text-color: #180202;
+  --legited-light-green: #259F87;
+  --legited-dark-green: #006340;
+
 }
 
-@import url("https://fonts.googleapis.com/css2?family=Signika:wght@300;400;500;600;700&display=swap");
+body {
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  min-height: var(--vh);
+}
+
+
 
 *,
 *:before,
@@ -15,17 +35,10 @@
   box-sizing: border-box;
 }
 html {
-  font-size: 62.5%;
-  font-family: "Signika", sans-serif;
   height: 100%;
   overflow-x: hidden;
 }
-body {
-  display: flex;
-  flex-direction: column;
-  overflow-x: hidden;
-  min-height: var(--vh);
-}
+
 img,
 video {
   max-width: 100%;
@@ -179,4 +192,39 @@ video {
     flex-direction: column;
     gap: 3rem;
   }
+}
+
+
+
+nav{
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 5rem;
+  padding: 0 48px 0 48px;
+}
+
+nav button{
+  font-size: 15px;
+  font-weight: 700;
+}
+
+nav img{
+  height: 6rem;
+}
+
+nav button{
+  background-color: transparent;
+  color: var(--legited-light-green);
+}
+
+.btn-login{
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color)
+}
+
+.btn-register{
+  background-color: var(--main-text-color);
+  color: var(--main-bg-color);
 }
