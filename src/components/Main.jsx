@@ -7,7 +7,7 @@ import { Register } from './register';
 import { Login } from './login';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-
+import { ProfileTabs } from '../shared/ProfileTabs';
 
 
 export const Mainpage =()=> {
@@ -27,6 +27,7 @@ export const Mainpage =()=> {
   const [foundItems, setFoundItems] = useState()
   const[newOwner, setNewOwner] = useState()
   const[assignedItem, setAssignedItem] = useState()
+  const[comments, setComments] = useState()
 
 
   const API = process.env.REACT_APP_API
@@ -42,6 +43,17 @@ export const Mainpage =()=> {
     console.log(user)
     console.log(data)
   }
+
+
+//   const getComments = async () =>{
+
+//     try{
+
+
+//     }catch(err){
+//         console.log(err)
+//     }
+// }
 
 
 
@@ -70,6 +82,11 @@ export const Mainpage =()=> {
         console.log(publicUserData[0])
         const userItemsListResponse = await fetch(`${API}/user-items/${publicUserData[0].nickname}`);
         const userItemsData = await userItemsListResponse.json()
+
+        const commentsResponse = await fetch(`${API}/get-comments/${publicUserData[0].nickname}`);
+        const commentsData = await commentsResponse.json();
+        setComments(commentsData)
+        console.log(commentsData)
 
         setUserItemsList(userItemsData)
         console.log(userItemsData)
@@ -207,7 +224,7 @@ export const Mainpage =()=> {
           <h1>
             Witaj<span className='user-nickname'> {publicUser?.nickname}</span>
           </h1>
-          <p className='user-items-title'>Twoje przedmioty:</p>
+          {/* <p className='user-items-title'>Twoje przedmioty:</p>
           <div className="items-container">
             {
               userItemsList?.map((item)=>(
@@ -221,7 +238,8 @@ export const Mainpage =()=> {
               ))
             }
 
-          </div>
+          </div> */}
+          <ProfileTabs userItemsList={userItemsList} comments={comments}/>
         </div>
       </div>
       {
