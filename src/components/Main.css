@@ -86,7 +86,6 @@ form {
 }
 
 input {
-  margin: 5px;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -111,4 +110,81 @@ input {
 
 .search-bar:focus{
   outline: none;
+}
+
+.central-page{
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 2rem;
+  height: 40rem;
+}
+
+aside{
+  width: 20%;
+  height: 100%;
+  background-color: var(--secondary-bg-color)
+}
+
+.profile-container{
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  height: 100%;
+  flex: 1;
+}
+
+h1{
+  font-size: 60px;
+}
+
+.user-nickname{
+  color: var(--legited-dark-green);
+}
+
+.user-items-title{
+  font-weight: 700;
+  font-size: 25px;
+  margin: 2rem 0 1rem 0;
+}
+
+.items-container{
+  display: flex;
+  gap: 2rem;
+}
+
+
+.item{
+  /* height: 9rem; */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 18rem;
+  border: 1px solid var(--secondary-bg-color);
+  background-color: white;
+  /* background-color: var(--secondary-bg-color); */
+  padding-bottom: 1rem;
+}
+
+.item .image{
+
+}
+
+.item img{
+  height: 140px;
+  /* width: 140px; */
+  width: auto;
+  max-width: 70/140;
+  
+}
+
+.item .item-name{
+  font-weight: 500;
+}
+
+.item-registered{
+  color: var(--legited-light-green);
+}
+
+.item .register-date{
+  color: var(--main-text-color);
 }

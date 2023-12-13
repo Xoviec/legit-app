@@ -20,6 +20,7 @@ export const Mainpage =()=> {
   const [publicUser, setPublicUser] = useState()
   const [userList, setUserList] = useState()
   const [itemsList, setItemsList] = useState()
+  const [userItemsList, setUserItemsList] = useState()
   const [ogItemIdVal, setOgItemIdVal] = useState('')
   const [ownerId, setOwnerId] = useState('')
   const [foundUsers, setFoundUsers] = useState()
@@ -54,9 +55,9 @@ export const Mainpage =()=> {
       setUser(user)
 
       try {
-        const usersDataResponse = await fetch(`${API}/nicknames`); // Zastąp tym adresem URL swoim adresem serwera
+        const usersDataResponse = await fetch(`${API}/nicknames`); // szuka wszystkich uzytkownikow
         const usersData = await usersDataResponse.json();
-        const itemsResponse = await fetch(`${API}/items`); // Zastąp tym adresem URL swoim adresem serwera
+        const itemsResponse = await fetch(`${API}/items`); //wszystkie itemy
         const itemsData = await itemsResponse.json();
 
         setUserList(usersData)
@@ -64,9 +65,14 @@ export const Mainpage =()=> {
         console.log(user.email)
         console.log(user.id)
         
-        const publicUserResponse = await fetch(`${API}/secret/${user.id}`); // Zastąp tym adresem URL swoim adresem serwera
+        const publicUserResponse = await fetch(`${API}/secret/${user.id}`); //dane uzytkownika
         const publicUserData = await publicUserResponse.json();
         console.log(publicUserData[0])
+        const userItemsListResponse = await fetch(`${API}/user-items/${publicUserData[0].nickname}`);
+        const userItemsData = await userItemsListResponse.json()
+
+        setUserItemsList(userItemsData)
+        console.log(userItemsData)
         setPublicUser(publicUserData[0])
 
         // setPublicUser(usersData?.find(profile=>profile.id===user?.id))
@@ -195,29 +201,29 @@ export const Mainpage =()=> {
   return (
     <div className="App">
       <input placeholder='Szukaj uzytkownika' className="search-bar"/>
+      <div className='central-page'>
+        <aside></aside>
+        <div className="profile-container">
+          <h1>
+            Witaj<span className='user-nickname'> {publicUser?.nickname}</span>
+          </h1>
+          <p className='user-items-title'>Twoje przedmioty:</p>
+          <div className="items-container">
+            {
+              userItemsList?.map((item)=>(
+                <div className='item' key={item.id}>
+                  <div className="image">
+                    <img src={item.image} alt="" />
+                  </div>
+                  <p className='item-name'>{item.name}</p> 
+                  <p className='item-registered'>Registered <span className='register-date'>{item.legited_at.slice(0, 10)}</span></p>
+                </div>
+              ))
+            }
 
-      {
-        user ? 
-        
-        <button onClick={logout}>
-          Wyloguj się
-        </button>
-        :
-        <div>
-          <Link  to='/login'>
-            <button>
-                Zaloguj się
-            </button>
-          </Link>
-          <Link  to='/register'>
-            <button>
-                Zarejestruj się
-            </button>
-          </Link>
+          </div>
         </div>
-      }
-
-
+      </div>
       {
         publicUser && 
         <div>Witaj, {publicUser?.nickname} - {publicUser?.id}</div>

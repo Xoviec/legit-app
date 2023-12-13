@@ -103,7 +103,11 @@ app.get('/nicknames/:nickname', async function (req, res) {
 // konkretny uzytkownik z wrazliwymi danymi
 app.get('/secret/:id', async function (req, res){
     const { id } = req.params;
-    const { data, error } = await supabase.from('users').select().eq('id', id);
+    const { data, error } = await supabase
+        .from('users')
+        .select()
+        .eq('id', id);
+        
     if (error) {
         return res.status(500).send(error.message);
     }
@@ -171,7 +175,7 @@ app.get('/user-items/:nickname', async function(req, res) {
         name: updatedItemsData[index].name,
         brand: updatedItemsData[index].brand,
         sku: updatedItemsData[index].sku,
-        image: updatedItemsData[index].name,
+        image: updatedItemsData[index].image,
 
     }));
         res.status(200).json(itemsData);
