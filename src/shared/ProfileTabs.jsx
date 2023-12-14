@@ -21,6 +21,7 @@ export const ProfileTabs = (props) => (
             {
               props?.userItemsList?.map((item)=>(
                 <div className='item' key={item.id}>
+                  <div className="item-hover-button">xd</div>
                   <div className="image">
                     <img src={item.image} alt="" />
                   </div>

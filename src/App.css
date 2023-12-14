@@ -236,6 +236,7 @@ nav button{
   box-sizing: border-box;
   border: 1px solid var(--main-text-color);
   border-radius: 0.8rem;
+  transition: 0.4s;
 }
 
 .btn-register{
@@ -247,5 +248,10 @@ nav button{
   height: 2.7rem;
   width: 8.3rem;
   border-radius: 0.8rem;
+  transition: 0.4s;
 
+}
+
+.btn-login:hover, .btn-register:hover{
+  scale: 1.02;
 }
