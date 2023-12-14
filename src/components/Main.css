@@ -19,6 +19,22 @@
   pointer-events: none;
 }
 
+a:link {
+  text-decoration: none;
+}
+
+a:visited {
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+}
+
+a:active {
+  text-decoration: none;
+}
+
 
 
 @media (prefers-reduced-motion: no-preference) {
@@ -61,15 +77,6 @@
 }
 
 /* Dodaj styl dla przycisków */
-button {
-  margin: 5px;
-  padding: 10px;
-  cursor: pointer;
-  background-color: #3498db;
-  color: #fff;
-  border: none;
-  border-radius: 5px;
-}
 
 
 
@@ -129,6 +136,22 @@ aside{
   text-align: left;
   height: 100%;
   flex: 1;
+  padding-right: 2rem;
+}
+
+.user-info{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.user-about{
+  margin-top: 1rem;
+  font-weight: 600;
+}
+
+.profile-description{
+  margin-left: 5rem;
 }
 
 h1{
@@ -186,3 +209,12 @@ h1{
 .item .register-date{
   color: var(--main-text-color);
 }
+
+.avatar-container{
+  height: 4rem;
+  width: 4rem;
+  
+}
+
+
+

@@ -27,7 +27,7 @@ const supabase = createClient(
 app.get('/nicknames', async function (req, res) {
     const { data, error } = await supabase
     .from('users')
-    .select('id, nickname, avatar, is_verified, account_type')
+    .select('id, nickname, avatar, is_verified, account_type, description')
     res.send(data)
 })
 
@@ -91,7 +91,10 @@ app.get('/search-users', async (req, res) => {
 app.get('/nicknames/:nickname', async function (req, res) {
     const { nickname } = req.params;
 
-    const { data, error } = await supabase.from('users').select('id, nickname, avatar, is_verified, account_type').ilike('nickname', nickname);
+    const { data, error } = await supabase
+    .from('users')
+    .select('id, nickname, avatar, is_verified, account_type, description')
+    .ilike('nickname', nickname);
 
     if (error) {
         return res.status(500).send(error.message);

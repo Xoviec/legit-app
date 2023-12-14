@@ -1,6 +1,9 @@
 import React from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import './ProfileTabs.css';
+import { Link } from 'react-router-dom';
+import { MyAvatar } from './Avatar';
+
 
 export const ProfileTabs = (props) => (
   <Tabs.Root className="TabsRoot" defaultValue="tab1">
@@ -32,8 +35,14 @@ export const ProfileTabs = (props) => (
       {
         props?.comments?.map((comment)=>(
             <div className='comment-tab'>
-                <p className='comment-author'>{comment.comment_by}</p>
-                <p>{comment.content}</p>
+              {/* <MyAvatar user={comment}/> */}
+              <div className="comment-data">
+                <Link to={`/Users/${comment.comment_by}`}>
+                      <p className='comment-author'>{comment.comment_by}</p>
+                  </Link>
+                  <p>{comment.content}</p>
+              </div>
+
             </div>
         ))
       }

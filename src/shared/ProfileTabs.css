@@ -14,8 +14,9 @@
 
 /* reset */
 button,
-fieldset,
-input {
+fieldset
+/* input */
+ {
   all: unset;
 }
 
@@ -24,6 +25,7 @@ button:active{
 }
 
 .TabsRoot {
+  margin-top: 3rem;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -105,16 +107,6 @@ button:active{
   display: block;
 }
 
-.Input {
-  flex: 1 0 auto;
-  border-radius: 4px;
-  padding: 0 10px;
-  font-size: 15px;
-  line-height: 1;
-  color: var(--violet-11);
-  box-shadow: 0 0 0 1px var(--violet-7);
-  height: 35px;
-}
 .Input:focus {
   box-shadow: 0 0 0 2px var(--violet-8);
 }
@@ -142,6 +134,7 @@ button:active{
 }
 
 .comment-tab{
+    display: flex;
     margin: 0rem 0 1rem 0;
     padding: 0.5rem;
     padding-top: 0;
@@ -150,4 +143,6 @@ button:active{
 
 .comment-author{
     font-weight: 700;
+    color: #180202;
+    text-decoration: none;   
 }

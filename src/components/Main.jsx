@@ -8,7 +8,7 @@ import { Login } from './login';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ProfileTabs } from '../shared/ProfileTabs';
-
+import { MyAvatar } from '../shared/Avatar';
 
 export const Mainpage =()=> {
 
@@ -221,24 +221,14 @@ export const Mainpage =()=> {
       <div className='central-page'>
         <aside></aside>
         <div className="profile-container">
+            <MyAvatar user={publicUser}/>
+
           <h1>
             Witaj<span className='user-nickname'> {publicUser?.nickname}</span>
           </h1>
-          {/* <p className='user-items-title'>Twoje przedmioty:</p>
-          <div className="items-container">
-            {
-              userItemsList?.map((item)=>(
-                <div className='item' key={item.id}>
-                  <div className="image">
-                    <img src={item.image} alt="" />
-                  </div>
-                  <p className='item-name'>{item.name}</p> 
-                  <p className='item-registered'>Registered <span className='register-date'>{item.legited_at.slice(0, 10)}</span></p>
-                </div>
-              ))
-            }
-
-          </div> */}
+          <p>
+            {publicUser?.description}
+          </p>
           <ProfileTabs userItemsList={userItemsList} comments={comments}/>
         </div>
       </div>

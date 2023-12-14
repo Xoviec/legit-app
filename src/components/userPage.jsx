@@ -3,7 +3,8 @@ import { useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
-
+import { ProfileTabs } from '../shared/ProfileTabs';
+import { MyAvatar } from '../shared/Avatar';
 
 
 
@@ -62,6 +63,7 @@ export const UserPage = (key) =>{
                 const data = await response.json();
                 setUserItemsList(userItemsList)
                 setDisplayUser(data[0])
+                console.log('dsadasdasxdddd',data[0])
             } catch (error) {
                 console.error('Błąd podczas pobierania danych:', error);
             }
@@ -148,17 +150,35 @@ export const UserPage = (key) =>{
         await axios.post(`${API}/delete-comment`, {
             id: id,
             userNick: usersDataResponse[0].nickname
-            // commentOn: user.nickname,
-            // content: e.target.comment.value,
         });
     }catch(err){
         console.log(err)
     }
     }
 
-    console.log(user)
+
     return(
         <div>
+            <div className='central-page'>
+                <aside></aside>
+                <div className="profile-container">
+                    <div className="user-info">
+                        <MyAvatar user={displayUser}/>
+                        <h1>{displayUser?.nickname}</h1>
+                    </div>
+                    {
+                        displayUser?.description && <><p className='user-about'>O mnie:</p> <p>{displayUser?.description}</p></>
+                    }
+                <ProfileTabs userItemsList={userItemsList} comments={commentsList}/>
+                </div>
+            </div>
+
+
+
+
+
+
+
             {usernameFromPath}-{displayUser?.id}
 
 
