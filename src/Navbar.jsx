@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import logo from './LOGO.png'
+import logo from './Legited logo.svg'
 
 export const Navbar = () =>{
     return(

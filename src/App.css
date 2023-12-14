@@ -82,7 +82,7 @@ video {
 }
 
 .logo {
-  height: 6rem;
+  height: 4rem;
   cursor: pointer;
 }
 
@@ -211,7 +211,7 @@ nav button{
 }
 
 nav img{
-  height: 6rem;
+  height: 4rem;
 }
 
 nav button{
@@ -219,12 +219,33 @@ nav button{
   color: var(--legited-light-green);
 }
 
+.rest{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
 .btn-login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--main-bg-color);
-  color: var(--main-text-color)
+  color: var(--main-text-color);
+  height: 2.7rem;
+  width: 8.3rem;
+  box-sizing: border-box;
+  border: 1px solid var(--main-text-color);
+  border-radius: 0.8rem;
 }
 
 .btn-register{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   background-color: var(--main-text-color);
   color: var(--main-bg-color);
+  height: 2.7rem;
+  width: 8.3rem;
+  border-radius: 0.8rem;
+
 }
