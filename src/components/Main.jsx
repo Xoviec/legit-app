@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ProfileTabs } from '../shared/ProfileTabs';
 import { MyAvatar } from '../shared/Avatar';
+import { LastEvents } from './LastEvents';
 
 export const Mainpage =()=> {
 
@@ -28,6 +29,7 @@ export const Mainpage =()=> {
   const[newOwner, setNewOwner] = useState()
   const[assignedItem, setAssignedItem] = useState()
   const[comments, setComments] = useState()
+  const[mostItems, setMostItems] = useState()
 
 
   const API = process.env.REACT_APP_API
@@ -54,6 +56,14 @@ export const Mainpage =()=> {
 //         console.log(err)
 //     }
 // }
+
+  const getMostItems = async () =>{
+    const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
+    const mostItemsData = await mostItemsRes.json();
+    setMostItems(mostItemsData)
+
+    console.log(mostItemsData)
+  } 
 
 
 
@@ -98,6 +108,7 @@ export const Mainpage =()=> {
       }
     };
 
+    getMostItems()
     fetchData()
     // fetchUserData();
   }, []);
@@ -219,7 +230,7 @@ export const Mainpage =()=> {
     <div className="App">
       <input placeholder='Szukaj uzytkownika' className="search-bar"/>
       <div className='central-page'>
-        <aside></aside>
+        <LastEvents list={mostItems}/>
         <div className="profile-container">
                     <div className="user-info">
                         <MyAvatar user={publicUser}/>

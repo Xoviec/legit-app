@@ -315,6 +315,59 @@ app.get('/legited-items', async function (req, res){
     res.send(data)
 })
 
+
+app.get('/most-items', async function (req, res){
+    const {data, error} = await supabase
+        .from('legited_items')
+        .select('current_owner')
+
+
+        const result = data.reduce((acc, item) => {
+            const key = item.current_owner
+            if (!acc.hasOwnProperty(key)) {
+              acc[key] = 0
+            }
+            acc[key] += 1
+            return acc
+          }, {})
+          
+          // not sure why you want the result to be multiple objects. But here you go:
+          
+          const output = await Promise.all(
+            Object.entries(result).map(async ([key, value]) => {
+              const { data: userData, error: userError } = await supabase
+                .from('users')
+                .select('nickname')
+                .eq('id', key)
+          
+                console.log(
+                    {
+                        userID: key,
+                        itemAmount: value,
+                        nickname: userData[0].nickname
+                      }
+                )
+              return {
+                userID: key,
+                itemAmount: value,
+                userNickname: userData[0].nickname
+              };
+            })
+          );
+
+          const sortedOutput = output.sort((a,b)=>
+            b.itemAmount - a.itemAmount
+          )
+          
+        //   const sortedOutput = output.sort((a, b) => b.itemAmount - a.itemAmount);
+
+
+        //   const newOutput = output.sort()
+
+        res.send(sortedOutput)
+
+    })
+
 // update nicku
 app.post('/update-nickname', async function (req, res){
     console.log(req.body.id)
