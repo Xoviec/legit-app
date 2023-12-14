@@ -6,9 +6,9 @@ export const LastEvents = ({list}) =>{
     console.log(list)
     return(
         <aside>
-            <p className="ranking-title">
+            {/* <p className="ranking-title">
                 Ranking Uzytkowników
-            </p>
+            </p> */}
             {
                 list?.map((user, i)=>(
                     <div className="ranking-card">

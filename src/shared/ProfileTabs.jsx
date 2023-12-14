@@ -16,6 +16,7 @@ export const ProfileTabs = (props) => (
       </Tabs.Trigger>
     </Tabs.List>
     <Tabs.Content className="TabsContent" value="tab1">
+      <p className='item-counter'>{props?.userItemsList?.length} przedmiotów</p>
         <div className="items-container">
             {
               props?.userItemsList?.map((item)=>(

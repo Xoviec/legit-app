@@ -90,11 +90,11 @@ form {
   margin: 10px 0;
 }
 
-input {
+/* input {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
+} */
 
 /* Dodaj styl dla listy użytkowników */
 .user {
@@ -103,18 +103,26 @@ input {
 }
 
 .search-bar{
-  width: 100%;
-  height: 4rem;
+  /* width: 100%; */
+  flex: 1;
+  margin: 0 2rem 0 2rem;
+  height: 2.7rem;
   box-sizing: border-box;
-  background-color: var(--secondary-bg-color);
-  border: 0px;
-  border-radius: 0.5rem;
+  background-color: var(--main-bg-color);
+  border: 1px solid var(--secondary-bg-color);
+  /* border-radius: 0.5rem; */
   font-size: 25px;
   padding: 0 15px 0 15px;
+  font-size: 18px;
 }
 
 .search-bar:focus{
-  outline: none;
+  outline: 1px solid var(--main-text-color);
+}
+
+.search-bar::placeholder{
+  font-size: 18px;
+  color: var(--main-text-color);
 }
 
 .central-page{
@@ -125,14 +133,28 @@ input {
 }
 
 aside{
+  position: relative;
   width: 20rem;
   display: flex;
   flex-direction: column;
-  height: 100%;
-  padding: 10px;
+  /* height: 100%; */
+  padding: 20px;
   gap: 1rem;
-  background-color: var(--secondary-bg-color)
+
+  border-right: 1px solid var(--secondary-bg-color);
+
+  /* background-color: var(--secondary-bg-color) */
 }
+
+/* aside::after{
+  position: absolute;
+  right: 0;
+  content: " ";
+  height: 100%;
+  width:2px;
+  background-color: var(--secondary-bg-color) ;
+} */
+
 
 .ranking-title{
   font-weight: 700;
@@ -143,31 +165,37 @@ aside{
   display: flex;
   align-items: center;
   text-align: left;
-  width: 100%;
   box-sizing: border-box;
-  background-color: var(--main-bg-color);
+  border: solid 3px var(--secondary-bg-color);
+  background-color: var(--secondary-bg-color);
   height: 5rem;
-  border-radius: 0.5rem;
+  border-radius: 0.8rem;
   padding: 5px;
   gap: 1rem;
   box-sizing: border-box;
 }
 
 .ranking-card:nth-of-type(1){
-  background-color: hsla(42, 100%, 62%, 0.7);
+  border: solid 2px hsla(42, 100%, 62%, 0.7);
 }
 
 .ranking-card:nth-of-type(2){
-  background-color:  hsla(258, 7%, 72%, 0.7);
+  border: solid 2px  hsla(258, 7%, 72%, 0.7);
 }
 
 .ranking-card:nth-of-type(3){
-  background-color:  hsla(27, 36%, 56%, 0.7);
+  border: solid 2px  hsla(27, 36%, 56%, 0.7);
 }
 
 
+.register-info{
+  font-weight: 600;
+  font-size: 18px;
+}
+
 .register-time{
   font-size: 15px;
+  color: #3a3a3a;
 }
 
 
@@ -221,6 +249,10 @@ h1{
   font-weight: 700;
   font-size: 25px;
   margin: 2rem 0 1rem 0;
+}
+
+.item-counter{
+  margin: 1rem 0 1rem 0;
 }
 
 .items-container{

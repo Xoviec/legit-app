@@ -23,6 +23,8 @@ export const Navbar = () =>{
             <div className="logo">
                 <img src={logo} alt="" />   
             </div>
+            <input placeholder='Szukaj uzytkownika' className="search-bar"/>
+
             <div className="rest">
             <Link to='/login'>
                 <button>

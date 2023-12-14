@@ -228,7 +228,6 @@ export const Mainpage =()=> {
 
   return (
     <div className="App">
-      <input placeholder='Szukaj uzytkownika' className="search-bar"/>
       <div className='central-page'>
         <LastEvents list={mostItems}/>
         <div className="profile-container">
@@ -246,7 +245,7 @@ export const Mainpage =()=> {
           <ProfileTabs userItemsList={userItemsList} comments={comments}/>
         </div>
       </div>
-      {
+      {/* {
         publicUser && 
         <div>Witaj, {publicUser?.nickname} - {publicUser?.id}</div>
       }
@@ -262,7 +261,6 @@ export const Mainpage =()=> {
       }
   
 
-      {/* dodawanie nowego itemu */}
   
       <form onSubmit={handleAddItem}>
         <input type="text" placeholder='name' name='name'/>
@@ -271,7 +269,6 @@ export const Mainpage =()=> {
         <button type='submit'>add item</button>
       </form>
 
-      {/* rejestracja itemu */}
 
       <form onChange={handleRegisterChange} onSubmit={handleRegisterItem}>
         <input type="text" placeholder='og item id' name='ogItemId' value={ogItemIdVal}/>
@@ -314,7 +311,7 @@ export const Mainpage =()=> {
         itemsList?.map((item)=>(
           <div>{item.name} - {item.id}</div>
         ))
-      }
+      } */}
     </div>
   );
 }
