@@ -140,16 +140,34 @@ aside{
 }
 
 .ranking-card{
+  display: flex;
+  align-items: center;
   text-align: left;
   width: 100%;
   box-sizing: border-box;
   background-color: var(--main-bg-color);
-  height: 4rem;
+  height: 5rem;
+  border-radius: 0.5rem;
+  padding: 5px;
+  gap: 1rem;
+  box-sizing: border-box;
 }
+
+.ranking-card:nth-of-type(1){
+  background-color: hsla(42, 100%, 62%, 0.7);
+}
+
+.ranking-card:nth-of-type(2){
+  background-color:  hsla(258, 7%, 72%, 0.7);
+}
+
+.ranking-card:nth-of-type(3){
+  background-color:  hsla(27, 36%, 56%, 0.7);
+}
+
 
 .register-time{
   font-size: 15px;
-  color: var(--secondary-bg-color);
 }
 
 

@@ -337,7 +337,7 @@ app.get('/most-items', async function (req, res){
             Object.entries(result).map(async ([key, value]) => {
               const { data: userData, error: userError } = await supabase
                 .from('users')
-                .select('nickname')
+                .select('nickname, avatar')
                 .eq('id', key)
           
                 console.log(
@@ -350,7 +350,8 @@ app.get('/most-items', async function (req, res){
               return {
                 userID: key,
                 itemAmount: value,
-                userNickname: userData[0].nickname
+                nickname: userData[0].nickname,
+                avatar: userData[0].avatar
               };
             })
           );

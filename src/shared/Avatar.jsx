@@ -6,7 +6,7 @@ import './Avatar.css';
 export const MyAvatar = (props) => {
     
 
-    console.log(props?.user)
+    console.log(props)
     return(
     <div style={{ display: 'flex', gap: 20 }}>
     <Avatar.Root className="AvatarRoot">
@@ -21,5 +21,7 @@ export const MyAvatar = (props) => {
     </Avatar.Root>
 
   </div>
-);}
+);
+
+}
 
