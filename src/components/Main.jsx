@@ -230,7 +230,7 @@ export const Mainpage =()=> {
                         </Link>
                     </div>
                     {
-                        publicUser?.description && <><p className='user-about'>O mnie:</p> <p>{publicUser?.description}</p></>
+                        publicUser?.description && <><p className='user-about'></p> <p>{publicUser?.description}</p></>
                     }
           <ProfileTabs userItemsList={userItemsList} comments={comments}/>
         </div>

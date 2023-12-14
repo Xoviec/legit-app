@@ -182,8 +182,14 @@ h1{
 }
 
 .items-container{
-  display: flex;
-  gap: 2rem;
+  /* display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; */
+
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18rem, 1fr));
+  gap: 1rem;
+  
 }
 
 
@@ -192,7 +198,7 @@ h1{
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 18rem;
+  /* width: 18rem; */
   border: 1px solid var(--secondary-bg-color);
   background-color: white;
   /* background-color: var(--secondary-bg-color); */
