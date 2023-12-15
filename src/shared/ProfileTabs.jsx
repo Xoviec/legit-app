@@ -28,7 +28,7 @@ export const ProfileTabs = (props) => {
                 props?.userItemsList?.map((item)=>(
                   <div className='item' key={item.id}>
                         {
-                        location.pathname === '/Main' &&
+                        location.pathname === '/main' &&
 
                         <div className="item-hover-button">
                         <button className='trade-item-button'>
@@ -67,3 +67,6 @@ export const ProfileTabs = (props) => {
     </Tabs.Root>
   );
 }
+
+
+
