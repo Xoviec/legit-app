@@ -19,6 +19,10 @@ export const Main = () =>{
 
     const excludedRoutes = ['/', '/login', '/register'];
 
+    const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
+    const nameFromLocalStorage = item.user.user_metadata.full_name
+
+
     return(
         <>
         {/* {(path !== '/login' && path!== '/register') && <Navbar/>} */}
@@ -29,6 +33,8 @@ export const Main = () =>{
             
 
             <Route path='/' element={<App/>}/>
+            <Route path={`/users/${nameFromLocalStorage}`} element={<Mainpage/>}/>
+
             <Route path='/users/:id' element={<UserPage/>}/>
             <Route path='/settings' element={<Settings/>}/>
             <Route path='/main' element={<Mainpage/>}/>

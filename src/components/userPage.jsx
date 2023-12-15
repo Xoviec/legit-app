@@ -54,6 +54,8 @@ export const UserPage = (key) =>{
     }
 
     useEffect(()=>{
+
+
         const getNicknameData = async (nickname) => {
             try {
                 const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
