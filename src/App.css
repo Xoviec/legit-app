@@ -49,7 +49,8 @@ video {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 17rem;
+  /* height: 17rem; */
+  margin-top: 4rem;
 }
 
 .header {
@@ -68,7 +69,7 @@ video {
 }
 .login-text {
   text-decoration: underline;
-  font-size: 1.6rem;
+  font-size: 0.8rem;
   font-weight: 900;
   text-align: center;
 }
@@ -87,7 +88,7 @@ video {
 }
 
 .heading-secondary {
-  font-size: 4rem;
+  font-size: 2.8rem;
   height: 1em;
   overflow: hidden;
   margin-bottom: 3rem;
@@ -101,9 +102,7 @@ video {
 }
 .box {
   text-align: center;
-  padding: 5rem;
   align-self: center;
-  padding-bottom: 12rem;
 }
 .input-container {
   display: flex;
@@ -148,9 +147,9 @@ video {
   align-items: center;
   background-color: #E6E6E5;
   padding: 3rem;
-  height: 17rem;
+  height: 11rem;
   text-align: center;
-  font-size: 1.4rem;
+  font-size: 0.7rem;
   padding-bottom: max(env(safe-area-inset-bottom), 1rem);
   font-weight: 500;
 }
