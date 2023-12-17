@@ -2,7 +2,6 @@ import React from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import './ProfileTabs.css';
 import { Link, useLocation } from 'react-router-dom';
-
 import { MyAvatar } from './Avatar';
 import { CommentsAvatar } from './commentsAvatar';
 
@@ -50,23 +49,42 @@ export const ProfileTabs = (props) => {
           </div>
       </Tabs.Content>
       <Tabs.Content className="TabsContent" value="tab2">
-        {/* <p className="Text">Komentarze na profilu</p> */}
+
+        {
+          location.pathname !== '/main' &&
+
+
+
+      
+
+          <form className="add-comment-tab" onSubmit={props.handleAddComment}>
+            <textarea className='textarea-add-comment' placeholder='Dodaj komentarz' name='comment' type="text" />
+            {/* <input placeholder='ocena 1-5' type="text" min={0} max={5} /> */}
+            <button type='submit'>Wyślij</button>
+          </form>
+        }
+        
         {
           props?.comments?.map((comment)=>(
               <div key={comment.id} className='comment-tab'>
                 <CommentsAvatar avatar={comment.avatar} nickname={comment.comment_by_nickname}/>
                 <div className="comment-data">
-                  <Link 
-                  to={`/Users/${comment.comment_by_nickname}`} 
-                  
-                  // onClick={() => {
-                  //   window.location.href = `/Users/${comment.comment_by_nickname}`;
-                  // }}
-                  >
-                        <p className='comment-author'>{comment.comment_by_nickname}</p>
-                    </Link>
-                    <p className='comment-content'>{comment.content}</p>
+                  <Link to={`/Users/${comment.comment_by_nickname}`}>
+                    <p className='comment-author'>{comment.comment_by_nickname}</p>
+                  </Link>
+                  <p className='comment-content'>{comment.content}</p>
+  
                 </div>
+                {
+                  comment?.comment_by===props?.viewer?.id && 
+
+                  <div className="delete">
+                    <button className='button-delete'>
+                      <svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5.5 1C5.22386 1 5 1.22386 5 1.5C5 1.77614 5.22386 2 5.5 2H9.5C9.77614 2 10 1.77614 10 1.5C10 1.22386 9.77614 1 9.5 1H5.5ZM3 3.5C3 3.22386 3.22386 3 3.5 3H5H10H11.5C11.7761 3 12 3.22386 12 3.5C12 3.77614 11.7761 4 11.5 4H11V12C11 12.5523 10.5523 13 10 13H5C4.44772 13 4 12.5523 4 12V4L3.5 4C3.22386 4 3 3.77614 3 3.5ZM5 4H10V12H5V4Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg>
+                    </button>
+                  </div>
+                     
+                }
 
               </div>
           ))

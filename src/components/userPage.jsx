@@ -197,7 +197,7 @@ export const UserPage = (key) =>{
                     {
                         displayUser?.description && <><p className='user-about'>O mnie:</p> <p>{displayUser?.description}</p></>
                     }
-                <ProfileTabs userItemsList={userItemsList} comments={commentsList}/>
+                <ProfileTabs handleAddComment={handleAddComment} viewer={user} userItemsList={userItemsList} comments={commentsList}/>
                 </div>
             </div>
 
@@ -252,7 +252,7 @@ export const UserPage = (key) =>{
                                 {comment.comment_by}: 
                                 {comment.content}
                                 {
-                                    comment.comment_by===user.nickname && 
+                                    comment.comment_by===user.id && 
                                     <button onClick={(event)=>handleDeleteComment(event, comment.id)}>usuń komentarz</button>
                                 }
                             </div>
