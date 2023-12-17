@@ -91,15 +91,10 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
       try{
         const commentsRes = await fetch(`${API}/get-comments/${user.id}`)
         const commentsData = await commentsRes.json()
-
-
-        console.log('komentarze xd', commentsData)
         setComments(commentsData)
       }catch(commentsError){
         console.log(commentsError)
       }
-
-
     
       try{
         const publicUserResponse = await fetch(`${API}/secret/${user.id}`); //dane uzytkownika
@@ -120,10 +115,8 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
         setItemsList(itemsData)
         console.log(user.email)
         console.log(user.id)
-        
 
 
-        // setPublicUser(usersData?.find(profile=>profile.id===user?.id))
       } catch (error) {
         console.error('Error fetching data:', error);
       }
@@ -133,8 +126,6 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
     getUserItems()
     getMostItems()
     fetchData()
-    // getComments()
-    // fetchUserData();
   }, []);
 
 

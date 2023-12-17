@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
 import { ProfileTabs } from '../shared/ProfileTabs';
 import { MyAvatar } from '../shared/Avatar';
+import { LastEvents } from './LastEvents';
 
 
 
@@ -20,7 +21,8 @@ export const UserPage = (key) =>{
     const[newOwner, setNewOwner] = useState()
     const[commentsList, setCommentsList] = useState()
     const[commentVal, setCommentVal] = useState('')
- 
+    const[mostItems, setMostItems] = useState()
+
     const location = useLocation();
     const pathSegments = location.pathname.split('/');
     const usernameFromPath = pathSegments[2];
@@ -39,6 +41,17 @@ export const UserPage = (key) =>{
             console.log(err)
         }
     }
+
+
+
+    const getMostItems = async () =>{
+        const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
+        const mostItemsData = await mostItemsRes.json();
+        setMostItems(mostItemsData)
+    
+        console.log(mostItemsData)
+      } 
+    
 
     const getComments = async () =>{
 
@@ -71,6 +84,8 @@ export const UserPage = (key) =>{
             }
         };
 
+
+        getMostItems()
         getComments()
         getUserDataFromDB()
         getNicknameData()
@@ -163,7 +178,7 @@ export const UserPage = (key) =>{
         <div className='App'>
             <input placeholder='Szukaj uzytkownika' className="search-bar"/>
             <div className='central-page'>
-                <aside></aside>
+            <LastEvents list={mostItems}/>
                 <div className="profile-container">
                     <div className="user-info">
                         <MyAvatar user={displayUser}/>
