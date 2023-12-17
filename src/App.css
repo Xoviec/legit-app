@@ -22,7 +22,8 @@ body {
   display: flex;
   flex-direction: column;
   overflow-x: hidden;
-  min-height: var(--vh);
+  /* min-height: var(--vh); */
+  min-height: 100svh;
 }
 
 
