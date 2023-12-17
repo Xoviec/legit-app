@@ -187,7 +187,6 @@ export const UserPage = (key) =>{
 
     return(
         <div className='App'>
-            <input placeholder='Szukaj uzytkownika' className="search-bar"/>
             <div className='central-page'>
             <LastEvents list={mostItems}/>
                 <div className="profile-container">
