@@ -53,10 +53,16 @@ export const ProfileTabs = (props) => {
         {/* <p className="Text">Komentarze na profilu</p> */}
         {
           props?.comments?.map((comment)=>(
-              <div className='comment-tab'>
+              <div key={comment.id} className='comment-tab'>
                 <CommentsAvatar avatar={comment.avatar} nickname={comment.comment_by_nickname}/>
                 <div className="comment-data">
-                  <Link to={`/Users/${comment.comment_by}`}>
+                  <Link 
+                  to={`/Users/${comment.comment_by_nickname}`} 
+                  
+                  // onClick={() => {
+                  //   window.location.href = `/Users/${comment.comment_by_nickname}`;
+                  // }}
+                  >
                         <p className='comment-author'>{comment.comment_by_nickname}</p>
                     </Link>
                     <p className='comment-content'>{comment.content}</p>

@@ -430,8 +430,8 @@ app.post('/add-comment', async function (req, res){
     const { error } = await supabase
     .from('comments')
     .insert({ 
-        comment_by: req.body.commentBy,
-        comment_on: req.body.commentOn, 
+        comment_by: req.body.comment_by,
+        comment_on: req.body.comment_on, 
         content: req.body.content
         
     })

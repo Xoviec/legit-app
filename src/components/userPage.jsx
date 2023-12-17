@@ -1,5 +1,5 @@
 
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
@@ -12,7 +12,9 @@ import { LastEvents } from './LastEvents';
 export const UserPage = (key) =>{
 
     const API = process.env.REACT_APP_API
+    const { nickname } = useParams();
 
+    
 
     const[displayUser, setDisplayUser] = useState() // user który jest wyswietlany na stronie
     const[user, setUser] = useState('none') // user przeglądający strone 
@@ -68,14 +70,23 @@ export const UserPage = (key) =>{
 
     useEffect(()=>{
 
-
-        const getNicknameData = async (nickname) => {
+        const getProfileData = async (nickname) => {
             try {
                 const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
                 const userItemsListResponse = await fetch(`${API}/user-items/${usernameFromPath}`);
                 const userItemsList = await userItemsListResponse.json()
                 console.log(userItemsList)
                 const data = await response.json();
+                console.log(data[0].id)
+
+                try{
+                    const commentsResponse = await fetch(`${API}/get-comments/${data[0].id}`);
+                    const commentsData = await commentsResponse.json();
+                    setCommentsList(commentsData)
+        
+                }catch(err){
+                    console.log(err)
+                }
                 setUserItemsList(userItemsList)
                 setDisplayUser(data[0])
                 console.log('dsadasdasxdddd',data[0])
@@ -86,10 +97,10 @@ export const UserPage = (key) =>{
 
 
         getMostItems()
-        getComments()
+        // getComments()
         getUserDataFromDB()
-        getNicknameData()
-    }, [])
+        getProfileData()
+    }, [nickname])
 
 
     const handleUpdateFoundUsers = async (e) =>{
@@ -144,8 +155,8 @@ export const UserPage = (key) =>{
 
             console.log('exdi')
             await axios.post(`${API}/add-comment`, {
-                commentBy: usersDataResponse[0].nickname,
-                commentOn: displayUser.nickname,
+                comment_by: usersDataResponse[0].id,
+                comment_on: displayUser.id,
                 content: e.target.comment.value,
             });
         }catch(error){

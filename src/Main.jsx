@@ -1,5 +1,5 @@
 import React from "react";
-import {Route, Routes, useLocation, useNavigate} from 'react-router-dom';
+import {Route, Routes, useLocation, useNavigate, replace} from 'react-router-dom';
 
 import App from "./App";
 import { Login } from "./components/login";
@@ -32,9 +32,16 @@ export const Main = () =>{
     //to ponizej przekierowuje uzytkownika na strone glowna po wpisaniu w url /users/swoj nick
     useEffect(()=>{
         if(location.pathname === `/Users/${nameFromLocalStorage}`){
-            navigate('/main')
+            navigate('/main', { replace: true })
         }
-    }, [])
+    }, [path])
+
+    // useEffect(() => {
+    //     if (nameFromLocalStorage && location.pathname === `/users/${nameFromLocalStorage}`) {
+    //       navigate('/main');
+    //     }
+    //   }, [nameFromLocalStorage, location.pathname]);
+      
 
 
  
@@ -54,7 +61,8 @@ export const Main = () =>{
             <Route path='/' element={<App/>}/>
             {/* <Route path={`/users/${nameFromLocalStorage}`}  element={<Mainpage/>}/> */}
 
-            <Route path='/users/:id' element={<UserPage/>}/>
+
+            <Route path='/users/:nickname' element={<UserPage/>}/>
             <Route path='/settings' element={<Settings/>}/>
             <Route path='/main' element={<Mainpage/>}/>
             
