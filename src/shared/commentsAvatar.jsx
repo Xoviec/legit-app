@@ -3,19 +3,21 @@ import * as Avatar from '@radix-ui/react-avatar';
 import './Avatar.css';
 
 
-export const MyAvatar = (props) => {
+export const CommentsAvatar = ({avatar, nickname}) => {
     
+
+  console.log('japierdole')
 
     return(
     <div style={{ display: 'flex', gap: 20 }}>
-    <Avatar.Root className="AvatarRoot">
+    <Avatar.Root className="CommentAvatarRoot">
       <Avatar.Image
         className="AvatarImage"
-        src={props?.user?.avatar}
+        src={avatar}
         alt="Colm Tuite"
       />
       <Avatar.Fallback className="AvatarFallback" delayMs={0}>
-        {props?.user?.nickname[0]}
+        {nickname[0]}
       </Avatar.Fallback>
     </Avatar.Root>
 

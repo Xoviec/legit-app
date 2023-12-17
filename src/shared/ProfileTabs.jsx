@@ -4,11 +4,13 @@ import './ProfileTabs.css';
 import { Link, useLocation } from 'react-router-dom';
 
 import { MyAvatar } from './Avatar';
+import { CommentsAvatar } from './commentsAvatar';
 
 
 export const ProfileTabs = (props) => {
   
   const location = useLocation();
+
   
   
   return(
@@ -18,7 +20,7 @@ export const ProfileTabs = (props) => {
           Przedmioty
         </Tabs.Trigger>
         <Tabs.Trigger className="TabsTrigger" value="tab2">
-          Komentarze
+          Legit check
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content className="TabsContent" value="tab1">
@@ -48,16 +50,16 @@ export const ProfileTabs = (props) => {
           </div>
       </Tabs.Content>
       <Tabs.Content className="TabsContent" value="tab2">
-        <p className="Text">Komentarze na profilu</p>
+        {/* <p className="Text">Komentarze na profilu</p> */}
         {
           props?.comments?.map((comment)=>(
               <div className='comment-tab'>
-                {/* <MyAvatar user={comment}/> */}
+                <CommentsAvatar avatar={comment.avatar} nickname={comment.comment_by_nickname}/>
                 <div className="comment-data">
                   <Link to={`/Users/${comment.comment_by}`}>
-                        <p className='comment-author'>{comment.comment_by}</p>
+                        <p className='comment-author'>{comment.comment_by_nickname}</p>
                     </Link>
-                    <p>{comment.content}</p>
+                    <p className='comment-content'>{comment.content}</p>
                 </div>
 
               </div>

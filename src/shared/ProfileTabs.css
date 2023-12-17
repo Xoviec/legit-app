@@ -142,6 +142,8 @@ button:active{
     margin: 0rem 0 1rem 0;
     padding: 0.5rem;
     padding-top: 0;
+    max-width: 100%;
+    gap: 1rem;
     box-shadow: inset 0 -1px 0 0 var(--secondary-bg-color), 0 1px 0 0 var(--secondary-bg-color);
 }
 
@@ -149,4 +151,12 @@ button:active{
     font-weight: 700;
     color: #180202;
     text-decoration: none;   
+
+}
+
+.comment-content{
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break:break-word;
+
 }

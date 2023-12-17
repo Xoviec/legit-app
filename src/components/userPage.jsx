@@ -220,7 +220,7 @@ export const UserPage = (key) =>{
                     }
                 </div>
                 <div>
-                    <p>Komentarze:</p>
+                    <p>Legit check:</p>
                     {
                         commentsList?.map((comment)=>(
                             <div key={comment.id}>

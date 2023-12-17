@@ -15,6 +15,9 @@ export const Mainpage =()=> {
 
 
 // supabase.auth.getUser()
+const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
+const nickNameFromLocalStorage = item?.user.user_metadata.full_name
+
 
 
   const [user, setUser] = useState(null)
@@ -46,17 +49,6 @@ export const Mainpage =()=> {
     console.log(data)
   }
 
-
-//   const getComments = async () =>{
-
-//     try{
-
-
-//     }catch(err){
-//         console.log(err)
-//     }
-// }
-
   const getMostItems = async () =>{
     const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
     const mostItemsData = await mostItemsRes.json();
@@ -65,7 +57,27 @@ export const Mainpage =()=> {
     console.log(mostItemsData)
   } 
 
+  const getComments = async () =>{
 
+    console.log('sraka')
+    console.log(user?.id)
+    // const commentsRes = await fetch(`${API}/get-comments/${user.id}`)
+    // const commentsData = await commentsRes.json()
+    // setComments(commentsData)
+  }
+
+
+  const getUserItems = async () =>{
+
+    try{
+      const userItemsListResponse = await fetch(`${API}/user-items/${nickNameFromLocalStorage}`);
+      const userItemsData = await userItemsListResponse.json()
+      setUserItemsList(userItemsData)
+      console.log(userItemsData)
+    }catch(userItemsError){
+      console.log(userItemsError)
+    }
+  }
 
   useEffect(() => {
 
@@ -75,6 +87,28 @@ export const Mainpage =()=> {
       const { data, error } = await supabase.auth.getSession()
   
       setUser(user)
+
+      try{
+        const commentsRes = await fetch(`${API}/get-comments/${user.id}`)
+        const commentsData = await commentsRes.json()
+
+
+        console.log('komentarze xd', commentsData)
+        setComments(commentsData)
+      }catch(commentsError){
+        console.log(commentsError)
+      }
+
+
+    
+      try{
+        const publicUserResponse = await fetch(`${API}/secret/${user.id}`); //dane uzytkownika
+        const publicUserData = await publicUserResponse.json();
+        setPublicUser(publicUserData[0])
+      }catch(userDataError){
+        console.log(userDataError)
+      }
+
 
       try {
         const usersDataResponse = await fetch(`${API}/nicknames`); // szuka wszystkich uzytkownikow
@@ -87,20 +121,7 @@ export const Mainpage =()=> {
         console.log(user.email)
         console.log(user.id)
         
-        const publicUserResponse = await fetch(`${API}/secret/${user.id}`); //dane uzytkownika
-        const publicUserData = await publicUserResponse.json();
-        console.log(publicUserData[0])
-        const userItemsListResponse = await fetch(`${API}/user-items/${publicUserData[0].nickname}`);
-        const userItemsData = await userItemsListResponse.json()
 
-        const commentsResponse = await fetch(`${API}/get-comments/${publicUserData[0].nickname}`);
-        const commentsData = await commentsResponse.json();
-        setComments(commentsData)
-        console.log(commentsData)
-
-        setUserItemsList(userItemsData)
-        console.log(userItemsData)
-        setPublicUser(publicUserData[0])
 
         // setPublicUser(usersData?.find(profile=>profile.id===user?.id))
       } catch (error) {
@@ -108,8 +129,11 @@ export const Mainpage =()=> {
       }
     };
 
+
+    getUserItems()
     getMostItems()
     fetchData()
+    // getComments()
     // fetchUserData();
   }, []);
 

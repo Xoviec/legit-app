@@ -340,13 +340,7 @@ app.get('/most-items', async function (req, res){
                 .select('nickname, avatar')
                 .eq('id', key)
           
-                console.log(
-                    {
-                        userID: key,
-                        itemAmount: value,
-                        nickname: userData[0].nickname
-                      }
-                )
+ 
               return {
                 userID: key,
                 itemAmount: value,
@@ -384,19 +378,106 @@ app.post('/update-nickname', async function (req, res){
 })
 
 //szukanie komentarzy na profilu użytkownika
-app.get('/get-comments/:nickname', async function (req, res){
-    const { nickname } = req.params;
+app.get('/get-comments/:id', async function (req, res){
+    const { id } = req.params;
 
-    console.log(nickname)
-    const { data, error } = await supabase
+    console.log( id)
+    const { data: commentData, error: commentError } = await supabase
         .from('comments')
         .select()
-        .ilike('comment_on', nickname);
-    if(error){
-        console.log(error)
+        .eq('comment_on', id);
+    if(commentError){
+        console.log(commentError)
     }
-    console.log(data)
-    res.send(data)
+
+
+    console.log('comment data:', commentData)
+
+
+    const output = await Promise.all(commentData?.map( async (comment, i) =>{
+
+        const { data: userData, error: userError } = await supabase
+            .from('users')
+            .select('nickname, avatar')
+            .eq('id', comment.comment_by)
+
+
+        
+            console.log('kontrolna kurwa')
+            console.log('cipeunia', userData[0].nickname)
+
+
+            return{
+                ...comment,
+                comment_by_nickname: userData[0].nickname,
+                avatar: userData[0].avatar
+            }
+            
+    }))
+
+
+    console.log('console log outputu', output)
+        // const { data: userData, error: userError } = await supabase
+        //     .from('users')
+        //     .select('nickname')
+        //     .eq('id', commentData.co)
+
+
+        // console.log(userData)
+
+    // const output = await Promise.all(
+    //     Object.entries(commentData).map(async (key, value) => {
+    //       const { data: userData, error: userError } = await supabase
+    //         .from('users')
+    //         .select('nickname')
+    //         .eq('id', key)
+      
+
+    //         console.log('key;', key)
+    //         console.log('xd', userData)
+
+            // return{
+            //     ...key,
+            //     comment_by_nickname: userData[value]
+            // }
+
+        //   return {
+        //     userID: key,
+        //     itemAmount: value,
+        //     nickname: userData[0].nickname,
+        //     avatar: userData[0].avatar
+        //   };
+    //     })
+    //   );
+
+
+
+    // const {data: userData, error: userError} = await supabase
+    //     .from('users')
+    //     .select('nickname')
+    //     .eq('id', commentData.comment_by)
+    // if(userError){
+    //     console.log(userError)
+    // }
+
+    // const output = commentData.map((comment, i)=>(
+
+
+        
+    //     console.log('userdata',i, ':',userData)
+
+        
+
+    //     // ...comment,
+    //     // comment_by_nickname: userData[i].nickname 
+    // ))
+        
+    
+
+
+
+
+    res.send(output)
 
 })
 
