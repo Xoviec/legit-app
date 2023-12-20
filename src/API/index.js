@@ -4,6 +4,12 @@ const express = require('express')
 const cors = require('cors')
 const path = require('path')
 const {Storage} = require('@google-cloud/storage')
+const multer  = require('multer')
+const { Readable } = require('stream');
+
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
 
 require('dotenv').config()
@@ -34,25 +40,21 @@ const supabase = createClient(
 // const avatarsBucket = gc.bucket('legited-avatars')
 
 
-async function uploadFile(bucketName, file, fileOutputName) {
+async function uploadFile(bucketName, fileBuffer, fileOutputName) {
     try {
         const projectId = 'direct-subset-406517';
         const keyFilename = path.join(__dirname, 'direct-subset-406517-b59aff2e65d5.json');
         const storage = new Storage({ projectId, keyFilename });
         const bucket = storage.bucket(bucketName);
 
-        const options = {
-            destination: fileOutputName,
-            // Poniżej możesz dostosować opcje podpisu URL, np. czas ważności
-            // expiresIn: '1h', // Czas ważności linku (np. 1 godzina)
-        };
+        const file = bucket.file(fileOutputName);
 
         // Przesyłanie pliku
-        await bucket.upload(file, options);
+        await file.save(fileBuffer);
 
         // Pobieranie bezpośredniego linku do przesłanego pliku
-        const [metadata] = await bucket.file(fileOutputName).getMetadata();
-        const fileUrl = await bucket.file(fileOutputName).getSignedUrl({
+        const [metadata] = await file.getMetadata();
+        const fileUrl = await file.getSignedUrl({
             action: 'read',
             expires: '01-01-2100', // Dostosuj do swoich potrzeb
         });
@@ -60,9 +62,11 @@ async function uploadFile(bucketName, file, fileOutputName) {
         return fileUrl[0];
     } catch (error) {
         console.error(error);
-        throw error; // Rzucenie błędu dla dalszej obsługi lub logiki
+        throw error;
     }
 }
+
+
 
 // (async () => {
 //     try {
@@ -244,10 +248,18 @@ app.get('/user-items/:nickname', async function(req, res) {
 
 // dodanie avataru
 
-app.post('/set-avatar', async function (req, res){
+app.post('/set-avatar', upload.single('file'), async (req, res) => {
+    try {
+        const uploadedFile = req.file.buffer;
+        const fileUrl = await uploadFile('legited-avatars', uploadedFile, 'noweeloesssa.png');
+        console.log('Direct link to the uploaded file:', fileUrl);
+        res.status(200).send('Plik został pomyślnie przesłany.');
+    } catch (error) {
+        console.error('Wystąpił błąd:', error);
+        res.status(500).send('Wystąpił błąd podczas przesyłania pliku.');
+    }
+});
 
-    console.log(req.body)
-})
 
 
 

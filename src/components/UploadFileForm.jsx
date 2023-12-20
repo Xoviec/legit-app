@@ -17,19 +17,14 @@ const FileUploadForm = () => {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-
-    console.log(event.target[0].value)
-
-    console.log(file)
     try {
-      const formData = new FormData();
+        const formData = new FormData(event.target);
       formData.append('file', file);
 
-      console.log(file)
-      // Wysłanie pliku do serwera
-      const response = await fetch(`${API}/set-avatar/`, {
+      // Wysyłanie pliku do nowego endpointu
+      const response = await fetch('http://localhost:8000/set-avatar', {
         method: 'POST',
-        body: file,
+        body: formData,
       });
 
       // Obsługa odpowiedzi od serwera
