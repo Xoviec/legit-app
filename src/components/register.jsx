@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { supabase } from "./supabaseClient"
 import { useNavigate} from 'react-router-dom';
+import FileUploadForm from "./UploadFileForm";
 
 
 export const Register = () =>{
@@ -63,11 +64,17 @@ export const Register = () =>{
     }
 
     return(
-        <form onSubmit={handleSubmit} onChange={handleChange}>
-            <input type="text" placeholder="full name" name="fullname"/>
-            <input type="text" placeholder="email" name="email"/>
-            <input type="text" placeholder="password" name="password"/>
-            <button type="submit">Submit</button>
-        </form>
+        <>
+            <form onSubmit={handleSubmit} onChange={handleChange}>
+                <input type="text" placeholder="full name" name="fullname"/>
+                <input type="text" placeholder="email" name="email"/>
+                <input type="text" placeholder="password" name="password"/>
+                <button type="submit">Submit</button>
+            </form>
+        
+            <FileUploadForm/>
+        
+        </>
+
     )
 }

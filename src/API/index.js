@@ -2,6 +2,8 @@ const { v4: uuidv4 } = require('uuid');
 const { createClient } = require('@supabase/supabase-js');
 const express = require('express')
 const cors = require('cors')
+const path = require('path')
+const {Storage} = require('@google-cloud/storage')
 
 
 require('dotenv').config()
@@ -18,6 +20,58 @@ const supabase = createClient(
     process.env.REACT_APP_SUPABASE_URL, 
     process.env.REACT_APP_SUPABASE_ANON_KEY
 );
+
+
+// const gc = new Storage({
+//     keyFilename: path.join(__dirname, 'direct-subset-406517-b59aff2e65d5.json'),
+//     projectId: 'direct-subset-406517'
+// })
+
+// gc.getBuckets().then(x=>console.log(x))
+
+
+
+// const avatarsBucket = gc.bucket('legited-avatars')
+
+
+async function uploadFile(bucketName, file, fileOutputName) {
+    try {
+        const projectId = 'direct-subset-406517';
+        const keyFilename = path.join(__dirname, 'direct-subset-406517-b59aff2e65d5.json');
+        const storage = new Storage({ projectId, keyFilename });
+        const bucket = storage.bucket(bucketName);
+
+        const options = {
+            destination: fileOutputName,
+            // Poniżej możesz dostosować opcje podpisu URL, np. czas ważności
+            // expiresIn: '1h', // Czas ważności linku (np. 1 godzina)
+        };
+
+        // Przesyłanie pliku
+        await bucket.upload(file, options);
+
+        // Pobieranie bezpośredniego linku do przesłanego pliku
+        const [metadata] = await bucket.file(fileOutputName).getMetadata();
+        const fileUrl = await bucket.file(fileOutputName).getSignedUrl({
+            action: 'read',
+            expires: '01-01-2100', // Dostosuj do swoich potrzeb
+        });
+
+        return fileUrl[0];
+    } catch (error) {
+        console.error(error);
+        throw error; // Rzucenie błędu dla dalszej obsługi lub logiki
+    }
+}
+
+// (async () => {
+//     try {
+//         const fileUrl = await uploadFile('legited-avatars', path.join(__dirname, 'essa.txt'), 'nazwa.txt');
+//         console.log('Direct link to the uploaded file:', fileUrl);
+//     } catch (error) {
+//         console.error('Error elooo:', error);
+//     }
+// })();
 
 
 
@@ -187,6 +241,15 @@ app.get('/user-items/:nickname', async function(req, res) {
         res.status(500).send('Wystąpił błąd podczas pobierania danych użytkownika.');
     }
 });
+
+// dodanie avataru
+
+app.post('/set-avatar', async function (req, res){
+
+    console.log(req.body)
+})
+
+
 
 // dodanie itemów
 app.post('/items', async function (req, res){
