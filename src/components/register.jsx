@@ -2,6 +2,7 @@ import { useState } from "react"
 import { supabase } from "./supabaseClient"
 import { useNavigate} from 'react-router-dom';
 import FileUploadForm from "./UploadFileForm";
+import * as Tabs from '@radix-ui/react-tabs';
 
 
 export const Register = () =>{
@@ -65,15 +66,30 @@ export const Register = () =>{
 
     return(
         <>
-            <form onSubmit={handleSubmit} onChange={handleChange}>
-                <input type="text" placeholder="full name" name="fullname"/>
-                <input type="text" placeholder="email" name="email"/>
-                <input type="text" placeholder="password" name="password"/>
-                <button type="submit">Submit</button>
-            </form>
-        
+
             <FileUploadForm/>
         
+            <Tabs.Root className="TabsRoot" defaultValue="tab1">
+                <Tabs.List className="TabsList" aria-label="Manage your account">
+                    <Tabs.Trigger className="TabsTrigger" value="tab1">
+                    Login
+                    </Tabs.Trigger>
+                    <Tabs.Trigger className="TabsTrigger" value="tab2">
+                    Register
+                    </Tabs.Trigger>
+                </Tabs.List>
+                    <Tabs.Content className="login-tab" value="tab1">
+                        <form onSubmit={handleSubmit} onChange={handleChange}>
+                            <input type="text" placeholder="full name" name="fullname"/>
+                            <input type="text" placeholder="email" name="email"/>
+                            <input type="text" placeholder="password" name="password"/>
+                            <button type="submit">Submit</button>
+                        </form>
+                
+                    </Tabs.Content>
+                    <Tabs.Content className="login-tab" value="tab2">
+                    </Tabs.Content>
+            </Tabs.Root>
         </>
 
     )

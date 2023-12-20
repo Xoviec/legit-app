@@ -198,7 +198,7 @@ app.get('/user-items/:nickname', async function(req, res) {
             throw userItemsError;
         }
 
-        const itemsOwner = userItemsData[0].id
+        const itemsOwner = userItemsData[0]?.id
 
 
             const {data, error} = await supabase

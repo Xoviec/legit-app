@@ -21,8 +21,7 @@ const FileUploadForm = () => {
         const formData = new FormData(event.target);
       formData.append('file', file);
 
-      // Wysyłanie pliku do nowego endpointu
-      const response = await fetch('http://localhost:8000/set-avatar', {
+      const response = await fetch(`${API}/set-avatar`, {
         method: 'POST',
         body: formData,
       });
@@ -41,7 +40,7 @@ const FileUploadForm = () => {
   return (
     
     <form onSubmit={handleFormSubmit} encType="multipart/form-data">
-      <input type="file" onChange={handleFileChange} />
+      <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange} />
       <button type="submit">Wyślij</button>
     </form>
   );
