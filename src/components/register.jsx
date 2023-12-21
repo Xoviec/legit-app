@@ -9,12 +9,16 @@ export const Register = () =>{
 
     const navigate = useNavigate();
 
-    const [isRequired, setIsRequired] = useState(false)
+    const [isRequiredRegister, setIsRequiredRegister] = useState(false)
+    const [isRequiredLogin, setIsRequiredLogin] = useState(false)
+    
     const [formData, setFormData] = useState(
         {
             fullname: '',
-            email: '',
-            password: ''
+            registerEmail: '',
+            registerPassword: '',
+            loginEmail: '',
+            loginPassword: ''
         }
     )
 
@@ -30,29 +34,49 @@ export const Register = () =>{
     // }
 
     // Tutaj to normalnie ma byc pierowotnie
-    // const handleSubmit = async (e) =>{
+    const handleSubmitRegister = async (e) =>{
 
-    //     e.preventDefault()
-    //     try{
-    //         const { data, error } = await supabase.auth.signUp(
-    //             {
-    //             email: formData.email,
-    //             password: formData.password,
-    //             options: {
-    //                 data: {
-    //                 full_name: formData.fullname,
+        // e.preventDefault()
+        try{
+            const { data, error } = await supabase.auth.signUp(
+                {
+                email: formData.registerEmail,
+                password: formData.registerPassword,
+                options: {
+                    data: {
+                    full_name: formData.fullname,
     
-    //             }}}
-    //         )
-    //         if(!error)navigate('/');
+                }}}
+            )
+            if(!error)navigate('/');
 
-    //         if (error) throw error
-    //         // alert(error)
-    //     }  catch(error){
-    //         alert(error)
-    //     }
+            if (error) throw error
+            // alert(error)
+        }  catch(error){
+            alert(error)
+        }
 
-    // }
+    }
+
+
+    const handleSubmitLogin = async (e) =>{
+
+        // e.preventDefault()
+        try{
+            const { data, error } = await supabase.auth.signInWithPassword({
+                email: formData.loginEmail,
+                password: formData.loginPassword,
+              })
+
+
+
+            if(!error)navigate('/')
+            if (error) throw error
+            alert('udao sie')
+        }  catch(error){
+            alert(error)
+        }
+    }
 
 
     const handleInputChange = (e) => {
@@ -65,19 +89,32 @@ export const Register = () =>{
         console.log(formData)
       };
 
-      const handleSubmit = (e) =>{
+      const handleRegisterSubmit = (e) =>{
 
-        if(formData.fullname && formData.email && formData.password){
-            setIsRequired(false)
+        if(formData.fullname && formData.registerEmail && formData.registerPassword){
+            setIsRequiredRegister(false)
+            handleSubmitRegister()
             console.log('essa działa')
           }
           else{
-            setIsRequired(true)
+            setIsRequiredRegister(true)
             console.log('ee brakuje kurwo')
           }
-
           e.preventDefault()
-          
+    }
+
+    const handleLoginSubmit = (e) =>{
+
+        if(formData.loginEmail && formData.loginPassword){
+            setIsRequiredLogin(false)
+            handleSubmitLogin()
+            console.log('essa działa')
+          }
+          else{
+            setIsRequiredLogin(true)
+            console.log('ee brakuje kurwo')
+          }
+          e.preventDefault()
     }
 
 
@@ -98,22 +135,22 @@ export const Register = () =>{
                     </Tabs.Trigger>
                 </Tabs.List>
                     <Tabs.Content className="login-tab" value="tab1">
-                        <form onSubmit={handleSubmit}  onChange={handleInputChange}>
+                        <form onSubmit={handleRegisterSubmit}  onChange={handleInputChange}>
                             <div className="input-title">
                                 <p>Nickname</p>
-                                <p className={`required-alert ${isRequired ? `${formData.fullname ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
+                                <p className={`required-alert ${isRequiredRegister ? `${formData.fullname ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
                             </div>
                             <input type="text" placeholder="Cinal007" name="fullname" value={formData.fullname}/>
                             <div className="input-title">
                                 <p>Email</p>
-                                <p className={`required-alert ${isRequired ? `${formData.email ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
+                                <p className={`required-alert ${isRequiredRegister ? `${formData.registerEmail ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
                             </div>
-                            <input type="text" placeholder="wujek@rada.scpl" name="email" value={formData.email}/>
+                            <input type="text" placeholder="wujek@rada.scpl" name="registerEmail" value={formData.registerEmail}/>
                             <div className="input-title">
                                 <p>Password</p>
-                                <p className={`required-alert ${isRequired ? `${formData.password ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
+                                <p className={`required-alert ${isRequiredRegister ? `${formData.registerPassword ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
                             </div>
-                            <input type="text" placeholder="########" name="password" value={formData.password}/>
+                            <input type="text" placeholder="########" name="registerPassword" value={formData.registerPassword}/>
 
                             <button type="submit">Zarejestruj się</button>
                             <p className="terms">
@@ -124,18 +161,18 @@ export const Register = () =>{
                     
                     </Tabs.Content>
                     <Tabs.Content className="login-tab" value="tab2">
-                    <form onSubmit={handleSubmit}  onChange={handleInputChange}>
+                    <form onSubmit={handleLoginSubmit}  onChange={handleInputChange}>
 
                     <div className="input-title">
                                 <p>Email</p>
-                                <p className={`required-alert ${isRequired ? `${formData.email ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
+                                <p className={`required-alert ${isRequiredLogin ? `${formData.loginEmail ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
                             </div>
-                            <input type="text" placeholder="wujek@rada.scpl" name="email" value={formData.email}/>
+                            <input type="text" placeholder="wujek@rada.scpl" name="loginEmail" value={formData.loginEmail}/>
                             <div className="input-title">
                                 <p>Password</p>
-                                <p className={`required-alert ${isRequired ? `${formData.password ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
+                                <p className={`required-alert ${isRequiredLogin ? `${formData.loginPassword ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
                             </div>
-                            <input type="text" placeholder="########" name="password" value={formData.password}/>
+                            <input type="text" placeholder="########" name="loginPassword" value={formData.loginPassword}/>
 
                             <button type="submit">Zaloguj się</button>
                             <p className="terms">
