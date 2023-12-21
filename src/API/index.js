@@ -209,7 +209,7 @@ app.get('/user-items/:nickname', async function(req, res) {
             console.log(error)
         
 
-        itemsData = data.map((item)=>({
+        itemsData = data?.map((item)=>({
             ...item,
             owner_nickname: nickname
         }))
