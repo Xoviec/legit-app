@@ -392,9 +392,19 @@ app.get('/legited-items', async function (req, res){
 
 
 app.get('/most-items', async function (req, res){
+
+    try{
+
+    
     const {data, error} = await supabase
         .from('legited_items')
         .select('current_owner')
+
+
+        if(error){
+            throw error
+        }
+
 
 
         const result = data.reduce((acc, item) => {
@@ -428,15 +438,20 @@ app.get('/most-items', async function (req, res){
           const sortedOutput = output.sort((a,b)=>
             b.itemAmount - a.itemAmount
           )
-          
-        //   const sortedOutput = output.sort((a, b) => b.itemAmount - a.itemAmount);
 
-
-        //   const newOutput = output.sort()
 
         res.send(sortedOutput)
 
-    })
+    }catch(error){
+
+        console.error('Error fetching legited_items data:', error);
+        res.status(500).send('Internal Server Error'); // or handle the error as needed
+
+    }
+
+        
+
+        })
 
 // update nicku
 app.post('/update-nickname', async function (req, res){

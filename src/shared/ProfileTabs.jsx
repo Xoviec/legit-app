@@ -10,6 +10,8 @@ export const ProfileTabs = (props) => {
   
   const location = useLocation();
 
+
+  console.log('xd', props.userItemsList)
   
   
   return(

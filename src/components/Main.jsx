@@ -50,11 +50,16 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
   }
 
   const getMostItems = async () =>{
-    const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
-    const mostItemsData = await mostItemsRes.json();
-    setMostItems(mostItemsData)
+    try{
+      const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
+      const mostItemsData = await mostItemsRes.json();
+      setMostItems(mostItemsData)
+  
+      console.log(mostItemsData)
+    }catch(error){
+      console.log(error)
+    }
 
-    console.log(mostItemsData)
   } 
 
   const getComments = async () =>{
@@ -245,6 +250,7 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
     <div className="App">
       <div className='central-page'>
         <LastEvents list={mostItems}/>
+
         <div className="profile-container">
                     <div className="user-info">
                         <MyAvatar user={publicUser}/>
