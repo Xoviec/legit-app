@@ -4,6 +4,7 @@ import { useNavigate} from 'react-router-dom';
 import FileUploadForm from "./UploadFileForm";
 import * as Tabs from '@radix-ui/react-tabs';
 import logo from '../Legited logo.svg'
+import { Link } from 'react-router-dom';
 
 
 export const Register = () =>{
@@ -124,9 +125,12 @@ export const Register = () =>{
 
         <div className="login-page">
             <div className="login-nav">
-                <div className="logo">
-                    <img src={logo} alt="" />   
-                </div>
+                <Link to='/main'>
+                    <div className="logo">
+                        <img src={logo} alt="" />   
+                    </div>    
+                </Link>
+
             </div>
 
             {/* <FileUploadForm/> */}
