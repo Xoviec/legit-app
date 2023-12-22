@@ -1,10 +1,11 @@
 import { useState } from "react"
 import { supabase } from "./supabaseClient"
-import { useNavigate} from 'react-router-dom';
+import { useNavigate, useSearchParams} from 'react-router-dom';
 import FileUploadForm from "./UploadFileForm";
 import * as Tabs from '@radix-ui/react-tabs';
 import logo from '../Legited logo.svg'
 import { Link } from 'react-router-dom';
+import { useEffect } from "react";
 
 
 export const Register = () =>{
@@ -13,6 +14,30 @@ export const Register = () =>{
 
     const [isRequiredRegister, setIsRequiredRegister] = useState(false)
     const [isRequiredLogin, setIsRequiredLogin] = useState(false)
+
+    const [searchParams, setSearchParams] = useSearchParams({activeTab: " "})
+
+    const [activeTab, setActiveTab] = useState('')
+
+
+
+    useEffect(()=>{
+        if(searchParams.get("activeTab")==='login'){
+            // console.log('xd')
+            setActiveTab('login')
+        }
+ 
+        else{
+            setActiveTab('register')
+        }
+
+    }, [])
+
+
+    console.log('aktiw', activeTab)
+
+
+    console.log( searchParams.get("activeTab"))
     
     const [formData, setFormData] = useState(
         {
@@ -24,6 +49,9 @@ export const Register = () =>{
         }
     )
 
+    const handlexd = () =>{
+        console.log('elo dupa')
+    }
     console.log(formData)
 
     // const handleChange = (event) =>{
@@ -120,6 +148,19 @@ export const Register = () =>{
     }
 
 
+    const removeQueryParams = () => {
+        const param = searchParams.get('activeTab');
+    
+        if (param) {
+          searchParams.delete('activeTab');
+    
+          setSearchParams(searchParams);
+          setActiveTab()
+        }
+
+      };
+
+
     return(
         <>
 
@@ -135,16 +176,16 @@ export const Register = () =>{
 
             {/* <FileUploadForm/> */}
         
-            <Tabs.Root className="login-root" defaultValue="tab1">
+            <Tabs.Root className="login-root" defaultValue="login" value={activeTab} onValueChange={removeQueryParams} >
                 <Tabs.List className="TabsList" aria-label="Manage your account">
-                    <Tabs.Trigger className="TabsTrigger login-trigger" value="tab1">
+                    <Tabs.Trigger className="TabsTrigger login-trigger" value="register">
                     Rejestracja
                     </Tabs.Trigger>
-                    <Tabs.Trigger className="TabsTrigger login-trigger" value="tab2">
+                    <Tabs.Trigger className="TabsTrigger login-trigger" value="login">
                     Logowanie
                     </Tabs.Trigger>
                 </Tabs.List>
-                    <Tabs.Content className="login-tab" value="tab1">
+                    <Tabs.Content className="login-tab" value="register">
                         <form onSubmit={handleRegisterSubmit}  onChange={handleInputChange}>
                             <div className="input-title">
                                 <p>Nickname</p>
@@ -170,7 +211,7 @@ export const Register = () =>{
                         </form>
                     
                     </Tabs.Content>
-                    <Tabs.Content className="login-tab" value="tab2">
+                    <Tabs.Content className="login-tab" value="login">
                     <form onSubmit={handleLoginSubmit}  onChange={handleInputChange}>
 
                     <div className="input-title">
