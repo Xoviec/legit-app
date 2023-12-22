@@ -469,9 +469,13 @@ app.post('/update-nickname', async function (req, res){
 
 //szukanie komentarzy na profilu użytkownika
 app.get('/get-comments/:id', async function (req, res){
+    
     const { id } = req.params;
 
-    console.log( id)
+    try{
+
+    
+
     const { data: commentData, error: commentError } = await supabase
         .from('comments')
         .select()
@@ -495,8 +499,8 @@ app.get('/get-comments/:id', async function (req, res){
 
 
             
-                console.log('kontrolna kurwa')
-                console.log('cipeunia', userData[0].nickname)
+                // console.log('kontrolna kurwa')
+                // console.log('cipeunia', userData[0].nickname)
 
 
                 return{
@@ -512,6 +516,10 @@ app.get('/get-comments/:id', async function (req, res){
 
     res.send(output)
 
+    }
+    catch(error){
+        res.status(500).json({ error: 'Wystąpił błąd podczas przetwarzania żądania.' });
+    }
 })
 
 //dodawanie komentarza
