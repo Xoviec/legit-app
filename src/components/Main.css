@@ -358,6 +358,8 @@ h1{
   width: 25rem;
   padding: 1rem;
   border: 1px solid var(--secondary-bg-color);
+  margin-top: 1rem;
+  background-color: #fff;
 
 }
 
@@ -447,4 +449,19 @@ h1{
 
 .hidden{
   display: none;
+}
+
+.login-nav{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 5rem;
+  border-bottom: 1px solid var(--secondary-bg-color);
+  background-color: #fff;
+
+}
+
+.logo img{
+  height: 4rem;
 }

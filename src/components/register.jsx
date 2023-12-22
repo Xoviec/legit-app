@@ -3,6 +3,7 @@ import { supabase } from "./supabaseClient"
 import { useNavigate} from 'react-router-dom';
 import FileUploadForm from "./UploadFileForm";
 import * as Tabs from '@radix-ui/react-tabs';
+import logo from '../Legited logo.svg'
 
 
 export const Register = () =>{
@@ -122,6 +123,11 @@ export const Register = () =>{
         <>
 
         <div className="login-page">
+            <div className="login-nav">
+                <div className="logo">
+                    <img src={logo} alt="" />   
+                </div>
+            </div>
 
             {/* <FileUploadForm/> */}
         
