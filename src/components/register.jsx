@@ -26,6 +26,10 @@ export const Register = () =>{
             // console.log('xd')
             setActiveTab('login')
         }
+        else if(searchParams.get("activeTab")==='register'){
+            // console.log('xd')
+            setActiveTab('register')
+        }
  
         else{
             setActiveTab('register')
@@ -151,12 +155,36 @@ export const Register = () =>{
     const removeQueryParams = () => {
         const param = searchParams.get('activeTab');
     
-        if (param) {
-          searchParams.delete('activeTab');
+
+        console.log(param)
     
-          setSearchParams(searchParams);
-          setActiveTab()
+        switch(activeTab){
+            case 'login':
+                setActiveTab('register')
+
+                searchParams.set("activeTab", 'register')
+                setSearchParams(searchParams, {replace: true})
+                // setSearchParams({activeTab: 'register'}, {replace:false})
+                // navigate('/register?activeTab=login', { replace: false })
+
+                break
+            case 'register':
+                setActiveTab('login')
+
+                searchParams.set("activeTab", 'login')
+                setSearchParams(searchParams, {replace: true})
+                // navigate('/register?activeTab=register', { replace: false })
+
+                // setSearchParams({activeTab: 'login'}, {replace:false})
+                break;
+
         }
+        // if (param) {
+        //   searchParams.delete('activeTab');
+    
+        //   setSearchParams(searchParams);
+        //   setActiveTab()
+        // }
 
       };
 

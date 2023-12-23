@@ -26,7 +26,7 @@ export const Navbar = () =>{
             <input placeholder='Szukaj uzytkownika' className="search-bar"/>
 
             <div className="rest">
-            <Link to='/login'>
+            <Link to='/register'>
                 <button>
                     Jak to działa
                 </button>
@@ -48,13 +48,13 @@ export const Navbar = () =>{
                 :
                 (
                     <>
-                        <Link to='/login'>
+                        <Link to='/register?activeTab=login' replace={false}>
                             <button className='btn-login'>
                                 Zaloguj się
                             </button>
                        </Link>
                         <Link to='/register'>
-                            <button className='btn-register'>
+                            <button className='btn-register' replace={false}>
                                 Zarejestruj się
                             </button>
                         </Link>
