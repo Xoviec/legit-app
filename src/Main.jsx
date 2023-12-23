@@ -69,8 +69,8 @@ export const Main = () =>{
 
 
             <Route element={<Anonymous />}>
-                <Route path="/register" element={<Register />} />
-                <Route path="/login" element={<Login />} />
+                {/* <Route path="/register" element={<Register />} /> */}
+                <Route path="/login" element={<Register />} />
             </Route>
 
             {/* <Route path='/users' element={<Users data={data} handleAddData={addData}/>}/>

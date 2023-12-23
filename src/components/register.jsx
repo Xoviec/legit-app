@@ -152,11 +152,7 @@ export const Register = () =>{
     }
 
 
-    const removeQueryParams = () => {
-        const param = searchParams.get('activeTab');
-    
-
-        console.log(param)
+    const switchQueryParams = () => {
     
         switch(activeTab){
             case 'login':
@@ -164,28 +160,16 @@ export const Register = () =>{
 
                 searchParams.set("activeTab", 'register')
                 setSearchParams(searchParams, {replace: true})
-                // setSearchParams({activeTab: 'register'}, {replace:false})
-                // navigate('/register?activeTab=login', { replace: false })
-
                 break
             case 'register':
                 setActiveTab('login')
 
                 searchParams.set("activeTab", 'login')
                 setSearchParams(searchParams, {replace: true})
-                // navigate('/register?activeTab=register', { replace: false })
 
-                // setSearchParams({activeTab: 'login'}, {replace:false})
                 break;
 
         }
-        // if (param) {
-        //   searchParams.delete('activeTab');
-    
-        //   setSearchParams(searchParams);
-        //   setActiveTab()
-        // }
-
       };
 
 
@@ -204,7 +188,7 @@ export const Register = () =>{
 
             {/* <FileUploadForm/> */}
         
-            <Tabs.Root className="login-root" defaultValue="login" value={activeTab} onValueChange={removeQueryParams} >
+            <Tabs.Root className="login-root" defaultValue="login" value={activeTab} onValueChange={switchQueryParams} >
                 <Tabs.List className="TabsList" aria-label="Manage your account">
                     <Tabs.Trigger className="TabsTrigger login-trigger" value="register">
                     Rejestracja
@@ -237,7 +221,8 @@ export const Register = () =>{
                         </p>
                 
                         </form>
-                    
+                        <p className="login-form-footer-text">Masz juz konto? <span className="login-switch-tab" onClick={switchQueryParams}>Zaloguj się</span></p>
+
                     </Tabs.Content>
                     <Tabs.Content className="login-tab" value="login">
                     <form onSubmit={handleLoginSubmit}  onChange={handleInputChange}>
@@ -262,7 +247,7 @@ export const Register = () =>{
                             </p>
                 
                         </form>
-                        {/* <p>Already have and account?</p> */}
+                        <p className="login-form-footer-text">Nie masz konta? <span className="login-switch-tab" onClick={switchQueryParams}>Zarejestruj się</span></p>
                     </Tabs.Content>
             </Tabs.Root>
 

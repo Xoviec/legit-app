@@ -48,12 +48,12 @@ export const Navbar = () =>{
                 :
                 (
                     <>
-                        <Link to='/register?activeTab=login' replace={false}>
+                        <Link to='/login?activeTab=login' replace={false}>
                             <button className='btn-login'>
                                 Zaloguj się
                             </button>
                        </Link>
-                        <Link to='/register'>
+                        <Link to='/login?activeTab=register'>
                             <button className='btn-register' replace={false}>
                                 Zarejestruj się
                             </button>
