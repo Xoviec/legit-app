@@ -18,6 +18,7 @@ export const Register = () =>{
     const [searchParams, setSearchParams] = useSearchParams({activeTab: " "})
 
     const [activeTab, setActiveTab] = useState('')
+    const [loginError, setLoginError] = useState()
 
 
 
@@ -106,9 +107,11 @@ export const Register = () =>{
 
             if(!error)navigate('/')
             if (error) throw error
-            alert('udao sie')
+            // alert('udao sie')
         }  catch(error){
-            alert(error)
+            // alert(error.name)
+            setLoginError('Zły adres email lub hasło')
+            console.log(error)
         }
     }
 
@@ -227,6 +230,12 @@ export const Register = () =>{
                     <Tabs.Content className="login-tab" value="login">
                     <form onSubmit={handleLoginSubmit}  onChange={handleInputChange}>
 
+                    {
+                        loginError && 
+
+                        <div className="error-card">{loginError}</div>
+
+                    }
                     <div className="input-title">
                                 <p>Email</p>
                                 <p className={`required-alert ${isRequiredLogin ? `${formData.loginEmail ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
