@@ -24,11 +24,9 @@ export const Register = () =>{
 
     useEffect(()=>{
         if(searchParams.get("activeTab")==='login'){
-            // console.log('xd')
             setActiveTab('login')
         }
         else if(searchParams.get("activeTab")==='register'){
-            // console.log('xd')
             setActiveTab('register')
         }
  
@@ -83,12 +81,21 @@ export const Register = () =>{
     
                 }}}
             )
-            if(!error)navigate('/');
+            if(!error)navigate('/settings');
 
             if (error) throw error
             // alert(error)
         }  catch(error){
-            alert(error)
+
+            if(formData.registerPassword.length < 6){
+                setLoginError('Hasło powinno zawierać przynajmniej 6 znaków')
+            }
+            else if(error.message === 'Unable to validate email address: invalid format'){
+                setLoginError("Wpisz poprawny adres e-mail")
+            }
+
+            console.log(error.message)
+            // alert(error)
         }
 
     }
@@ -107,11 +114,18 @@ export const Register = () =>{
 
             if(!error)navigate('/')
             if (error) throw error
-            // alert('udao sie')
+            alert('udao sie')
         }  catch(error){
             // alert(error.name)
-            setLoginError('Zły adres email lub hasło')
-            console.log(error)
+            // setLoginError('Zły adres email')
+            console.log(error.message)
+
+            if(error.message === 'Invalid login credentials'){
+                setLoginError('Złe dane logowania')
+            }
+            else{
+                setLoginError('Spróbuj ponownie później')
+            }
         }
     }
 
@@ -131,11 +145,9 @@ export const Register = () =>{
         if(formData.fullname && formData.registerEmail && formData.registerPassword){
             setIsRequiredRegister(false)
             handleSubmitRegister()
-            console.log('essa działa')
           }
           else{
             setIsRequiredRegister(true)
-            console.log('ee brakuje kurwo')
           }
           e.preventDefault()
     }
@@ -145,7 +157,6 @@ export const Register = () =>{
         if(formData.loginEmail && formData.loginPassword){
             setIsRequiredLogin(false)
             handleSubmitLogin()
-            console.log('essa działa')
           }
           else{
             setIsRequiredLogin(true)
@@ -156,6 +167,8 @@ export const Register = () =>{
 
 
     const switchQueryParams = () => {
+
+        setLoginError()
     
         switch(activeTab){
             case 'login':
@@ -202,6 +215,12 @@ export const Register = () =>{
                 </Tabs.List>
                     <Tabs.Content className="login-tab" value="register">
                         <form onSubmit={handleRegisterSubmit}  onChange={handleInputChange}>
+                        {
+                            loginError && 
+
+                            <div className="error-card">{loginError}</div>
+
+                        }
                             <div className="input-title">
                                 <p>Nickname</p>
                                 <p className={`required-alert ${isRequiredRegister ? `${formData.fullname ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
