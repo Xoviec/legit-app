@@ -1,7 +1,6 @@
 import { useState } from "react"
 import { supabase } from "./supabaseClient"
 import { useNavigate, useSearchParams} from 'react-router-dom';
-import FileUploadForm from "./UploadFileForm";
 import * as Tabs from '@radix-ui/react-tabs';
 import logo from '../Legited logo.svg'
 import { Link } from 'react-router-dom';
@@ -204,7 +203,6 @@ export const Register = () =>{
 
             </div>
 
-            {/* <FileUploadForm/> */}
         
             <Tabs.Root className="login-root" defaultValue="login" value={activeTab} onValueChange={switchQueryParams} >
                 <Tabs.List className="TabsList" aria-label="Manage your account">

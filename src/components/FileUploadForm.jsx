@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const FileUploadForm = () => {
+const FileUploadForm = (props) => {
 
 
 
@@ -20,6 +20,10 @@ const FileUploadForm = () => {
     try {
         const formData = new FormData(event.target);
       formData.append('file', file);
+      formData.append('userID', props.userID);
+      formData.append('userNickname', props.nickname);
+
+
 
       const response = await fetch(`${API}/set-avatar`, {
         method: 'POST',
@@ -40,6 +44,7 @@ const FileUploadForm = () => {
   return (
     
     <form onSubmit={handleFormSubmit} encType="multipart/form-data">
+      <p>Dla gosteczka o id: {props.userID}</p>
       <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange} />
       <button type="submit">Wyślij</button>
     </form>

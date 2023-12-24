@@ -1,6 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from './supabaseClient';
+import FileUploadForm from './FileUploadForm'
 import axios from 'axios';
 
 
@@ -69,7 +70,9 @@ export const Settings = () =>{
 
     return(
         <div>
-            <p>{publicUser?.id}</p>
+            
+            <FileUploadForm userID={publicUser?.id} nickname={publicUser?.nickname}/>
+            <p>{publicUser?.nickname}</p>
             <p>{publicUser?.email}</p>
             {/* <p>{publicUser?.nickname}</p> */}
             <p>{publicUser?.is_verified} </p>

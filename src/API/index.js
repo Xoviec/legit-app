@@ -249,15 +249,37 @@ app.get('/user-items/:nickname', async function(req, res) {
 // dodanie avataru
 
 app.post('/set-avatar', upload.single('file'), async (req, res) => {
+
+    console.log(req.body.userID)
+
+    const userID = req.body.userID
+    const userNickname = req.body.userNickname
+
+    // console.log(req.body.userNickname)
     try {
         const uploadedFile = req.file.buffer;
-        const fileUrl = await uploadFile('legited-avatars', uploadedFile, 'noweeloesssa.png');
+        const fileUrl = await uploadFile('legited-avatars', uploadedFile, `${userNickname}-avatar.png`);
         console.log('Direct link to the uploaded file:', fileUrl);
-        res.status(200).send('Plik został pomyślnie przesłany.');
+        
+        try{
+
+
+            const {error: updateOwnersHistoryError} = await supabase
+                .from('users')
+                .update({avatar: fileUrl})
+                .eq('id', userID)
+            
+            res.status(200).send('Pomyślnie zmieniono avatar');
+
+        }catch(error){
+            console.log(error)
+        }
+
     } catch (error) {
         console.error('Wystąpił błąd:', error);
         res.status(500).send('Wystąpił błąd podczas przesyłania pliku.');
     }
+    
 });
 
 
