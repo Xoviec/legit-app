@@ -93,7 +93,9 @@ export const Register = () =>{
             else if(error.message === 'Unable to validate email address: invalid format'){
                 setLoginError("Wpisz poprawny adres e-mail")
             }
-
+            else{
+                setLoginError('Spróbuj ponownie później')
+            }
             console.log(error.message)
             // alert(error)
         }
@@ -134,7 +136,7 @@ export const Register = () =>{
         const { name, value } = e.target;
         setFormData((prevData) => ({
           ...prevData,
-          [name]: value
+          [name]: value.replace(/\s+/g, '')
         }));
     
         console.log(formData)
