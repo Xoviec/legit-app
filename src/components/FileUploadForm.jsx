@@ -63,7 +63,7 @@ const FileUploadForm = (props) => {
         <label className='choose-avatar-btn' htmlFor="avatar-input">Wybierz plik</label>
       </div>
 
-      <input className='hidden' name='avatar-input' id='avatar-input' type="file" accept="image/png, image/jpeg" onChange={handleFileChange} />
+      <input className='hidden' id='avatar-input' type="file" accept="image/png, image/jpeg" onChange={handleFileChange} />
    
 
 
