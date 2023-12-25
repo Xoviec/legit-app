@@ -13,7 +13,18 @@ const FileUploadForm = (props) => {
 
   const handleFileChange = (event) => {
 
-    setFilePreview(URL.createObjectURL(event.target.files[0]));
+    // setFilePreview(URL.createObjectURL(event.target.files[0]));
+
+    const file = event.target.files[0];
+    console.log("Typ pliku:", file?.type);
+
+    if (file) {
+      setFilePreview(URL.createObjectURL(file));
+    } else {
+
+      setFilePreview(null)
+      console.error("Brak wybranego pliku");
+    }
 
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
@@ -35,7 +46,6 @@ const FileUploadForm = (props) => {
         body: formData,
       });
 
-      // Obsługa odpowiedzi od serwera
       if (response.ok) {
         console.log('Plik został pomyślnie przesłany!');
       } else {
@@ -63,7 +73,7 @@ const FileUploadForm = (props) => {
       {
         file && 
 
-        <button className='settings-save-btn' type="submit">Zapisz</button>
+        <button className='settings-save-btn' type="submit">Ustaw avatar</button>
         
         } 
       {/* <p>{file?.name}</p> */}

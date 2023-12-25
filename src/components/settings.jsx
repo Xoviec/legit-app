@@ -56,17 +56,27 @@ export const Settings = () =>{
 
         e.preventDefault()
 
-        checkPasswordChange()
+        try{
+            const { data, error } = await supabase.auth.updateUser({
+                email: formData.email
+            })
+
+        }catch(error){
+            console.log(error)
+        }
+
 
         try{
-            
             const { data, error } = await supabase.auth.updateUser({
-                data: { full_name: nickname }
+                data: { full_name: formData.nickname }
             })
             await axios.post(`${API}/update-nickname`, {
-                newNickname: nickname,
+                newNickname: formData.nickname,
                 id: publicUser.id,
             });
+
+            checkPasswordChange()
+
             if (error) throw error
             // alert(error)
         }  catch(error){
@@ -85,11 +95,17 @@ export const Settings = () =>{
     }, [])
 
 
-    const checkPasswordChange = () =>{
+    const checkPasswordChange = async () =>{
         if(formData.newPassword.length>0){
             if(formData.newPassword.length>=6){
                 if(formData.newPassword === formData.confirmPassword){
                     console.log('hasła są takie same')
+
+
+                    const { data, error } = await supabase.auth.updateUser({
+                        password: formData.newPassword
+                    })
+
                 }
                 else{
                     console.log('hasła sie róznią')
@@ -115,7 +131,7 @@ export const Settings = () =>{
                     <p>Aktualny nickname</p>
                     <input className='nickname-input' type="text" value={formData.nickname} name='nickname'/>
                     <p>Email</p>
-                    <input className='nickname-input' type="text" value={formData.email} name='password'/>
+                    <input className='nickname-input' type="text" value={formData.email} name='email'/>
                     <p>Nowe hasło</p>
                     <input className='nickname-input' type="text" value={formData.newPassword} name='newPassword'/>
                     <p>Potwierdź haslo</p>

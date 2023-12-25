@@ -20,9 +20,12 @@ export const Navbar = () =>{
 
     return(
         <nav>
-            <div className="logo">
-                <img src={logo} alt="" />   
-            </div>
+            <Link to='/main'>
+                <div className="logo">
+                    <img src={logo} alt="" />   
+                </div>
+            </Link>
+
             <input placeholder='Szukaj uzytkownika' className="search-bar"/>
 
             <div className="rest">
