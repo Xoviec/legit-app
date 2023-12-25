@@ -16,8 +16,14 @@ export const Settings = () =>{
     const [userData, setUserData] = useState(props)
     const [publicUser, setPublicUser] = useState(props)
     const [nickname, setNickname] = useState(props?.nickname)
+    const [email, setEmail] = useState(userData?.email)
 
-    console.log(userData)
+    const [formData, setFormData] = useState({
+        nickname: props?.nickname,
+        email: props?.email,
+        newPassword: '',
+        confirmPassword: ''
+    })
 
 
 
@@ -31,14 +37,26 @@ export const Settings = () =>{
         setNickname(publicUserData[0].nickname)
     }
 
-    const handleChange = (e) =>{
-        setNickname(e.target.value)
-    }
+    // const handleChange = (e) =>{
+    //     setNickname(e.target.value)
+    // }
+
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: value.replace(/\s+/g, '')
+        }));
+    
+        console.log(formData)
+      };
 
     const handleSubmit = async (e) =>{
 
         e.preventDefault()
 
+        checkPasswordChange()
 
         try{
             
@@ -56,7 +74,6 @@ export const Settings = () =>{
         }
     }
 
-    console.log(nickname)
 
 
     //Jeżeli dane użytkownika nie zostały wzięte z props, bierze je prosto z supabase
@@ -68,6 +85,25 @@ export const Settings = () =>{
     }, [])
 
 
+    const checkPasswordChange = () =>{
+        if(formData.newPassword.length>0){
+            if(formData.newPassword.length>=6){
+                if(formData.newPassword === formData.confirmPassword){
+                    console.log('hasła są takie same')
+                }
+                else{
+                    console.log('hasła sie róznią')
+                }
+            }
+            else{
+                console.log("Hasło powinno mieć minimum 6 znaków")
+            }
+        }
+        else{
+            return
+        }
+    }
+
     return(
         <div className='settings'>
             
@@ -75,10 +111,18 @@ export const Settings = () =>{
             <div className="settings-container">
                 <FileUploadForm avatar={publicUser?.avatar} userID={publicUser?.id} nickname={publicUser?.nickname}/>
 
-                <form className='change-nickname' onSubmit={handleSubmit} onChange={handleChange}>
+                <form className='change-nickname' onSubmit={handleSubmit} onChange={handleInputChange}>
                     <p>Aktualny nickname</p>
-                    <input className='nickname-input' type="text" value={nickname}/>
+                    <input className='nickname-input' type="text" value={formData.nickname} name='nickname'/>
+                    <p>Email</p>
+                    <input className='nickname-input' type="text" value={formData.email} name='password'/>
+                    <p>Nowe hasło</p>
+                    <input className='nickname-input' type="text" value={formData.newPassword} name='newPassword'/>
+                    <p>Potwierdź haslo</p>
+                    <input className='nickname-input' type="text" value={formData.confirmPassword} name='confirmPassword'/>
+                    
                     <button className='settings-save-btn' type='submit'>zapisz</button>
+
                 </form>
             </div>
 

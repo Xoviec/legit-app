@@ -10,7 +10,6 @@ const FileUploadForm = (props) => {
   const [filePreview, setFilePreview] = useState(null)
 
 
-console.log(file)
 
   const handleFileChange = (event) => {
 
