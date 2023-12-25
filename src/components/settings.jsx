@@ -69,17 +69,20 @@ export const Settings = () =>{
 
 
     return(
-        <div>
+        <div className='settings'>
             
-            <FileUploadForm userID={publicUser?.id} nickname={publicUser?.nickname}/>
-            <p>{publicUser?.nickname}</p>
-            <p>{publicUser?.email}</p>
-            {/* <p>{publicUser?.nickname}</p> */}
-            <p>{publicUser?.is_verified} </p>
+            <h1>Ustawienia</h1>
+
             <form onSubmit={handleSubmit} onChange={handleChange}>
+                <p>Aktualny nickname</p>
                 <input type="text" value={nickname}/>
                 <button type='submit'>zapisz</button>
             </form>
+            <FileUploadForm avatar={publicUser?.avatar} userID={publicUser?.id} nickname={publicUser?.nickname}/>
+            <p>{publicUser?.email}</p>
+            {/* <p>{publicUser?.nickname}</p> */}
+            <p>{publicUser?.is_verified} </p>
+
             {/* <input placeholder={e.name} style={{display: idEdit == e.id ? 'block' : 'none'}}/>  */}
         </div>
     )

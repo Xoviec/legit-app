@@ -4,12 +4,18 @@ const FileUploadForm = (props) => {
 
 
 
-
     const API = process.env.REACT_APP_API
 
   const [file, setFile] = useState(null);
+  const [filePreview, setFilePreview] = useState(null)
+
+
+console.log(file)
 
   const handleFileChange = (event) => {
+
+    setFilePreview(URL.createObjectURL(event.target.files[0]));
+
     const selectedFile = event.target.files[0];
     setFile(selectedFile);
   };
@@ -44,9 +50,25 @@ const FileUploadForm = (props) => {
   return (
     
     <form onSubmit={handleFormSubmit} encType="multipart/form-data">
-      <p>Dla gosteczka o id: {props.userID}</p>
-      <input type="file" accept="image/png, image/jpeg" onChange={handleFileChange} />
-      <button type="submit">Wyślij</button>
+
+      <div className="avatar-preview-container">
+        <img className='avatar-preview' src={!filePreview ? props.avatar : filePreview} alt="" />
+      
+        <label className='choose-avatar-btn' htmlFor="avatar-input">Wybierz plik</label>
+
+      </div>
+
+      <input className='hidden' name='avatar-input' id='avatar-input' type="file" accept="image/png, image/jpeg" onChange={handleFileChange} />
+      {
+        file && 
+
+        <button type="submit">Zapisz</button>
+        
+      }
+
+      <p>{file?.name}</p>
+
+      <img src={filePreview} alt="" />
     </form>
   );
 };

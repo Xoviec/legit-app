@@ -491,5 +491,46 @@ h1{
   color: #3a3a3a;
   box-sizing: border-box;
   padding: 1rem;
-  border-radius: 0.3rem;
+  border-radius: 0
+  .3rem;
+}
+
+
+.settings{
+  background-color: #e5e5e5;
+  padding: 0px 48px 0px 48px;
+}
+
+.avatar-preview-container{
+  position: relative;
+  width: 9rem;
+  height: 9rem;
+}
+
+.avatar-preview{
+  width: 9rem;
+  height: 9rem;
+  border-radius: 50%;
+}
+
+.choose-avatar-btn{
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  cursor: pointer;
+  height: 100%;
+  width: 100%;
+  background-color: #259f87a6;
+  color: var(--main-text-color);
+  border-radius: 50%;
+  opacity: 0;
+}
+
+.avatar-preview-container:hover .choose-avatar-btn{
+  opacity: 1;
+  backdrop-filter: blur(5px);
 }
