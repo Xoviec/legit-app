@@ -34,6 +34,11 @@ export const Settings = () =>{
         const publicUserData = await publicUserResponse.json();
         console.log(publicUserData[0])
         setPublicUser(publicUserData[0])
+        setFormData((prevData) => ({
+            ...prevData,
+            nickname: publicUserData[0].nickname,
+            email: publicUserData[0].email,
+          }));
         setNickname(publicUserData[0].nickname)
     }
 
