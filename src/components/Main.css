@@ -222,7 +222,7 @@ aside{
   align-items: center;
   justify-content: flex-end;
   flex: 1;
-  gap: 0.2rem;
+  gap: 1rem;
   color: var(--main-text-color);
 
 }
@@ -497,13 +497,32 @@ h1{
 
 
 .settings{
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
   background-color: #e5e5e5;
   padding: 0px 48px 0px 48px;
 }
 
+.settings-container{
+  width: 100%;
+  display: flex;
+  gap: 2rem;
+}
+
+.change-nickname{
+  display: flex;
+  flex-direction: column;
+  /* flex: 1; */
+  width: 14rem;
+}
+
+.upload-form{
+  width: 9rem;
+}
+
 .avatar-preview-container{
   position: relative;
-  width: 9rem;
   height: 9rem;
 }
 
@@ -511,6 +530,8 @@ h1{
   width: 9rem;
   height: 9rem;
   border-radius: 50%;
+  object-fit: cover;
+  border: 1px solid var(--legited-light-green);
 }
 
 .choose-avatar-btn{
@@ -533,4 +554,30 @@ h1{
 .avatar-preview-container:hover .choose-avatar-btn{
   opacity: 1;
   backdrop-filter: blur(5px);
+}
+
+.settings-save-btn{
+  cursor: pointer;
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* background-color: var(--main-text-color); */
+  background-color: var(--legited-dark-green);
+  color: var(--main-bg-color);
+  height: 2.7rem;
+  width: 100%;
+  border-radius: 0.8rem;
+  transition: 0.4s;
+}
+
+.nickname-input{
+  height: 2.7rem;
+  background-color: transparent;
+  outline: none;
+  box-sizing: border-box;
+  width: 100%;
+  background-color: var(--main-bg-color);
+  border: 1px solid var(--secondary-bg-color);
+  padding: 5px;
 }

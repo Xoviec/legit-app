@@ -49,26 +49,26 @@ console.log(file)
 
   return (
     
-    <form onSubmit={handleFormSubmit} encType="multipart/form-data">
+    <form onSubmit={handleFormSubmit} encType="multipart/form-data" className='upload-form'>
 
       <div className="avatar-preview-container">
         <img className='avatar-preview' src={!filePreview ? props.avatar : filePreview} alt="" />
       
         <label className='choose-avatar-btn' htmlFor="avatar-input">Wybierz plik</label>
-
       </div>
 
       <input className='hidden' name='avatar-input' id='avatar-input' type="file" accept="image/png, image/jpeg" onChange={handleFileChange} />
+   
+
+
       {
         file && 
 
-        <button type="submit">Zapisz</button>
+        <button className='settings-save-btn' type="submit">Zapisz</button>
         
-      }
+        } 
+      {/* <p>{file?.name}</p> */}
 
-      <p>{file?.name}</p>
-
-      <img src={filePreview} alt="" />
     </form>
   );
 };

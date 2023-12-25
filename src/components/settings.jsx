@@ -72,14 +72,17 @@ export const Settings = () =>{
         <div className='settings'>
             
             <h1>Ustawienia</h1>
+            <div className="settings-container">
+                <FileUploadForm avatar={publicUser?.avatar} userID={publicUser?.id} nickname={publicUser?.nickname}/>
 
-            <form onSubmit={handleSubmit} onChange={handleChange}>
-                <p>Aktualny nickname</p>
-                <input type="text" value={nickname}/>
-                <button type='submit'>zapisz</button>
-            </form>
-            <FileUploadForm avatar={publicUser?.avatar} userID={publicUser?.id} nickname={publicUser?.nickname}/>
-            <p>{publicUser?.email}</p>
+                <form className='change-nickname' onSubmit={handleSubmit} onChange={handleChange}>
+                    <p>Aktualny nickname</p>
+                    <input className='nickname-input' type="text" value={nickname}/>
+                    <button className='settings-save-btn' type='submit'>zapisz</button>
+                </form>
+            </div>
+
+
             {/* <p>{publicUser?.nickname}</p> */}
             <p>{publicUser?.is_verified} </p>
 
