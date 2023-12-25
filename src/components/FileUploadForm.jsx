@@ -12,22 +12,19 @@ const FileUploadForm = (props) => {
 
 
   const handleFileChange = (event) => {
+    
 
-    // setFilePreview(URL.createObjectURL(event.target.files[0]));
+    try{
 
-    const file = event.target.files[0];
-    console.log("Typ pliku:", file?.type);
+      setFilePreview(URL.createObjectURL(event.target.files[0]));
 
-    if (file) {
-      setFilePreview(URL.createObjectURL(file));
-    } else {
-
+      const selectedFile = event.target.files[0];
+      setFile(selectedFile);
+    }catch(error){
+      console.log(error)
       setFilePreview(null)
-      console.error("Brak wybranego pliku");
     }
 
-    const selectedFile = event.target.files[0];
-    setFile(selectedFile);
   };
 
   const handleFormSubmit = async (event) => {
