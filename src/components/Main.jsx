@@ -39,6 +39,11 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
 
   console.log(API)
 
+
+
+
+  // console.log(getSession().session.user)
+
   const essa = async()=>{
     const { data: { user } } = await supabase.auth.getUser()
     const { data, error } = await supabase.auth.getSession()

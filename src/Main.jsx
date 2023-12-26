@@ -10,6 +10,7 @@ import { Settings } from "./components/settings";
 import {Mainpage} from "./components/Main";
 import { Navbar } from "./Navbar";
 import { useEffect } from "react";
+import { LoggedCheck } from "./components/loggedCheck";
 
 export const Main = () =>{
 
@@ -63,13 +64,22 @@ export const Main = () =>{
 
 
             <Route path='/users/:nickname' element={<UserPage/>}/>
-            <Route path='/settings' element={<Settings/>}/>
+
+
+            <Route element={<LoggedCheck />}>
+
+                <Route path='/settings' element={<Settings/>}/>
+
+            </Route>
+
             <Route path='/main' element={<Mainpage/>}/>
+
+
             
 
 
             <Route element={<Anonymous />}>
-                {/* <Route path="/register" element={<Register />} /> */}
+                <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Register />} />
             </Route>
 

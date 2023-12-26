@@ -6,6 +6,7 @@ import axios from 'axios';
 
 
 export const Settings = () =>{
+    
 
     const API = process.env.REACT_APP_API
 
@@ -28,18 +29,28 @@ export const Settings = () =>{
 
 
     const getUserDataFromDB = async()=>{
-        const { data: { user } } = await supabase.auth.getUser()
-        setUserData(user)
-        const publicUserResponse = await fetch(`${API}/secret/${user.id}`);
-        const publicUserData = await publicUserResponse.json();
-        console.log(publicUserData[0])
-        setPublicUser(publicUserData[0])
-        setFormData((prevData) => ({
-            ...prevData,
-            nickname: publicUserData[0].nickname,
-            email: publicUserData[0].email,
-          }));
-        setNickname(publicUserData[0].nickname)
+
+        try{
+            const { data: { user } } = await supabase.auth.getUser()
+            setUserData(user)
+            const publicUserResponse = await fetch(`${API}/secret/${user?.id}`);
+            const publicUserData = await publicUserResponse.json();
+            console.log(publicUserData[0])
+            setPublicUser(publicUserData[0])
+            setFormData((prevData) => ({
+                ...prevData,
+                nickname: publicUserData[0].nickname,
+                email: publicUserData[0].email,
+              }));
+            setNickname(publicUserData[0].nickname)
+        }catch(error){
+            console.log(error)
+        }
+        
+   
+
+
+
     }
 
     // const handleChange = (e) =>{
