@@ -113,6 +113,7 @@ export const Register = () =>{
 
 
 
+
             if(!error)navigate('/')
             if (error) throw error
             alert('udao sie')

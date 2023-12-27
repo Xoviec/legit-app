@@ -32,12 +32,16 @@ export const UserPage = (key) =>{
 
     const getUserDataFromDB = async()=>{
 
+        
+
         const { data: { user } } = await supabase.auth.getUser()
         try{
             const userResponse = await fetch(`${API}/secret/${user?.id}`)
             const usersDataResponse = await userResponse.json()
             console.log(usersDataResponse[0].nickname)
             setUser(usersDataResponse[0])
+
+            console.log(user)
         }
         catch(err){
             console.log(err)
@@ -169,19 +173,22 @@ export const UserPage = (key) =>{
         console.log(event)
         console.log(id)
         event.preventDefault()
-
+        const newCommentList = commentsList.filter(((comment)=>comment.id !== id))
+        setCommentsList(newCommentList)
      try{
-
-        const userResponse = await fetch(`${API}/secret/${user.id}`)
-        const usersDataResponse = await userResponse.json()
-        console.log(usersDataResponse[0].nickname)
+        // const userResponse = await fetch(`${API}/secret/${user.id}`)
+        // const usersDataResponse = await userResponse.json()
+        // console.log(usersDataResponse[0].id)
         await axios.post(`${API}/delete-comment`, {
             id: id,
-            userNick: usersDataResponse[0].nickname
+            comment_by_id: user.id
         });
+
+    
     }catch(err){
         console.log(err)
     }
+
     }
 
 
@@ -197,7 +204,7 @@ export const UserPage = (key) =>{
                     {
                         displayUser?.description && <><p className='user-about'>O mnie:</p> <p>{displayUser?.description}</p></>
                     }
-                <ProfileTabs handleAddComment={handleAddComment} viewer={user} userItemsList={userItemsList} comments={commentsList}/>
+                <ProfileTabs handleDeleteComment={handleDeleteComment} handleAddComment={handleAddComment} viewer={user} userItemsList={userItemsList} comments={commentsList}/>
                 </div>
             </div>
 
@@ -249,6 +256,7 @@ export const UserPage = (key) =>{
                     {
                         commentsList?.map((comment)=>(
                             <div key={comment.id}>
+                                
                                 {comment.comment_by}: 
                                 {comment.content}
                                 {

@@ -520,11 +520,6 @@ app.get('/get-comments/:id', async function (req, res){
                 .eq('id', comment.comment_by)
 
 
-            
-                // console.log('kontrolna kurwa')
-                // console.log('cipeunia', userData[0].nickname)
-
-
                 return{
                     ...comment,
                     comment_by_nickname: userData[0].nickname,
@@ -547,20 +542,29 @@ app.get('/get-comments/:id', async function (req, res){
 //dodawanie komentarza
 app.post('/add-comment', async function (req, res){
     console.log(req.body)
-    const { error } = await supabase
-    .from('comments')
-    .insert({ 
-        comment_by: req.body.comment_by,
-        comment_on: req.body.comment_on, 
-        content: req.body.content
-        
-    })
+
+    try{
+        const { error } = await supabase
+        .from('comments')
+        .insert({ 
+            comment_by: req.body.comment_by,
+            comment_on: req.body.comment_on, 
+            content: req.body.content
+            
+        })
+        if(error){
+            console.log(error)
+        }
+    }catch(err){
+        console.log(err)
+    }
+
 })
 
 app.post('/delete-comment', async function (req, res){
     console.log(req.body.id)
     const commentID = req.body.id
-    const userNick = req.body.userNick
+    const comment_by_id = req.body.comment_by_id
 
 
     const { data, error: getComments } = await supabase
@@ -568,20 +572,22 @@ app.post('/delete-comment', async function (req, res){
         .select()
         .eq('id', commentID);
 
-    console.log('wisla to sstara kurwa')
-    console.log(data)
-    console.log(data[0]?.comment_by)
-    console.log(userNick)
-
-    if(data[0]?.comment_by === userNick){
-        const { error } = await supabase
-        .from('comments')
-        .delete()
-        .eq('id', commentID)
+    try{
+        if(data[0]?.comment_by === comment_by_id){
+            const { error } = await supabase
+                .from('comments')
+                .delete()
+                .eq('id', commentID)
+            if(error){
+                console.log('jakiś błąd: ',error)
+            }
+        }
+        else{
+            return res.status(500).json({ error: 'Nie mozesz usunac czyjegos komentarza' }); 
+        }
+    }catch(err){
+        console.log(err)
     }
-    else{
-        return res.status(500).json({ error: 'Nie mozesz usunac czyjegos komentarza' });    }
-    
 
 })
 

@@ -50,7 +50,6 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
 
     setUser(user)
 
-    console.log(user)
     console.log(data)
   }
 
@@ -95,6 +94,8 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
 
       const { data: { user } } = await supabase.auth.getUser()
       const { data, error } = await supabase.auth.getSession()
+
+      console.log(user)
   
       setUser(user)
 
@@ -250,7 +251,10 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
     setPublicUser(null)
   }
 
+  console.log('kuuurwa', user)
+  
 
+  console.log(comments)
   return (
     <div className="App">
       <div className='central-page'>
