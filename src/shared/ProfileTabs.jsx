@@ -4,6 +4,7 @@ import './ProfileTabs.css';
 import { Link, useLocation } from 'react-router-dom';
 import { MyAvatar } from './Avatar';
 import { CommentsAvatar } from './commentsAvatar';
+import { ItemDialog } from './ItemDialog';
 
 
 export const ProfileTabs = (props) => {
@@ -35,7 +36,8 @@ export const ProfileTabs = (props) => {
 
                         <div className="item-hover-button">
                         <button className='trade-item-button'>
-                          Przekaz przedmiot
+                          <ItemDialog/>
+                          {/* Przekaz przedmiot */}
                         </button>
                       </div>
                       }
@@ -53,11 +55,7 @@ export const ProfileTabs = (props) => {
       <Tabs.Content className="TabsContent" value="tab2">
 
         {
-          location.pathname !== '/main' &&
-
-
-
-      
+          location.pathname !== '/main' &&      
 
           <form className="add-comment-tab" onSubmit={props.handleAddComment}>
             <textarea className='textarea-add-comment' placeholder='Dodaj komentarz' name='comment' type="text" />

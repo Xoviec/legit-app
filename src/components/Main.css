@@ -110,6 +110,7 @@ a:active {
   font-size: 25px;
   padding: 0 15px 0 15px;
   font-size: 18px;
+  font-weight: 400;
 }
 
 .search-bar:focus{
@@ -625,7 +626,10 @@ h1{
 }
 
 .welcomer p{
+  position: relative;
   font-size: 23px;
+  font-weight: 500;
+  z-index: 2;
 }
 
 .welcomer span{

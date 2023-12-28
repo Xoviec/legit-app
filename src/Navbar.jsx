@@ -22,7 +22,7 @@ export const Navbar = () =>{
         <nav>
             <Link to='/main'>
                 <div className="logo">
-                    <img src={logo} alt="" />   
+                    <img src={logo} alt="legited-logo" />   
                 </div>
             </Link>
 
