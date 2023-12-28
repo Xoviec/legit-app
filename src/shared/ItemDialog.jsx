@@ -1,17 +1,38 @@
 import React from 'react';
 import { useState } from 'react';
+import { CommentsAvatar } from './commentsAvatar';
+import { Link, useLocation } from 'react-router-dom';
+import axios from 'axios';
+import { supabase } from '../components/supabaseClient';
 
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import './ItemDialog.css'
+import { useRef } from 'react';
+import { useEffect } from 'react';
 
 
-export const ItemDialog = () =>{
+export const ItemDialog = (props) =>{
 
   const API = process.env.REACT_APP_API
 
+  const inputRef = useRef()
   const[foundUsers, setFoundUsers] = useState()
   const[newOwner, setNewOwner] = useState('')
+  const[user, setUser] = useState()
+
+
+  const getUserData = async () =>{
+
+    const { data: { user } } = await supabase.auth.getUser()
+
+    setUser(user)
+  }
+
+  useEffect(()=>{
+
+    getUserData()
+  }, [])
 
 
   const handleUpdateFoundUsers = async (e) =>{
@@ -28,6 +49,43 @@ export const ItemDialog = () =>{
         console.log(err)
     }
 }
+
+  const handleSetNewOwner = (user) =>{
+
+    setNewOwner(user.id)
+    setFoundUsers()
+    inputRef.current.value = user.nickname;
+
+  }
+
+
+  const handleTradeItem = async (item) =>{
+        
+    const currentOwner = item.current_owner
+
+    console.log(item.id)
+
+    console.log(currentOwner)
+    console.log(newOwner)
+    console.log(user)
+
+    if(item.id && currentOwner && newOwner && newOwner!==currentOwner){
+        try{
+            await axios.post(`${API}/change-owner`, {
+                registerID: item.id,
+                currentOwner: currentOwner,
+                newOwner: newOwner,
+                verifyID: user.id
+            });
+        setNewOwner()
+        }catch(error){
+            console.log(error.response ? error.response.data.error : error)
+        }
+    }
+    else{
+        console.log("coś poszło nie tak")
+    }
+  }
   
     return(
         <Dialog.Root>
@@ -45,15 +103,18 @@ export const ItemDialog = () =>{
                   <label className="Label" htmlFor="name">
                     Wybierz uzytkownika
                   </label>
-                  <input onChange={handleUpdateFoundUsers} className="Input" id="name" />
+                  <input ref={inputRef} onChange={handleUpdateFoundUsers} className="Input" id="name" />
                   <div className="foundUsersList">
                   {
                         foundUsers?.length > 0 && 
                         foundUsers?.map((user)=>(
-                            <div key={user.id}>
-                                <p>Nickname: {user.nickname}</p>
-                                <p>ID: {user.id}</p>
-                                <button onClick={(()=>setNewOwner(user.id))}>Wybierz uzytkownika</button>
+                            <div className='foundUser' key={user.id}>
+                                <CommentsAvatar avatar={user.avatar} nickname={user.nickname}/>
+                                <Link to={`/Users/${user.nickname}`}>
+                                  <p className='comment-author'>{user.nickname}</p>
+                                </Link>
+                                {/* <p>ID: {user.id}</p> */}
+                                <button className='select-user-button' onClick={(()=>handleSetNewOwner(user))}>Wybierz</button>
                             </div>
                         ))
                 
@@ -61,15 +122,10 @@ export const ItemDialog = () =>{
                   </div>
                
                 </fieldset>
-                <fieldset className="Fieldset">
-                  <label className="Label" htmlFor="username">
-                    Username
-                  </label>
-                  <input className="Input" id="username" defaultValue="@peduarte" />
-                </fieldset>
+
                 <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
                   <Dialog.Close asChild>
-                    <button className="Button green">Save changes</button>
+                    <button onClick={()=>handleTradeItem(props.item)} className="Button green">Save changes</button>
                   </Dialog.Close>
                 </div>
                 <Dialog.Close asChild>

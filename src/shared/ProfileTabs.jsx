@@ -36,7 +36,7 @@ export const ProfileTabs = (props) => {
 
                         <div className="item-hover-button">
                         <button className='trade-item-button'>
-                          <ItemDialog/>
+                          <ItemDialog item={item}/>
                           {/* Przekaz przedmiot */}
                         </button>
                       </div>

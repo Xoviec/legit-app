@@ -159,7 +159,23 @@ input {
 
 
 .foundUsersList{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
     background-color: bisque;
     overflow-y: scroll;
-    max-height: 3rem;
+    max-height: 9rem;
+    gap: 1rem;
+    padding: 0.5rem;
+}
+
+.foundUser{
+    gap: 1rem;
+    display: flex;
+    align-items: center;
+}
+
+.select-user-button{
+    flex: 1;
+    text-align: right;
 }
