@@ -37,14 +37,7 @@ export const Main = () =>{
         }
     }, [path])
 
-    // useEffect(() => {
-    //     if (nameFromLocalStorage && location.pathname === `/users/${nameFromLocalStorage}`) {
-    //       navigate('/main');
-    //     }
-    //   }, [nameFromLocalStorage, location.pathname]);
       
-
-
  
 
     console.log('xd', location.pathname)

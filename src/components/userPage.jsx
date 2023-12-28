@@ -151,6 +151,19 @@ export const UserPage = (key) =>{
 
         e.preventDefault()
 
+        const newCommentData = {
+            comment_by: user.id,
+            comment_on: displayUser.id,
+            content: e.target.comment.value
+        }
+
+        const newCommentList = [...commentsList, newCommentData]
+
+        console.log(newCommentData)
+
+        console.log(newCommentList)
+        // setCommentsList(newCommentList)
+
         try{
             const userResponse = await fetch(`${API}/secret/${user.id}`)
             const usersDataResponse = await userResponse.json()

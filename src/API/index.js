@@ -578,6 +578,7 @@ app.post('/delete-comment', async function (req, res){
                 .from('comments')
                 .delete()
                 .eq('id', commentID)
+                .eq('comment_by',comment_by_id)
             if(error){
                 console.log('jakiś błąd: ',error)
             }
