@@ -90,7 +90,7 @@ export const ItemDialog = (props) =>{
     return(
         <Dialog.Root>
             <Dialog.Trigger asChild>
-              <button className="Button violet">Edit profile</button>
+              <button className="trade-item-button">Prześlij przedmiot</button>
             </Dialog.Trigger>
             <Dialog.Portal>
               <Dialog.Overlay className="DialogOverlay" />
@@ -104,9 +104,12 @@ export const ItemDialog = (props) =>{
                     Wybierz uzytkownika
                   </label>
                   <input ref={inputRef} onChange={handleUpdateFoundUsers} className="Input" id="name" />
-                  <div className="foundUsersList">
                   {
-                        foundUsers?.length > 0 && 
+                    foundUsers?.length > 0 && 
+
+                    <div className="foundUsersList">
+
+                      {
                         foundUsers?.map((user)=>(
                             <div className='foundUser' key={user.id}>
                                 <CommentsAvatar avatar={user.avatar} nickname={user.nickname}/>
@@ -114,18 +117,20 @@ export const ItemDialog = (props) =>{
                                   <p className='comment-author'>{user.nickname}</p>
                                 </Link>
                                 {/* <p>ID: {user.id}</p> */}
-                                <button className='select-user-button' onClick={(()=>handleSetNewOwner(user))}>Wybierz</button>
+                                <button className='select-user-button button green' onClick={(()=>handleSetNewOwner(user))}>Wybierz</button>
                             </div>
                         ))
+                      }
+                    </div>
+
                 
                     }
-                  </div>
                
                 </fieldset>
 
                 <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
                   <Dialog.Close asChild>
-                    <button onClick={()=>handleTradeItem(props.item)} className="Button green">Save changes</button>
+                    <button onClick={()=>handleTradeItem(props.item)} className="Button green">Prześlij</button>
                   </Dialog.Close>
                 </div>
                 <Dialog.Close asChild>

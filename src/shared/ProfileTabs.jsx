@@ -35,10 +35,8 @@ export const ProfileTabs = (props) => {
                         location.pathname === '/main' &&
 
                         <div className="item-hover-button">
-                        <button className='trade-item-button'>
                           <ItemDialog item={item}/>
                           {/* Przekaz przedmiot */}
-                        </button>
                       </div>
                       }
                 
