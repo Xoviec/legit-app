@@ -11,6 +11,8 @@ import {Mainpage} from "./components/Main";
 import { Navbar } from "./Navbar";
 import { useEffect } from "react";
 import { LoggedCheck } from "./components/loggedCheck";
+import { AdminCheck } from "./components/adminCheck";
+import { AdminPanel } from "./components/AdminPanel";
 
 export const Main = () =>{
 
@@ -60,10 +62,14 @@ export const Main = () =>{
 
 
             <Route element={<LoggedCheck />}>
-
                 <Route path='/settings' element={<Settings/>}/>
-
             </Route>
+
+            <Route element={<AdminCheck />}>
+                <Route path='/adminpanel' element={<AdminPanel/>}/>
+            </Route>
+
+            
 
             <Route path='/main' element={<Mainpage/>}/>
 
