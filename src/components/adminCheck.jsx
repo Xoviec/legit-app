@@ -31,7 +31,7 @@ export const AdminCheck = () => {
         return <Navigate to="/main" replace />;
     } else if (item && !dataLoaded) {
         return (
-            <div>Loading...</div>
+            <div>Weryfikowanie</div>
         );
     } else if (dataLoaded && user.account_type !== 'admin') {
         return <Navigate to="/main" replace />;

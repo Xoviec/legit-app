@@ -303,7 +303,7 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
 
        
       </div>
-      {/* {
+      {
         publicUser && 
         <div>Witaj, {publicUser?.nickname} - {publicUser?.id}</div>
       }
@@ -369,7 +369,7 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
         itemsList?.map((item)=>(
           <div>{item.name} - {item.id}</div>
         ))
-      } */}
+      }
       
     </div>
     

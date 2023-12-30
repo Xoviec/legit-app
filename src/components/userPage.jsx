@@ -228,7 +228,7 @@ export const UserPage = (key) =>{
 
 
 
-            {usernameFromPath}-{displayUser?.id}
+            {/* {usernameFromPath}-{displayUser?.id}
 
 
             <p>Przedmioty uzytkownika {usernameFromPath}</p>
@@ -286,7 +286,7 @@ export const UserPage = (key) =>{
                         <button type='submit'>Dodaj komentarz</button>
                     </form>
                 </div>
-            </div>
+            </div> */}
 
         </div>
     )
