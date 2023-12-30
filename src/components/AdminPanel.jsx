@@ -102,11 +102,13 @@ export const AdminPanel = () =>{
             console.log(e.target.value)
             setOwnerId(e.target.value)
             handleUpdateFoundUsers(e.target.value)
+            handleUpdateFoundItems()
             }
             //zmiana state do szukania itemu 
             else{
             setOgItemIdVal(e.target.value)
             handleUpdateFoundItems(e.target.value)
+            handleUpdateFoundUsers()
             }
         }
 
@@ -204,44 +206,44 @@ export const AdminPanel = () =>{
         <form onChange={handleRegisterChange} onSubmit={handleRegisterItem}>
             <span>Nazwa przedmiotu</span>
             <input type="text" placeholder='Yeezy 350' name='ogItemId' value={ogItemIdVal}/>
-            <div className="found-items">
 
             {
-            foundItems?.length > 0 && 
-            foundItems?.map((item)=>(
-                <div className='found-item' key={item.id}>
-                    <p>{item.name}</p>
-                    {/* <p>ID: {item.id}</p> */}
-                    <button onClick={
-                      (()=>handleSetFoundItem(item))}>Wybierz</button>
+            foundItems?.length > 0 && (
+                <div className="pre-list">
+                <div className="found-items">
+                    {foundItems.map((item) => (
+                    <div className='found-item' key={item.id}>
+                        <p>{item.name}</p>
+                        {/* <p>ID: {item.id}</p> */}
+                        <button onClick={() => handleSetFoundItem(item)}>Wybierz</button>
+                    </div>
+                    ))}
                 </div>
-            ))
-    
-        }
-            </div>
+                </div>
+            )
+            }
+
+         
+
             <span>Uzytkownik</span>
             <input type="text" placeholder='Xoviec' name='ownerHistory' value={ownerId}/>
+            {
+            foundUsers?.length > 0 && (
+                <div className="pre-list">
+                <div className="found-items">
+                    {foundUsers.map((user) => (
+                    <div className='found-item' key={user.id}>
+                        <p>{user.nickname}</p>
+                        {/* <p>ID: {user.id}</p> */}
+                        <button onClick={() => handleSetNewOwner(user)}>Wybierz</button>
+                    </div>
+                    ))}
+                </div>
+                </div>
+            )
+            }
             <button type='submit'>Przypisz</button>
         </form>
-      </div>
-
-
-      <div>
-        <p>Wybierz uzytkownika:</p>
-        {
-            foundUsers?.length > 0 && 
-            foundUsers?.map((user)=>(
-                <div key={user.id}>
-                    <p>Nickname: {user.nickname}</p>
-                    <p>ID: {user.id}</p>
-                    <button onClick={(()=>handleSetNewOwner(user))}>Wybierz uzytkownika</button>
-                </div>
-            ))
-        }
-      </div>
-      <div>
-        <p>Wybierz item:</p>
-
       </div>
       <p>Items:</p>
       {

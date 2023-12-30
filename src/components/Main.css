@@ -694,10 +694,26 @@ h1{
   margin-bottom: 1rem;
 }
 
+.found-items{
+    background-color: #fff;
+    border: 1px solid var(--secondary-bg-color);
+
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    /* background-color: bisque; */
+    overflow-y: scroll;
+    max-height: 20rem;
+    padding: 0 0.5rem 0 0.5rem;
+}
+
 .found-item{
   display: flex;
   justify-content: space-between;
   align-items: center;
+  border-bottom: 1px solid var(--secondary-bg-color);
+
 }
 
 .found-item button{
@@ -707,4 +723,12 @@ h1{
   text-align: right;
   cursor: pointer;
   max-width: 6rem;
+  margin: 0.5rem 0 0.5rem 0;
+}
+
+.pre-list{
+  width: 100%;
+  background-color: #259F87;
+  position: relative;
+  
 }
