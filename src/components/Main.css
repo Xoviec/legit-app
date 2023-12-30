@@ -730,5 +730,16 @@ h1{
   width: 100%;
   background-color: #259F87;
   position: relative;
-  
+}
+
+.items-table{
+  width: 50rem;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.table-item{
+  display: flex;
+  justify-content: space-between;
 }

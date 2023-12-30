@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { supabase } from './supabaseClient';
 import { Link } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 
@@ -22,6 +24,29 @@ export const AdminPanel = () =>{
 
 
     const API = process.env.REACT_APP_API
+
+    const itemRegisterSuccess = (item) => toast.success(`Pomyślnie dodano ${item}`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+
+
+    const itemAssignSuccess = (item) => toast.success(`Pomyślnie przypisano ${item} uzytkownikowi ${user}`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
 
 
     useEffect(() => {
@@ -127,7 +152,10 @@ export const AdminPanel = () =>{
             await axios.post(`${API}/items`, {
               itemData: data,
               accountType: publicUser.account_type,
-            });
+            })
+            .then(
+                itemRegisterSuccess(e.target.name.value)
+            )
           }catch(err){
             console.log(err)
             setItemsList((previousArr) => (previousArr.slice(0, -1)));
@@ -163,7 +191,10 @@ export const AdminPanel = () =>{
                 itemData: data,
                 accountType: publicUser.account_type,
               }),
-            ]);
+              itemAssignSuccess(assignedItem, newOwner.nickname)
+
+            ])
+     
           }catch(err){
             console.log(err)
           }
@@ -173,6 +204,19 @@ export const AdminPanel = () =>{
 
     return(
         <div className='admin-panel'>
+
+            <ToastContainer
+                    position="bottom-right"
+                    autoClose={5000}
+                    hideProgressBar={false}
+                    newestOnTop={false}
+                    closeOnClick
+                    rtl={false}
+                    pauseOnFocusLoss
+                    draggable
+                    pauseOnHover
+                    theme="light"
+            /> 
             {
                 publicUser && 
                 <div>Witaj, {publicUser?.nickname} - {publicUser?.account_type}</div>
@@ -246,12 +290,18 @@ export const AdminPanel = () =>{
         </form>
       </div>
       <p>Items:</p>
-      {
-        
-        itemsList?.map((item)=>(
-          <div>{item.name} - {item.id}</div>
-        ))
-      }
+      <div className="items-table">
+        {
+            
+            itemsList?.map((item)=>(
+            <div className="table-item">
+                <p>{item.name}</p>
+                <p>{item.id}</p>
+            </div>
+            ))
+        }
+      </div>
+  
       
     </div>
     )
