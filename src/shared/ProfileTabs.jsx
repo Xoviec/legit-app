@@ -5,11 +5,37 @@ import { Link, useLocation } from 'react-router-dom';
 import { MyAvatar } from './Avatar';
 import { CommentsAvatar } from './commentsAvatar';
 import { ItemDialog } from './ItemDialog';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 export const ProfileTabs = (props) => {
   
   const location = useLocation();
+
+  const notify = (nickname) => toast.success(`Przedmiot przesłany pomyślnie do uzytkownika ${nickname}`, {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    });
+
+  const tradeError = () => toast.error('Błąd podczas przesyłania przedmiotu', {
+    position: "bottom-right",
+    autoClose: 5000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "light",
+    });
+
+
 
 
   console.log('xd', props.userItemsList)
@@ -26,7 +52,19 @@ export const ProfileTabs = (props) => {
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content className="TabsContent" value="tab1">
-        <p className='item-counter'>{props?.userItemsList?.length} przedmiotów</p>
+      <ToastContainer
+        position="bottom-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />       
+          <p className='item-counter'>{props?.userItemsList?.length} przedmiotów</p>
           <div className="items-container">
               {
                 props?.userItemsList?.map((item)=>(
@@ -35,7 +73,7 @@ export const ProfileTabs = (props) => {
                         location.pathname === '/main' &&
 
                         <div className="item-hover-button">
-                          <ItemDialog item={item}/>
+                          <ItemDialog notify={notify} tradeError={tradeError} item={item}/>
                           {/* Przekaz przedmiot */}
                       </div>
                       }

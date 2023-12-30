@@ -52,7 +52,7 @@ export const ItemDialog = (props) =>{
 
   const handleSetNewOwner = (user) =>{
 
-    setNewOwner(user.id)
+    setNewOwner(user)
     setFoundUsers()
     inputRef.current.value = user.nickname;
 
@@ -69,21 +69,36 @@ export const ItemDialog = (props) =>{
     console.log(newOwner)
     console.log(user)
 
-    if(item.id && currentOwner && newOwner && newOwner!==currentOwner){
+    if(item.id && currentOwner && newOwner?.id && newOwner?.id!==currentOwner){
         try{
             await axios.post(`${API}/change-owner`, {
                 registerID: item.id,
                 currentOwner: currentOwner,
-                newOwner: newOwner,
+                newOwner: newOwner.id,
                 verifyID: user.id
-            });
-        setNewOwner()
-        }catch(error){
+
+            
+            })
+
+            .then(
+              props.notify(newOwner.nickname),
+              setNewOwner()
+            )
+
+            
+
+        
+        }
+        catch(error){
+            props.tradeError()
             console.log(error.response ? error.response.data.error : error)
         }
     }
     else{
+      props.tradeError()
+
         console.log("coś poszło nie tak")
+        
     }
   }
   
@@ -130,14 +145,19 @@ export const ItemDialog = (props) =>{
 
                 <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
                   <Dialog.Close asChild>
-                    <button onClick={()=>handleTradeItem(props.item)} className="Button green">Prześlij</button>
+                    <button onClick={()=>handleTradeItem(props.item)} className="Button green">
+                      Prześlij
+                    </button>
+
                   </Dialog.Close>
+                  
                 </div>
                 <Dialog.Close asChild>
                   <button className="IconButton" aria-label="Close">
                     <Cross2Icon />
                   </button>
                 </Dialog.Close>
+
               </Dialog.Content>
             </Dialog.Portal>
           </Dialog.Root>
