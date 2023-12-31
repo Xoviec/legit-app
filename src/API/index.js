@@ -27,19 +27,6 @@ const supabase = createClient(
     process.env.REACT_APP_SUPABASE_ANON_KEY
 );
 
-
-// const gc = new Storage({
-//     keyFilename: path.join(__dirname, 'direct-subset-406517-b59aff2e65d5.json'),
-//     projectId: 'direct-subset-406517'
-// })
-
-// gc.getBuckets().then(x=>console.log(x))
-
-
-
-// const avatarsBucket = gc.bucket('legited-avatars')
-
-
 async function uploadFile(bucketName, fileBuffer, fileOutputName) {
     try {
         const projectId = 'direct-subset-406517';
@@ -49,14 +36,12 @@ async function uploadFile(bucketName, fileBuffer, fileOutputName) {
 
         const file = bucket.file(fileOutputName);
 
-        // Przesyłanie pliku
         await file.save(fileBuffer);
 
-        // Pobieranie bezpośredniego linku do przesłanego pliku
         const [metadata] = await file.getMetadata();
         const fileUrl = await file.getSignedUrl({
             action: 'read',
-            expires: '01-01-2100', // Dostosuj do swoich potrzeb
+            expires: '01-01-2100', 
         });
 
         return fileUrl[0];
@@ -65,20 +50,6 @@ async function uploadFile(bucketName, fileBuffer, fileOutputName) {
         throw error;
     }
 }
-
-
-
-// (async () => {
-//     try {
-//         const fileUrl = await uploadFile('legited-avatars', path.join(__dirname, 'essa.txt'), 'nazwa.txt');
-//         console.log('Direct link to the uploaded file:', fileUrl);
-//     } catch (error) {
-//         console.error('Error elooo:', error);
-//     }
-// })();
-
-
-
 
 //wszyscy uzytkownicy
 
@@ -283,9 +254,6 @@ app.post('/set-avatar', upload.single('file'), async (req, res) => {
 });
 
 
-
-
-// dodanie itemów
 app.post('/items', async function (req, res){
 
     if(req.body.accountType==='admin'){
@@ -295,7 +263,6 @@ app.post('/items', async function (req, res){
     }
 })
 
-// zmiana własciciela
 app.post('/change-owner', async function (req, res){
 
 
@@ -342,10 +309,6 @@ app.post('/change-owner', async function (req, res){
     }else{
         return res.status(500).json({ error: 'Nie możesz przekazać nie swojego przedmiotu' });
     }
-
-    
-
-
         
 })
 
@@ -406,7 +369,6 @@ app.post('/register-item', async function(req, res){
     }
 })
 
-// wyswietla wszystkie zarejestrowane itemy
 app.get('/legited-items', async function (req, res){
     const { data, error } = await supabase.from('legited_items').select()
     res.send(data)
@@ -417,52 +379,44 @@ app.get('/most-items', async function (req, res){
 
     try{
 
-    
-    const {data, error} = await supabase
-        .from('legited_items')
-        .select('current_owner')
+        const {data, error} = await supabase
+            .from('legited_items')
+            .select('current_owner')
 
-
-        if(error){
-            throw error
-        }
-
-
-
-        const result = data.reduce((acc, item) => {
-            const key = item.current_owner
-            if (!acc.hasOwnProperty(key)) {
-              acc[key] = 0
+            if(error){
+                throw error
             }
-            acc[key] += 1
-            return acc
-          }, {})
-          
-          // not sure why you want the result to be multiple objects. But here you go:
-          
-          const output = await Promise.all(
-            Object.entries(result).map(async ([key, value]) => {
-              const { data: userData, error: userError } = await supabase
-                .from('users')
-                .select('nickname, avatar')
-                .eq('id', key)
-          
- 
-              return {
-                userID: key,
-                itemAmount: value,
-                nickname: userData[0].nickname,
-                avatar: userData[0].avatar
-              };
-            })
-          );
 
-          const sortedOutput = output.sort((a,b)=>
-            b.itemAmount - a.itemAmount
-          )
+            const result = data.reduce((acc, item) => {
+                const key = item.current_owner
+                if (!acc.hasOwnProperty(key)) {
+                acc[key] = 0
+                }
+                acc[key] += 1
+                return acc
+            }, {})
+            
+            const output = await Promise.all(
+                Object.entries(result).map(async ([key, value]) => {
+                const { data: userData, error: userError } = await supabase
+                    .from('users')
+                    .select('nickname, avatar')
+                    .eq('id', key)
+            
+                    return {
+                        userID: key,
+                        itemAmount: value,
+                        nickname: userData[0].nickname,
+                        avatar: userData[0].avatar
+                    };
+                    })
+                );
 
+            const sortedOutput = output.sort((a,b)=>
+                b.itemAmount - a.itemAmount
+            )
 
-        res.send(sortedOutput)
+            res.send(sortedOutput)
 
     }catch(error){
 
@@ -470,12 +424,8 @@ app.get('/most-items', async function (req, res){
         res.status(500).send('Internal Server Error'); // or handle the error as needed
 
     }
+})
 
-        
-
-        })
-
-// update nicku
 app.post('/update-nickname', async function (req, res){
     console.log(req.body.id)
     console.log(req.body.newNickname)
@@ -484,62 +434,49 @@ app.post('/update-nickname', async function (req, res){
         .update({ nickname: req.body.newNickname })
         .eq('id', req.body.id)
     if(error){
-
-    return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji nickname.' });
+        return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji nickname.' });
     }
 })
 
-//szukanie komentarzy na profilu użytkownika
 app.get('/get-comments/:id', async function (req, res){
     
     const { id } = req.params;
 
     try{
+        const { data: commentData, error: commentError } = await supabase
+            .from('comments')
+            .select()
+            .eq('comment_on', id);
+        if(commentError){
+            console.log(commentError)
+        }
 
-    
+        let output
+        console.log('comment data:', commentData)
 
-    const { data: commentData, error: commentError } = await supabase
-        .from('comments')
-        .select()
-        .eq('comment_on', id);
-    if(commentError){
-        console.log(commentError)
-    }
+        if(commentData){
 
-    let output
-    console.log('comment data:', commentData)
+            output = await Promise.all(commentData.map( async (comment, i) =>{
 
+                const { data: userData, error: userError } = await supabase
+                    .from('users')
+                    .select('nickname, avatar')
+                    .eq('id', comment.comment_by)
 
-    if(commentData){
-
-        output = await Promise.all(commentData.map( async (comment, i) =>{
-
-            const { data: userData, error: userError } = await supabase
-                .from('users')
-                .select('nickname, avatar')
-                .eq('id', comment.comment_by)
-
-
-                return{
-                    ...comment,
-                    comment_by_nickname: userData[0].nickname,
-                    avatar: userData[0].avatar
-                }
-                
-        }))
-    }
-    console.log('console log outputu', output)
-
-
-    res.send(output)
-
-    }
-    catch(error){
-        res.status(500).json({ error: 'Wystąpił błąd podczas przetwarzania żądania.' });
-    }
+                    return{
+                        ...comment,
+                        comment_by_nickname: userData[0].nickname,
+                        avatar: userData[0].avatar
+                    }
+            }))
+        }
+        res.send(output)
+        }
+        catch(error){
+            res.status(500).json({ error: 'Wystąpił błąd podczas przetwarzania żądania.' });
+        }
 })
 
-//dodawanie komentarza
 app.post('/add-comment', async function (req, res){
     console.log(req.body)
 
