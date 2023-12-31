@@ -58,11 +58,12 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
     try{
       const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
       const mostItemsData = await mostItemsRes.json();
+      console.log('topka', mostItems)
       setMostItems(mostItemsData)
   
       console.log(mostItemsData)
     }catch(error){
-      console.log(error)
+      console.log('topka error', error)
     }
 
   } 

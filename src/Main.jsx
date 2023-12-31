@@ -23,7 +23,7 @@ export const Main = () =>{
 
     console.log('xdd', path)
 
-    const excludedRoutes = ['/', '/login', '/register'];
+    const excludedRoutes = ['/', '/login', '/register', '/adminpanel'];
 
     const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
     const nameFromLocalStorage = item?.user.user_metadata.full_name

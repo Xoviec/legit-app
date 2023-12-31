@@ -4,6 +4,7 @@ import { supabase } from './supabaseClient';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import logo from '../Legited logo.svg'
 
 
 
@@ -205,6 +206,14 @@ export const AdminPanel = () =>{
 
     return(
         <div className='admin-panel'>
+                      <div className="login-nav">
+                <Link to='/main'>
+                    <div className="logo">
+                        <img src={logo} alt="" />   
+                    </div>    
+                </Link>
+
+            </div>
 
             <ToastContainer
                     position="bottom-right"

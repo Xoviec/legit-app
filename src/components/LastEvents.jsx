@@ -15,8 +15,8 @@ export const LastEvents = ({list}) =>{
                     <div className="ranking-card">
                         <MyAvatar user={list[i]}/>
                         <div className="card-right">
-                            <p className="register-info">{user.nickname}</p>
-                            <p className="register-time">{user.itemAmount} przedmiotów</p>
+                            <p className="register-info">{user?.nickname}</p>
+                            <p className="register-time">{user?.itemAmount} przedmiotów</p>
                         </div>
 
                     </div>

@@ -62,12 +62,10 @@ app.get('/nicknames', async function (req, res) {
 
 //znajdź przedmiot
 app.get('/search-items', async (req, res) => {
-    // Pobierz litery z parametru zapytania
     const searchLetters = req.query.letters;
   
-    // Jeśli parametr nie został przekazany, zwróć błąd
     if (!searchLetters) {
-      return res.status(400).json({ error: 'Parametr "letters" jest wymagany.' });
+      return res.status(400).json({ error: 'P' });
     }
   
     try {
@@ -379,44 +377,55 @@ app.get('/most-items', async function (req, res){
 
     try{
 
-        const {data, error} = await supabase
-            .from('legited_items')
-            .select('current_owner')
 
-            if(error){
-                throw error
+    const {data, error} = await supabase
+        .from('legited_items')
+        .select('current_owner')
+
+        if(error){
+            throw error
+        }
+
+
+
+        const result = data.reduce((acc, item) => {
+            const key = item.current_owner
+            if (!acc.hasOwnProperty(key)) {
+              acc[key] = 0
             }
+            acc[key] += 1
+            return acc
+          }, {})
 
-            const result = data.reduce((acc, item) => {
-                const key = item.current_owner
-                if (!acc.hasOwnProperty(key)) {
-                acc[key] = 0
+          // not sure why you want the result to be multiple objects. But here you go:
+
+          const output = await Promise.all(
+            Object.entries(result).map(async ([key, value]) => {
+              const { data: userData, error: userError } = await supabase
+                .from('users')
+                .select('nickname, avatar')
+                .eq('id', key)
+
+                if(userData[0]!== null){
+                console.log('essa', userData[0])
+
                 }
-                acc[key] += 1
-                return acc
-            }, {})
-            
-            const output = await Promise.all(
-                Object.entries(result).map(async ([key, value]) => {
-                const { data: userData, error: userError } = await supabase
-                    .from('users')
-                    .select('nickname, avatar')
-                    .eq('id', key)
-            
-                    return {
-                        userID: key,
-                        itemAmount: value,
-                        nickname: userData[0].nickname,
-                        avatar: userData[0].avatar
-                    };
-                    })
-                );
 
-            const sortedOutput = output.sort((a,b)=>
-                b.itemAmount - a.itemAmount
-            )
+              return {
+                userID: key,
+                itemAmount: value,
+                nickname: userData[0].nickname,
+                avatar: userData[0].avatar
+              };
+            })
+          );
 
-            res.send(sortedOutput)
+          const sortedOutput = output.sort((a,b)=>
+            b.itemAmount - a.itemAmount
+          )
+
+
+        res.send(sortedOutput)
 
     }catch(error){
 
@@ -424,7 +433,10 @@ app.get('/most-items', async function (req, res){
         res.status(500).send('Internal Server Error'); // or handle the error as needed
 
     }
-})
+
+
+
+        })
 
 app.post('/update-nickname', async function (req, res){
     console.log(req.body.id)
