@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 
+
 export const AdminPanel = () =>{
 
     const [itemsList, setItemsList] = useState()
@@ -217,10 +218,10 @@ export const AdminPanel = () =>{
                     pauseOnHover
                     theme="light"
             /> 
-            {
+            {/* {
                 publicUser && 
                 <div>Witaj, {publicUser?.nickname} - {publicUser?.account_type}</div>
-            }
+            } */}
 
       {/* {
         
@@ -289,18 +290,31 @@ export const AdminPanel = () =>{
             <button type='submit'>Przypisz</button>
         </form>
       </div>
-      <p>Items:</p>
-      <div className="items-table">
-        {
-            
-            itemsList?.map((item)=>(
-            <div className="table-item">
-                <p>{item.name}</p>
-                <p>{item.id}</p>
-            </div>
-            ))
-        }
-      </div>
+      <table className="items-table">
+        <thead >
+          <tr className="table-row">
+            <td>Item Name</td>
+            <td className='id-cell'>Item ID</td>
+            <td>SKU</td>
+            <td>Brand</td>
+          </tr>
+         
+        </thead>
+        <tbody>
+          {
+              
+              itemsList?.map((item)=>(
+              <tr className="table-row">
+                  <td>{item.name}</td>
+                  <td className='id-cell'>{item.id}</td>
+                  <td>{item.sku}</td>
+                  <td>{item.brand}</td>
+              </tr>
+              ))
+          }
+        </tbody>
+
+      </table>
   
       
     </div>
