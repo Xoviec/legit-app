@@ -22,6 +22,7 @@ export const AdminPanel = () =>{
     const [ogItemIdVal, setOgItemIdVal] = useState('')
     const[newOwner, setNewOwner] = useState()
     const[assignedItem, setAssignedItem] = useState()
+    const[legitedItemsList, setLegitedItemsList] = useState()
 
 
 
@@ -86,6 +87,15 @@ export const AdminPanel = () =>{
     
           } catch (error) {
             console.error('Error fetching data:', error);
+          }
+
+          try{
+            const legitedItemsRes = await fetch(`${API}/legited-items`); // szuka wszystkich uzytkownikow
+            const legitedItemsData = await legitedItemsRes.json();
+            setLegitedItemsList(legitedItemsData)
+            console.log(legitedItemsData)
+          }catch(err){
+            console.log(error)
           }
         };
 
@@ -206,14 +216,13 @@ export const AdminPanel = () =>{
 
     return(
         <div className='admin-panel'>
-                      <div className="login-nav">
-                <Link to='/main'>
-                    <div className="logo">
-                        <img src={logo} alt="" />   
-                    </div>    
-                </Link>
-
-            </div>
+          <div className="login-nav">
+            <Link to='/main'>
+                <div className="logo">
+                    <img src={logo} alt="" />   
+                </div>    
+            </Link>
+          </div>
 
             <ToastContainer
                     position="bottom-right"
@@ -318,6 +327,32 @@ export const AdminPanel = () =>{
                   <td className='id-cell'>{item.id}</td>
                   <td>{item.sku}</td>
                   <td>{item.brand}</td>
+              </tr>
+              ))
+          }
+        </tbody>
+
+      </table>
+
+      <table className="items-table">
+        <thead >
+          <tr className="table-row">
+            <td>Item Owner</td>
+            <td className='id-cell'>ID</td>
+            <td>OG ite id</td>
+            <td>Register date</td>
+          </tr>
+         
+        </thead>
+        <tbody>
+          {
+              
+              legitedItemsList?.map((item)=>(
+              <tr className="table-row">
+                  <td>{item.current_owner}</td>
+                  <td className='id-cell'>{item.id}</td>
+                  <td>{item.og_item_id}</td>
+                  <td>{item.legited_at}</td>
               </tr>
               ))
           }
