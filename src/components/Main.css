@@ -100,6 +100,9 @@ a:active {
 
 .search-bar{
   /* width: 100%; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   flex: 1;
   margin: 0 2rem 0 2rem;
   height: 2.7rem;
@@ -108,16 +111,44 @@ a:active {
   border: 1px solid var(--secondary-bg-color);
   /* border-radius: 0.5rem; */
   font-size: 25px;
-  padding: 0 15px 0 15px;
   font-size: 18px;
   font-weight: 400;
 }
 
-.search-bar:focus{
+.search-bar input{
+  width: 100%;
+  padding: 0 15px 0 15px;
+  height: 100%;
+}
+
+.found-users{
+  background-color: #fff;
+  border: 1px solid var(--secondary-bg-color);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  /* background-color: bisque; */
+  overflow-y: scroll;
+  z-index: 21;
+  max-height: 20rem;
+  padding: 0 0.5rem 0 0.5rem
+}
+
+.found-user{
+  padding: 0.3rem;
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  border-bottom: 1px solid var(--secondary-bg-color);
+  color: var(--main-text-color);
+}
+
+.search-bar input:focus .search-bar{
   outline: 1px solid var(--main-text-color);
 }
 
-.search-bar::placeholder{
+.search-bar input::placeholder{
   font-size: 18px;
   color: var(--main-text-color);
 }
@@ -472,6 +503,9 @@ h1{
 .logo img{
   height: 4rem;
 }
+
+
+
 
 .login-switch-tab{
   text-decoration: underline;
