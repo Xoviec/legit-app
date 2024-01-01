@@ -160,18 +160,13 @@ export const UserPage = (key) =>{
 
         const newCommentList = [...commentsList, newCommentData]
 
-        console.log(newCommentData)
-
-        console.log(newCommentList)
         // setCommentsList(newCommentList)
 
         try{
             const userResponse = await fetch(`${API}/secret/${user.id}`)
             const usersDataResponse = await userResponse.json()
-            console.log(usersDataResponse[0].nickname)
             setCommentVal('')
 
-            console.log('exdi')
             await axios.post(`${API}/add-comment`, {
                 comment_by: usersDataResponse[0].id,
                 comment_on: displayUser.id,

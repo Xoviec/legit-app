@@ -193,7 +193,10 @@ aside{
 .register-info{
   font-weight: 600;
   font-size: 18px;
+  color: var(--main-text-color);
 }
+
+
 
 .register-time{
   font-size: 15px;
@@ -652,7 +655,7 @@ h1{
 .item-register-form{
   padding: 1rem;
   background-color: #fff;
-  max-width: 30rem;
+  width: 30rem;
   border: 1px solid var(--secondary-bg-color);
   margin-top: 1rem;
 }

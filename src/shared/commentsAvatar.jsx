@@ -6,8 +6,6 @@ import './Avatar.css';
 export const CommentsAvatar = ({avatar, nickname}) => {
     
 
-  console.log('japierdole')
-
     return(
     <div style={{ display: 'flex', gap: 20 }}>
     <Avatar.Root className="CommentAvatarRoot">

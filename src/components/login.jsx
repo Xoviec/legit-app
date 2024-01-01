@@ -53,7 +53,6 @@ export const Login = ({handleSetUser}) =>{
             essa()
             if(!error)navigate('/')
             if (error) throw error
-            alert('udao sie')
         }  catch(error){
             alert(error)
         }

@@ -253,10 +253,8 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
     setPublicUser(null)
   }
 
-  console.log('kuuurwa', user)
   
 
-  console.log(comments)
   return (
     
 
@@ -304,23 +302,23 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
 
        
       </div>
-      {
+      {/* {
         publicUser && 
         <div>Witaj, {publicUser?.nickname} - {publicUser?.id}</div>
       }
       <div>
         <Link state={publicUser}to={`/settings`}>Ustawienia</Link>
 
-      </div>
-      {
+      </div> */}
+      {/* {
         
         userList?.map((appUser)=>(
           <Link className={`${appUser?.id===user?.id ? `user` : null}`} key={appUser.name} to={`/Users/${appUser.nickname}`}>{appUser.nickname}</Link>
         ))
-      }
+      } */}
   
 
-  
+{/*   
       <form onSubmit={handleAddItem}>
         <input type="text" placeholder='name' name='name'/>
         <input type="text" placeholder='sku' name='sku'/>
@@ -371,7 +369,7 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
           <div>{item.name} - {item.id}</div>
         ))
       }
-      
+       */}
     </div>
     
 
