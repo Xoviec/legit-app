@@ -225,7 +225,7 @@ export const Register = () =>{
                                 <p>Password</p>
                                 <p className={`required-alert ${isRequiredRegister ? `${formData.registerPassword ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
                             </div>
-                            <input type="text" placeholder="########" name="registerPassword" value={formData.registerPassword}/>
+                            <input type="password" placeholder="########" name="registerPassword" value={formData.registerPassword}/>
 
                             <button type="submit">Zarejestruj się</button>
                             <p className="terms">
@@ -254,7 +254,7 @@ export const Register = () =>{
                                 <p>Password</p>
                                 <p className={`required-alert ${isRequiredLogin ? `${formData.loginPassword ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
                             </div>
-                            <input type="text" placeholder="########" name="loginPassword" value={formData.loginPassword}/>
+                            <input type="password" placeholder="########" name="loginPassword" value={formData.loginPassword}/>
 
                             <button type="submit">Zaloguj się</button>
                             <p className="terms">
