@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from './Legited logo.svg'
 import { supabase } from './components/supabaseClient';
 import { useEffect, useState } from 'react';
-import { useStyleRegistry } from 'styled-jsx';
 import { CommentsAvatar } from './shared/commentsAvatar';
 
 
@@ -10,6 +9,8 @@ import { CommentsAvatar } from './shared/commentsAvatar';
 
 export const Navbar = () =>{
 
+    const location = useLocation();
+    const navigate = useNavigate();
 
     const API = process.env.REACT_APP_API
 

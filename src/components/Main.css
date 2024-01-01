@@ -144,6 +144,10 @@ a:active {
   color: var(--main-text-color);
 }
 
+.found-user:hover{
+  background-color: #ededed70;
+}
+
 .search-bar input:focus .search-bar{
   outline: 1px solid var(--main-text-color);
 }
