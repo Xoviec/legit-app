@@ -56,14 +56,6 @@ export const Register = () =>{
     }
     console.log(formData)
 
-    // const handleChange = (event) =>{
-    //     setFormData((prevFormData)=>{
-    //         return{
-    //             ...prevFormData,
-    //             [event.target.name]:event.target.value
-    //         }
-    //     })
-    // }
 
     // Tutaj to normalnie ma byc pierowotnie
     const handleSubmitRegister = async (e) =>{
@@ -83,7 +75,6 @@ export const Register = () =>{
             if(!error)navigate('/settings');
 
             if (error) throw error
-            // alert(error)
         }  catch(error){
 
             if(formData.registerPassword.length < 6){
@@ -96,7 +87,6 @@ export const Register = () =>{
                 setLoginError('Spróbuj ponownie później')
             }
             console.log(error.message)
-            // alert(error)
         }
 
     }
@@ -116,7 +106,6 @@ export const Register = () =>{
 
             if(!error)navigate('/')
             if (error) throw error
-            alert('udao sie')
         }  catch(error){
             // alert(error.name)
             // setLoginError('Zły adres email')
