@@ -810,3 +810,14 @@ td{
 .id-cell{
   flex: 2;
 }
+
+
+@media only screen and (max-width: 750px) {
+  .central-page {
+    flex-direction: column;
+  }
+
+  aside{
+    flex-direction: row;
+  }
+}
