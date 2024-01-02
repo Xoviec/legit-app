@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from './Legited logo.svg'
+import monogram from './monogram.svg'
 import { supabase } from './components/supabaseClient';
 import { useEffect, useState } from 'react';
 import { CommentsAvatar } from './shared/commentsAvatar';
@@ -63,6 +64,8 @@ export const Navbar = () =>{
             <Link to='/main'>
                 <div className="logo">
                     <img src={logo} alt="legited-logo" />   
+                    <img src={monogram} alt="legited-logo" className='monogram' />   
+
                 </div>
             </Link>
 
