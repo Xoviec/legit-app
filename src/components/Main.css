@@ -828,7 +828,7 @@ td{
   }
 }
 
-@media only screen and (max-width: 750px) {
+@media only screen and (max-width: 810px) {
 
 
   nav{
@@ -865,7 +865,7 @@ td{
     padding: 0;
   }
 
-  .logo img:first-child{
+  nav .logo img:first-child{
     display: none;
   }
 
