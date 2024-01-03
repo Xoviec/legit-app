@@ -24,7 +24,7 @@ export const Navbar = () =>{
       }
 
 
-      const handleUpdateFoundUsers = async (nickname) =>{
+    const handleUpdateFoundUsers = async (nickname) =>{
         const response = await fetch(`${API}/search-users?letters=${nickname}`);
         const data = await response.json();
 
@@ -36,27 +36,16 @@ export const Navbar = () =>{
         }catch(err){
             console.log(err)
         }
-}
+    }
+
+    const changeUserPage = (userProfile) =>{
+
+        setIsNavActive(false)
+        handleUpdateFoundUsers('')
+        navigate(`/Users/${userProfile}`, { replace: false })
 
 
-// const handleRegisterChange = (e) =>{
-//     //zmiana state do szukania usera
-//         if(e.target.name==='ownerHistory'){
-//         console.log(e.target.value)
-//         setOwnerId(e.target.value)
-//         handleUpdateFoundUsers(e.target.value)
-//         handleUpdateFoundItems()
-//         }
-//         //zmiana state do szukania itemu 
-//         else{
-//         setOgItemIdVal(e.target.value)
-//         handleUpdateFoundItems(e.target.value)
-//         handleUpdateFoundUsers()
-//         }
-//     }
-
-
-
+    }
 
     const isLogged = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
 
@@ -82,15 +71,15 @@ export const Navbar = () =>{
                     <div className="pre-list">
                     <div className="found-users">
                         {foundUsers.map((user) => (
-                        <Link to={`/Users/${user.nickname}`}>
-                            <div className='found-user' key={user.id}>
+                        // <Link to={`/Users/${user.nickname}`}>
+                            <button onClick={(()=>changeUserPage(user.nickname))} className='found-user' key={user.id}>
                                 <CommentsAvatar avatar={user.avatar} nickname={user.nickname}/>
                                 <p>{user.nickname}</p>
                                 {/* <p>ID: {item.id}</p> */}
                                 {/* <button onClick={() => handleSetFoundItem(item)}>Wybierz</button> */}
-                            </div>
+                            </button>
 
-                        </Link>
+                        // </Link>
     
                         ))}
                     </div>
