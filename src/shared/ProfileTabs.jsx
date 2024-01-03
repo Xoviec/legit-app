@@ -45,7 +45,7 @@ export const ProfileTabs = (props) => {
     <Tabs.Root className="TabsRoot" defaultValue="tab1">
       <Tabs.List className="TabsList" aria-label="Manage your account">
         <Tabs.Trigger className="TabsTrigger" value="tab1">
-          Przedmioty
+          Przedmioty ({props?.userItemsList?.length})
         </Tabs.Trigger>
         <Tabs.Trigger className="TabsTrigger" value="tab2">
           Legit check
@@ -64,7 +64,7 @@ export const ProfileTabs = (props) => {
         pauseOnHover
         theme="light"
       />       
-          <p className='item-counter'>{props?.userItemsList?.length} przedmiotów</p>
+          {/* <p className='item-counter'> przedmiotów</p> */}
           <div className="items-container">
               {
                 props?.userItemsList?.map((item)=>(
