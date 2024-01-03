@@ -69,7 +69,9 @@ export const Navbar = () =>{
                 </div>
             </Link>
             <button onClick={() => setIsNavActive(prev => !prev)} className='burger'>
-                x
+                <span></span>
+                <span></span>
+                <span></span>
             </button>
 
             <div className={`nav-links ${isNavActive ? `` : `disabled`}`}>

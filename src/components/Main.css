@@ -837,7 +837,19 @@ td{
 
 
   .burger{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    height: 5rem;
+    justify-content: center;
+    align-items: flex-end;
+  }
+
+  .burger span{
     display: block;
+    height: 1px;
+    width: 2rem;
+    background-color: var(--legited-dark-green);
   }
 
   .settings{
