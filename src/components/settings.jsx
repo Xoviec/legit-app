@@ -21,6 +21,7 @@ export const Settings = () =>{
 
     const [formData, setFormData] = useState({
         nickname: props?.nickname,
+        description: props?.description,
         email: props?.email,
         newPassword: '',
         confirmPassword: ''
@@ -52,11 +53,6 @@ export const Settings = () =>{
 
 
     }
-
-    // const handleChange = (e) =>{
-    //     setNickname(e.target.value)
-    // }
-
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -94,7 +90,6 @@ export const Settings = () =>{
             checkPasswordChange()
 
             if (error) throw error
-            // alert(error)
         }  catch(error){
             console.log(error)
         }
@@ -144,8 +139,10 @@ export const Settings = () =>{
                 <FileUploadForm avatar={publicUser?.avatar} userID={publicUser?.id} nickname={publicUser?.nickname}/>
 
                 <form className='change-nickname' onSubmit={handleSubmit} onChange={handleInputChange}>
-                    <p>Aktualny nickname</p>
+                    <p>Nickname</p>
                     <input className='nickname-input' type="text" value={formData.nickname} name='nickname'/>
+                    <p>Opis</p>
+                    <textarea className='nickname-input' type="text" value={formData.description} name='description'/>
                     <p>Email</p>
                     <input className='nickname-input' type="text" value={formData.email} name='email'/>
                     <p>Nowe hasło</p>
