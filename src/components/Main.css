@@ -513,6 +513,13 @@ h1{
   display:none;
 }
 
+.burger{
+  display: none;
+  flex: 1;
+  text-align: right;
+  width: 100%;
+}
+
 
 
 .login-switch-tab{
@@ -822,6 +829,29 @@ td{
 }
 
 @media only screen and (max-width: 750px) {
+
+
+  nav{
+    position: relative;
+  }
+
+
+  .burger{
+    display: block;
+  }
+
+  .settings{
+    gap: 1rem;
+
+  }
+
+  .search-bar{
+    flex: none;
+  }
+
+  .settings h1{
+    font-size: 35px;
+  }
   .central-page {
     flex-direction: column;
   }
@@ -845,6 +875,30 @@ td{
 
   .monogram{
     display: block;
+  }
+
+  .nav-links{
+    position: absolute;
+    flex-direction: column;
+    top: 5rem;
+    left: 0;
+    width: 100%;
+    gap: 1rem;
+    padding-top: 1rem;
+    /* display: none; */
+    background-color: var(--main-bg-color);
+    z-index: 2;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--secondary-bg-color);
+  }
+
+
+  .disabled{
+    display: none;
+  }
+
+  .rest{
+    flex-direction: column;
   }
 
   .settings-btn{
