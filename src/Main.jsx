@@ -16,20 +16,18 @@ import { AdminPanel } from "./components/AdminPanel";
 
 export const Main = () =>{
 
-    const location = useLocation();
+
     const navigate = useNavigate();
+
+    const location = useLocation();
 
     const path = location.pathname
 
-    console.log('xdd', path)
 
     const excludedRoutes = ['/', '/login', '/register', '/adminpanel'];
 
     const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
     const nameFromLocalStorage = item?.user.user_metadata.full_name
-
-    const handleRedirectUser = () =>{
-    }
 
 
     //to ponizej przekierowuje uzytkownika na strone glowna po wpisaniu w url /users/swoj nick
@@ -39,11 +37,6 @@ export const Main = () =>{
         }
     }, [path])
 
-      
- 
-
-    console.log('xd', location.pathname)
-
     return(
         <>
         {/* {(path !== '/login' && path!== '/register') && <Navbar/>} */}
@@ -52,11 +45,8 @@ export const Main = () =>{
         
 
         <Routes>
-            
-
             <Route path='/' element={<App/>}/>
             {/* <Route path={`/users/${nameFromLocalStorage}`}  element={<Mainpage/>}/> */}
-
 
             <Route path='/users/:nickname' element={<UserPage/>}/>
 

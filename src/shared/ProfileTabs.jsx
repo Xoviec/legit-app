@@ -38,7 +38,6 @@ export const ProfileTabs = (props) => {
 
 
 
-  console.log('xd', props.userItemsList)
   
   
   return(

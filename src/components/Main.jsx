@@ -5,7 +5,7 @@ import { supabase } from './supabaseClient';
 import { User } from '@supabase/supabase-js';
 import { Register } from './register';
 import { Login } from './login';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { ProfileTabs } from '../shared/ProfileTabs';
 import { MyAvatar } from '../shared/Avatar';
@@ -18,6 +18,13 @@ export const Mainpage =()=> {
 // supabase.auth.getUser()
 const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
 const nickNameFromLocalStorage = item?.user.user_metadata.full_name
+
+
+
+const location = useLocation();
+
+const path = location.pathname
+
 
 
 
@@ -51,31 +58,19 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
 
     setUser(user)
 
-    console.log(data)
   }
 
   const getMostItems = async () =>{
     try{
       const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
       const mostItemsData = await mostItemsRes.json();
-      console.log('topka', mostItems)
       setMostItems(mostItemsData)
   
-      console.log(mostItemsData)
     }catch(error){
-      console.log('topka error', error)
     }
 
   } 
 
-  const getComments = async () =>{
-
-    console.log('sraka')
-    console.log(user?.id)
-    // const commentsRes = await fetch(`${API}/get-comments/${user.id}`)
-    // const commentsData = await commentsRes.json()
-    // setComments(commentsData)
-  }
 
 
   const getUserItems = async () =>{
@@ -84,9 +79,7 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
       const userItemsListResponse = await fetch(`${API}/user-items/${nickNameFromLocalStorage}`);
       const userItemsData = await userItemsListResponse.json()
       setUserItemsList(userItemsData)
-      console.log(userItemsData)
     }catch(userItemsError){
-      console.log(userItemsError)
     }
   }
 
@@ -97,8 +90,6 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
       const { data: { user } } = await supabase.auth.getUser()
       const { data, error } = await supabase.auth.getSession()
 
-      console.log(user)
-  
       setUser(user)
 
       try{
@@ -106,7 +97,6 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
         const commentsData = await commentsRes.json()
         setComments(commentsData)
       }catch(commentsError){
-        console.log(commentsError)
       }
     
       try{
@@ -114,7 +104,6 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
         const publicUserData = await publicUserResponse.json();
         setPublicUser(publicUserData[0])
       }catch(userDataError){
-        console.log(userDataError)
       }
 
 
@@ -126,8 +115,6 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
 
         setUserList(usersData)
         setItemsList(itemsData)
-        console.log(user.email)
-        console.log(user.id)
 
 
       } catch (error) {
@@ -139,7 +126,7 @@ const nickNameFromLocalStorage = item?.user.user_metadata.full_name
     getUserItems()
     getMostItems()
     fetchData()
-  }, []);
+  }, [path]);
 
 
   const handleAddItem = async (e) =>{

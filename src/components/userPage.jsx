@@ -39,10 +39,8 @@ export const UserPage = (key) =>{
         try{
             const userResponse = await fetch(`${API}/secret/${user?.id}`)
             const usersDataResponse = await userResponse.json()
-            console.log(usersDataResponse[0].nickname)
             setUser(usersDataResponse[0])
 
-            console.log(user)
         }
         catch(err){
             console.log(err)
@@ -56,7 +54,6 @@ export const UserPage = (key) =>{
         const mostItemsData = await mostItemsRes.json();
         setMostItems(mostItemsData)
     
-        console.log(mostItemsData)
       } 
     
 
@@ -65,7 +62,6 @@ export const UserPage = (key) =>{
         try{
             const response = await fetch(`${API}/get-comments/${usernameFromPath}`);
             const data = await response.json();
-            console.log(data)
             setCommentsList(data)
 
         }catch(err){
@@ -80,9 +76,7 @@ export const UserPage = (key) =>{
                 const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
                 const userItemsListResponse = await fetch(`${API}/user-items/${usernameFromPath}`);
                 const userItemsList = await userItemsListResponse.json()
-                console.log(userItemsList)
                 const data = await response.json();
-                console.log(data[0].id)
 
                 try{
                     const commentsResponse = await fetch(`${API}/get-comments/${data[0].id}`);
@@ -94,7 +88,6 @@ export const UserPage = (key) =>{
                 }
                 setUserItemsList(userItemsList)
                 setDisplayUser(data[0])
-                console.log('dsadasdasxdddd',data[0])
             } catch (error) {
                 console.error('Błąd podczas pobierania danych:', error);
             }
@@ -109,11 +102,8 @@ export const UserPage = (key) =>{
 
 
     const handleUpdateFoundUsers = async (e) =>{
-        console.log(e.target.value)
             const response = await fetch(`${API}/search-users?letters=${e.target.value}`);
             const data = await response.json();
-
-            console.log(data)
             setFoundUsers(data)
 
         try{
@@ -148,7 +138,6 @@ export const UserPage = (key) =>{
     
     const handleAddComment = async (e) =>{
 
-        console.log(e.target.comment.value)
 
         e.preventDefault()
 
@@ -179,15 +168,12 @@ export const UserPage = (key) =>{
 
     const handleDeleteComment = async (event, id) =>{
 
-        console.log(event)
-        console.log(id)
         event.preventDefault()
         const newCommentList = commentsList.filter(((comment)=>comment.id !== id))
         setCommentsList(newCommentList)
      try{
         // const userResponse = await fetch(`${API}/secret/${user.id}`)
         // const usersDataResponse = await userResponse.json()
-        // console.log(usersDataResponse[0].id)
         await axios.post(`${API}/delete-comment`, {
             id: id,
             comment_by_id: user.id

@@ -4,8 +4,6 @@ import { Link } from 'react-router-dom';
 export const LastEvents = ({list}) =>{
 
 
-    console.log('elo', list)
-
     return(
         <aside>
 

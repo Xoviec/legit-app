@@ -4,6 +4,7 @@ import monogram from './monogram.svg'
 import { supabase } from './components/supabaseClient';
 import { useEffect, useState } from 'react';
 import { CommentsAvatar } from './shared/commentsAvatar';
+import { useRef } from 'react';
 
 
 
@@ -17,6 +18,8 @@ export const Navbar = () =>{
 
     const [foundUsers, setFoundUsers] = useState()
     const [isNavActive, setIsNavActive] = useState(false)
+
+    const searchRef = useRef();
 
     const logout = async()=>{
         await supabase.auth.signOut()
@@ -42,9 +45,8 @@ export const Navbar = () =>{
 
         setIsNavActive(false)
         handleUpdateFoundUsers('')
-        navigate(`/Users/${userProfile}`, { replace: false })
-
-
+        navigate(`/Users/${userProfile}`, { replace: false });
+        searchRef.current.value = ''
     }
 
     const isLogged = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
@@ -65,7 +67,7 @@ export const Navbar = () =>{
 
             <div className={`nav-links ${isNavActive ? `` : `disabled`}`}>
                 <div placeholder='Szukaj uzytkownika' className="search-bar">
-                    <input onChange={((e)=>handleUpdateFoundUsers(e.target.value))} type="text" placeholder='Szukaj uzytkownika'/>
+                    <input ref={searchRef} onChange={((e)=>handleUpdateFoundUsers(e.target.value))} type="text" placeholder='Szukaj uzytkownika'/>
                     {
                 foundUsers?.length > 0 && (
                     <div className="pre-list">
