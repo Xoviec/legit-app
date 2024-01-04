@@ -14,7 +14,8 @@ export const LastEvents = ({list}) =>{
             <Swiper
                     autoplay={true}
                     modules={[Autoplay]}
-                    autoplay={{delay: 5000}}
+                    autoplay={{delay: 3000}}
+
     
                 breakpoints={{
                     300: {
@@ -32,7 +33,7 @@ export const LastEvents = ({list}) =>{
 
 
                     },
-                    810: {
+                    811: {
                     // height: auto,
                     slidesPerView: 7,
                     spaceBetween: 10,
