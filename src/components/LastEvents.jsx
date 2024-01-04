@@ -12,26 +12,22 @@ export const LastEvents = ({list}) =>{
     return(
         <aside>
             <Swiper
-                    autoplay={true}
-                    modules={[Autoplay]}
-                    autoplay={{delay: 3000}}
 
-    
+                autoplay={true}
+                modules={[Autoplay]}
+                autoplay={{delay: 3000}}
                 breakpoints={{
                     300: {
                     // width: 640,
                         slidesPerView: 1,
                         spaceBetween: 10,
                         direction: 'horizontal',
-
                     },
                     600: {
                         // width: 768,
                         slidesPerView: 2,
                         spaceBetween: 10,
                         direction: 'horizontal',
-
-
                     },
                     811: {
                     // height: auto,
@@ -39,7 +35,6 @@ export const LastEvents = ({list}) =>{
                     spaceBetween: 10,
                     direction: 'vertical'
                     },
-         
                 }}
                 direction="horizontal"
 
@@ -55,7 +50,7 @@ export const LastEvents = ({list}) =>{
                     list.map((user, i)=>(
 
                         <SwiperSlide>
-                            <div className="ranking-card">
+                            <div className={`ranking-card card-${i+1}`}>
                                 <MyAvatar user={list[i]}/>
                                 <div className="card-right">
                                 <Link to={`/Users/${user.nickname}`}>

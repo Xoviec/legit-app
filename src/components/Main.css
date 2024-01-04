@@ -130,7 +130,7 @@ a:active {
   width: 100%;
   /* background-color: bisque; */
   overflow-y: scroll;
-  z-index: 21;
+  z-index: 2;
   max-height: 20rem;
   padding: 0 0.5rem 0 0.5rem
 }
@@ -214,16 +214,19 @@ aside{
   scale: 1.02;
 }
 
-.ranking-card:nth-of-type(1){
+.card-1{
   border: solid 2px hsla(42, 100%, 62%, 0.7);
+
 }
 
-.ranking-card:nth-of-type(2){
+.card-2{
   border: solid 2px  hsla(258, 7%, 72%, 0.7);
+
 }
 
-.ranking-card:nth-of-type(3){
+.card-3{
   border: solid 2px  hsla(27, 36%, 56%, 0.7);
+
 }
 
 
