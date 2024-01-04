@@ -54,29 +54,7 @@ export const Settings = () =>{
 
     }
 
-    const handleInputChange = (e) => {
-        const { name, value } = e.target;
-        setFormData((prevData) => ({
-          ...prevData,
-          [name]: value.replace(/\s+/g, '')
-        }));
-    
-        console.log(formData)
-      };
-
-    const handleSubmit = async (e) =>{
-
-        e.preventDefault()
-
-        try{
-            const { data, error } = await supabase.auth.updateUser({
-                email: formData.email
-            })
-
-        }catch(error){
-            console.log(error)
-        }
-
+    const updateNickname = async ()=>{
 
         try{
             const { data, error } = await supabase.auth.updateUser({
@@ -86,13 +64,60 @@ export const Settings = () =>{
                 newNickname: formData.nickname,
                 id: publicUser.id,
             });
-
-            checkPasswordChange()
-
-            if (error) throw error
         }  catch(error){
             console.log(error)
         }
+
+    }
+
+    const updateEmail = async()=>{
+
+        try{
+            const { data, error } = await supabase.auth.updateUser({
+                email: formData.email
+            })
+
+        }catch(error){
+            console.log(error)
+        }
+    }
+
+    const updateDescription = async()=>{
+        try{
+            await axios.post(`${API}/update-description`, {
+                newDescription: formData.description,
+                id: publicUser.id,
+            });
+
+
+        }  catch(error){
+            console.log(error)
+        }
+    }
+
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+          ...prevData,
+          [name]: name !== 'description' ? value.replace(/\s+/g, '') : value
+        }));
+    
+        console.log(formData)
+      };
+
+    const handleSubmit = async (e) =>{
+
+        e.preventDefault()
+
+        checkPasswordChange()
+        updateDescription()
+        updateEmail()
+        updateNickname()
+
+
+
+
+
     }
 
 

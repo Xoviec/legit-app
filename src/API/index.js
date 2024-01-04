@@ -450,6 +450,21 @@ app.post('/update-nickname', async function (req, res){
     }
 })
 
+app.post('/update-description', async function (req, res){
+    console.log(req.body.id)
+    console.log('halko', req.body.newDescription)
+    const { error } = await supabase
+        .from('users')
+        .update({ description: req.body.newDescription })
+        .eq('id', req.body.id)
+    if(error){
+        console.log(error)
+        return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji opisu.' });
+    }
+})
+
+
+
 app.get('/get-comments/:id', async function (req, res){
     
     const { id } = req.params;
