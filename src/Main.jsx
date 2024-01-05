@@ -13,6 +13,7 @@ import { useEffect } from "react";
 import { LoggedCheck } from "./components/loggedCheck";
 import { AdminCheck } from "./components/adminCheck";
 import { AdminPanel } from "./components/AdminPanel";
+import { NotFound } from "./components/NotFound";
 
 export const Main = () =>{
 
@@ -48,8 +49,14 @@ export const Main = () =>{
             <Route path='/' element={<App/>}/>
             {/* <Route path={`/users/${nameFromLocalStorage}`}  element={<Mainpage/>}/> */}
 
-            <Route path='/users/:nickname' element={<UserPage/>}/>
+            {/* <Route path='/users/:nickname' element={<UserPage/>}/> */}
 
+
+            <Route path='/users' >
+                <Route path=':nickname' element={<UserPage/>} />
+            </Route>
+
+            <Route path='*'  element={<NotFound />} />
 
             <Route element={<LoggedCheck />}>
                 <Route path='/settings' element={<Settings/>}/>
@@ -63,6 +70,7 @@ export const Main = () =>{
 
             <Route path='/main' element={<Mainpage/>}/>
 
+            <Route path="/users/*" element={<NotFound />} />
 
             
 

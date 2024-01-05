@@ -15,7 +15,9 @@ export const UserPage = (key) =>{
     const API = process.env.REACT_APP_API
     const { nickname } = useParams();
 
-    
+    const location = useLocation();
+    const pathSegments = location.pathname.split('/');
+    const usernameFromPath = pathSegments[2];
 
     const[displayUser, setDisplayUser] = useState() // user który jest wyswietlany na stronie
     const[user, setUser] = useState('none') // user przeglądający strone 
@@ -25,10 +27,10 @@ export const UserPage = (key) =>{
     const[commentsList, setCommentsList] = useState()
     const[commentVal, setCommentVal] = useState('')
     const[mostItems, setMostItems] = useState()
+    const[userNotFound, setUserNotFound] = useState(false)
+    const[stateUsernameFromPath, setStateUserNameFromPath] = useState(usernameFromPath)
 
-    const location = useLocation();
-    const pathSegments = location.pathname.split('/');
-    const usernameFromPath = pathSegments[2];
+
 
 
     const getUserDataFromDB = async()=>{
@@ -71,6 +73,9 @@ export const UserPage = (key) =>{
 
     useEffect(()=>{
 
+        setStateUserNameFromPath(usernameFromPath)
+        setUserNotFound(false)
+
         const getProfileData = async (nickname) => {
             try {
                 const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
@@ -89,17 +94,20 @@ export const UserPage = (key) =>{
                 setUserItemsList(userItemsList)
                 setDisplayUser(data[0])
             } catch (error) {
+                setUserNotFound(true)
                 console.error('Błąd podczas pobierania danych:', error);
             }
         };
 
 
         getMostItems()
-        // getComments()
         getUserDataFromDB()
         getProfileData()
     }, [nickname])
 
+
+    console.log('state', stateUsernameFromPath)
+    console.log(usernameFromPath)
 
     const handleUpdateFoundUsers = async (e) =>{
             const response = await fetch(`${API}/search-users?letters=${e.target.value}`);
@@ -192,14 +200,29 @@ export const UserPage = (key) =>{
             <div className='central-page'>
             <LastEvents list={mostItems}/>
                 <div className="profile-container">
-                    <div className="user-info">
-                        <MyAvatar user={displayUser}/>
-                        <h1>{displayUser?.nickname}</h1>
-                    </div>
+                    {
+                        !userNotFound ?
+                            <div className="user-info">
+                                <MyAvatar user={displayUser}/>
+                                <h1>{displayUser?.nickname}</h1>
+                            </div>
+                            :
+                            <div>
+                                <h1>Nie znaleziono uzytkownika</h1>
+                            </div>
+                        
+                        
+                    }
+                    
                     {
                         displayUser?.description && <><p className='user-about'>O mnie:</p> <p>{displayUser?.description}</p></>
                     }
-                <ProfileTabs handleDeleteComment={handleDeleteComment} handleAddComment={handleAddComment} viewer={user} userItemsList={userItemsList} comments={commentsList}/>
+                    {
+                        !userNotFound &&
+
+                        <ProfileTabs handleDeleteComment={handleDeleteComment} handleAddComment={handleAddComment} viewer={user} userItemsList={userItemsList} comments={commentsList}/>
+
+                    }
                 </div>
             </div>
 
