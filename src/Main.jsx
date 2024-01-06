@@ -14,6 +14,7 @@ import { LoggedCheck } from "./components/loggedCheck";
 import { AdminCheck } from "./components/adminCheck";
 import { AdminPanel } from "./components/AdminPanel";
 import { NotFound } from "./components/NotFound";
+import { Privacy } from "./components/privacy";
 
 export const Main = () =>{
 
@@ -69,6 +70,7 @@ export const Main = () =>{
             
 
             <Route path='/main' element={<Mainpage/>}/>
+            <Route path='/privacy' element={<Privacy/>}/>
 
             <Route path="/users/*" element={<NotFound />} />
 
