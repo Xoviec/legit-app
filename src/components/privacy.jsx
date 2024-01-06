@@ -219,10 +219,10 @@ export const Privacy = () =>{
         <p>Ustawę z dnia 18 lipca 2002 r. o świadczeniu usług drogą elektroniczną (<span>t.j. Dz.U. z 2020 r. poz. 344, ze zm.</span>);</p>
     </li>
     <li>
-        <p>Ustawę z dnia 4 lutego 1994 r. o prawie autorskim i prawach pokrewnych ( <span>t.j. Dz.U. z 2022 r. poz. 2509, ze zm.</span> );</p>
+        <p>Ustawę z dnia 4 lutego 1994 r. o prawie autorskim i prawach pokrewnych (<span>t.j. Dz.U. z 2022 r. poz. 2509, ze zm.</span>);</p>
     </li>
     <li>
-        <p>Ustawę z dnia 23 kwietnia 1964 r. Kodeks Cywilny (t.j. Dz.U. z 2023 r. poz. 1610, ze zm.);</p>
+        <p>Ustawę z dnia 23 kwietnia 1964 r. Kodeks Cywilny (<span>t.j. Dz.U. z 2023 r. poz. 1610, ze zm.</span>);</p>
     </li>
 </ul>
 <p>oraz inne właściwe przepisy prawa polskiego.</p>
