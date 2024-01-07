@@ -52,9 +52,10 @@ function App() {
       <div className="copyright">
         © <span id="currentYear"></span> Legited. All rights reserved.
       </div>
-      {/* <p className='info'>Page designed by Lorinnio</p> */}
     </footer>
   </body>
+      {/* <p className='info'>Page designed by Lorinnio</p> */}
+
     </>
   );
 }

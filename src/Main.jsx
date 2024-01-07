@@ -17,6 +17,7 @@ import { NotFound } from "./Routes/NotFound";
 import { Privacy } from "./Routes/Privacy";
 import { Terms } from "./Routes/Terms";
 import { Rodo } from "./Routes/Rodo";
+import { Footer } from "./components/Footer";
 
 export const Main = () =>{
 
@@ -28,7 +29,7 @@ export const Main = () =>{
     const path = location.pathname
 
 
-    const excludedRoutes = ['/', '/login', '/register', '/adminpanel'];
+    const excludedRoutes = ['/', '/login', '/register', '/adminpanel',];
 
     const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
     const nameFromLocalStorage = item?.user.user_metadata.full_name
@@ -43,17 +44,13 @@ export const Main = () =>{
 
     return(
         <>
-        {/* {(path !== '/login' && path!== '/register') && <Navbar/>} */}
-        {/* {(!path && path !== '/login' && path !== '/register') && <Navbar />} */}
+
         {!excludedRoutes.includes(location.pathname) && <Navbar />}
         
 
         <Routes>
             <Route path='/' element={<App/>}/>
-            {/* <Route path={`/users/${nameFromLocalStorage}`}  element={<Mainpage/>}/> */}
-
-            {/* <Route path='/users/:nickname' element={<UserPage/>}/> */}
-
+       
 
             <Route path='/users' >
                 <Route path=':nickname' element={<UserPage/>} />
@@ -87,9 +84,9 @@ export const Main = () =>{
                 <Route path="/login" element={<Register />} />
             </Route>
 
-            {/* <Route path='/users' element={<Users data={data} handleAddData={addData}/>}/>
-            <Route path='/users/:id' element={<User data={data} setData={setData}/>}/> */}
          </Routes>
+         {!excludedRoutes.includes(location.pathname) && <Footer />}
+
         </>
     )
 }

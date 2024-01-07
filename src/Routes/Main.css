@@ -12,6 +12,9 @@
   --main-text-color: #180202;
   --legited-light-green: #259F87;
   --legited-dark-green: #006340;
+
+  min-height: calc(100svh - 18.5rem);
+
 }
 
 .App-logo {
@@ -161,7 +164,11 @@ a:active {
   margin-top: 2.5rem;
   display: flex;
   gap: 2rem;
-  height: 40rem;
+  min-height: calc(100svh - 7.5rem);
+  /* margin-bottom: 2rem; */
+  /* max-height: calc(100svh - 7.5rem); */
+  /* margin-bottom: 5rem; */
+  /* height: 40rem; */
 }
 
 aside{
@@ -169,7 +176,7 @@ aside{
   width: 20rem;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  max-height: 40rem;
   padding: 0 20px 0 20px;
   gap: 1rem;
 
