@@ -570,6 +570,7 @@ h1{
   justify-content: center;
   gap: 2.5rem;
   padding: 0px 48px 0px 48px;
+  min-height: calc(100svh - 5rem);
 }
 
 .settings-container{
