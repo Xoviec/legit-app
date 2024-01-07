@@ -12,6 +12,7 @@ import { MyAvatar } from '../shared/Avatar';
 import { UserRanking } from '../components/UserRanking';
 import { MainNotLogged } from '../components/MainNotLogged';
 
+
 export const Mainpage =()=> {
 
 

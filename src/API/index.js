@@ -1,3 +1,5 @@
+const SneaksAPI = require('sneaks-api');
+
 const { v4: uuidv4 } = require('uuid');
 const { createClient } = require('@supabase/supabase-js');
 const express = require('express')
@@ -10,6 +12,12 @@ const { Readable } = require('stream');
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
+
+const sneaks = new SneaksAPI();
+
+sneaks.getProductPrices("BQ6817-009", function(err, product){
+    console.log(product)
+})
 
 
 require('dotenv').config()
