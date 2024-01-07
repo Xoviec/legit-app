@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { supabase } from './supabaseClient';
-import FileUploadForm from './FileUploadForm'
+import { supabase } from '../components/supabaseClient';
+import FileUploadForm from '../components/FileUploadForm'
 import axios from 'axios';
 
 

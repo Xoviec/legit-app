@@ -6,7 +6,7 @@ import {Autoplay} from 'swiper/modules'
 // Import Swiper styles
 import 'swiper/css';
 import 'swiper/css/autoplay';
-export const LastEvents = ({list}) =>{
+export const UserRanking = ({list}) =>{
 
 
     return(

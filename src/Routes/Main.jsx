@@ -1,16 +1,16 @@
 // import logo from './logo.svg';
 import './Main.css';
 import React, { useEffect, useState } from 'react';
-import { supabase } from './supabaseClient';
+import { supabase } from '../components/supabaseClient';
 import { User } from '@supabase/supabase-js';
 import { Register } from './register';
-import { Login } from './login';
+import { Login } from '../components/login';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { ProfileTabs } from '../shared/ProfileTabs';
 import { MyAvatar } from '../shared/Avatar';
-import { LastEvents } from './LastEvents';
-import { NotLogged } from './notLogged';
+import { UserRanking } from '../components/UserRanking';
+import { NotLogged } from '../components/NotLogged';
 
 export const Mainpage =()=> {
 
@@ -247,7 +247,7 @@ const path = location.pathname
 
     <div className="App">
       <div className='central-page'>
-        <LastEvents list={mostItems}/>
+        <UserRanking list={mostItems}/>
 
         {
 

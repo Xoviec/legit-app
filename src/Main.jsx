@@ -3,20 +3,20 @@ import {Route, Routes, useLocation, useNavigate, replace} from 'react-router-dom
 
 import App from "./App";
 import { Login } from "./components/login";
-import { Register } from "./components/register";
+import { Register } from "./Routes/register";
 import { Anonymous } from "./components/anonymous";
-import { UserPage } from "./components/userPage";
-import { Settings } from "./components/settings";
-import {Mainpage} from "./components/Main";
+import { UserPage } from "./Routes/userPage";
+import { Settings } from "./Routes/settings";
+import {Mainpage} from "./Routes/Main";
 import { Navbar } from "./Navbar";
 import { useEffect } from "react";
 import { LoggedCheck } from "./components/loggedCheck";
 import { AdminCheck } from "./components/adminCheck";
-import { AdminPanel } from "./components/AdminPanel";
-import { NotFound } from "./components/NotFound";
-import { Privacy } from "./components/privacy";
-import { Terms } from "./components/terms";
-import { Rodo } from "./components/rodo";
+import { AdminPanel } from "./Routes/AdminPanel";
+import { NotFound } from "./Routes/NotFound";
+import { Privacy } from "./Routes/Privacy";
+import { Terms } from "./Routes/Terms";
+import { Rodo } from "./Routes/Rodo";
 
 export const Main = () =>{
 

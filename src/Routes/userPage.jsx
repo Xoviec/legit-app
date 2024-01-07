@@ -3,10 +3,10 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { supabase } from './supabaseClient';
+import { supabase } from '../components/supabaseClient';
 import { ProfileTabs } from '../shared/ProfileTabs';
 import { MyAvatar } from '../shared/Avatar';
-import { LastEvents } from './LastEvents';
+import { UserRanking } from '../components/UserRanking';
 
 
 
@@ -198,7 +198,7 @@ export const UserPage = (key) =>{
     return(
         <div className='App'>
             <div className='central-page'>
-            <LastEvents list={mostItems}/>
+            <UserRanking list={mostItems}/>
                 <div className="profile-container">
                     {
                         !userNotFound ?
