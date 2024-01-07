@@ -51,10 +51,6 @@ export const Register = () =>{
         }
     )
 
-    const handlexd = () =>{
-        console.log('elo dupa')
-    }
-    console.log(formData)
 
 
     // Tutaj to normalnie ma byc pierowotnie
@@ -151,7 +147,6 @@ export const Register = () =>{
           }
           else{
             setIsRequiredLogin(true)
-            console.log('ee brakuje kurwo')
           }
           e.preventDefault()
     }
@@ -229,7 +224,7 @@ export const Register = () =>{
 
                             <button type="submit">Zarejestruj się</button>
                             <p className="terms">
-                        By signing up, you agree you've read and accepted our <a className="terms-link" href="">Terms and Conditions.</a>  Please see our <a className="terms-link" href="">Privacy Policy</a>  for information on how we process your data.
+                        Rejestrując się, potwierdzasz przeczyatnie i akceptację <a className="terms-link" href="/terms">Regulamin serwisu.</a>  Przeczytaj <a className="terms-link" href="/privacy">Politykę prywatności </a>aby dowiedzieć się w jaki sposób przetwarzamy Twoje dane.
                         </p>
                 
                         </form>
@@ -258,10 +253,10 @@ export const Register = () =>{
 
                             <button type="submit">Zaloguj się</button>
                             <p className="terms">
-                                By logging in, you agree to the
-                                    <a className="terms-link" href=""> Terms of Service </a>
-                                and 
-                                    <a className="terms-link" href=""> Privacy Policy </a> 
+                                Logując się akceptujesz
+                                    <a className="terms-link" href="/terms"> Regulamin Serwisu </a>
+                                oraz 
+                                    <a className="terms-link" href="/privacy"> Politykę Prywatności. </a> 
                             </p>
                 
                         </form>
