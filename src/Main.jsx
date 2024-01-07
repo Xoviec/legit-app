@@ -16,6 +16,7 @@ import { AdminPanel } from "./components/AdminPanel";
 import { NotFound } from "./components/NotFound";
 import { Privacy } from "./components/privacy";
 import { Terms } from "./components/terms";
+import { Rodo } from "./components/rodo";
 
 export const Main = () =>{
 
@@ -73,7 +74,8 @@ export const Main = () =>{
             <Route path='/main' element={<Mainpage/>}/>
             <Route path='/privacy' element={<Privacy/>}/>
             <Route path='/terms' element={<Terms/>}/>
-
+            <Route path='/rodo' element={<Rodo/>}/>
+        
 
             <Route path="/users/*" element={<NotFound />} />
 
