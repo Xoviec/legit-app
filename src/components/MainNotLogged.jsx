@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 
 
-export const NotLogged = ()=>{
+export const MainNotLogged = ()=>{
 
     return(
         <div className="welcomer">

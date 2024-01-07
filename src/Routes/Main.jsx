@@ -10,7 +10,7 @@ import axios from 'axios';
 import { ProfileTabs } from '../shared/ProfileTabs';
 import { MyAvatar } from '../shared/Avatar';
 import { UserRanking } from '../components/UserRanking';
-// import { NotLogged } from '../components/NotLogged';
+import { MainNotLogged } from '../components/MainNotLogged';
 
 export const Mainpage =()=> {
 
@@ -283,8 +283,8 @@ const path = location.pathname
 
             :
 
-            null
-            // <NotLogged/>
+            
+            <MainNotLogged/>
 
         }
 
