@@ -10,7 +10,7 @@ import axios from 'axios';
 import { ProfileTabs } from '../shared/ProfileTabs';
 import { MyAvatar } from '../shared/Avatar';
 import { UserRanking } from '../components/UserRanking';
-import { NotLogged } from '../components/NotLogged';
+// import { NotLogged } from '../components/NotLogged';
 
 export const Mainpage =()=> {
 
@@ -283,84 +283,17 @@ const path = location.pathname
 
             :
 
-            <NotLogged/>
+            null
+            // <NotLogged/>
 
         }
 
        
       </div>
-      {/* {
-        publicUser && 
-        <div>Witaj, {publicUser?.nickname} - {publicUser?.id}</div>
-      }
-      <div>
-        <Link state={publicUser}to={`/settings`}>Ustawienia</Link>
 
-      </div> */}
-      {/* {
-        
-        userList?.map((appUser)=>(
-          <Link className={`${appUser?.id===user?.id ? `user` : null}`} key={appUser.name} to={`/Users/${appUser.nickname}`}>{appUser.nickname}</Link>
-        ))
-      } */}
-  
-
-{/*   
-      <form onSubmit={handleAddItem}>
-        <input type="text" placeholder='name' name='name'/>
-        <input type="text" placeholder='sku' name='sku'/>
-        <input type="text" placeholder='brand' name='brand'/>
-        <button type='submit'>add item</button>
-      </form>
-
-
-      <form onChange={handleRegisterChange} onSubmit={handleRegisterItem}>
-        <input type="text" placeholder='og item id' name='ogItemId' value={ogItemIdVal}/>
-        <input type="text" placeholder='owner id' name='ownerHistory' value={ownerId}/>
-        <button type='submit'>register item</button>
-      </form>
-
-      <div>
-        <p>Wybierz uzytkownika:</p>
-        {
-            foundUsers?.length > 0 && 
-            foundUsers?.map((user)=>(
-                <div key={user.id}>
-                    <p>Nickname: {user.nickname}</p>
-                    <p>ID: {user.id}</p>
-                    <button onClick={(()=>handleSetNewOwner(user))}>Wybierz uzytkownika</button>
-                </div>
-            ))
-    
-        }
-      </div>
-      <div>
-        <p>Wybierz item:</p>
-        {
-            foundItems?.length > 0 && 
-            foundItems?.map((item)=>(
-                <div key={item.id}>
-                    <p>Nazwa: {item.name}</p>
-                    <p>ID: {item.id}</p>
-                    <button onClick={
-                      (()=>handleSetFoundItem(item))}>Wybierz przedmiot</button>
-                </div>
-            ))
-    
-        }
-      </div>
-      <p>Items:</p>
-      {
-        
-        itemsList?.map((item)=>(
-          <div>{item.name} - {item.id}</div>
-        ))
-      }
-       */}
     </div>
     
 
   );
 }
 
-// export default App;
