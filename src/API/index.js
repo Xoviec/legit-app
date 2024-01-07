@@ -16,11 +16,6 @@ const upload = multer({ storage: storage });
 const sneaks = new SneaksAPI();
 
 
-// sneaks.getProductPrices("CD4487-100", function(err, product){
-//     console.log(product)
-// })
-
-
 
 require('dotenv').config()
 
@@ -216,56 +211,16 @@ app.get('/user-items/:nickname', async function(req, res) {
     
     const updatedItemsData = await fetchAllItemData(itemsData);
 
-    // const price = sneaks.getProductPrices('HQ6316', function(err, product){
-   
-    //     product.price
-    // })
-    
-    // console.log('chuj', price)
 
 
-    const price = sneaks.getProductPrices("CD4487-100", function(err, product){
-        console.log('xddd', product.lowestResellPrice.stockX)
-    })
+    itemsData = itemsData.map((item, index) => ({
+        ...item,
+        name: updatedItemsData[index].name,
+        brand: updatedItemsData[index].brand,
+        sku: updatedItemsData[index].sku,
+        image: updatedItemsData[index].image,
 
-
-    console.log(price )
-    itemsData = await Promise.all(itemsData.map(async (item, index) => {
-        try {
-            const product = await new Promise((resolve, reject) => {
-                sneaks.getProductPrices(updatedItemsData[index].sku, function(err, product){
-                    if (err) {
-                        reject(err);
-                    } else {
-                        resolve(product);
-                    }
-                });
-            });
-
-            item.price = product ? product.lowestResellPrice.stockX : 0;
-    
-            return {
-                ...item,
-                name: updatedItemsData[index].name,
-                brand: updatedItemsData[index].brand,
-                sku: updatedItemsData[index].sku,
-                image: updatedItemsData[index].image,
-            };
-        } catch (error) {
-            console.error("Błąd podczas pobierania ceny:", error);
-    
-            return {
-                ...item,
-                price: 0,
-                name: updatedItemsData[index].name,
-                brand: updatedItemsData[index].brand,
-                sku: updatedItemsData[index].sku,
-                image: updatedItemsData[index].image,
-            };
-        }
     }));
-    
-
         res.status(200).json(itemsData);
     } catch (error) {
         console.error(error);
