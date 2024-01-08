@@ -16,7 +16,7 @@ export const Footer = () =>{
             <div className="info">
                 <a href="/privacy">Polityka prywatności</a>
                 <a href="/terms">Regulamin</a>
-                <a className='instagram-logo' href="https://instagram.com/legited.app">
+                <a className='instagram-logo' href="https://instagram.com/legited.app" target="_blank">
                 <img src={instagram} alt="" />
             </a>
                 {/* <div className="copyright">
