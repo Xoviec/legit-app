@@ -840,6 +840,33 @@ td{
   flex: 2;
 }
 
+
+.not-found{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: calc(100svh - 5rem);
+  width: 100%;
+  padding-bottom: 5rem;
+  gap: 2rem;
+}
+
+.not-found img{
+  height: 300px;
+  width: auto;
+}
+
+.not-found h1{
+  color: var(--legited-light-green);
+}
+
+.not-found p{
+  font-weight: 600;
+  font-size: 30px;
+}
+
 @media only screen and (max-width: 1100px) {
 
 
@@ -961,5 +988,19 @@ td{
     font-size: 30px;
   }
 
+  .not-found{
+    padding: 0 1rem 0 1rem;
+  }
+
+
+  .not-found img{
+    height: 200px;
+    width: auto;
+  }
+  
+  .not-found p{
+    font-weight: 600;
+    font-size: 20px;
+  }
 
 }
