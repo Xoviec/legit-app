@@ -104,6 +104,7 @@ export const UserPage = (key) =>{
         getUserDataFromDB()
         getProfileData()
     }, [nickname])
+    
 
 
     console.log('state', stateUsernameFromPath)

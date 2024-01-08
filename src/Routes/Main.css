@@ -165,6 +165,7 @@ a:active {
   display: flex;
   gap: 2rem;
   min-height: calc(100svh - 7.5rem);
+  padding: 0 48px 0 48px;
   /* margin-bottom: 2rem; */
   /* max-height: calc(100svh - 7.5rem); */
   /* margin-bottom: 5rem; */
@@ -950,7 +951,7 @@ td{
 
 @media only screen and (max-width: 550px) {
 
-  .App{
+  .central-page{
     padding: 0 15px 0 15px;
 
   }

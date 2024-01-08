@@ -51,6 +51,8 @@ export const Main = () =>{
 
     const excludedRoutes = ['/', '/login', '/register', '/adminpanel',];
 
+    const rankingRoutes = ['/main', '/Users']
+
     const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
     const nameFromLocalStorage = item?.user.user_metadata.full_name
 
@@ -64,25 +66,37 @@ export const Main = () =>{
         }
     }, [path])
 
+
+
+    const isProfileRoute = () =>{
+        return((location.pathname.startsWith('/Users')||location.pathname.startsWith('/main')))
+      
+    }
+
     return(
         <>
 
         {!excludedRoutes.includes(location.pathname) && <Navbar />}
 
-
-        
-
-        <div className="central-page">
-        <UserRanking list={mostItems}/>
-
-
-        <Routes>
-            <Route path='/' element={<App/>}/>
+        {/* <div className="App"> */}
        
 
+        <div className={ isProfileRoute() &&`central-page`}>
+        {
+         isProfileRoute() && <UserRanking list={mostItems}/>
+        }
+        <Routes>
+
+            <Route path='/' element={<App/>}/>
+
+        
+            <Route path='/main' element={<Mainpage/>}/>
+
             <Route path='/users' >
-                <Route path=':nickname' element={<UserPage/>} />
+                <Route path=':nickname' element={<UserPage/>}/>
+                <Route path=":*" element={<NotFound />} />
             </Route>
+
 
             <Route path='*'  element={<NotFound />} />
 
@@ -94,17 +108,10 @@ export const Main = () =>{
                 <Route path='/adminpanel' element={<AdminPanel/>}/>
             </Route>
 
-            
-
-            <Route path='/main' element={<Mainpage/>}/>
             <Route path='/privacy' element={<Privacy/>}/>
             <Route path='/terms' element={<Terms/>}/>
             <Route path='/rodo' element={<Rodo/>}/>
         
-
-            <Route path="/users/*" element={<NotFound />} />
-
-            
 
 
             <Route element={<Anonymous />}>
@@ -115,7 +122,7 @@ export const Main = () =>{
          </Routes>
          </div>
          {!excludedRoutes.includes(location.pathname) && <Footer />}
-
+         {/* </div> */}
         </>
     )
 }
