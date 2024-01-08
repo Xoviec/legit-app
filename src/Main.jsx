@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Route, Routes, useLocation, useNavigate, replace} from 'react-router-dom';
 
 import App from "./App";
@@ -18,15 +18,35 @@ import { Privacy } from "./Routes/Privacy";
 import { Terms } from "./Routes/Terms";
 import { Rodo } from "./Routes/Rodo";
 import { Footer } from "./components/Footer";
+import { UserRanking } from "./components/UserRanking";
 
 export const Main = () =>{
 
 
     const navigate = useNavigate();
 
+    const API = process.env.REACT_APP_API
+
+
     const location = useLocation();
 
     const path = location.pathname
+
+
+    const getMostItems = async () =>{
+        try{
+          const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
+          const mostItemsData = await mostItemsRes.json();
+          setMostItems(mostItemsData)
+          console.log('eee', mostItemsData)
+      
+        }catch(error){
+        }
+    
+      } 
+
+      
+    const[mostItems, setMostItems] = useState()
 
 
     const excludedRoutes = ['/', '/login', '/register', '/adminpanel',];
@@ -37,6 +57,8 @@ export const Main = () =>{
 
     //to ponizej przekierowuje uzytkownika na strone glowna po wpisaniu w url /users/swoj nick
     useEffect(()=>{
+        getMostItems()
+
         if(location.pathname === `/Users/${nameFromLocalStorage}`){
             navigate('/main', { replace: true })
         }
@@ -46,7 +68,13 @@ export const Main = () =>{
         <>
 
         {!excludedRoutes.includes(location.pathname) && <Navbar />}
+
+
         
+
+        <div className="central-page">
+        <UserRanking list={mostItems}/>
+
 
         <Routes>
             <Route path='/' element={<App/>}/>
@@ -85,6 +113,7 @@ export const Main = () =>{
             </Route>
 
          </Routes>
+         </div>
          {!excludedRoutes.includes(location.pathname) && <Footer />}
 
         </>

@@ -247,9 +247,8 @@ const path = location.pathname
   return (
     
 
-    <div className="App">
-      <div className='central-page'>
-        <UserRanking list={mostItems}/>
+    <>
+        {/* <UserRanking list={mostItems}/> */}
 
         {
 
@@ -291,9 +290,8 @@ const path = location.pathname
         }
 
        
-      </div>
 
-    </div>
+    </>
     
 
   );

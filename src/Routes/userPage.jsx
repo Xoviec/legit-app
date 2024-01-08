@@ -196,9 +196,8 @@ export const UserPage = (key) =>{
 
 
     return(
-        <div className='App'>
-            <div className='central-page'>
-            <UserRanking list={mostItems}/>
+        <>
+            {/* <UserRanking list={mostItems}/> */}
                 <div className="profile-container">
                     {
                         !userNotFound ?
@@ -224,85 +223,7 @@ export const UserPage = (key) =>{
 
                     }
                 </div>
-            </div>
-
-
-
-
-
-
-
-            {/* {usernameFromPath}-{displayUser?.id}
-
-
-            <p>Przedmioty uzytkownika {usernameFromPath}</p>
-            <div>
-                {
-                    userItemsList?.map((item)=>(
-
-                        // console.log(item.owners_history[item.owners_history.length-1].registerDate)
-                        <div key={item.registerID}>
-                            <p>{item.id}</p>
-                            <p>{item.name} registered {item.legited_at}</p>
-                            <p>It belongs to {item.owner_nickname} since {item.owners_history[item.owners_history.length-1].registerDate}</p>
-                            <img src={item.image} alt="" />
-                            <button onClick={()=>handleTradeItem(item)}>prześlij item</button>
-                        </div>
-                    ))
-                }
-            </div>
-            <div>
-
-                <input onChange={handleUpdateFoundUsers} type="text" name="search" id="" />
-
-                <div>
-                    <p>Wybierz uzytkownika:</p>
-                    {
-                        foundUsers?.length > 0 && 
-                        foundUsers?.map((user)=>(
-                            <div key={user.id}>
-                                <p>Nickname: {user.nickname}</p>
-                                <p>ID: {user.id}</p>
-                                <button onClick={(()=>setNewOwner(user.id))}>Wybierz uzytkownika</button>
-                            </div>
-                        ))
-                
-                    }
-                </div>
-                <div>
-                    <p>Legit check:</p>
-                    {
-                        commentsList?.map((comment)=>(
-                            <div key={comment.id}>
-                                
-                                {comment.comment_by}: 
-                                {comment.content}
-                                {
-                                    comment.comment_by===user.id && 
-                                    <button onClick={(event)=>handleDeleteComment(event, comment.id)}>usuń komentarz</button>
-                                }
-                            </div>
-                        ))
-                    }
-                    <p>Dodaj komentarz</p>
-                    <form onSubmit={handleAddComment}>
-                        <input name='comment' type="text" onChange={((e)=>setCommentVal(e.target.value))} value={commentVal}/>
-                        <button type='submit'>Dodaj komentarz</button>
-                    </form>
-                </div>
-            </div> */}
-
-        </div>
+        </>
     )
 }
 
-
-// try{
-//     await axios.post('http://localhost:8000/delete-comment', {
-//         id: id,
-//         commentOn: user.nickname,
-//         content: e.target.comment.value,
-//     });
-// }catch(err){
-//     console.log(err)
-// }

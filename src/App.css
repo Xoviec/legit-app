@@ -13,6 +13,8 @@
   --main-text-color: #180202;
   --legited-light-green: #259F87;
   --legited-dark-green: #006340;
+  display: flex;
+  flex-direction: column-reverse;
 
 }
 
@@ -277,4 +279,8 @@ nav button{
 
 .btn-login:hover, .btn-register:hover{
   scale: 1.02;
+}
+
+.main-page{
+  display: flex;
 }

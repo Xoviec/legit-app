@@ -45,7 +45,7 @@ export const UserRanking = ({list}) =>{
             >
 
                 {
-                    list &&
+                    list ?
 
                     list.map((user, i)=>(
 
@@ -54,7 +54,9 @@ export const UserRanking = ({list}) =>{
                                 <MyAvatar user={list[i]}/>
                                 <div className="card-right">
                                 <Link to={`/Users/${user.nickname}`}>
+                                {/* <a href={`/Users/${user.nickname}`}> */}
                                     <p className="register-info">{user?.nickname}</p>
+                                {/* </a> */}
                                 </Link>
                                     <p className="register-time">{user?.itemAmount} przedmiotów</p>
                                 </div>
@@ -62,6 +64,8 @@ export const UserRanking = ({list}) =>{
                             </div>
                         </SwiperSlide>
                     ))
+                    :
+                    'xd'
                 }
             </Swiper>
             
