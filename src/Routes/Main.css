@@ -674,14 +674,14 @@ h1{
   height: 40rem;
   flex: 1 1;
   color: var(--main-text-color);
-  padding: 1rem;
 }
 
 
 .welcomer::after{
+  padding: 1rem;
   content: '';
   position: absolute;
-  background-image: url('https://i.pinimg.com/736x/33/4b/86/334b8680152345801c4fbc77a03c818a.jpg');
+  background-image: url('../background.png');
   background-repeat: no-repeat;
   background-size: cover;
   /* background-attachment: fixed; */
