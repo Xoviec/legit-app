@@ -74,7 +74,16 @@ export const UserPage = (key) =>{
         }
     }
 
+    const clearData = ()=>{
+
+        setUserItemsList(undefined)
+        setDisplayUser(undefined)
+    }
+
     useEffect(()=>{
+
+
+        clearData()
 
         setStateUserNameFromPath(usernameFromPath)
         setUserNotFound(false)
