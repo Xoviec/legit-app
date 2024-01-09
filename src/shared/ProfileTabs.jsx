@@ -35,11 +35,6 @@ export const ProfileTabs = (props) => {
     theme: "light",
     });
 
-
-
-
-  
-  
   return(
     <Tabs.Root className="TabsRoot" defaultValue="tab1">
       <Tabs.List className="TabsList" aria-label="Manage your account">

@@ -12,6 +12,9 @@ import { UserRanking } from '../components/UserRanking';
 
 export const UserPage = (key) =>{
 
+    const { v4: uuidv4 } = require('uuid');
+
+
     const API = process.env.REACT_APP_API
     const { nickname } = useParams();
 
@@ -147,18 +150,22 @@ export const UserPage = (key) =>{
     
     const handleAddComment = async (e) =>{
 
+        const newCommentID = uuidv4()
 
         e.preventDefault()
 
         const newCommentData = {
+            avatar: user.avatar,
+            comment_by_nickname: user.nickname,
             comment_by: user.id,
             comment_on: displayUser.id,
-            content: e.target.comment.value
+            content: e.target.comment.value,
+            id: newCommentID
         }
 
         const newCommentList = [...commentsList, newCommentData]
 
-        // setCommentsList(newCommentList)
+        setCommentsList(newCommentList)
 
         try{
             const userResponse = await fetch(`${API}/secret/${user.id}`)
@@ -169,6 +176,7 @@ export const UserPage = (key) =>{
                 comment_by: usersDataResponse[0].id,
                 comment_on: displayUser.id,
                 content: e.target.comment.value,
+                id: newCommentID
             });
         }catch(error){
             console.log(error)
@@ -194,7 +202,6 @@ export const UserPage = (key) =>{
     }
 
     }
-
 
     return(
         <>
