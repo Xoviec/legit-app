@@ -10,7 +10,7 @@ import axios from 'axios';
 export const Settings = () =>{
 
 
-    const updateSuccess = (nickname) => toast.success(`Pomyślnie zaktualizowano profil`, {
+    const updateAvatarSuccess = (nickname) => toast.success(`Pomyślnie zaktualizowano avatar`, {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -20,8 +20,20 @@ export const Settings = () =>{
         progress: undefined,
         theme: "light",
         });
+
+    const updateDataSuccess = (nickname) => toast.success(`Pomyślnie zaktualizowano profil`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+
     
-    const updateFailed = () => toast.error('Błąd podczas przesyłania przedmiotu', {
+    const updateFailed = (data) => toast.error(`${data}`, {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -276,22 +288,16 @@ export const Settings = () =>{
             updateNickname()
             updateEmail()
             passwordChange()
-            updateSuccess()
+            updateDataSuccess()
 
             console.log('wszystko')
         }catch(err){
+            updateFailed(err)
             console.log(err)
         }
         
 
         e.preventDefault()
-        // checkPasswordChangeCheck()
-        // updateDescription()
-        // updateEmailCheck()
-        // updateNicknameCheck()
-        // setIsSaved(true)
-        // window.location.reload(true)
-        // Promise
 
   
         
@@ -393,48 +399,48 @@ export const Settings = () =>{
                 theme="light"
             />  
             <div className="settings-container">
-                <FileUploadForm avatar={publicUser?.avatar} userID={publicUser?.id} nickname={publicUser?.nickname}/>
+                <FileUploadForm avatar={publicUser?.avatar} userID={publicUser?.id} nickname={publicUser?.nickname} toast={updateAvatarSuccess}/>
 
                 <form className='change-nickname' onSubmit={handleSubmit} onChange={handleInputChange}>
                     <p>Nickname</p>
                     <input className={`${(isSaved && !errorData.nickname) && `border-success `} nickname-input`} type="text" value={formData.nickname} name='nickname'/>
-                    <p>{(isSaved && !errorData.nickname) && <p className='success-card'>zapisano</p> }</p>
+                    {/* <p>{(isSaved && !errorData.nickname) && <p className='success-card'>zapisano</p> }</p>
                     {
                         errorData.nickname && 
                         <p className="error-card">
                             {errorData.nickname}
                         </p>
-                    }
+                    } */}
                     <p>Opis</p>
                     <textarea className={`${(isSaved && !errorData.description) && `border-success `} nickname-input`} type="text" value={formData.description} name='description'/>
-                    <p>{(isSaved && !errorData.description) && <p className='success-card'>zapisano</p> }</p>
+                    {/* <p>{(isSaved && !errorData.description) && <p className='success-card'>zapisano</p> }</p>
                     {
                         errorData.descriptions && 
                         <p className="error-card">
                             {errorData.descriptions}
                         </p>
-                    }
+                    } */}
                     <p>Email</p>
                     <input className={`${(isSaved && !errorData.email) && `border-success `} nickname-input`} type="text" value={formData.email} name='email'/>
-                    <p>{(isSaved && !errorData.email) && <p className='success-card'>zapisano</p> }</p>
+                    {/* <p>{(isSaved && !errorData.email) && <p className='success-card'>zapisano</p> }</p>
                     {
                         errorData.email && 
                         <p className="error-card">
                             {errorData.email}
                         </p>
-                    }
+                    } */}
                     <p>Nowe hasło</p>
                     <input className={`${(isSaved && !errorData.newPassword) && `border-success `} nickname-input`} type="text" value={formData.newPassword} name='newPassword'/>
                     {/* <p>{(isSaved && !errorData.newPassword) && <p className='success-card'>zapisano</p> }</p> */}
                     <p>Potwierdź haslo</p>
                     <input className={`${(isSaved && !errorData.newPassword) && `border-success `} nickname-input`} type="text" value={formData.confirmPassword} name='confirmPassword'/>
-                    <p>{(isSaved && !errorData.newPassword) && <p className='success-card'>zapisano</p> }</p>
+                    {/* <p>{(isSaved && !errorData.newPassword) && <p className='success-card'>zapisano</p> }</p>
                     {
                         errorData.newPassword && 
                         <p className="error-card">
                             {errorData.newPassword}
                         </p>
-                    }
+                    } */}
                     <button className='settings-save-btn' type='submit'>zapisz</button>
 
                 </form>

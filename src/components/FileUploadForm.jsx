@@ -17,9 +17,10 @@ const FileUploadForm = (props) => {
     try{
 
       setFilePreview(URL.createObjectURL(event.target.files[0]));
-
       const selectedFile = event.target.files[0];
       setFile(selectedFile);
+
+
     }catch(error){
       console.log(error)
       setFilePreview(null)
@@ -32,9 +33,9 @@ const FileUploadForm = (props) => {
 
     try {
         const formData = new FormData(event.target);
-      formData.append('file', file);
-      formData.append('userID', props.userID);
-      formData.append('userNickname', props.nickname);
+        formData.append('file', file);
+        formData.append('userID', props.userID);
+        formData.append('userNickname', props.nickname);
 
 
 
@@ -44,7 +45,9 @@ const FileUploadForm = (props) => {
       });
 
       if (response.ok) {
+
         console.log('Plik został pomyślnie przesłany!');
+        props.toast()
       } else {
         console.error('Wystąpił błąd podczas przesyłania pliku.');
       }
