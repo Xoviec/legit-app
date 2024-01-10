@@ -10,7 +10,7 @@ import axios from 'axios';
 export const Settings = () =>{
 
 
-    const updateSuccess = (nickname) => toast.success(`Przedmiot przesłany pomyślnie do uzytkownika ${nickname}`, {
+    const updateSuccess = (nickname) => toast.success(`Pomyślnie zaktualizowano profil`, {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -276,6 +276,7 @@ export const Settings = () =>{
             updateNickname()
             updateEmail()
             passwordChange()
+            updateSuccess()
 
             console.log('wszystko')
         }catch(err){
@@ -379,6 +380,18 @@ export const Settings = () =>{
         <div className='settings'>
             
             <h1>Ustawienia</h1>
+            <ToastContainer
+                position="bottom-right"
+                autoClose={5000}
+                hideProgressBar={false}
+                newestOnTop={false}
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover
+                theme="light"
+            />  
             <div className="settings-container">
                 <FileUploadForm avatar={publicUser?.avatar} userID={publicUser?.id} nickname={publicUser?.nickname}/>
 
