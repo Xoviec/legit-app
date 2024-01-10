@@ -579,7 +579,7 @@ h1{
   width: 20rem;
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1rem;
   background-color: #fff;
   border: 1px solid var(--secondary-bg-color);
   padding: 1rem;

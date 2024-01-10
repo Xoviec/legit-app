@@ -50,6 +50,7 @@ const FileUploadForm = (props) => {
         props.toast()
       } else {
         console.error('Wystąpił błąd podczas przesyłania pliku.');
+        props.toastFailed()
       }
     } catch (error) {
       console.error('Wystąpił błąd:', error);

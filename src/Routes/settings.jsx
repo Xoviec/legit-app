@@ -21,6 +21,17 @@ export const Settings = () =>{
         theme: "light",
         });
 
+    const updateAvatarFailed = (data) => toast.error(`${data}`, {
+        position: "bottom-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+
     const updateDataSuccess = (nickname) => toast.success(`Pomyślnie zaktualizowano profil`, {
         position: "bottom-right",
         autoClose: 5000,
@@ -399,7 +410,7 @@ export const Settings = () =>{
                 theme="light"
             />  
             <div className="settings-container">
-                <FileUploadForm avatar={publicUser?.avatar} userID={publicUser?.id} nickname={publicUser?.nickname} toast={updateAvatarSuccess}/>
+                <FileUploadForm avatar={publicUser?.avatar} userID={publicUser?.id} nickname={publicUser?.nickname} toast={updateAvatarSuccess} toastFailed={updateAvatarFailed}/>
 
                 <form className='change-nickname' onSubmit={handleSubmit} onChange={handleInputChange}>
                     <p>Nickname</p>
