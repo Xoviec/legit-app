@@ -54,9 +54,9 @@ export const Settings = () =>{
 
 
     const [formData, setFormData] = useState({
-        nickname: props?.nickname,
-        description: props?.description,
-        email: props?.email,
+        nickname: '',
+        description: '',
+        email: '',
         newPassword: '',
         confirmPassword: ''
     })
@@ -89,7 +89,53 @@ export const Settings = () =>{
 
     }
 
-    const updateNicknameCheck = async ()=>{
+    // const updateNicknameCheck = async ()=>{
+
+    //     if(formData.nickname.length === 0){
+    //         setErrorData((prevData) => ({
+    //             ...prevData,
+    //             nickname:"Niedozwolony nick"
+       
+    //         }));
+    //     }else{
+    //         try{
+    //             const { data, error } = await supabase.auth.updateUser({
+    //                 data: { full_name: formData.nickname }
+    //             })
+    //             await axios.post(`${API}/update-nickname`, {
+    //                 newNickname: formData.nickname,
+    //                 id: publicUser.id,
+    //             });
+    //         }  catch(error){
+    //             console.log(error)
+    //             setErrorData((prevData) => ({
+    //                 ...prevData,
+    //                 nickname:"Podany nick jest zajęty"
+           
+    //             }));
+    //         }    
+    //     }
+
+    // }
+
+    
+
+    const updateNicknameCheck = () => {
+        return new Promise(async (resolve, reject) => {
+            if (formData.nickname.length === 0) {
+                setErrorData((prevData) => ({
+                    ...prevData,
+                    nickname: "Niedozwolony nick"
+                }));
+                reject('Niedozwolony nick');
+            } else {
+               resolve(true)
+               console.log('zmiana nicku zdiała')
+            }
+        });
+    };
+
+    const updateNickname = async ()=>{
 
         if(formData.nickname.length === 0){
             setErrorData((prevData) => ({
@@ -117,6 +163,20 @@ export const Settings = () =>{
         }
 
     }
+    
+    // // Wywołanie funkcji updateNicknameCheck z użyciem Promise
+    // updateNicknameCheck()
+    //     .then(() => {
+    //         // Obsługa sukcesu (resolve)
+    //         console.log('Operacja zakończona sukcesem');
+    //     })
+    //     .catch((error) => {
+    //         // Obsługa błędu (reject)
+    //         console.error('Wystąpił błąd:', error);
+    //     });
+    
+
+
 
     const validateEmail = (email) => {
         return String(email)
@@ -126,6 +186,21 @@ export const Settings = () =>{
           );
       };
   
+
+      const updateEmailCheck = () => {
+        return new Promise(async (resolve, reject) => {
+            if (validateEmail(formData.email)) {
+                resolve(true)
+                console.log('email ok')
+            } else {
+                setErrorData((prevData) => ({
+                    ...prevData,
+                    email: "Wpisz poprawny adres email"
+                }));
+                reject('Nieprawidłowy adres email');
+            }
+        });
+    };
 
     const updateEmail = async()=>{
 
@@ -150,10 +225,8 @@ export const Settings = () =>{
        
             }));
         }
-
-
     }
-
+    
     const updateDescription = async()=>{
         try{
             await axios.post(`${API}/update-description`, {
@@ -185,22 +258,39 @@ export const Settings = () =>{
         setErrorData((prevData) => ({
             ...prevData,
             [name]:''
-   
         }));
-    
         console.log(formData)
       };
 
     const handleSubmit = async (e) =>{
 
+
+
+        try{
+            const results = await Promise.all([
+                checkPasswordChangeCheck(),
+                updateEmailCheck(),
+                updateNicknameCheck()
+            ]);
+            updateDescription()
+            updateNickname()
+            updateEmail()
+            passwordChange()
+
+            console.log('wszystko')
+        }catch(err){
+            console.log(err)
+        }
         
 
         e.preventDefault()
-        checkPasswordChange()
-        updateDescription()
-        updateEmail()
-        updateNicknameCheck()
-        setIsSaved(true)
+        // checkPasswordChangeCheck()
+        // updateDescription()
+        // updateEmailCheck()
+        // updateNicknameCheck()
+        // setIsSaved(true)
+        // window.location.reload(true)
+        // Promise
 
   
         
@@ -210,15 +300,46 @@ export const Settings = () =>{
 
     //Jeżeli dane użytkownika nie zostały wzięte z props, bierze je prosto z supabase
     useEffect(()=>{
-        if(!props){
+        // if(!props)
+        {
             getUserDataFromDB()
         }
     }, [])
 
 
 
+    const checkPasswordChangeCheck = () => {
+        return new Promise(async (resolve, reject) => {
+            if (formData.newPassword.length > 0) {
+                if (formData.newPassword.length >= 6) {
+                    if (formData.newPassword === formData.confirmPassword) {
+                        console.log('Hasła są takie same');
+    
+                        resolve(true)
 
-    const checkPasswordChange = async () =>{
+                    } else {
+                        console.log('Hasła się różnią');
+                        setErrorData((prevData) => ({
+                            ...prevData,
+                            newPassword: "Hasła nie są takie same"
+                        }));
+                        reject('Hasła nie są takie same');
+                    }
+                } else {
+                    console.log("Hasło powinno mieć minimum 6 znaków");
+                    setErrorData((prevData) => ({
+                        ...prevData,
+                        newPassword: "Hasło powinno mieć minimum 6 znaków"
+                    }));
+                    reject('Hasło powinno mieć minimum 6 znaków');
+                }
+            } else {
+                resolve(); // Jeśli nowe hasło nie zostało podane, resolve bez błędu.
+            }
+        });
+    };
+
+    const passwordChange = async () =>{
         if(formData.newPassword.length>0){
             if(formData.newPassword.length>=6){
                 if(formData.newPassword === formData.confirmPassword){
@@ -253,6 +374,7 @@ export const Settings = () =>{
         }
     }
 
+    
     return(
         <div className='settings'>
             
