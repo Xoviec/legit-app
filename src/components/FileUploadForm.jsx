@@ -3,8 +3,7 @@ import React, { useState } from 'react';
 const FileUploadForm = (props) => {
 
 
-
-    const API = process.env.REACT_APP_API
+  const API = process.env.REACT_APP_API
 
   const [file, setFile] = useState(null);
   const [filePreview, setFilePreview] = useState(null)
@@ -37,15 +36,12 @@ const FileUploadForm = (props) => {
         formData.append('userID', props.userID);
         formData.append('userNickname', props.nickname);
 
-
-
       const response = await fetch(`${API}/set-avatar`, {
         method: 'POST',
         body: formData,
       });
 
       if (response.ok) {
-
         console.log('Plik został pomyślnie przesłany!');
         props.toast()
       } else {

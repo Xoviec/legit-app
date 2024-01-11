@@ -9,8 +9,7 @@ import axios from 'axios';
 
 export const Settings = () =>{
 
-
-    const updateAvatarSuccess = (nickname) => toast.success(`Pomyślnie zaktualizowano avatar`, {
+    const toastData = {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -18,41 +17,24 @@ export const Settings = () =>{
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "light"
+    }
+
+    const updateAvatarSuccess = (nickname) => toast.success(`Pomyślnie zaktualizowano avatar`, {
+        ...toastData,
         });
 
     const updateAvatarFailed = (data) => toast.error(`${data}`, {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+        ...toastData,
         });
 
     const updateDataSuccess = (nickname) => toast.success(`Pomyślnie zaktualizowano profil`, {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+        ...toastData,
         });
 
     
     const updateFailed = (data) => toast.error(`${data}`, {
-        position: "bottom-right",
-        autoClose: 5000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
+        ...toastData,
         });
         
 
@@ -74,7 +56,7 @@ export const Settings = () =>{
     })
     const [updateSettingsError, setUpdateSettingsError] = useState()
     const [isSaved, setIsSaved] = useState(false)
-
+    const [isNicknameTaken, setIsNicknameTaken] = useState(false)
 
     const [formData, setFormData] = useState({
         nickname: '',
@@ -84,6 +66,17 @@ export const Settings = () =>{
         confirmPassword: ''
     })
 
+
+    const availableNicknameCheck = async (nickname) =>{
+        
+        console.log(nickname)
+
+        const response = await fetch(`${API}/search-users?letters=${nickname}`);
+        const data = await response.json();
+        console.log('xdd', data[0])
+        return data[0]
+
+    }
 
 
     const getUserDataFromDB = async()=>{
@@ -105,68 +98,58 @@ export const Settings = () =>{
         }catch(error){
             console.log(error)
         }
-        
-   
-
-
-
     }
 
-    // const updateNicknameCheck = async ()=>{
-
-    //     if(formData.nickname.length === 0){
-    //         setErrorData((prevData) => ({
-    //             ...prevData,
-    //             nickname:"Niedozwolony nick"
-       
-    //         }));
-    //     }else{
-    //         try{
-    //             const { data, error } = await supabase.auth.updateUser({
-    //                 data: { full_name: formData.nickname }
-    //             })
-    //             await axios.post(`${API}/update-nickname`, {
-    //                 newNickname: formData.nickname,
-    //                 id: publicUser.id,
-    //             });
-    //         }  catch(error){
-    //             console.log(error)
-    //             setErrorData((prevData) => ({
-    //                 ...prevData,
-    //                 nickname:"Podany nick jest zajęty"
-           
-    //             }));
-    //         }    
-    //     }
-
-    // }
+    const updateNicknameCheck = async (e) => {
 
     
+        // e.preventDefault()
 
-    const updateNicknameCheck = () => {
+        // console.log('dupa bupa')
+
+
         return new Promise(async (resolve, reject) => {
-            if (formData.nickname.length === 0) {
-                setErrorData((prevData) => ({
-                    ...prevData,
-                    nickname: "Niedozwolony nick"
-                }));
-                reject('Niedozwolony nick');
-            } else {
-               resolve(true)
-               console.log('zmiana nicku zdiała')
-            }
+
+                // const newNickname = await availableNicknameCheck(formData.nickname)
+
+                // console.log('XDD')
+    
+                // console.log(newNickname)
+    
+    
+                if (formData.nickname.length === 0) {
+                    setErrorData((prevData) => ({
+                        ...prevData,
+                        nickname: "Niedozwolony nick"
+                    }));
+                    reject('Niedozwolony nick');
+                }         
+                else if(isNicknameTaken){
+                    console.log('nick zajety')                
+                    reject('Podany nick jest zajęty');
+                }
+                else {
+                   resolve('Success')
+                   console.log('zmiana nicku zdiała')
+                }
+
+            // console.log(err)
+
         });
+
     };
 
     const updateNickname = async ()=>{
 
-        if(formData.nickname.length === 0){
-            setErrorData((prevData) => ({
-                ...prevData,
-                nickname:"Niedozwolony nick"
-       
-            }));
-        }else{
+        // if(formData.nickname.length === 0){
+        //     setErrorData((prevData) => ({
+        //         ...prevData,
+        //         nickname:"Niedozwolony nick"
+        //     }));
+        // }
+
+        
+        // else{
             try{
                 const { data, error } = await supabase.auth.updateUser({
                     data: { full_name: formData.nickname }
@@ -177,29 +160,15 @@ export const Settings = () =>{
                 });
             }  catch(error){
                 console.log(error)
-                setErrorData((prevData) => ({
-                    ...prevData,
-                    nickname:"Podany nick jest zajęty"
-           
-                }));
+                // setErrorData((prevData) => ({
+                //     ...prevData,
+                //     nickname:"Podany nick jest zajęty"
+        
+                // }));
             }    
-        }
+        // }
 
     }
-    
-    // // Wywołanie funkcji updateNicknameCheck z użyciem Promise
-    // updateNicknameCheck()
-    //     .then(() => {
-    //         // Obsługa sukcesu (resolve)
-    //         console.log('Operacja zakończona sukcesem');
-    //     })
-    //     .catch((error) => {
-    //         // Obsługa błędu (reject)
-    //         console.error('Wystąpił błąd:', error);
-    //     });
-    
-
-
 
     const validateEmail = (email) => {
         return String(email)
@@ -208,12 +177,11 @@ export const Settings = () =>{
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
           );
       };
-  
 
-      const updateEmailCheck = () => {
+    const updateEmailCheck = () => {
         return new Promise(async (resolve, reject) => {
             if (validateEmail(formData.email)) {
-                resolve(true)
+                resolve('Success')
                 console.log('email ok')
             } else {
                 setErrorData((prevData) => ({
@@ -270,7 +238,7 @@ export const Settings = () =>{
 
 
 
-    const handleInputChange = (e) => {
+    const handleInputChange = async (e) => {
         setIsSaved(false)
         setUpdateSettingsError()
         const { name, value } = e.target;
@@ -278,50 +246,50 @@ export const Settings = () =>{
           ...prevData,
           [name]: name !== 'description' ? value.replace(/\s+/g, '') : value
         }))
-        setErrorData((prevData) => ({
-            ...prevData,
-            [name]:''
-        }));
+        if(name==='nickname'){
+            const isAvailable = await availableNicknameCheck(value)
+            console.log(isAvailable)
+            console.log(publicUser)
+            if(isAvailable && isAvailable?.id !== publicUser.id){
+                console.log('zajęty')
+                setIsNicknameTaken(true)
+            }
+            else{
+                setIsNicknameTaken(false)
+            }
+
+            console.log("halooooooo")
+
+        }
+
         console.log(formData)
       };
 
     const handleSubmit = async (e) =>{
-
-
-
         try{
             const results = await Promise.all([
                 checkPasswordChangeCheck(),
                 updateEmailCheck(),
-                updateNicknameCheck()
-            ]);
-            updateDescription()
+                updateNicknameCheck(e)
+            ])
+            console.log('test')
+            console.log(results)
+            // updateDescription()
             updateNickname()
             updateEmail()
             passwordChange()
             updateDataSuccess()
 
-            console.log('wszystko')
         }catch(err){
             updateFailed(err)
             console.log(err)
         }
-        
-
         e.preventDefault()
-
-  
-        
     }
 
 
-
-    //Jeżeli dane użytkownika nie zostały wzięte z props, bierze je prosto z supabase
     useEffect(()=>{
-        // if(!props)
-        {
             getUserDataFromDB()
-        }
     }, [])
 
 
@@ -333,7 +301,7 @@ export const Settings = () =>{
                     if (formData.newPassword === formData.confirmPassword) {
                         console.log('Hasła są takie same');
     
-                        resolve(true)
+                        resolve('Success')
 
                     } else {
                         console.log('Hasła się różnią');
@@ -362,8 +330,6 @@ export const Settings = () =>{
             if(formData.newPassword.length>=6){
                 if(formData.newPassword === formData.confirmPassword){
                     console.log('hasła są takie same')
-
-                    
                     const { data, error } = await supabase.auth.updateUser({
                         password: formData.newPassword
                     })
@@ -396,7 +362,7 @@ export const Settings = () =>{
     return(
         <div className='settings'>
             
-            <h1>Ustawienia</h1>
+            <h1>Ustawienia {isNicknameTaken.toString()}</h1>
             <ToastContainer
                 position="bottom-right"
                 autoClose={5000}
