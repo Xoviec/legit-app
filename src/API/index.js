@@ -92,6 +92,29 @@ app.get('/search-items', async (req, res) => {
     }
   });
 
+app.get('/search-user', async (req,res)=>{
+    const searchUser = req.query.nickname;
+
+    if (!searchUser) {
+        return res.status(400).json({ error: 'Parametr "nickname" jest wymagany.' });
+      }
+      try {
+        const { data, error } = await supabase
+          .from('users')
+          .select('id, nickname, avatar, is_verified, account_type')
+          .ilike('nickname', searchUser);
+    
+        if (error) {
+          return res.status(500).send(error.message);
+        }
+    
+        // Zwróć znalezione użytkowników
+        res.json(data);
+      } catch (error) {
+        console.error('Błąd podczas wyszukiwania użytkowników:', error.message);
+        res.status(500).json({ error: 'Wystąpił błąd podczas przetwarzania żądania.' });
+      }
+    });
 
 //znajdz uzytkownika
 app.get('/search-users', async (req, res) => {

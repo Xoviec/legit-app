@@ -71,8 +71,8 @@ export const Settings = () =>{
         
         console.log(nickname)
 
-        const response = await fetch(`${API}/search-users?letters=${nickname}`);
-        const data = await response.json();
+        const response = await fetch(`${API}/search-user?nickname=${nickname}`);
+        const data = await response.json()
         console.log('xdd', data[0])
         return data[0]
 
@@ -124,10 +124,10 @@ export const Settings = () =>{
                     }));
                     reject('Niedozwolony nick');
                 }         
-                else if(isNicknameTaken){
-                    console.log('nick zajety')                
-                    reject('Podany nick jest zajęty');
-                }
+                // else if(isNicknameTaken){
+                //     console.log('nick zajety')                
+                //     reject('Podany nick jest zajęty');
+                // }
                 else {
                    resolve('Success')
                    console.log('zmiana nicku zdiała')
@@ -158,6 +158,9 @@ export const Settings = () =>{
                     newNickname: formData.nickname,
                     id: publicUser.id,
                 });
+                if(error){
+                    console.log(error)
+                }
             }  catch(error){
                 console.log(error)
                 // setErrorData((prevData) => ({
@@ -246,21 +249,21 @@ export const Settings = () =>{
           ...prevData,
           [name]: name !== 'description' ? value.replace(/\s+/g, '') : value
         }))
-        if(name==='nickname'){
-            const isAvailable = await availableNicknameCheck(value)
-            console.log(isAvailable)
-            console.log(publicUser)
-            if(isAvailable && isAvailable?.id !== publicUser.id){
-                console.log('zajęty')
-                setIsNicknameTaken(true)
-            }
-            else{
-                setIsNicknameTaken(false)
-            }
+        // if(name==='nickname'){
+        //     const isAvailable = await availableNicknameCheck(value)
+        //     console.log(isAvailable)
+        //     console.log(publicUser)
+        //     if(isAvailable && isAvailable?.id !== publicUser.id){
+        //         console.log('zajęty')
+        //         setIsNicknameTaken(true)
+        //     }
+        //     else{
+        //         setIsNicknameTaken(false)
+        //     }
 
-            console.log("halooooooo")
+        //     console.log("halooooooo")
 
-        }
+        // }
 
         console.log(formData)
       };
@@ -274,7 +277,7 @@ export const Settings = () =>{
             ])
             console.log('test')
             console.log(results)
-            // updateDescription()
+            updateDescription()
             updateNickname()
             updateEmail()
             passwordChange()
