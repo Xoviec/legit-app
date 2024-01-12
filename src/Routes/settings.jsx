@@ -141,16 +141,6 @@ export const Settings = () =>{
 
     const updateNickname = async ()=>{
 
-        // if(formData.nickname.length === 0){
-        //     setErrorData((prevData) => ({
-        //         ...prevData,
-        //         nickname:"Niedozwolony nick"
-        //     }));
-        // }
-
-        
-        // else{
-            try{
                 const { data, error } = await supabase.auth.updateUser({
                     data: { full_name: formData.nickname }
                 })
@@ -158,19 +148,10 @@ export const Settings = () =>{
                     newNickname: formData.nickname,
                     id: publicUser.id,
                 });
+               
                 if(error){
                     console.log(error)
                 }
-            }  catch(error){
-                console.log(error)
-                // setErrorData((prevData) => ({
-                //     ...prevData,
-                //     nickname:"Podany nick jest zajęty"
-        
-                // }));
-            }    
-        // }
-
     }
 
     const validateEmail = (email) => {
@@ -269,25 +250,77 @@ export const Settings = () =>{
       };
 
     const handleSubmit = async (e) =>{
+
+        e.preventDefault()
+
+            const response = await fetch(`${API}/search-user?nickname=${formData.nickname}`);
+            const data = await response.json()
+
+            console.log(data)
+    
+
         try{
-            const results = await Promise.all([
-                checkPasswordChangeCheck(),
-                updateEmailCheck(),
-                updateNicknameCheck(e)
-            ])
+
+        
+
+            if(data.length !== 0 && (data[0]?.id !== publicUser.id)){
+
+                updateFailed('Nickname zajęty')
+
+            }
+            else{
+                const results = await Promise.all([
+                    checkPasswordChangeCheck(),
+                    updateEmailCheck(),
+                    updateNicknameCheck(e),
+                    // availableNicknameCheck()
+                ])
+                .then(
+                    updateDescription(),
+                    updateNickname(),
+                    updateEmail(),
+                    passwordChange(),
+                )
+                .then(
+                    updateDataSuccess()
+
+                )
+                console.log(results)
+                // checkPasswordChangeCheck()
+                // updateEmailCheck()
+                // updateNicknameCheck(e)
+                // availableNicknameCheck()
+                // updateDataSuccess()
+
+            }
+
+            // const results = await Promise.all([
+            //     checkPasswordChangeCheck(),
+            //     updateEmailCheck(),
+            //     updateNicknameCheck(e),
+            //     availableNicknameCheck()
+            // ]).then(
+            //     updateDescription(),
+            //     updateNickname(),
+            //     updateEmail(),
+            //     passwordChange()
+            // )
+            // .then(
+            //     await Promise.all([
+            //         updateDataSuccess()
+
+            //     ])
+            // )
+
+            // console.log(results)
+        
             console.log('test')
-            console.log(results)
-            updateDescription()
-            updateNickname()
-            updateEmail()
-            passwordChange()
-            updateDataSuccess()
+       
 
         }catch(err){
             updateFailed(err)
             console.log(err)
         }
-        e.preventDefault()
     }
 
 
@@ -329,6 +362,9 @@ export const Settings = () =>{
     };
 
     const passwordChange = async () =>{
+
+        console.log('kurwiszon pierdoloeni')
+
         if(formData.newPassword.length>0){
             if(formData.newPassword.length>=6){
                 if(formData.newPassword === formData.confirmPassword){

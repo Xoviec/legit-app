@@ -481,6 +481,9 @@ app.post('/update-nickname', async function (req, res){
         .from('users')
         .update({ nickname: req.body.newNickname })
         .eq('id', req.body.id)
+    if(!error){
+        return res.status(200).json({message: 'ok'})
+    }
     if(error){
         return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji nickname.' });
     }
@@ -493,6 +496,9 @@ app.post('/update-description', async function (req, res){
         .from('users')
         .update({ description: req.body.newDescription })
         .eq('id', req.body.id)
+    if(!error){
+        return res.status(200).json({message: 'ok'})
+    }
     if(error){
         console.log(error)
         return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji opisu.' });
