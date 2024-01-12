@@ -253,10 +253,9 @@ export const Settings = () =>{
 
         e.preventDefault()
 
-            const response = await fetch(`${API}/search-user?nickname=${formData.nickname}`);
-            const data = await response.json()
-
-            console.log(data)
+        const response = await fetch(`${API}/search-user?nickname=${formData.nickname}`);
+        const data = await response.json()
+        console.log(data)
     
 
         try{
@@ -273,7 +272,6 @@ export const Settings = () =>{
                     checkPasswordChangeCheck(),
                     updateEmailCheck(),
                     updateNicknameCheck(e),
-                    // availableNicknameCheck()
                 ])
                 .then(
                     updateDescription(),
@@ -285,37 +283,7 @@ export const Settings = () =>{
                     updateDataSuccess()
 
                 )
-                console.log(results)
-                // checkPasswordChangeCheck()
-                // updateEmailCheck()
-                // updateNicknameCheck(e)
-                // availableNicknameCheck()
-                // updateDataSuccess()
-
             }
-
-            // const results = await Promise.all([
-            //     checkPasswordChangeCheck(),
-            //     updateEmailCheck(),
-            //     updateNicknameCheck(e),
-            //     availableNicknameCheck()
-            // ]).then(
-            //     updateDescription(),
-            //     updateNickname(),
-            //     updateEmail(),
-            //     passwordChange()
-            // )
-            // .then(
-            //     await Promise.all([
-            //         updateDataSuccess()
-
-            //     ])
-            // )
-
-            // console.log(results)
-        
-            console.log('test')
-       
 
         }catch(err){
             updateFailed(err)
@@ -363,7 +331,6 @@ export const Settings = () =>{
 
     const passwordChange = async () =>{
 
-        console.log('kurwiszon pierdoloeni')
 
         if(formData.newPassword.length>0){
             if(formData.newPassword.length>=6){
@@ -401,7 +368,7 @@ export const Settings = () =>{
     return(
         <div className='settings'>
             
-            <h1>Ustawienia {isNicknameTaken.toString()}</h1>
+            <h1>Ustawienia</h1>
             <ToastContainer
                 position="bottom-right"
                 autoClose={5000}
@@ -420,43 +387,18 @@ export const Settings = () =>{
                 <form className='change-nickname' onSubmit={handleSubmit} onChange={handleInputChange}>
                     <p>Nickname</p>
                     <input className={`${(isSaved && !errorData.nickname) && `border-success `} nickname-input`} type="text" value={formData.nickname} name='nickname'/>
-                    {/* <p>{(isSaved && !errorData.nickname) && <p className='success-card'>zapisano</p> }</p>
-                    {
-                        errorData.nickname && 
-                        <p className="error-card">
-                            {errorData.nickname}
-                        </p>
-                    } */}
+                
                     <p>Opis</p>
                     <textarea className={`${(isSaved && !errorData.description) && `border-success `} nickname-input`} type="text" value={formData.description} name='description'/>
-                    {/* <p>{(isSaved && !errorData.description) && <p className='success-card'>zapisano</p> }</p>
-                    {
-                        errorData.descriptions && 
-                        <p className="error-card">
-                            {errorData.descriptions}
-                        </p>
-                    } */}
+               
                     <p>Email</p>
                     <input className={`${(isSaved && !errorData.email) && `border-success `} nickname-input`} type="text" value={formData.email} name='email'/>
-                    {/* <p>{(isSaved && !errorData.email) && <p className='success-card'>zapisano</p> }</p>
-                    {
-                        errorData.email && 
-                        <p className="error-card">
-                            {errorData.email}
-                        </p>
-                    } */}
+                
                     <p>Nowe hasło</p>
                     <input className={`${(isSaved && !errorData.newPassword) && `border-success `} nickname-input`} type="text" value={formData.newPassword} name='newPassword'/>
-                    {/* <p>{(isSaved && !errorData.newPassword) && <p className='success-card'>zapisano</p> }</p> */}
                     <p>Potwierdź haslo</p>
                     <input className={`${(isSaved && !errorData.newPassword) && `border-success `} nickname-input`} type="text" value={formData.confirmPassword} name='confirmPassword'/>
-                    {/* <p>{(isSaved && !errorData.newPassword) && <p className='success-card'>zapisano</p> }</p>
-                    {
-                        errorData.newPassword && 
-                        <p className="error-card">
-                            {errorData.newPassword}
-                        </p>
-                    } */}
+                  
                     <button className='settings-save-btn' type='submit'>zapisz</button>
 
                 </form>
@@ -469,10 +411,8 @@ export const Settings = () =>{
             </div>
 
 
-            {/* <p>{publicUser?.nickname}</p> */}
             <p>{publicUser?.is_verified} </p>
 
-            {/* <input placeholder={e.name} style={{display: idEdit == e.id ? 'block' : 'none'}}/>  */}
         </div>
     )
 }
