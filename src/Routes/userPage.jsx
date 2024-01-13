@@ -161,6 +161,7 @@ export const UserPage = (key) =>{
 
         const newCommentID = uuidv4()
 
+        const commentContent = e.target.comment.value
         e.preventDefault()
 
         const newCommentData = {
@@ -168,7 +169,7 @@ export const UserPage = (key) =>{
             comment_by_nickname: user.nickname,
             comment_by: user.id,
             comment_on: displayUser.id,
-            content: e.target.comment.value,
+            content: commentContent,
             id: newCommentID,
             created_at: 'teraz'
         }
@@ -185,7 +186,7 @@ export const UserPage = (key) =>{
             await axios.post(`${API}/add-comment`, {
                 comment_by: usersDataResponse[0].id,
                 comment_on: displayUser.id,
-                content: e.target.comment.value,
+                content: commentContent,
                 id: newCommentID
             });
         }catch(error){

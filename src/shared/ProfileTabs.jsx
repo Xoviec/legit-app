@@ -38,8 +38,12 @@ export const ProfileTabs = (props) => {
     });
 
   const addComment = (e) =>{
-    props.handleAddComment(e)
-    textareaRef.current.value = ''
+    e.preventDefault()
+    if((e.target.comment.value).length > 0){
+      props.handleAddComment(e)
+      textareaRef.current.value = ''
+    }
+
   }
 
   return(
@@ -93,11 +97,15 @@ export const ProfileTabs = (props) => {
         {
           location.pathname !== '/main' &&      
 
-          <form className="add-comment-tab" onSubmit={addComment}>
+          <div className='add-comment-section'> 
+          <CommentsAvatar avatar={props?.viewer.avatar} nickname={props?.viewer.nickname}/>
+          <form className="add-comment-form" onSubmit={addComment}>
             <textarea ref={textareaRef} className='textarea-add-comment' placeholder='Dodaj komentarz' name='comment' type="text" />
             {/* <input placeholder='ocena 1-5' type="text" min={0} max={5} /> */}
-            <button type='submit'>Wyślij</button>
+            <button type='submit'>Dodaj komentarz</button>
           </form>
+          </div>
+      
         }
         
         {
