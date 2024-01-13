@@ -7,11 +7,13 @@ import { CommentsAvatar } from './commentsAvatar';
 import { ItemDialog } from './ItemDialog';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useRef } from 'react';
 
 
 export const ProfileTabs = (props) => {
   
   const location = useLocation();
+  const textareaRef = useRef()
 
   const notify = (nickname) => toast.success(`Przedmiot przesłany pomyślnie do uzytkownika ${nickname}`, {
     position: "bottom-right",
@@ -34,6 +36,11 @@ export const ProfileTabs = (props) => {
     progress: undefined,
     theme: "light",
     });
+
+  const addComment = (e) =>{
+    props.handleAddComment(e)
+    textareaRef.current.value = ''
+  }
 
   return(
     <Tabs.Root className="TabsRoot" defaultValue="tab1">
@@ -86,8 +93,8 @@ export const ProfileTabs = (props) => {
         {
           location.pathname !== '/main' &&      
 
-          <form className="add-comment-tab" onSubmit={props.handleAddComment}>
-            <textarea className='textarea-add-comment' placeholder='Dodaj komentarz' name='comment' type="text" />
+          <form className="add-comment-tab" onSubmit={addComment}>
+            <textarea ref={textareaRef} className='textarea-add-comment' placeholder='Dodaj komentarz' name='comment' type="text" />
             {/* <input placeholder='ocena 1-5' type="text" min={0} max={5} /> */}
             <button type='submit'>Wyślij</button>
           </form>
