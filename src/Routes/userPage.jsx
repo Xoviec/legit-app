@@ -78,6 +78,8 @@ export const UserPage = (key) =>{
 
         setUserItemsList(undefined)
         setDisplayUser(undefined)
+        setCommentsList(undefined)
+
     }
 
     useEffect(()=>{
@@ -238,7 +240,7 @@ export const UserPage = (key) =>{
                     {
                         !userNotFound &&
 
-                        <ProfileTabs handleDeleteComment={handleDeleteComment} handleAddComment={handleAddComment} viewer={user} userItemsList={userItemsList} comments={commentsList}/>
+                        <ProfileTabs  handleDeleteComment={handleDeleteComment} handleAddComment={handleAddComment} viewer={user} userItemsList={userItemsList} comments={commentsList}/>
 
                     }
                 </div>
