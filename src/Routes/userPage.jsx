@@ -7,7 +7,8 @@ import { supabase } from '../components/supabaseClient';
 import { ProfileTabs } from '../shared/ProfileTabs';
 import { MyAvatar } from '../shared/Avatar';
 import { UserRanking } from '../components/UserRanking';
-
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 
 export const UserPage = (key) =>{
@@ -224,7 +225,12 @@ export const UserPage = (key) =>{
                         !userNotFound ?
                             <div className="user-info">
                                 <MyAvatar user={displayUser}/>
-                                <h1>{displayUser?.nickname}</h1>
+                                {
+                                    <h1>{displayUser?.nickname}</h1> 
+                                    ||
+                                    <Skeleton />
+                                }
+                                {/* <h1>{displayUser?.nickname || <Skeleton />}</h1> */}
                             </div>
                             :
                             <div>
