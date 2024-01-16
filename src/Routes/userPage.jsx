@@ -219,22 +219,18 @@ export const UserPage = (key) =>{
 
     return(
         <>
-            {/* <UserRanking list={mostItems}/> */}
                 <div className="profile-container">
                     {
                         !userNotFound ?
                             <div className="user-info">
                                 <MyAvatar user={displayUser}/>
-                                {
-                                    <h1>{displayUser?.nickname}</h1> 
-                                    ||
-                                    <Skeleton />
-                                }
-                                {/* <h1>{displayUser?.nickname || <Skeleton />}</h1> */}
+                                <h1>{ displayUser?.nickname || <Skeleton height={30} width={200} className='skeleton' containerClassName="skeleton" /> } </h1>
+                                <Skeleton />
                             </div>
                             :
                             <div>
                                 <h1>Nie znaleziono uzytkownika</h1>
+                                
                             </div>
                         
                         

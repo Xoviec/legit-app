@@ -90,6 +90,22 @@ export const ProfileTabs = (props) => {
                     <p className='item-registered'>Zarejestrowane <span className='register-date'>{item.legited_at.slice(0, 10).split('-').reverse().join('.')}</span></p>
                   </div>
                 ))
+                ||
+                Array.from(Array(9).keys()).map((num)=>(
+                  <div className='item item-skeleton' key={num}>
+                    <div className="image">
+                      <Skeleton width={200} height={100}  />
+                    </div>
+                    <p className='item-name'>
+                      <Skeleton width={180}/>
+                    </p> 
+                    <p className='item-registered'>
+                    <Skeleton width={240}/>
+
+                    </p>
+                  </div>
+                ))
+
               }
           </div>
       </Tabs.Content>

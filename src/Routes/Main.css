@@ -269,6 +269,10 @@ aside{
   gap: 1rem;
 }
 
+.skeleton{
+	flex: 1 1 0%;
+}
+
 .settings-btn{
   display: flex;
   align-items: center;
@@ -334,6 +338,7 @@ h1{
   position: relative;
   display: flex;
   flex-direction: column;
+  min-height: 12.563rem;
   align-items: center;
   /* max-width: 23rem; */
   border: 1px solid var(--secondary-bg-color);
@@ -341,6 +346,12 @@ h1{
   /* background-color: var(--secondary-bg-color); */
   padding-bottom: 1rem;
   overflow: hidden;
+}
+
+.item-skeleton{
+  padding-top: 2rem;
+  padding-bottom: 0;
+  gap: 0.5rem;
 }
 
 .item:hover .item-hover-button{
@@ -1020,6 +1031,7 @@ td{
   .user-info h1{
     font-size: 30px;
   }
+
 
   .not-found{
     padding: 0 1rem 0 1rem;
