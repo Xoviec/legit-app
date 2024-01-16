@@ -224,7 +224,7 @@ export const UserPage = (key) =>{
                         !userNotFound ?
                             <div className="user-info">
                                 <MyAvatar user={displayUser}/>
-                                <h1>{ displayUser?.nickname || <Skeleton height={30} width={200} className='skeleton' containerClassName="skeleton" /> } </h1>
+                                <h1>{ displayUser?.nickname || <Skeleton width={200} className='skeleton' containerClassName="skeleton" /> } </h1>
                                 <Skeleton />
                             </div>
                             :

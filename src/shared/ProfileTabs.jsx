@@ -101,7 +101,6 @@ export const ProfileTabs = (props) => {
                     </p> 
                     <p className='item-registered'>
                     <Skeleton width={240}/>
-
                     </p>
                   </div>
                 ))
