@@ -73,12 +73,9 @@ export const Navbar = () =>{
                     <div className="pre-list">
                     <div className="found-users">
                         {foundUsers.map((user) => (
-                        // <Link to={`/Users/${user.nickname}`}>
                             <button onClick={(()=>changeUserPage(user.nickname))} className='found-user' key={user.id}>
                                 <CommentsAvatar avatar={user.avatar} nickname={user.nickname}/>
                                 <p>{user.nickname}</p>
-                                {/* <p>ID: {item.id}</p> */}
-                                {/* <button onClick={() => handleSetFoundItem(item)}>Wybierz</button> */}
                             </button>
 
                         // </Link>

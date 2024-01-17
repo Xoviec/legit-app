@@ -38,8 +38,6 @@ export const Main = () =>{
           const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
           const mostItemsData = await mostItemsRes.json();
           setMostItems(mostItemsData)
-          console.log('eee', mostItemsData)
-      
         }catch(error){
         }
     
@@ -81,7 +79,7 @@ export const Main = () =>{
         {/* <div className="App"> */}
        
 
-        <div className={ isProfileRoute() &&`central-page`}>
+        <div className={ isProfileRoute() ? `central-page` :``}>
         {
          isProfileRoute() && <UserRanking list={mostItems}/>
         }
