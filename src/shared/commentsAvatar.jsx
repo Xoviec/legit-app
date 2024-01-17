@@ -15,7 +15,7 @@ export const CommentsAvatar = ({avatar, nickname}) => {
         alt="Colm Tuite"
       />
       <Avatar.Fallback className="AvatarFallback" delayMs={0}>
-        {nickname[0]}
+        {nickname ? nickname[0] : 'U'}
       </Avatar.Fallback>
     </Avatar.Root>
 
