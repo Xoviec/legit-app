@@ -54,7 +54,7 @@ export const ProfileTabs = (props) => {
           Przedmioty ({props?.userItemsList?.length})
         </Tabs.Trigger>
         <Tabs.Trigger className="TabsTrigger" value="tab2">
-          Legit check
+          Komentarze ({props?.comments?.length})
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content className="TabsContent" value="tab1">

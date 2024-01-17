@@ -39,7 +39,6 @@ export const ItemDialog = (props) =>{
     console.log(e.target.value)
         const response = await fetch(`${API}/search-users?letters=${e.target.value}`);
         const data = await response.json();
-
         console.log(data)
         setFoundUsers(data)
 
