@@ -94,7 +94,7 @@ export const Main = () =>{
 
             <Route path='/users' >
                 <Route path=':nickname' element={<UserPage/>}/>
-                <Route path=":*" element={<NotFound />} />
+                <Route path=":/*" element={<NotFound />} />
             </Route>
 
 

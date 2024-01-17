@@ -12,7 +12,6 @@ export const UserRanking = ({list}) =>{
     return(
         <aside>
             <Swiper
-
                 autoplay={true}
                 modules={[Autoplay]}
                 autoplay={{delay: 3000}}
@@ -40,8 +39,7 @@ export const UserRanking = ({list}) =>{
 
             
             
-            // onSlideChange={() => console.log('slide change')}
-            // onSwiper={(swiper) => console.log(swiper)}
+
             >
 
                 {
@@ -49,7 +47,7 @@ export const UserRanking = ({list}) =>{
 
                     list.map((user, i)=>(
 
-                        <SwiperSlide>
+                        <SwiperSlide key={user.id}>
                             <div className={`ranking-card card-${i+1}`}>
                                 <MyAvatar user={list[i]}/>
                                 <div className="card-right">
