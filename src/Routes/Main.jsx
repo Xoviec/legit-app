@@ -48,19 +48,6 @@ const path = location.pathname
   const API = process.env.REACT_APP_API
 
 
-
-
-
-  // console.log(getSession().session.user)
-
-  const essa = async()=>{
-    const { data: { user } } = await supabase.auth.getUser()
-    const { data, error } = await supabase.auth.getSession()
-
-    setUser(user)
-
-  }
-
   const getMostItems = async () =>{
     try{
       const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
@@ -68,11 +55,10 @@ const path = location.pathname
       setMostItems(mostItemsData)
   
     }catch(error){
+      console.log(error)
     }
 
   } 
-
-
 
   const getUserItems = async () =>{
 
@@ -82,6 +68,7 @@ const path = location.pathname
       console.log(userItemsData)
       setUserItemsList(userItemsData)
     }catch(userItemsError){
+      console.log(userItemsError)
     }
   }
 
@@ -95,39 +82,26 @@ const path = location.pathname
       setUser(user)
 
       try{
-        const commentsRes = await fetch(`${API}/get-comments/${user.id}`)
-        const commentsData = await commentsRes.json()
-        setComments(commentsData)
-      }catch(commentsError){
-      }
-    
-      try{
         const publicUserResponse = await fetch(`${API}/secret/${user.id}`); //dane uzytkownika
         const publicUserData = await publicUserResponse.json();
         setPublicUser(publicUserData[0])
       }catch(userDataError){
+        console.log(userDataError)
       }
 
 
-      try {
-        const usersDataResponse = await fetch(`${API}/nicknames`); // szuka wszystkich uzytkownikow
-        const usersData = await usersDataResponse.json();
-        const itemsResponse = await fetch(`${API}/items`); //wszystkie itemy
-        const itemsData = await itemsResponse.json();
-
-        setUserList(usersData)
-        setItemsList(itemsData)
-
-
-      } catch (error) {
-        console.error('Error fetching data:', error);
+      try{
+        const commentsRes = await fetch(`${API}/get-comments/${user.id}`)
+        const commentsData = await commentsRes.json()
+        setComments(commentsData)
+      }catch(commentsError){
+        console.log(commentsError)
       }
     };
 
-
+    fetchData()
     getUserItems()
     getMostItems()
-    fetchData()
   }, [path]);
 
 
@@ -152,94 +126,6 @@ const path = location.pathname
         setItemsList((previousArr) => (previousArr.slice(0, -1)));
       }
     }
-  }
-
-
-  const handleRegisterChange = (e) =>{
-    //zmiana state do szukania usera
-    if(e.target.name==='ownerHistory'){
-      console.log(e.target.value)
-      setOwnerId(e.target.value)
-      handleUpdateFoundUsers(e.target.value)
-    }
-    //zmiana state do szukania itemu 
-    else{
-      setOgItemIdVal(e.target.value)
-      handleUpdateFoundItems(e.target.value)
-    }
-  }
-
-  const handleUpdateFoundItems = async (item) =>{
-    const response = await fetch(`${API}/search-items?letters=${item}`);
-    const data = await response.json();
-  
-    console.log(data)
-    setFoundItems(data)
-  
-  try{
-  
-  }catch(err){
-    console.log(err)
-  }
-  }
-
-  const handleSetFoundItem = (item) =>{
-    setAssignedItem(item.id)
-    setOgItemIdVal(item.name)
-    setFoundItems()
-  }
-
-  const handleSetNewOwner = (user) =>{
-    setNewOwner(user.id)  
-    setOwnerId(user.nickname)
-    setFoundUsers() 
-  }
-
-  const handleUpdateFoundUsers = async (nickname) =>{
-        const response = await fetch(`${API}/search-users?letters=${nickname}`);
-        const data = await response.json();
-
-        console.log(data)
-        setFoundUsers(data)
-
-    try{
-
-    }catch(err){
-        console.log(err)
-    }
-}
-
-
-
-  const handleRegisterItem = async (e) =>{
-    e.preventDefault()
-    if(user){
-      const data = 
-      {
-        'ogItemId': assignedItem,
-        'ownerHistory': newOwner,
-      }
-      try{
-        await Promise.all([
-          axios.post(`${API}/register-item`, {
-            itemData: data,
-            accountType: publicUser.account_type,
-          }),
-        ]);
-      }catch(err){
-        console.log(err)
-      }
-    }
-  }
- 
-  const handleSetUser = (newUser) =>{
-    setUser(newUser)
-  }
-
-  const logout = async()=>{
-    await supabase.auth.signOut()
-    setUser(null)
-    setPublicUser(null)
   }
 
   

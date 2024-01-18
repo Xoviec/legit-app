@@ -45,7 +45,9 @@ export const Navbar = () =>{
 
         setIsNavActive(false)
         handleUpdateFoundUsers('')
-        navigate(`/Users/${userProfile}`, { replace: false });
+        navigate(`/Users/${userProfile}`
+        // , { replace: false }
+        );
         searchRef.current.value = ''
     }
 
@@ -111,13 +113,17 @@ export const Navbar = () =>{
                     :
                     (
                         <>
-                            <Link to='/login?activeTab=login' replace={false}>
+                            <Link to='/login?activeTab=login'
+                            //  replace={false}
+                             >
                                 <button className='btn-login'>
                                     Zaloguj się
                                 </button>
                         </Link>
                             <Link to='/login?activeTab=register'>
-                                <button className='btn-register' replace={false}>
+                                <button className='btn-register'
+                                //  replace={false}
+                                 >
                                     Zarejestruj się
                                 </button>
                             </Link>

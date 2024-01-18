@@ -76,8 +76,6 @@ export const Main = () =>{
 
         {!excludedRoutes.includes(location.pathname) && <Navbar />}
 
-        {/* <div className="App"> */}
-       
 
         <div className={ isProfileRoute() ? `central-page` :``}>
         {
@@ -120,7 +118,6 @@ export const Main = () =>{
          </Routes>
          </div>
          {!excludedRoutes.includes(location.pathname) && <Footer />}
-         {/* </div> */}
         </>
     )
 }
