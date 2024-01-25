@@ -92,20 +92,16 @@ export const Main = () =>{
             <Route path='/users/:nickname' element={<UserPage/>} />
             <Route path='/users/:/*' element={<NotFound/>} />
 
-                {/* <Route path=':nickname' element={<UserPage/>}/>
-                <Route path=":/*" element={<NotFound />} />
-            </Route> */}
 
-
-            <Route path='*'  element={<NotFound />} />
 
             <Route element={<LoggedCheck />}>
                 <Route path='/settings' element={<Settings/>}/>
             </Route>
-            <Route path="/legited-item">
-                <Route path=":id" element={<LegitedItem/>}/>
-                <Route path=":/*" element={<NotFound />} />
-            </Route>
+
+
+            <Route path='/legited-item/:id' element={<LegitedItem/>} />
+            <Route path='/legited-item/:/*' element={<NotFound/>} />
+ 
 
             <Route element={<AdminCheck />}>
                 <Route path='/adminpanel' element={<AdminPanel/>}/>
@@ -121,6 +117,7 @@ export const Main = () =>{
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Register />} />
             </Route>
+            <Route path='*'  element={<NotFound />} />
 
          </Routes>
          </div>

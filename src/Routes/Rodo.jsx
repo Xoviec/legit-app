@@ -6,22 +6,6 @@ export const Rodo = () =>{
 
 
 
-  useEffect(() => {
-    // Tworzymy element skryptu
-    const script = document.createElement('script');
-
-    // Ustawiamy atrybuty skryptu (src, defer itp.)
-    script.src = 'https://t.ixkio.com/s/traceback.js?code=Gnuxzv';
-    script.defer = true;
-
-    // Dodajemy skrypt do elementu head dokumentu
-    document.head.appendChild(script);
-
-    // Opcjonalnie, możemy oczyścić skrypt przy odmontowywaniu komponentu
-    return () => {
-      document.head.removeChild(script);
-    };
-  }, []); // 
 
 
     return(

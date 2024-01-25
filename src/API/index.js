@@ -408,6 +408,35 @@ app.get('/legited-items', async function (req, res){
     res.send(data)
 })
 
+app.get('/legited-item/:itemID', async function (req,res){
+
+    console.log(req.params)
+    
+    const { itemID } = req.params;
+
+    const {data, error} = await supabase
+        .from('legited_items')
+        .select()
+        .eq('id', itemID)
+
+    return res.status(200).send(data)
+})
+
+// app.get('/nicknames/:nickname', async function (req, res) {
+//     const { nickname } = req.params;
+
+//     const { data, error } = await supabase
+//     .from('users')
+//     .select('id, nickname, avatar, is_verified, account_type, description')
+//     .ilike('nickname', nickname);
+
+//     if (error) {
+//         return res.status(500).send(error.message);
+//     }
+
+//     res.send(data);
+// });
+
 
 app.get('/most-items', async function (req, res){
 
