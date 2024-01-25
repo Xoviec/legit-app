@@ -30,6 +30,7 @@ export const ItemAuthPassed = ({data, authDate}) => {
                 <div className="auth-item-info">
                     <p className="verified-item-name">{data?.name}</p>
                     <p className="verified-item-sku">{data?.sku}</p>
+                    <p className="verified-item-owner">Właściel: <span className="verified-item-owner-nickname">{data?.nickname}</span></p>
                     <p className='verified-item-registered'>Zarejestrowane <span className='register-date'>{data?.legited_at.slice(0, 10).split('-').reverse().join('.')}</span></p>
                 </div>
  
