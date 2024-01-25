@@ -18,6 +18,7 @@ export const Mainpage =()=> {
 
 
 // supabase.auth.getUser()
+
 const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
 const nickNameFromLocalStorage = item?.user.user_metadata.full_name
 
@@ -72,6 +73,8 @@ const path = location.pathname
     }
   }
 
+
+
   useEffect(() => {
 
     const fetchData = async () => {
@@ -79,6 +82,7 @@ const path = location.pathname
       const { data: { user } } = await supabase.auth.getUser()
       const { data, error } = await supabase.auth.getSession()
 
+      console.log('sesja:', data)
       setUser(user)
 
       try{

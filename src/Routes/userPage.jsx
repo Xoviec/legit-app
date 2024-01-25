@@ -137,7 +137,6 @@ export const UserPage = (key) =>{
         }
     }
 
-    // Przykładowe użycie
     const handleTradeItem = async (item) =>{
         
         const currentOwner = item.current_owner
@@ -203,18 +202,13 @@ export const UserPage = (key) =>{
         const newCommentList = commentsList.filter(((comment)=>comment.id !== id))
         setCommentsList(newCommentList)
      try{
-        // const userResponse = await fetch(`${API}/secret/${user.id}`)
-        // const usersDataResponse = await userResponse.json()
         await axios.post(`${API}/delete-comment`, {
             id: id,
             comment_by_id: user.id
         });
-
-    
-    }catch(err){
-        console.log(err)
-    }
-
+        }catch(err){
+            console.log(err)
+        }
     }
 
     return(

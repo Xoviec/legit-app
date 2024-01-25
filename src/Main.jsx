@@ -19,6 +19,7 @@ import { Terms } from "./Routes/Terms";
 import { Rodo } from "./Routes/Rodo";
 import { Footer } from "./components/Footer";
 import { UserRanking } from "./components/UserRanking";
+import { LegitedItem } from "./Routes/Legited-item";
 
 export const Main = () =>{
 
@@ -88,16 +89,22 @@ export const Main = () =>{
         
             <Route path='/main' element={<Mainpage/>}/>
 
-            <Route path='/users' >
-                <Route path=':nickname' element={<UserPage/>}/>
+            <Route path='/users/:nickname' element={<UserPage/>} />
+            <Route path='/users/:/*' element={<NotFound/>} />
+
+                {/* <Route path=':nickname' element={<UserPage/>}/>
                 <Route path=":/*" element={<NotFound />} />
-            </Route>
+            </Route> */}
 
 
             <Route path='*'  element={<NotFound />} />
 
             <Route element={<LoggedCheck />}>
                 <Route path='/settings' element={<Settings/>}/>
+            </Route>
+            <Route path="/legited-item">
+                <Route path=":id" element={<LegitedItem/>}/>
+                <Route path=":/*" element={<NotFound />} />
             </Route>
 
             <Route element={<AdminCheck />}>
