@@ -49,12 +49,19 @@ export const LegitedItem = () =>{
             setIsScanSuccess(false)
             setAuthError(promiseData.qserror)
             switch(promiseData.qserror){
+                default:
+                    navigate('/auth-failed?error=400', { replace: true, state: {error: 'xd'} })
+                    return
                 case('expired_key'):
                     navigate('/auth-failed?error=410', { replace: true, state: {error: 'xd'} })
                     return
                 case('no_key'):
                     navigate('/auth-failed?error=400', { replace: true, state: {error: 'xd'} })
                     return
+                case('key_not_found'):
+                    navigate('/auth-failed?error=401', { replace: true, state: {error: 'xd'} })
+                    return
+
             }
         }
         else{

@@ -2,8 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import gone from '../410.svg'
 import unauthorized from '../401.svg'
 import notFound from '../404.svg'
-
-// import unauthorized from '../410.svg'
+import badRequest from '../400.svg'
 
 
 export const AuthFailed = (props) =>{
@@ -20,7 +19,6 @@ export const AuthFailed = (props) =>{
             <div className="not-found">
                 {
                     error === '410' ?
-
                     <>
                        <img src={gone} alt="gone" />
                         <h2>
@@ -28,26 +26,20 @@ export const AuthFailed = (props) =>{
                         </h2>
                     </>
                     :
-
                     error === '401' ? 
-
                     <>
                         <img src={unauthorized} alt="401 unauthorized" />
                         <h2>
                         Nieprawidłowy klucz.
                         </h2>
                     </>
-
                     :
-                    
                     <>
-                        <img src={notFound} alt="404 not found" />
+                        <img src={badRequest} alt="400 bad request" />
                         <h2>
-                        Nie znaleziono strony której szukasz.
+                        Nieprawidłowe zapytanie.
                         </h2>
                     </>
-
-
                 }
         
            
