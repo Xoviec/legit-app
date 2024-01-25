@@ -1,5 +1,6 @@
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import { ItemAuthPassed } from '../components/ItemAuthPassed';
 
 
 export const LegitedItem = () =>{
@@ -13,6 +14,7 @@ export const LegitedItem = () =>{
     const[isScanSuccess, setIsScanSuccess] = useState()
     const[isDataLoaded, setIsDataLoaded] = useState()
     const[authError, setAuthError] = useState()
+    const[authDate, setAuthDate] = useState()
  
     const AuthLink = async () =>{
 
@@ -29,6 +31,7 @@ export const LegitedItem = () =>{
             status: 'unknown_error'
         };
         var ixk_ts = Date.now();
+        setAuthDate(ixk_ts)
         const controller = new AbortController();
         const options = {
             method: 'GET',
@@ -45,7 +48,14 @@ export const LegitedItem = () =>{
         if(promiseData.status === 'key_fail'){
             setIsScanSuccess(false)
             setAuthError(promiseData.qserror)
-            // navigate('/auth-failed?error=410', { replace: true, state: {error: 'xd'} })
+            // switch(promiseData.qserror){
+            //     case('expired_key'):
+            //         navigate('/auth-failed?error=410', { replace: true, state: {error: 'xd'} })
+            //         return
+            //     case('no_key'):
+            //         navigate('/auth-failed?error=400', { replace: true, state: {error: 'xd'} })
+            //         return
+            // }
         }
         else{
             setIsScanSuccess(true)
@@ -75,8 +85,8 @@ export const LegitedItem = () =>{
         try{
             const itemDataResponse = await fetch(`${API}/legited-item/${itemIdFromPath}`);
             const itemData = await itemDataResponse.json();
-            setItemData(itemData[0])
-            console.log(itemData[0])
+            setItemData(itemData)
+            console.log(itemData)
 
         }catch(err){
             console.log(err)
@@ -93,7 +103,7 @@ export const LegitedItem = () =>{
         <div className="central-page">
 
 
-            {
+            {/* {
                 !isDataLoaded ?
                 <div>Weryfikowanie...</div>
                 :
@@ -102,8 +112,7 @@ export const LegitedItem = () =>{
                 Status weryfikacji
                 {isScanSuccess ? 
                 <>
-                    current owner:
-                    {itemData?.current_owner}
+                   
                     <p>Udana</p> 
                     
                 </>
@@ -112,8 +121,10 @@ export const LegitedItem = () =>{
 
                 </>
 
-            }
-
+            } */}
+                {/* current owner:
+                {itemData?.current_owner} */}
+                <ItemAuthPassed authDate={authDate} data={itemData}/>
             
 
         </div>

@@ -410,7 +410,6 @@ app.get('/legited-items', async function (req, res){
 
 app.get('/legited-item/:itemID', async function (req,res){
 
-    
     const { itemID } = req.params;
 
     try{
@@ -432,36 +431,14 @@ app.get('/legited-item/:itemID', async function (req,res){
 
         const dataRes = {...ogItemData[0], ...legitedItemData[0], ...userData[0]}
 
-        console.log('O', dataRes)
-
-
-        console.log(ogItemData[0])
-        console.log(legitedItemData[0])
-        // resData = [...resData, ogItemData[0]]
-    return res.status(200).send(dataRes)
+        return res.status(200).send(dataRes)
 
     }catch(err){
-        console.log("blad here", err)
+        console.log(err)
         return res.status(400)
     }
 
 })
-
-// app.get('/nicknames/:nickname', async function (req, res) {
-//     const { nickname } = req.params;
-
-//     const { data, error } = await supabase
-//     .from('users')
-//     .select('id, nickname, avatar, is_verified, account_type, description')
-//     .ilike('nickname', nickname);
-
-//     if (error) {
-//         return res.status(500).send(error.message);
-//     }
-
-//     res.send(data);
-// });
-
 
 app.get('/most-items', async function (req, res){
 
