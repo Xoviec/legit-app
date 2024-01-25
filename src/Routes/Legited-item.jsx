@@ -52,12 +52,10 @@ export const LegitedItem = () =>{
       }, []); // 
     
 
-
-    
-
     return(
         <div className="central-page">
-            xD
+            current owner:
+            {itemData?.current_owner}
         </div>
     )
 }
