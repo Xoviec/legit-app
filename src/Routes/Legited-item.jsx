@@ -1,20 +1,25 @@
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 
 export const LegitedItem = () =>{
 
 
+
+    const navigate = useNavigate();
+
+
     const[scanData, setScanData] = useState()
     const[isScanSuccess, setIsScanSuccess] = useState()
+    const[isDataLoaded, setIsDataLoaded] = useState()
+    const[authError, setAuthError] = useState()
  
-    const dupa = async () =>{
+    const AuthLink = async () =>{
 
         try{
 
         let ixk_txtdelay = 0;
 
-        let ixk_textdb = "Authentication Check<br>In Progress...";
         let ixk_failurl = "https://legited.app/auth-failed";
         let ixk_errqs = true;
 
@@ -36,8 +41,11 @@ export const LegitedItem = () =>{
         console.log(ixk_curl)
         const promise = await fetch('https://t.ixkio.com/traceback?ixc=Gnuxzv&ts=' + ixk_ts + '&ixr=' + i.get('ixr') + '&ixu=' + ixk_curl, options);
         const promiseData = await promise.json()
+        setIsDataLoaded(true)
         if(promiseData.status === 'key_fail'){
             setIsScanSuccess(false)
+            setAuthError(promiseData.error)
+            navigate('/auth-failed?error=410', { replace: true, state: {error: 'xd'} })
         }
         else{
             setIsScanSuccess(true)
@@ -77,7 +85,7 @@ export const LegitedItem = () =>{
     }
 
     useEffect(()=>{
-        dupa()
+        AuthLink()
         getItemData()
     }, [])
 
@@ -106,9 +114,24 @@ export const LegitedItem = () =>{
 
     return(
         <div className="central-page">
+
+
+            {
+                !isDataLoaded ?
+                <div>Weryfikowanie...</div>
+                :
+                <>
+
+                Status weryfikacji
+                {isScanSuccess ? <p>Udana</p> : <p>Nieudana</p>}
+                {authError}
+
+                </>
+
+            }
+
             current owner:
             {itemData?.current_owner}
-            {isScanSuccess ? <p>Tak</p> : <p>Nie</p>}
 
         </div>
     )

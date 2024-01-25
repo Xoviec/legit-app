@@ -20,6 +20,7 @@ import { Rodo } from "./Routes/Rodo";
 import { Footer } from "./components/Footer";
 import { UserRanking } from "./components/UserRanking";
 import { LegitedItem } from "./Routes/Legited-item";
+import { AuthFailed } from "./Routes/AuthFailed";
 
 export const Main = () =>{
 
@@ -101,6 +102,7 @@ export const Main = () =>{
 
             <Route path='/legited-item/:id' element={<LegitedItem/>} />
             <Route path='/legited-item/:/*' element={<NotFound/>} />
+            <Route path='/auth-failed' element={<AuthFailed/>}/>
  
 
             <Route element={<AdminCheck />}>
@@ -110,6 +112,7 @@ export const Main = () =>{
             <Route path='/privacy' element={<Privacy/>}/>
             <Route path='/terms' element={<Terms/>}/>
             <Route path='/rodo' element={<Rodo/>}/>
+            
         
 
 
