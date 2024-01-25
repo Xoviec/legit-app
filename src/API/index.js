@@ -410,16 +410,41 @@ app.get('/legited-items', async function (req, res){
 
 app.get('/legited-item/:itemID', async function (req,res){
 
-    console.log(req.params)
     
     const { itemID } = req.params;
 
-    const {data, error} = await supabase
-        .from('legited_items')
-        .select()
-        .eq('id', itemID)
+    try{
 
-    return res.status(200).send(data)
+        const {data: legitedItemData, legitedItemError} = await supabase
+            .from('legited_items')
+            .select()
+            .eq('id', itemID)
+
+        const {data: ogItemData, ogItemError} = await supabase
+            .from('items')
+            .select('name, sku, brand, image')
+            .eq('id', legitedItemData[0].og_item_id)
+
+        const {data: userData, userError} = await supabase
+            .from('users')
+            .select('nickname, avatar')
+            .eq('id', legitedItemData[0].current_owner)
+
+        const dataRes = {...ogItemData[0], ...legitedItemData[0], ...userData[0]}
+
+        console.log('O', dataRes)
+
+
+        console.log(ogItemData[0])
+        console.log(legitedItemData[0])
+        // resData = [...resData, ogItemData[0]]
+    return res.status(200).send(dataRes)
+
+    }catch(err){
+        console.log("blad here", err)
+        return res.status(400)
+    }
+
 })
 
 // app.get('/nicknames/:nickname', async function (req, res) {

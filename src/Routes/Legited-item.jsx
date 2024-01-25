@@ -44,8 +44,8 @@ export const LegitedItem = () =>{
         setIsDataLoaded(true)
         if(promiseData.status === 'key_fail'){
             setIsScanSuccess(false)
-            setAuthError(promiseData.error)
-            navigate('/auth-failed?error=410', { replace: true, state: {error: 'xd'} })
+            setAuthError(promiseData.qserror)
+            // navigate('/auth-failed?error=410', { replace: true, state: {error: 'xd'} })
         }
         else{
             setIsScanSuccess(true)
@@ -89,29 +89,6 @@ export const LegitedItem = () =>{
         getItemData()
     }, [])
 
-
-    
-
-
-    // useEffect(() => {
-    //     // Tworzymy element skryptu
-    //     const script = document.createElement('script');
-    
-    //     // Ustawiamy atrybuty skryptu (src, defer itp.)
-    //     script.src = 'https://t.ixkio.com/s/traceback.js?code=Gnuxzv';
-    //     script.defer = true;
-    
-    //     // Dodajemy skrypt do elementu head dokumentu
-    //     document.head.appendChild(script);
-
-    
-    //     // Opcjonalnie, możemy oczyścić skrypt przy odmontowywaniu komponentu
-    //     return () => {
-    //       document.head.removeChild(script);
-    //     };
-    //   }, []); 
-    
-
     return(
         <div className="central-page">
 
@@ -123,15 +100,21 @@ export const LegitedItem = () =>{
                 <>
 
                 Status weryfikacji
-                {isScanSuccess ? <p>Udana</p> : <p>Nieudana</p>}
+                {isScanSuccess ? 
+                <>
+                    current owner:
+                    {itemData?.current_owner}
+                    <p>Udana</p> 
+                    
+                </>
+                : <p>Nieudana</p>}
                 {authError}
 
                 </>
 
             }
 
-            current owner:
-            {itemData?.current_owner}
+            
 
         </div>
     )
