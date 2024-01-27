@@ -19,6 +19,7 @@
 }
 
 body {
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
   font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
