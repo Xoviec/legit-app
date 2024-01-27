@@ -61,7 +61,6 @@ export const LegitedItem = () =>{
                 case('key_not_found'):
                     navigate('/auth-failed?error=401', { replace: true, state: {error: 'xd'} })
                     return
-
             }
         }
         else{
@@ -107,10 +106,10 @@ export const LegitedItem = () =>{
     }, [])
 
     return(
-        <div className="central-page">
+        <div className="certificate-page">
 
 
-            {/* {
+            {
                 !isDataLoaded ?
                 <div>Weryfikowanie...</div>
                 :
@@ -120,7 +119,7 @@ export const LegitedItem = () =>{
                 {isScanSuccess ? 
                 <>
                    
-                    <p>Udana</p> 
+                   <ItemAuthPassed authDate={authDate} data={itemData}/>
                     
                 </>
                 : <p>Nieudana</p>}
@@ -128,10 +127,8 @@ export const LegitedItem = () =>{
 
                 </>
 
-            } */}
-                {/* current owner:
-                {itemData?.current_owner} */}
-                <ItemAuthPassed authDate={authDate} data={itemData}/>
+            }
+              
             
 
         </div>

@@ -919,23 +919,55 @@ td{
   font-size: 30px;
 }
 
+.certificate-page{
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 2rem;
+  min-height: calc(100svh - 7.5rem);
+  justify-content: center;
+}
+
+.certificate-page h1{
+  text-align: center;
+  font-size: 30px;
+}
+
 .item-auth-passed{
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #ffffff;
-  border: 1px solid var(--secondary-bg-color);
-  padding: 3rem;
   width: 90%;
   margin-bottom: 2.5rem;
 }
 
+.verified-card{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--secondary-bg-color);
+  background-color: #ffffff;
+  padding: 3rem;
+
+
+
+}
+
 .auth-data{
 
+
+  margin-top: 1rem;
+  text-align: center;
   display: flex;
+  /* flex-wrap: wrap ; */
+  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  gap: 1rem;
   width: 100%;
+}
+
+.verify-date{
+  display: flex;
+  flex-wrap: wrap;
 }
 
 .item-auth-passed h1{
@@ -943,11 +975,13 @@ td{
 }
 
 .verified-item-id{
+  font-size: 10px;
   color: #868686
 }
 
 .auth-item{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   gap: 2rem;
 
@@ -956,17 +990,17 @@ td{
 .auth-item-info{
   display: flex;
   flex-direction: column;
-  padding-top: 5rem;
+  /* padding-top: 5rem; */
 }
 
 .item-auth-passed .image img{
-  height: 340px;
+  height: 150px;
   width: auto;
 }
 
 .verified-item-name{
   font-weight: 600;
-  font-size: 30px;
+  font-size: 20px;
 }
 
 .verified-item-owner{
@@ -1042,6 +1076,8 @@ td{
   .central-page {
     flex-direction: column;
   }
+
+
 
   .profile-container{
     padding-right: 0;
