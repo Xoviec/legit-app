@@ -589,13 +589,13 @@ h1{
   align-items: center;
   justify-content: center;
   gap: 1rem;
-  padding: 0px 48px 0px 48px;
+  /* padding: 0px 48px 0px 48px; */
   min-height: calc(100svh - 5rem);
 }
 
 .settings-container{
   align-items: center;
-  width: 20rem;
+  width: 48rem;
   display: flex;
   flex-direction: column;
   gap: 1rem;
@@ -629,7 +629,13 @@ h1{
   display: flex;
   flex-direction: column;
   /* flex: 1; */
-  width: 14rem;
+  /* width: 20rem; */
+  width: 90%;
+}
+
+.change-nickname textarea{
+  height: 5rem;
+  font-size: 16px;
 }
 
 .change-nickname p{
@@ -987,6 +993,17 @@ td{
 @media only screen and (max-width: 810px) {
 
 
+
+  .settings-container{
+    width: 95%;
+  }
+
+  .change-nickname{
+    width: 90%;
+  }
+
+
+
   nav{
     position: relative;
   }
@@ -1021,9 +1038,7 @@ td{
     flex: none;
   }
 
-  .settings h1{
-    font-size: 35px;
-  }
+ 
   .central-page {
     flex-direction: column;
   }
@@ -1089,9 +1104,18 @@ td{
 
   }
 
+   .settings h1{
+    font-size: 35px;
+  }
+
   .user-info h1{
     font-size: 30px;
   }
+
+  .change-nickname{
+    width: 100%;
+  }
+
 
 
   .not-found{
