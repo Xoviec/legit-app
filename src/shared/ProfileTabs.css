@@ -151,29 +151,40 @@ button:active{
 
 .comment-data{
   display: flex;
-  align-items: center;
   width: 100%;
   gap: 0.5rem;
 }
 
+.comment-right-side{
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+
 
 .comment-author{
     font-weight: 700;
-    font-size: 20px;
+    font-size: 15px;
     color: #180202;
     text-decoration: none;   
 
 }
 
 .comment-date{
-  color: rgb(146, 146, 146);
+  color: #536471;
+  font-size: 15px;
+}
+
+.comment-info{
+  display: flex;
+  gap: 0.5rem;
 }
 
 .comment-content{
   max-width: 100%;
   overflow-wrap: anywhere;
   word-break:break-word;
-  padding-left: 3rem;
 }
 
 .delete{
@@ -194,6 +205,7 @@ button:active{
   display: flex;
   align-items: center;
   cursor: pointer;
+  margin-left: auto;
 }
 
 
