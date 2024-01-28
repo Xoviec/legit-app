@@ -154,7 +154,6 @@ export const ProfileTabs = (props) => {
                           <div className="comment-date">
                             {
                               formatDistance(subDays(comment.created_at, 0), new Date(), { locale: pl })
-
                             }
                           </div>
                           {

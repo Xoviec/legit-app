@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import logo from './Legited logo.svg'
-import monogram from './monogram.svg'
+import monogram from './monogramPNG.png'
 import { supabase } from './components/supabaseClient';
 import { useEffect, useState } from 'react';
 import { CommentsAvatar } from './shared/commentsAvatar';
