@@ -173,7 +173,7 @@ export const UserPage = (key) =>{
             comment_on: displayUser.id,
             content: commentContent,
             id: newCommentID,
-            created_at: 'teraz'
+            created_at: new Date()
         }
 
         const newCommentList = [...commentsList, newCommentData]
