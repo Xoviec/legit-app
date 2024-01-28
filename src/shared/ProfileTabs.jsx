@@ -2,6 +2,9 @@ import React from 'react';
 import * as Tabs from '@radix-ui/react-tabs';
 import './ProfileTabs.css';
 import { Link, useLocation } from 'react-router-dom';
+import { format, formatDistance, formatRelative, subDays } from 'date-fns'
+import { pl } from 'date-fns/locale'
+
 import { MyAvatar } from './Avatar';
 import { CommentsAvatar } from './commentsAvatar';
 import { ItemDialog } from './ItemDialog';
@@ -134,7 +137,7 @@ export const ProfileTabs = (props) => {
                       <Link to={`/Users/${comment.comment_by_nickname}`}>
                           <p className='comment-author'>{comment.comment_by_nickname}</p>
                         </Link>
-                        <p className='comment-date'>
+                        {/* <p className='comment-date'>
                             {
                               comment.created_at
                               .slice(0, 10)
@@ -147,7 +150,13 @@ export const ProfileTabs = (props) => {
                                 comment.created_at
                                 .slice(11,16)
                               }
-                          </p>
+                          </p> */}
+                          <div className="comment-date">
+                            {
+                              formatDistance(subDays(comment.created_at, 0), new Date(), { locale: pl })
+
+                            }
+                          </div>
                           {
                             comment?.comment_by===props?.viewer?.id && 
 
