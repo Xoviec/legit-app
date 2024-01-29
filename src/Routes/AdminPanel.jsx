@@ -57,7 +57,7 @@ export const AdminPanel = () =>{
         const fetchData = async () => {
     
           const { data: { user } } = await supabase.auth.getUser()
-          const { data, error } = await supabase.auth.getSession()
+          const { data: {session}, error } = await supabase.auth.getSession()
     
           console.log(user)
       

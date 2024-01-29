@@ -214,6 +214,43 @@ app.get('/items', async function (req, res) {
     res.send(data)
 })
 
+app.get('/admin-access', async function (req, res){
+
+
+    console.log('halo')
+
+    try{
+        const decoded = jwtDecode(req.headers.jwt);
+
+        if(!decoded){
+
+            console.log('xd?')
+            return res.status(403).send('No access');
+        }
+    
+        const { data, error } = await supabase
+            .from('users')
+            .select('account_type')
+            .eq('id', decoded.sub);
+
+    
+        console.log('weryfikacja auu', data)
+
+        if(data[0].account_type === 'admin'){
+            res.status(200).send('Admin verified');
+        }else{
+            res.status(403).send('Forbidden');
+
+        }
+
+
+    }catch(error){
+        console.log(error)
+
+        res.status(403).send('No access');
+
+    }
+})
 
 // sneaks.getProductPrices("CD4487-100", function(err, product){
 //     console.log(product)
@@ -320,6 +357,7 @@ app.post('/set-avatar', upload.single('file'), async (req, res) => {
     }
     
 });
+
 
 
 app.post('/items', async function (req, res){
