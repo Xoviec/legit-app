@@ -225,6 +225,9 @@ nav{
   padding: 0 48px 0 48px;
 }
 
+nav .logo{
+  height: auto;
+}
 
 .nav-links{
   display: flex;
