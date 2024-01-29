@@ -217,14 +217,11 @@ app.get('/items', async function (req, res) {
 app.get('/admin-access', async function (req, res){
 
 
-    console.log('halo')
 
     try{
         const decoded = jwtDecode(req.headers.jwt);
 
         if(!decoded){
-
-            console.log('xd?')
             return res.status(403).send('No access');
         }
     
@@ -233,22 +230,15 @@ app.get('/admin-access', async function (req, res){
             .select('account_type')
             .eq('id', decoded.sub);
 
-    
-        console.log('weryfikacja auu', data)
-
         if(data[0].account_type === 'admin'){
             res.status(200).send('Admin verified');
         }else{
             res.status(403).send('Forbidden');
-
         }
 
 
     }catch(error){
-        console.log(error)
-
         res.status(403).send('No access');
-
     }
 })
 
@@ -476,8 +466,42 @@ app.post('/register-item', async function(req, res){
 })
 
 app.get('/legited-items', async function (req, res){
-    const { data, error } = await supabase.from('legited_items').select()
-    res.send(data)
+
+    try{
+        const { data, error } = await supabase.from('legited_items')
+            .select()
+
+
+            const fullData = await Promise.all(data.map( async(item, i) =>{
+                const { data: userData, error: userError } = await supabase
+                    .from('users')
+                    .select('nickname')
+                    .eq('id', item.current_owner)
+
+                const { data: itemData, error: itemError } = await supabase
+                    .from('items')
+                    .select('name')
+                    .eq('id', item.og_item_id)
+
+                return{
+                    ...item,
+                    current_owner_nickname: userData[0].nickname,
+                    item_name: itemData[0].name
+                }
+
+            }))
+
+            console.log(fullData)
+
+
+
+
+
+        res.status(200).send(fullData)
+    }catch(err){
+        console.log(err)
+    }
+
 })
 
 app.get('/legited-item/:itemID', async function (req,res){

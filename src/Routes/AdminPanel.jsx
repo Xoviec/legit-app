@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../Legited logo.svg'
-
+import { format } from "date-fns";
+import { pl } from "date-fns/locale";
 
 
 
@@ -338,8 +339,8 @@ export const AdminPanel = () =>{
         <thead >
           <tr className="table-row">
             <td>Item Owner</td>
+            <td>Name </td>
             <td className='id-cell'>ID</td>
-            <td>OG ite id</td>
             <td>Register date</td>
           </tr>
          
@@ -349,10 +350,10 @@ export const AdminPanel = () =>{
               
               legitedItemsList?.map((item)=>(
               <tr className="table-row">
-                  <td>{item.current_owner}</td>
+                  <td>{item.current_owner_nickname}</td>
+                  <td>{item.item_name}</td>
                   <td className='id-cell'>{item.id}</td>
-                  <td>{item.og_item_id}</td>
-                  <td>{item.legited_at}</td>
+                  <td>{format(item.legited_at, "yyyy-MM-dd")}</td>
               </tr>
               ))
           }
