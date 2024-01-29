@@ -44,6 +44,7 @@ const path = location.pathname
   const[assignedItem, setAssignedItem] = useState()
   const[comments, setComments] = useState()
   const[mostItems, setMostItems] = useState()
+  const[jwt, setJwt] = useState()
 
 
   const API = process.env.REACT_APP_API
@@ -80,13 +81,18 @@ const path = location.pathname
     const fetchData = async () => {
 
       const { data: { user } } = await supabase.auth.getUser()
-      const { data, error } = await supabase.auth.getSession()
-
-      console.log('sesja:', data)
+      const { data: {session}, error } = await supabase.auth.getSession()
+      console.log('sesja:', session)
       setUser(user)
 
       try{
-        const publicUserResponse = await fetch(`${API}/secret/${user.id}`); //dane uzytkownika
+        const publicUserResponse = await fetch(`${API}/secret/${user.id}`, {
+            method: 'GET',
+            headers: {
+              'jwt': JSON.stringify(session.access_token),
+            }
+          })
+        // const publicUserResponse = await fetch(`${API}/secret/${user.id}`); //dane uzytkownika
         const publicUserData = await publicUserResponse.json();
         setPublicUser(publicUserData[0])
       }catch(userDataError){

@@ -1,4 +1,5 @@
 const SneaksAPI = require('sneaks-api');
+const { jwtDecode } = require ("jwt-decode");
 
 const { v4: uuidv4 } = require('uuid');
 const { createClient } = require('@supabase/supabase-js');
@@ -171,17 +172,39 @@ app.get('/nicknames/:nickname', async function (req, res) {
 
 // konkretny uzytkownik z wrazliwymi danymi
 app.get('/secret/:id', async function (req, res){
+
     const { id } = req.params;
-    const { data, error } = await supabase
-        .from('users')
-        .select()
-        .eq('id', id);
-        
-    if (error) {
-        return res.status(500).send(error.message);
+
+
+
+    try{
+
+        const decoded = jwtDecode(req.headers.jwt);
+
+        if(!decoded){
+            return res.status(403).send('No access');
+        }
+        else if(decoded.sub === id){
+            console.log('passed')
+        }
+    
+        const { data, error } = await supabase
+            .from('users')
+            .select()
+            .eq('id', id);
+            
+        // if (error) {
+        //     return res.status(403).send('No access');
+        // }
+    
+        res.status(200).send(data);
+
+    }catch(error){
+        res.status(403).send('No access');
+
     }
 
-    res.send(data);
+
 })
 
 
@@ -485,7 +508,7 @@ app.get('/most-items', async function (req, res){
                 .eq('id', key)
 
                 if(userData[0]!== null){
-                console.log('essa', userData[0])
+                // console.log('essa', userData[0])
 
                 }
 
@@ -517,8 +540,7 @@ app.get('/most-items', async function (req, res){
         })
 
 app.post('/update-nickname', async function (req, res){
-    console.log(req.body.id)
-    console.log(req.body.newNickname)
+
     const { error } = await supabase
         .from('users')
         .update({ nickname: req.body.newNickname })
@@ -532,8 +554,7 @@ app.post('/update-nickname', async function (req, res){
 })
 
 app.post('/update-description', async function (req, res){
-    console.log(req.body.id)
-    console.log('halko', req.body.newDescription)
+  
     const { error } = await supabase
         .from('users')
         .update({ description: req.body.newDescription })
@@ -563,7 +584,6 @@ app.get('/get-comments/:id', async function (req, res){
         }
 
         let output
-        console.log('comment data:', commentData)
 
         if(commentData){
 
@@ -589,7 +609,6 @@ app.get('/get-comments/:id', async function (req, res){
 })
 
 app.post('/add-comment', async function (req, res){
-    console.log(req.body)
 
     try{
         const { error } = await supabase
@@ -611,7 +630,6 @@ app.post('/add-comment', async function (req, res){
 })
 
 app.post('/delete-comment', async function (req, res){
-    console.log(req.body.id)
     const commentID = req.body.id
     const comment_by_id = req.body.comment_by_id
 
