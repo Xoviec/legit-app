@@ -57,6 +57,8 @@ export const Settings = () =>{
     const [updateSettingsError, setUpdateSettingsError] = useState()
     const [isSaved, setIsSaved] = useState(false)
     const [isNicknameTaken, setIsNicknameTaken] = useState(false)
+    const[jwt, setJwt] = useState()
+
 
     const [formData, setFormData] = useState({
         nickname: '',
@@ -83,8 +85,15 @@ export const Settings = () =>{
 
         try{
             const { data: { user } } = await supabase.auth.getUser()
+            const { data: {session}, error } = await supabase.auth.getSession()
+            setJwt(session)
             setUserData(user)
-            const publicUserResponse = await fetch(`${API}/secret/${user?.id}`);
+            const publicUserResponse = await fetch(`${API}/secret/${user.id}`, {
+                method: 'GET',
+                headers: {
+                  'jwt': JSON.stringify(session.access_token),
+                }
+              })
             const publicUserData = await publicUserResponse.json();
             console.log(publicUserData[0])
             setPublicUser(publicUserData[0])
