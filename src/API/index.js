@@ -7,6 +7,8 @@ const cors = require('cors')
 const path = require('path')
 const {Storage} = require('@google-cloud/storage')
 const multer  = require('multer')
+const sharp = require('sharp');
+
 const { Readable } = require('stream');
 
 
@@ -34,6 +36,14 @@ const supabase = createClient(
 
 async function uploadFile(bucketName, fileBuffer, fileOutputName) {
     try {
+        // Kompresja obrazu za pomocą sharp
+        const compressedBuffer = await sharp(fileBuffer)
+            .resize({ width: 200, height: 200})
+            .jpeg ({ quality: 50 })
+            .webp ({ quality: 50 })
+            .png ({ compressionLevel: 9 }) // Dostosuj szerokość według potrzeb
+            .toBuffer();
+
         const projectId = 'direct-subset-406517';
         const keyFilename = path.join(__dirname, 'direct-subset-406517-b59aff2e65d5.json');
         const storage = new Storage({ projectId, keyFilename });
@@ -41,12 +51,13 @@ async function uploadFile(bucketName, fileBuffer, fileOutputName) {
 
         const file = bucket.file(fileOutputName);
 
-        await file.save(fileBuffer);
+        // Zapisz skompresowany plik
+        await file.save(compressedBuffer);
 
         const [metadata] = await file.getMetadata();
         const fileUrl = await file.getSignedUrl({
             action: 'read',
-            expires: '01-01-2100', 
+            expires: '01-01-2100',
         });
 
         return fileUrl[0];
@@ -263,7 +274,7 @@ app.post('/set-avatar', upload.single('file'), async (req, res) => {
     // console.log(req.body.userNickname)
     try {
         const uploadedFile = req.file.buffer;
-        const fileUrl = await uploadFile('legited-avatars', uploadedFile, `${userNickname}-avatar.png`);
+        const fileUrl = await uploadFile('legited-avatars', uploadedFile, `${userNickname}-avatar.webp`);
         console.log('Direct link to the uploaded file:', fileUrl);
         
         try{
