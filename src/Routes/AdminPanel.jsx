@@ -24,6 +24,7 @@ export const AdminPanel = () =>{
     const[newOwner, setNewOwner] = useState()
     const[assignedItem, setAssignedItem] = useState()
     const[legitedItemsList, setLegitedItemsList] = useState()
+    const[jwt, setJwt] = useState()
 
 
 
@@ -61,6 +62,7 @@ export const AdminPanel = () =>{
           const { data: {session}, error } = await supabase.auth.getSession()
     
           console.log(user)
+          setJwt(session.access_token)
       
           setUser(user)
     
@@ -158,13 +160,14 @@ export const AdminPanel = () =>{
             'name': e.target.name.value,
             'brand': e.target.brand.value,
             'sku': e.target.sku.value,
+            'image': e.target.image.value
           }
           setItemsList((prevItemsList) => [...prevItemsList, data]);
     
           try{
             await axios.post(`${API}/items`, {
               itemData: data,
-              accountType: publicUser.account_type,
+              jwt: jwt,
             })
             .then(
                 itemRegisterSuccess(e.target.name.value)
@@ -199,15 +202,13 @@ export const AdminPanel = () =>{
             'ownerHistory': newOwner,
           }
           try{
-            await Promise.all([
+          const essa = await Promise.all([
               axios.post(`${API}/register-item`, {
                 itemData: data,
                 accountType: publicUser.account_type,
-              }),
-              itemAssignSuccess(assignedItem, newOwner.nickname)
-
-            ])
-     
+              })
+          ])
+            itemAssignSuccess(assignedItem, newOwner.nickname)
           }catch(err){
             console.log(err)
           }
@@ -259,6 +260,8 @@ export const AdminPanel = () =>{
             <input type="text" placeholder='HQ6315' name='sku'/>
             <span>Marka</span>
             <input type="text" placeholder='Adidas' name='brand'/>
+            <span>Link do zdjęcia</span>
+            <input type="text" placeholder='https://cdn.discordapp.com/attachments/1184307919836155944/1191085967868698694/JordanChic.jpg?ex=65c91240&is=65b69d40&hm=e02519310d5b2784bb658045c5e93cf8abede17edba53e49c7fc834e333955f3&' name='image'/>
             <button type='submit'>Dodaj przedmiot</button>
         </form>
     </div>
@@ -340,7 +343,7 @@ export const AdminPanel = () =>{
           <tr className="table-row">
             <td>Item Owner</td>
             <td>Name </td>
-            <td className='id-cell'>ID</td>
+            <td className='id-cell'>Register ID</td>
             <td>Register date</td>
           </tr>
          

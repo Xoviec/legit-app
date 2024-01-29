@@ -352,11 +352,33 @@ app.post('/set-avatar', upload.single('file'), async (req, res) => {
 
 app.post('/items', async function (req, res){
 
-    if(req.body.accountType==='admin'){
-        const { error } = await supabase
-        .from('items')
-        .insert({ name: req.body.itemData.name, sku: req.body.itemData.sku, brand: req.body.itemData.brand,   })
+
+    try{
+        const decoded = jwtDecode(req.body.jwt);
+
+        const { data, error: userError } = await supabase
+            .from('users')
+            .select('account_type')
+            .eq('id', decoded.sub);
+
+        if(data[0].account_type === 'admin'){
+            const { error: addItemError } = await supabase
+                .from('items')
+                .insert({ name: req.body.itemData.name, sku: req.body.itemData.sku, brand: req.body.itemData.brand, image: req.body.itemData.image})
+                res.status(201)
+        }else{
+            res.status(403).send('Forbidden');
+        }
     }
+    catch(err){
+        console.log(err)
+    }
+
+
+
+
+      
+    // }
 })
 
 app.post('/change-owner', async function (req, res){
