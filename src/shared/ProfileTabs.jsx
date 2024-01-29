@@ -155,6 +155,7 @@ export const ProfileTabs = (props) => {
                             {
                               formatDistance(subDays(comment.created_at, 0), new Date(), { locale: pl })
                             }
+                            <span> temu</span>
                           </div>
                           {
                             comment?.comment_by===props?.viewer?.id && 

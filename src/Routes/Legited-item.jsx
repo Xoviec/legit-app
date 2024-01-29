@@ -7,6 +7,15 @@ export const LegitedItem = () =>{
 
 
 
+
+    const API = process.env.REACT_APP_API
+
+
+    const location = useLocation();
+    const pathSegments = location.pathname.split('/');
+    const itemIdFromPath = pathSegments[2];
+
+
     const navigate = useNavigate();
 
 
@@ -15,6 +24,8 @@ export const LegitedItem = () =>{
     const[isDataLoaded, setIsDataLoaded] = useState()
     const[authError, setAuthError] = useState()
     const[authDate, setAuthDate] = useState()
+    const[itemData, setItemData] = useState()
+
  
     const AuthLink = async () =>{
 
@@ -50,16 +61,16 @@ export const LegitedItem = () =>{
             setAuthError(promiseData.qserror)
             switch(promiseData.qserror){
                 default:
-                    navigate('/auth-failed?error=400', { replace: true, state: {error: 'xd'} })
+                    navigate('/auth-failed?error=400', { replace: true,  state: {itemIdFromPath}})
                     return
                 case('expired_key'):
-                    navigate('/auth-failed?error=410', { replace: true, state: {error: 'xd'} })
+                    navigate('/auth-failed?error=410', { replace: true,  state: {itemIdFromPath}})
                     return
                 case('no_key'):
-                    navigate('/auth-failed?error=400', { replace: true, state: {error: 'xd'} })
+                    navigate('/auth-failed?error=400', { replace: true,  state: {itemIdFromPath}})
                     return
                 case('key_not_found'):
-                    navigate('/auth-failed?error=401', { replace: true, state: {error: 'xd'} })
+                    navigate('/auth-failed?error=401', { replace: true,  state: {itemIdFromPath}})
                     return
             }
         }
@@ -75,14 +86,6 @@ export const LegitedItem = () =>{
     }
     
 
-    const API = process.env.REACT_APP_API
-
-
-    const location = useLocation();
-    const pathSegments = location.pathname.split('/');
-    const itemIdFromPath = pathSegments[2];
-
-    const [itemData, setItemData] = useState()
 
     console.log(itemIdFromPath)
 

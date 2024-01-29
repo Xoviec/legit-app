@@ -1,23 +1,53 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useLocation } from "react-router-dom";
 import gone from '../410.svg'
 import unauthorized from '../401.svg'
 import notFound from '../404.svg'
 import badRequest from '../400.svg'
+import { ItemAuthPassed } from "../components/ItemAuthPassed";
+import { useEffect, useState } from 'react';
 
 
 export const AuthFailed = (props) =>{
+
+
+    const API = process.env.REACT_APP_API
 
     const [searchParams] = useSearchParams();
 
     const error = searchParams.get("error")
 
+    const {state} = useLocation();
+
+    console.log(state)
 
     console.log(error)
+
+    const [itemData, setItemData] = useState()
+
+    const getItemData = async () =>{
+
+        try{
+            const itemDataResponse = await fetch(`${API}/legited-item/${state}`);
+            const itemData = await itemDataResponse.json();
+            setItemData(itemData)
+            console.log(itemData)
+
+        }catch(err){
+            console.log(err)
+        }
+
+    }
+
+    useEffect(()=>{
+        getItemData()
+    }, [])
+
+
 
     return(
         <div className="central-page">
             <div className="not-found">
-                {
+                {/* {
                     error === '410' ?
                     <>
                        <img src={gone} alt="gone" />
@@ -40,7 +70,8 @@ export const AuthFailed = (props) =>{
                         Nieprawidłowe zapytanie.
                         </h2>
                     </>
-                }
+                } */}
+                <ItemAuthPassed/>
         
            
             </div>

@@ -37,9 +37,6 @@ export const ItemAuthPassed = ({data, authDate}) => {
     
                 </div>
             </div>
-
-      
-    
         </div>
     )
 }
