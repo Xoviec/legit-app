@@ -236,6 +236,7 @@ const isAdmin = async (token) =>{
 
         if(data[0].account_type === 'admin'){
 
+            console.log('to admin')
             return true
             // return res.status(200).send('Admin verified');
         }
@@ -249,7 +250,6 @@ const isAdmin = async (token) =>{
             // return res.status(403).send('Forbidden');
         }
     }catch(err){
-        console.log(err)
         return false
     }
 }
@@ -433,7 +433,10 @@ app.post('/items', async function (req, res){
 
     try{
   
-        if(isAdmin(token)){
+
+        const adminCheck = await isAdmin(token)
+
+        if(adminCheck){
             const { error: addItemError } = await supabase
                 .from('items')
                 .insert({ name: req.body.itemData.name, sku: req.body.itemData.sku, brand: req.body.itemData.brand, image: req.body.itemData.image})
@@ -450,7 +453,7 @@ app.post('/items', async function (req, res){
         }
     }
     catch(err){
-        console.log(err)
+        console.log('xd', err)
         res.sendStatus(401)
     }
 })
@@ -518,7 +521,11 @@ app.post('/register-item', async function(req, res){
 
     try{
  
-        if(isAdmin(token)){
+
+        const adminCheck = await isAdmin(token)
+
+
+        if(adminCheck){
             const { error } = await supabase
                 .from('legited_items')
                 .insert({ 
