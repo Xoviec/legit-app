@@ -25,7 +25,7 @@ export const AdminCheck = () => {
             const adminAccessVerify = await fetch(`${API}/admin-access`, {
                 method: 'GET',
                 headers: {
-                  'jwt': JSON.stringify(session.access_token),
+                  'jwt': session.access_token,
                 }
               })
 

@@ -19,6 +19,7 @@ const upload = multer({ storage: storage });
 
 const sneaks = new SneaksAPI();
 
+const secretKey = 'MDJSmCwUgpKBo8vPyf50tR3hhDnFqwKb5blvaXgs5iiEcnd7tlJW1vXir7MFgEHCFUrALhxk66Hwz94AbPQL7A=='
 
 
 require('dotenv').config()
@@ -175,17 +176,13 @@ app.get('/nicknames/:nickname', async function (req, res) {
 app.get('/secret/:id', async function (req, res){
 
 
-    const secretKey = 'MDJSmCwUgpKBo8vPyf50tR3hhDnFqwKb5blvaXgs5iiEcnd7tlJW1vXir7MFgEHCFUrALhxk66Hwz94AbPQL7A=='
 
     const token = req.headers.jwt;
 
     if (!token) {
       return res.status(401).json({ error: 'Brak tokena JWT' });
     }
-  
-        //   const decoded = jwt.verify(token, secretKey)
 
-        //   console.log(decoded)
 
     try {
         const decoded = jwt.verify(token, secretKey)
@@ -209,56 +206,6 @@ app.get('/secret/:id', async function (req, res){
     } catch (error) {
       res.status(401).json({ error: 'Nieprawidłowy token JWT' });
     }
-
-
-
-    // const { id } = eq.params;
-
-
-    // const header = req.headers.jwt
-
-        // const decoded = jwtDecode(req.headers.jwt);
-
-        // const xd = decoded.sub
-
-
-        // res.status(200).json({ 
-        //     error: "Access forbidden",
-        //     xd: header
-            // id: id,
-            // decoded: decoded,
-            // xd: xd
-        // });
-
-    // try{
-
-    //     const decoded = jwtDecode(req.headers.jwt);
-
-    //     if(!decoded){
-    //         return res.status(403).send('No access', req.headers.jwt );
-    //     }
-    //     else if(decoded.sub === id){
-    //         console.log('passed')
-    //     }
-    
-    //     const { data, error } = await supabase
-    //         .from('users')
-    //         .select()
-    //         .eq('id', id);
-            
-    //     if(error){
-    //         res.sendStatus("error")
-    //     }else{
-    //         res.status(200).send(data);
-    //     }
-
-
-    // }catch(error){
-    //     res.status(403).json({ error: jwtDecode(req.headers.jwt) })
-
-    // }
-
-
 })
 
 
@@ -276,28 +223,65 @@ app.get('/admin-access', async function (req, res){
 
 
 
-    try{
-        const decoded = jwtDecode(req.headers.jwt);
+    const token = req.headers.jwt;
 
-        if(!decoded){
-            return res.status(403).send('No access, no jwt');
-        }
-    
+    console.log(token)
+
+    if (!token) {
+      return res.status(401).json({ error: 'Brak tokena JWT' });
+    }
+
+    try {
+        const decoded = jwt.verify(token, secretKey)
+
         const { data, error } = await supabase
             .from('users')
             .select('account_type')
             .eq('id', decoded.sub);
 
+
+            console.log(data[0].account_type)
+
         if(data[0].account_type === 'admin'){
-            res.status(200).send('Admin verified');
-        }else{
+            return res.status(200).send('Admin verified');
+        }
+        else if(error){
+            res.sendStatus("error")
+
+        }
+        else{
             res.status(403).send('Forbidden');
         }
+            
+    
 
 
-    }catch(error){
-        res.status(403).send('No access');
+    } catch (error) {
+      res.status(401).json({ error: 'Nieprawidłowy token JWT' });
     }
+
+    // try{
+    //     const decoded = jwtDecode(req.headers.jwt);
+
+    //     if(!decoded){
+    //         return res.status(403).send('No access, no jwt');
+    //     }
+    
+    //     const { data, error } = await supabase
+    //         .from('users')
+    //         .select('account_type')
+    //         .eq('id', decoded.sub);
+
+    //     if(data[0].account_type === 'admin'){
+    //         res.status(200).send('Admin verified');
+    //     }else{
+    //         res.status(403).send('Forbidden');
+    //     }
+
+
+    // }catch(error){
+    //     res.status(403).send('No access');
+    // }
 })
 
 // sneaks.getProductPrices("CD4487-100", function(err, product){
