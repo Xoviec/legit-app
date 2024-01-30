@@ -1,5 +1,5 @@
-const SneaksAPI = require('sneaks-api');
-const { jwtDecode } = require ("jwt-decode");
+// const SneaksAPI = require('sneaks-api');
+const { jwtDecode } = require ('jwt-decode');
 
 const { v4: uuidv4 } = require('uuid');
 const { createClient } = require('@supabase/supabase-js');
@@ -176,16 +176,19 @@ app.get('/secret/:id', async function (req, res){
     const { id } = req.params;
 
 
-        const decoded = jwtDecode(req.headers.jwt);
+    const header = req.headers.jwt
 
-        const xd = decoded.sub
+        // const decoded = jwtDecode(req.headers.jwt);
+
+        // const xd = decoded.sub
 
 
-        res.status(403).json({ 
+        res.status(200).json({ 
             error: "Access forbidden",
-            id: id,
-            decoded: decoded,
-            xd: xd
+            xd: header
+            // id: id,
+            // decoded: decoded,
+            // xd: xd
         });
 
     // try{
