@@ -442,53 +442,48 @@ app.post('/register-item', async function(req, res){
     let date = new Date().toJSON();
     const newUUID = uuidv4()
 
-    if(req.body.accountType==='admin'){
-        const { error } = await supabase
-            .from('legited_items')
-            .insert({ 
-                id: newUUID,
-                og_item_id: req.body.itemData.ogItemId, 
-                owners_history: [
-                    {
-                        ownerID: req.body.itemData.ownerHistory,
-                        registerDate: date
-                    }
-                ],
-                current_owner: req.body.itemData.ownerHistory
-            })
-        if(error){
-            console.log(error)
-            
-        return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji nickname.' });
+    if(!req.body.itemData.ogItemId || !req.body.itemData.ownerHistory){
+        return res.status(400).send("Pola nie mogą być puste")
+    }
+
+    try{
+        const decoded = jwtDecode(req.body.jwt);
+
+        const { data, error: userError } = await supabase
+            .from('users')
+            .select('account_type')
+            .eq('id', decoded.sub);
+
+
+        if(data[0].account_type==='admin'){
+            const { error } = await supabase
+                .from('legited_items')
+                .insert({ 
+                    id: newUUID,
+                    og_item_id: req.body.itemData.ogItemId, 
+                    owners_history: [
+                        {
+                            ownerID: req.body.itemData.ownerHistory,
+                            registerDate: date
+                        }
+                    ],
+                    current_owner: req.body.itemData.ownerHistory
+                })
+            if(error){
+                console.log(error)
+                res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji nickname.' });
+            }else{
+                res.status(201).json({ message: 'Pomyślnie przypisano przedmiot' });
+            }
+
+        }else{
+            res.sendStatus(403)
+        }
+        }catch(err){
+            console.log(err)
+            res.sendStatus(403)
         }
 
-        const { data: existingData, error: fetchDataError } = await supabase
-                .from('users')
-                .select('items_list')
-                .eq('id', req.body.itemData.ownerHistory);
-
-            if (fetchDataError) {
-                console.error(fetchDataError);
-                return res.status(500).json({ error: 'Wystąpił błąd podczas pobierania danych.' });
-            }
-
-            const newUserItems = existingData[0]?.items_list || [];
-            newUserItems.push(newUUID);
-
-            const { error: updateError } = await supabase
-                .from('users')
-                .update({
-                    items_list: newUserItems,
-                })
-                .eq('id', req.body.itemData.ownerHistory);
-
-            if (updateError) {
-                console.error(updateError);
-                return res.status(500).json({ error: 'Wystąpił błąd podczas aktualizacji danych.' });
-            }
-
-            return res.status(200).json({ message: 'Pomyślnie przypisano przedmiot' });
-    }
 })
 
 app.get('/legited-items', async function (req, res){
@@ -573,8 +568,6 @@ app.get('/most-items', async function (req, res){
         if(error){
             throw error
         }
-
-
 
         const result = data.reduce((acc, item) => {
             const key = item.current_owner

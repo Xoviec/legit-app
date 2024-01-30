@@ -42,7 +42,7 @@ export const AdminPanel = () =>{
         });
 
 
-    const itemAssignSuccess = (item) => toast.success(`Pomyślnie przypisano ${item} uzytkownikowi ${user}`, {
+    const itemAssignSuccess = (item, user) => toast.success(`Pomyślnie przypisano ${item} uzytkownikowi ${user}`, {
         position: "bottom-right",
         autoClose: 5000,
         hideProgressBar: false,
@@ -165,18 +165,6 @@ export const AdminPanel = () =>{
           setItemsList((prevItemsList) => [...prevItemsList, data]);
 
 
-
-          // await axios.post(`${API}/items`, {
-          //       itemData: data,
-          //       jwt: jwt,
-          //     })
-          // .then((res)=>{
-          //   console.log(res)
-          // })
-          // .catch((err)=>{
-          //   console.log(err)
-          // })
-    
           try{
             await axios.post(`${API}/items`, {
               itemData: data,
@@ -185,17 +173,13 @@ export const AdminPanel = () =>{
             itemRegisterSuccess(e.target.name.value)
                         
             }catch(err){
-              console.log('kurwa')
+              console.log(err)
               setItemsList((previousArr) => (previousArr.slice(0, -1)));
             }
             
           }
         }
 
-            
-            // .then(
-            //     itemRegisterSuccess(e.target.name.value)
-            // )
 
       const handleUpdateFoundItems = async (item) =>{
         const response = await fetch(`${API}/search-items?letters=${item}`);
@@ -222,13 +206,11 @@ export const AdminPanel = () =>{
           try{
           const response = await axios.post(`${API}/register-item`, {
                 itemData: data,
-                accountType: publicUser.account_type,
+                jwt: jwt,
               })
 
-              console.log(response)
-          if(response.ok){
-            itemAssignSuccess(assignedItem, newOwner.nickname)
-          }
+          itemAssignSuccess(ogItemIdVal, ownerId)
+       
           }catch(err){
             console.log(err)
           }
@@ -258,18 +240,6 @@ export const AdminPanel = () =>{
                     pauseOnHover
                     theme="light"
             /> 
-            {/* {
-                publicUser && 
-                <div>Witaj, {publicUser?.nickname} - {publicUser?.account_type}</div>
-            } */}
-
-      {/* {
-        
-        userList?.map((appUser)=>(
-          <Link className={`${appUser?.id===user?.id ? `user` : null}`} key={appUser.name} to={`/Users/${appUser.nickname}`}>{appUser.nickname}</Link>
-        ))
-      } */}
-  
 
     <div className="item-register-form">
         <p className='register-form-title'>Dodaj nowy przedmiot</p>
@@ -301,7 +271,6 @@ export const AdminPanel = () =>{
                     {foundItems.map((item) => (
                     <div className='found-item' key={item.id}>
                         <p>{item.name}</p>
-                        {/* <p>ID: {item.id}</p> */}
                         <button onClick={() => handleSetFoundItem(item)}>Wybierz</button>
                     </div>
                     ))}
@@ -321,7 +290,6 @@ export const AdminPanel = () =>{
                     {foundUsers.map((user) => (
                     <div className='found-item' key={user.id}>
                         <p>{user.nickname}</p>
-                        {/* <p>ID: {user.id}</p> */}
                         <button onClick={() => handleSetNewOwner(user)}>Wybierz</button>
                     </div>
                     ))}
