@@ -510,20 +510,15 @@ app.post('/register-item', async function(req, res){
     let date = new Date().toJSON();
     const newUUID = uuidv4()
 
+    const token = req.body.jwt
+
     if(!req.body.itemData.ogItemId || !req.body.itemData.ownerHistory){
         return res.status(400).send("Pola nie mogą być puste")
     }
 
     try{
-        const decoded = jwtDecode(req.body.jwt);
-
-        const { data, error: userError } = await supabase
-            .from('users')
-            .select('account_type')
-            .eq('id', decoded.sub);
-
-
-        if(data[0].account_type==='admin'){
+ 
+        if(isAdmin(token)){
             const { error } = await supabase
                 .from('legited_items')
                 .insert({ 

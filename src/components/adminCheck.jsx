@@ -16,12 +16,7 @@ export const AdminCheck = () => {
             const { data: { user } } = await supabase.auth.getUser();
             const { data: {session}, error } = await supabase.auth.getSession()
 
-            // const userResponse = await fetch(`${API}/secret/${user.id}`, {
-            //     method: 'GET',
-            //     headers: {
-            //       'jwt': JSON.stringify(session.access_token),
-            //     }
-            //   })
+
             const adminAccessVerify = await fetch(`${API}/admin-access`, {
                 method: 'GET',
                 headers: {
@@ -36,8 +31,7 @@ export const AdminCheck = () => {
             }
 
             console.log(adminAccessVerify.ok)
-            // const userData = await userResponse.json();
-            // setUser(userData[0]);
+
             setDataLoaded(true);
         } catch (error) {
             console.error("Error fetching data:", error);
