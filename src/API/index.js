@@ -1,5 +1,6 @@
-// const SneaksAPI = require('sneaks-api');
+const SneaksAPI = require('sneaks-api');
 const { jwtDecode } = require ('jwt-decode');
+const jwt = require('jsonwebtoken');
 
 const { v4: uuidv4 } = require('uuid');
 const { createClient } = require('@supabase/supabase-js');
@@ -173,23 +174,49 @@ app.get('/nicknames/:nickname', async function (req, res) {
 // konkretny uzytkownik z wrazliwymi danymi
 app.get('/secret/:id', async function (req, res){
 
-    const { id } = req.params;
+
+    const secretKey = 'MDJSmCwUgpKBo8vPyf50tR3hhDnFqwKb5blvaXgs5iiEcnd7tlJW1vXir7MFgEHCFUrALhxk66Hwz94AbPQL7A=='
+
+    const token = req.headers.jwt;
+
+    if (!token) {
+      return res.status(401).json({ error: 'Brak tokena JWT' });
+    }
+  
+        //   const decoded = jwt.verify(token, secretKey)
+
+        //   console.log(decoded)
+
+    try {
+      const decoded = jwt.verify(token, secretKey)
+      // Tutaj możesz dodać dodatkowe sprawdzenia, np. czy użytkownik o danym ID zgadza się z tym w tokenie
+  
+      // Teraz możesz obsłużyć żądanie, ponieważ token jest ważny
+      console.log('xd', secretKey)
+      res.json({ message: 'Dostęp do tajnych danych', userId: decoded.userId });
+    } catch (error) {
+      res.status(401).json({ error: 'Nieprawidłowy token JWT' });
+    }
 
 
-    const header = req.headers.jwt
+
+    // const { id } = eq.params;
+
+
+    // const header = req.headers.jwt
 
         // const decoded = jwtDecode(req.headers.jwt);
 
         // const xd = decoded.sub
 
 
-        res.status(200).json({ 
-            error: "Access forbidden",
-            xd: header
+        // res.status(200).json({ 
+        //     error: "Access forbidden",
+        //     xd: header
             // id: id,
             // decoded: decoded,
             // xd: xd
-        });
+        // });
 
     // try{
 
