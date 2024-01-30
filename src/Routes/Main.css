@@ -724,15 +724,18 @@ h1{
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  /* align-items: center; */
+  text-align: left;
+  align-items: flex-start;
   height: 40rem;
   flex: 1 1;
+  padding: 1rem;
   color: var(--main-text-color);
 }
 
 
 .welcomer::after{
+  
   padding: 1rem;
   content: '';
   position: absolute;
@@ -747,19 +750,63 @@ h1{
   opacity: 0.2;
 }
 
+.welcomer img{
+  height: 6rem;
+  margin-top: 6rem;
+
+}
+
 .welcomer h1{
+  color: var(--legited-dark-green);
   margin-top: 6rem;
 }
 
 .welcomer p{
   position: relative;
-  font-size: 23px;
+  font-size: 26px;
   font-weight: 500;
   z-index: 1;
+  max-width: 90%;
 }
 
 .welcomer span{
   color: var(--legited-light-green);
+}
+
+
+.buttons{
+  margin-top: 0.5rem;
+  display: flex;
+  gap: 1rem;
+  font-size: 20px;
+}
+
+.welcomer .btn-how{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color:var(--main-text-color);
+  color: var(--main-bg-color);
+  height: 2.7rem;
+  box-sizing: border-box;
+  border: 1px solid var(--main-text-color);
+  border-radius: 0.8rem;
+  transition: 0.4s;
+  padding: 1px 7px;
+}
+
+.welcomer .btn-join{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+  height: 2.7rem;
+  box-sizing: border-box;
+  border: 1px solid var(--main-text-color);
+  border-radius: 0.8rem;
+  transition: 0.4s;
+  padding: 1px 7px;
 }
 
 .admin-panel{
