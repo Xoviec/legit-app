@@ -227,7 +227,7 @@ app.get('/admin-access', async function (req, res){
         const decoded = jwtDecode(req.headers.jwt);
 
         if(!decoded){
-            return res.status(403).send('No access');
+            return res.status(403).send('No access, no jwt');
         }
     
         const { data, error } = await supabase
