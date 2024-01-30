@@ -197,7 +197,7 @@ app.get('/secret/:id', async function (req, res){
         res.status(200).send(data);
 
     }catch(error){
-        res.status(403).send('No access', req.headers.jwt );
+        res.status(403).json({ error: req.headers.jwt })
 
     }
 
