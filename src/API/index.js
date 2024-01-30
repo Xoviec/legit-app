@@ -182,7 +182,7 @@ app.get('/secret/:id', async function (req, res){
         const decoded = jwtDecode(req.headers.jwt);
 
         if(!decoded){
-            return res.status(403).send('No access');
+            return res.status(403).send('No access', req.headers.jwt );
         }
         else if(decoded.sub === id){
             console.log('passed')
@@ -193,14 +193,11 @@ app.get('/secret/:id', async function (req, res){
             .select()
             .eq('id', id);
             
-        // if (error) {
-        //     return res.status(403).send('No access');
-        // }
-    
+
         res.status(200).send(data);
 
     }catch(error){
-        res.status(403).send('No access');
+        res.status(403).send('No access', req.headers.jwt );
 
     }
 
