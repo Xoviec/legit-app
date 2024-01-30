@@ -67,13 +67,13 @@ export const AdminPanel = () =>{
           setUser(user)
     
         
-          try{
-            const publicUserResponse = await fetch(`${API}/secret/${user.id}`); //dane uzytkownika
-            const publicUserData = await publicUserResponse.json();
-            setPublicUser(publicUserData[0])
-          }catch(userDataError){
-            console.log(userDataError)
-          }
+          // try{
+          //   const publicUserResponse = await fetch(`${API}/secret/${user.id}`); //dane uzytkownika
+          //   const publicUserData = await publicUserResponse.json();
+          //   setPublicUser(publicUserData[0])
+          // }catch(userDataError){
+          //   console.log(userDataError)
+          // }
     
     
           try {
@@ -163,21 +163,39 @@ export const AdminPanel = () =>{
             'image': e.target.image.value
           }
           setItemsList((prevItemsList) => [...prevItemsList, data]);
+
+
+
+          // await axios.post(`${API}/items`, {
+          //       itemData: data,
+          //       jwt: jwt,
+          //     })
+          // .then((res)=>{
+          //   console.log(res)
+          // })
+          // .catch((err)=>{
+          //   console.log(err)
+          // })
     
           try{
             await axios.post(`${API}/items`, {
               itemData: data,
               jwt: jwt,
             })
-            .then(
-                itemRegisterSuccess(e.target.name.value)
-            )
-          }catch(err){
-            console.log(err)
-            setItemsList((previousArr) => (previousArr.slice(0, -1)));
+            itemRegisterSuccess(e.target.name.value)
+                        
+            }catch(err){
+              console.log('kurwa')
+              setItemsList((previousArr) => (previousArr.slice(0, -1)));
+            }
+            
           }
         }
-      }
+
+            
+            // .then(
+            //     itemRegisterSuccess(e.target.name.value)
+            // )
 
       const handleUpdateFoundItems = async (item) =>{
         const response = await fetch(`${API}/search-items?letters=${item}`);
@@ -202,13 +220,15 @@ export const AdminPanel = () =>{
             'ownerHistory': newOwner,
           }
           try{
-          const essa = await Promise.all([
-              axios.post(`${API}/register-item`, {
+          const response = await axios.post(`${API}/register-item`, {
                 itemData: data,
                 accountType: publicUser.account_type,
               })
-          ])
+
+              console.log(response)
+          if(response.ok){
             itemAssignSuccess(assignedItem, newOwner.nickname)
+          }
           }catch(err){
             console.log(err)
           }

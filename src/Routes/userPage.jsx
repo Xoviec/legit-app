@@ -42,8 +42,15 @@ export const UserPage = (key) =>{
         
 
         const { data: { user } } = await supabase.auth.getUser()
+        const { data: {session}, error } = await supabase.auth.getSession()
+
         try{
-            const userResponse = await fetch(`${API}/secret/${user?.id}`)
+            const userResponse = await fetch(`${API}/secret/${user.id}`, {
+                method: 'GET',
+                headers: {
+                  'jwt': JSON.stringify(session.access_token),
+                }
+              })
             const usersDataResponse = await userResponse.json()
             setUser(usersDataResponse[0])
 
@@ -181,16 +188,18 @@ export const UserPage = (key) =>{
         setCommentsList(newCommentList)
 
         try{
-            const userResponse = await fetch(`${API}/secret/${user.id}`)
-            const usersDataResponse = await userResponse.json()
+            // const userResponse = await fetch(`${API}/secret/${user.id}`)
+            // const usersDataResponse = await userResponse.json()
             setCommentVal('')
 
             await axios.post(`${API}/add-comment`, {
-                comment_by: usersDataResponse[0].id,
+                comment_by: user.id,
                 comment_on: displayUser.id,
                 content: commentContent,
                 id: newCommentID
             });
+
+
         }catch(error){
             console.log(error)
         }

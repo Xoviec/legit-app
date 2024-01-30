@@ -211,7 +211,11 @@ app.get('/secret/:id', async function (req, res){
 // wszystkie itemy
 app.get('/items', async function (req, res) {
     const { data, error } = await supabase.from('items').select()
-    res.send(data)
+        if(error){
+            res.sendStatus(500)
+        }else{
+            res.send(data)
+        }
 })
 
 app.get('/admin-access', async function (req, res){
@@ -365,20 +369,22 @@ app.post('/items', async function (req, res){
             const { error: addItemError } = await supabase
                 .from('items')
                 .insert({ name: req.body.itemData.name, sku: req.body.itemData.sku, brand: req.body.itemData.brand, image: req.body.itemData.image})
-                res.status(201)
+
+            if(addItemError){
+                res.sendStatus(403)
+            }else{
+                // res.status(200).send('some text');
+                res.sendStatus(201)
+            }
+            
         }else{
-            res.status(403).send('Forbidden');
+            res.sendStatus(403)
         }
     }
     catch(err){
         console.log(err)
+        res.sendStatus(403)
     }
-
-
-
-
-      
-    // }
 })
 
 app.post('/change-owner', async function (req, res){
@@ -432,9 +438,7 @@ app.post('/change-owner', async function (req, res){
 
 // zarejestrowanie unikalnego itemu i przypisanie go uzytkownikowi
 app.post('/register-item', async function(req, res){
-    console.log(req.body.accountType)
-    console.log(req.body.itemData.ogItemId)
-    console.log(req.body.itemData.ownerHistory)
+
     let date = new Date().toJSON();
     const newUUID = uuidv4()
 
@@ -513,7 +517,6 @@ app.get('/legited-items', async function (req, res){
 
             }))
 
-            console.log(fullData)
 
 
 
@@ -553,7 +556,7 @@ app.get('/legited-item/:itemID', async function (req,res){
 
     }catch(err){
         console.log(err)
-        return res.status(400)
+        return res.sendStatus(400)
     }
 
 })
@@ -705,8 +708,13 @@ app.post('/add-comment', async function (req, res){
             
         })
         if(error){
+            res.sendStatus(400)
             console.log(error)
         }
+        else{
+            res.sendStatus(201)
+        }
+
     }catch(err){
         console.log(err)
     }
