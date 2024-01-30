@@ -219,6 +219,41 @@ app.get('/items', async function (req, res) {
         }
 })
 
+const isAdmin = async (token) =>{
+    if(!token){
+        return false
+    }
+    try{
+        const decoded = jwt.verify(token, secretKey)
+
+        const { data, error } = await supabase
+            .from('users')
+            .select('account_type')
+            .eq('id', decoded.sub);
+
+
+            console.log(data[0].account_type)
+
+        if(data[0].account_type === 'admin'){
+
+            return true
+            // return res.status(200).send('Admin verified');
+        }
+        else if(error){
+            return false
+            // return res.sendStatus("error")
+
+        }
+        else{
+            return false
+            // return res.status(403).send('Forbidden');
+        }
+    }catch(err){
+        console.log(err)
+        return false
+    }
+}
+
 app.get('/admin-access', async function (req, res){
 
 
@@ -394,16 +429,11 @@ app.post('/set-avatar', upload.single('file'), async (req, res) => {
 
 app.post('/items', async function (req, res){
 
+    const token = req.body.jwt
 
     try{
-        const decoded = jwtDecode(req.body.jwt);
-
-        const { data, error: userError } = await supabase
-            .from('users')
-            .select('account_type')
-            .eq('id', decoded.sub);
-
-        if(data[0].account_type === 'admin'){
+  
+        if(isAdmin(token)){
             const { error: addItemError } = await supabase
                 .from('items')
                 .insert({ name: req.body.itemData.name, sku: req.body.itemData.sku, brand: req.body.itemData.brand, image: req.body.itemData.image})
@@ -416,12 +446,12 @@ app.post('/items', async function (req, res){
             }
             
         }else{
-            res.sendStatus(403)
+            res.sendStatus(401)
         }
     }
     catch(err){
         console.log(err)
-        res.sendStatus(403)
+        res.sendStatus(401)
     }
 })
 
