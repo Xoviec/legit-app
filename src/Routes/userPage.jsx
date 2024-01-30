@@ -48,7 +48,7 @@ export const UserPage = (key) =>{
             const userResponse = await fetch(`${API}/secret/${user.id}`, {
                 method: 'GET',
                 headers: {
-                  'jwt': JSON.stringify(session.access_token),
+                  'jwt': (session.access_token),
                 }
               })
             const usersDataResponse = await userResponse.json()

@@ -19,6 +19,8 @@ export const ProfileTabs = (props) => {
   const location = useLocation();
   const textareaRef = useRef()
 
+
+
   const notify = (nickname) => toast.success(`Przedmiot przesłany pomyślnie do uzytkownika ${nickname}`, {
     position: "bottom-right",
     autoClose: 5000,
@@ -117,7 +119,7 @@ export const ProfileTabs = (props) => {
           location.pathname !== '/main' &&      
 
           <div className='add-comment-section'> 
-          <CommentsAvatar avatar={props?.viewer.avatar} nickname={props?.viewer.nickname}/>
+          <CommentsAvatar avatar={props?.viewer?.avatar} nickname={props?.viewer?.nickname}/>
           <form className="add-comment-form" onSubmit={addComment}>
             <textarea ref={textareaRef} className='textarea-add-comment' placeholder='Dodaj komentarz' name='comment' type="text" />
             {/* <input placeholder='ocena 1-5' type="text" min={0} max={5} /> */}
