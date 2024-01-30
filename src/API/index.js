@@ -193,11 +193,15 @@ app.get('/secret/:id', async function (req, res){
             .select()
             .eq('id', id);
             
+        if(error){
+            res.sendStatus("error")
+        }else{
+            res.status(200).send(data);
+        }
 
-        res.status(200).send(data);
 
     }catch(error){
-        res.status(403).json({ error: req.headers.jwt })
+        res.status(403).json({ error: jwtDecode(req.headers.jwt) })
 
     }
 
