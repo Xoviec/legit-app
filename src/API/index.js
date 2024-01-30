@@ -188,12 +188,24 @@ app.get('/secret/:id', async function (req, res){
         //   console.log(decoded)
 
     try {
-      const decoded = jwt.verify(token, secretKey)
-      // Tutaj możesz dodać dodatkowe sprawdzenia, np. czy użytkownik o danym ID zgadza się z tym w tokenie
-  
-      // Teraz możesz obsłużyć żądanie, ponieważ token jest ważny
-      console.log('xd', secretKey)
-      res.json({ message: 'Dostęp do tajnych danych', userId: decoded.userId });
+        const decoded = jwt.verify(token, secretKey)
+        console.log('xd', secretKey)
+
+
+        const { data, error } = await supabase
+            .from('users')
+            .select()
+            .eq('id', decoded.sub);
+            
+        if(error){
+            res.sendStatus("error")
+        }else{
+            res.status(200).send(data);
+        }
+
+
+
+    //   res.json({ message: 'Dostęp do tajnych danych', userId: decoded.sub });
     } catch (error) {
       res.status(401).json({ error: 'Nieprawidłowy token JWT' });
     }
