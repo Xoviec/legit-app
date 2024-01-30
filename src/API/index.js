@@ -176,34 +176,45 @@ app.get('/secret/:id', async function (req, res){
     const { id } = req.params;
 
 
-
-    try{
-
         const decoded = jwtDecode(req.headers.jwt);
 
-        if(!decoded){
-            return res.status(403).send('No access', req.headers.jwt );
-        }
-        else if(decoded.sub === id){
-            console.log('passed')
-        }
+        const xd = decoded.sub
+
+
+        res.status(403).json({ 
+            error: "Access forbidden",
+            id: id,
+            decoded: decoded,
+            xd: xd
+        });
+
+    // try{
+
+    //     const decoded = jwtDecode(req.headers.jwt);
+
+    //     if(!decoded){
+    //         return res.status(403).send('No access', req.headers.jwt );
+    //     }
+    //     else if(decoded.sub === id){
+    //         console.log('passed')
+    //     }
     
-        const { data, error } = await supabase
-            .from('users')
-            .select()
-            .eq('id', id);
+    //     const { data, error } = await supabase
+    //         .from('users')
+    //         .select()
+    //         .eq('id', id);
             
-        if(error){
-            res.sendStatus("error")
-        }else{
-            res.status(200).send(data);
-        }
+    //     if(error){
+    //         res.sendStatus("error")
+    //     }else{
+    //         res.status(200).send(data);
+    //     }
 
 
-    }catch(error){
-        res.status(403).json({ error: jwtDecode(req.headers.jwt) })
+    // }catch(error){
+    //     res.status(403).json({ error: jwtDecode(req.headers.jwt) })
 
-    }
+    // }
 
 
 })
