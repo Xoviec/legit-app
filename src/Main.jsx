@@ -80,9 +80,9 @@ export const Main = () =>{
 
 
         <div className={ isProfileRoute() ? `central-page` :``}>
-        {
+        {/* {
          isProfileRoute() && <UserRanking list={mostItems}/>
-        }
+        } */}
         <Routes>
 
             <Route path='/' element={<App/>}/>

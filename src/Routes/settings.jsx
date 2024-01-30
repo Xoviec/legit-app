@@ -91,7 +91,7 @@ export const Settings = () =>{
             const publicUserResponse = await fetch(`${API}/secret/${user.id}`, {
                 method: 'GET',
                 headers: {
-                  'jwt': JSON.stringify(session.access_token),
+                  'jwt': session.access_token,
                 }
               })
             const publicUserData = await publicUserResponse.json();
