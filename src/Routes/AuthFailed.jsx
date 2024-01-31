@@ -19,11 +19,6 @@ export const AuthFailed = (props) =>{
     const error = searchParams.get("error")
 
 
-    console.log(state)
-
-    console.log(state.authDate)
-
-    console.log(error)
 
 
     const getItemData = async () =>{
