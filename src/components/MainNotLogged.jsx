@@ -8,10 +8,10 @@ export const MainNotLogged = ()=>{
     return(
         <div className="welcomer">
             <div className="content">
-                <h1>Legited</h1>
+                {/* <h1>Legited</h1> */}
                 {/* <img src={logo} alt="legited-logo" />    */}
 
-                <p>Uwierzytelnianie oraz permanentny legit check na <span>Twoje</span> sneakersy za pomocą tagów NFC.</p>
+                <p>Uwierzytelnianie oraz permanentny legit check na Twoje sneakersy za pomocą tagów NFC.</p>
                 <p> 
 
                 <div className="buttons">
