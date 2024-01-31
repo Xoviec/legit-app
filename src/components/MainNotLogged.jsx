@@ -11,9 +11,8 @@ export const MainNotLogged = ()=>{
                 {/* <h1>Legited</h1> */}
                 {/* <img src={logo} alt="legited-logo" />    */}
 
-                <p>Uwierzytelnianie oraz permanentny legit check na Twoje sneakersy za pomocą tagów NFC.</p>
-                <p> 
-
+                <h1>Uwierzytelnianie oraz permanentny legit check na Twoje sneakersy za pomocą tagów NFC</h1>
+                {/* <h2>Jeszcze nie wiem co tu napisać, ale na pewno tu coś będzie</h2> */}
                 <div className="buttons">
                     <button className='btn-join'>Dołącz</button>
                     <button className='btn-how'>Jak to działa?</button>
@@ -25,7 +24,6 @@ export const MainNotLogged = ()=>{
                 </Link> */}
 
                     {/* aby wykorzystać wszystkie funkcje! */}
-                </p>
             </div>
             <div className="image-container">
                 <img src={iphoneScreen} alt="" />

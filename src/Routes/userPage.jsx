@@ -210,10 +210,16 @@ export const UserPage = (key) =>{
         event.preventDefault()
         const newCommentList = commentsList.filter(((comment)=>comment.id !== id))
         setCommentsList(newCommentList)
-     try{
-        await axios.post(`${API}/delete-comment`, {
+        const reqData = {
             id: id,
             comment_by_id: user.id
+        }
+     try{
+        await axios.delete(`${API}/delete-comment`, {
+            headers: {
+                Authorization: 'jwt-key'
+            },
+            data: reqData
         });
         }catch(err){
             console.log(err)

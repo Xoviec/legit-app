@@ -769,9 +769,21 @@ h1{
 
 
 
-.welcomer h1{
+/* .welcomer h1{
   color: var(--legited-dark-green);
   margin-top: 6rem;
+} */
+
+.content h1{
+  font-size: 46px;
+  color: var(--main-text-color);
+  font-weight: 600;
+}
+
+.content  h2{
+  font-weight: 400;
+  font-size: 20px;
+  color: #5b5b5b;
 }
 
 .welcomer p{
@@ -781,6 +793,8 @@ h1{
   z-index: 1;
   max-width: 90%;
 }
+
+
 
 .welcomer span{
   color: var(--legited-light-green);
@@ -792,6 +806,7 @@ h1{
   display: flex;
   gap: 0.5rem;
   font-size: 20px;
+  font-weight: 500;
 }
 
 .welcomer .btn-join{
@@ -1113,6 +1128,10 @@ td{
     flex-direction: column;
     align-items: center;
     gap: 3rem;
+  }
+
+  .welcomer .content{
+    padding-top: 0;
   }
 
   .settings-container{

@@ -784,10 +784,12 @@ app.post('/add-comment', async function (req, res){
 
 })
 
-app.post('/delete-comment', async function (req, res){
+app.delete('/delete-comment', async function (req, res){
     const commentID = req.body.id
     const comment_by_id = req.body.comment_by_id
 
+    console.log('test', req.body)
+    console.log('test', comment_by_id)
 
     const { data, error: getComments } = await supabase
         .from('comments')
@@ -802,14 +804,20 @@ app.post('/delete-comment', async function (req, res){
                 .eq('id', commentID)
                 .eq('comment_by',comment_by_id)
             if(error){
+                res.sendStatus(400)
                 console.log('jakiś błąd: ',error)
             }
+            else{
+                res.sendStatus(200)
+            }
+
         }
         else{
-            return res.status(500).json({ error: 'Nie mozesz usunac czyjegos komentarza' }); 
+            return res.status(401).json({ error: 'Nie mozesz usunac czyjegos komentarza' }); 
         }
     }catch(err){
         console.log(err)
+        res.sendStatus(400)
     }
 
 })
