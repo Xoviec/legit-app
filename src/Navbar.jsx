@@ -91,7 +91,7 @@ export const Navbar = () =>{
                 </div>
 
                 <div className="rest">
-                <Link to='/register'>
+                {/* <Link to='/register'>
                     <button>
                         Jak to działa
                     </button>
@@ -101,7 +101,7 @@ export const Navbar = () =>{
                     <button>
                         O nas
                     </button>
-                </Link>
+                </Link> */}
 
                 {
                     isLogged ?
