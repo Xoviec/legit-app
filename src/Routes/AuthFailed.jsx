@@ -11,12 +11,13 @@ export const AuthFailed = (props) =>{
 
 
     const API = process.env.REACT_APP_API
+    const {state} = useLocation();
 
     const [searchParams] = useSearchParams();
+    const [data, setData] = useState(state)
 
     const error = searchParams.get("error")
 
-    const {state} = useLocation();
 
     console.log(state)
 
@@ -24,29 +25,30 @@ export const AuthFailed = (props) =>{
 
     console.log(error)
 
-    // const [itemData, setItemData] = useState()
 
-    // const getItemData = async () =>{
+    const getItemData = async () =>{
 
-    //     try{
-    //         const itemDataResponse = await fetch(`${API}/legited-item/${state}`);
-    //         const itemData = await itemDataResponse.json();
-    //         setItemData(itemData)
-    //         console.log(itemData)
+        try{
+            const itemDataResponse = await fetch(`${API}/legited-item/${state}`);
+            const itemData = await itemDataResponse.json();
+            setData(itemData)
+            console.log(itemData)
 
-    //     }catch(err){
-    //         console.log(err)
-    //     }
+        }catch(err){
+            console.log(err)
+        }
 
-    // }
+    }
 
-    // useEffect(()=>{
-    //     getItemData()
-    // }, [])
+    useEffect(()=>{
+        if(!state){
+            getItemData()
+        }
+    }, [])
 
 
     const getDate = () =>{
-        const a = new Date(state?.authDate * 1);
+        const a = new Date(Date.now());
         const months = ['Sty','Lut','Mrz','Kw','Maj','Cz','Lip','Sier','Wrz','Paź','Lis','Gr'];
         const year = a.getFullYear();
         const month = months[a.getMonth()];
@@ -56,9 +58,11 @@ export const AuthFailed = (props) =>{
         const sec = a.getSeconds().toString().padStart(2, '0');
         const time = date + '\xa0' + month + '\xa0' + year + '\xa0' + hour + ':' + min + ':' + sec ;
         return time;
-        return 1
     }
 
+
+
+    console.log('data', data)
 
 
     return(
@@ -68,7 +72,7 @@ export const AuthFailed = (props) =>{
                 <h1>Nie udało się zweryfikować</h1>
                 <div className="auth-data">
                     <p>Próba weryfikacji: {getDate()}</p>
-                    <p className="auth-item-id">ID: {state?.itemsData?.id}</p>
+                    <p className="auth-item-id">ID: {data?.itemsData?.id}</p>
                 </div>
                 <div className="auth-item">
                     <div className="image-overlay">
@@ -76,13 +80,13 @@ export const AuthFailed = (props) =>{
                     </div>
                     <div className="image">
                        
-                        <img src={state?.itemsData?.image} alt="auth item" />
+                        <img src={data?.itemsData?.image} alt="auth item" />
                     </div>
                     <div className="auth-item-info">
-                        <p className="auth-item-name">{state?.itemsData?.name}</p>
-                        <p className="auth-item-sku">{state?.itemsData?.sku}</p>
-                        <p className="auth-item-owner">Właściel: <span className="auth-item-owner-nickname">{state?.itemsData?.nickname}</span></p>
-                        <p className='auth-item-registered'>Zarejestrowane <span className='register-date'>{state?.itemsData?.legited_at?.slice(0, 10).split('-').reverse().join('.')}</span></p>
+                        <p className="auth-item-name">{data?.itemsData?.name}</p>
+                        <p className="auth-item-sku">{data?.itemsData?.sku}</p>
+                        <p className="auth-item-owner">Właściel: <span className="auth-item-owner-nickname">{data?.itemsData?.nickname}</span></p>
+                        <p className='auth-item-registered'>Zarejestrowane <span className='register-date'>{data?.itemsData?.legited_at?.slice(0, 10).split('-').reverse().join('.')}</span></p>
                     </div>
     
                 </div>
