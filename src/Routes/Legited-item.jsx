@@ -29,6 +29,8 @@ export const LegitedItem = () =>{
  
     const AuthLink = async () =>{
 
+        const itemsData = await getItemData()
+
         try{
 
         let ixk_txtdelay = 0;
@@ -42,7 +44,8 @@ export const LegitedItem = () =>{
             status: 'unknown_error'
         };
         var ixk_ts = Date.now();
-        setAuthDate(ixk_ts)
+        const authDate = ixk_ts
+        setAuthDate(authDate)
         const controller = new AbortController();
         const options = {
             method: 'GET',
@@ -61,16 +64,16 @@ export const LegitedItem = () =>{
             setAuthError(promiseData.qserror)
             switch(promiseData.qserror){
                 default:
-                    navigate('/auth-failed?error=400', { replace: true,  state: {itemIdFromPath}})
+                    navigate('/auth-failed?error=400', { replace: true,  state: {itemsData, authDate}})
                     return
                 case('expired_key'):
-                    navigate('/auth-failed?error=410', { replace: true,  state: {itemIdFromPath}})
+                    navigate('/auth-failed?error=410', { replace: true,  state: {itemsData, authDate}})
                     return
                 case('no_key'):
-                    navigate('/auth-failed?error=400', { replace: true,  state: {itemIdFromPath}})
+                    navigate('/auth-failed?error=400', { replace: true,  state: {itemsData, authDate}})
                     return
                 case('key_not_found'):
-                    navigate('/auth-failed?error=401', { replace: true,  state: {itemIdFromPath}})
+                    navigate('/auth-failed?error=401', { replace: true,  state: {itemsData, authDate}})
                     return
             }
         }
@@ -96,6 +99,7 @@ export const LegitedItem = () =>{
             const itemData = await itemDataResponse.json();
             setItemData(itemData)
             console.log(itemData)
+            return itemData
 
         }catch(err){
             console.log(err)
@@ -105,7 +109,6 @@ export const LegitedItem = () =>{
 
     useEffect(()=>{
         AuthLink()
-        getItemData()
     }, [])
 
     return(

@@ -20,33 +20,78 @@ export const AuthFailed = (props) =>{
 
     console.log(state)
 
+    console.log(state.authDate)
+
     console.log(error)
 
-    const [itemData, setItemData] = useState()
+    // const [itemData, setItemData] = useState()
 
-    const getItemData = async () =>{
+    // const getItemData = async () =>{
 
-        try{
-            const itemDataResponse = await fetch(`${API}/legited-item/${state}`);
-            const itemData = await itemDataResponse.json();
-            setItemData(itemData)
-            console.log(itemData)
+    //     try{
+    //         const itemDataResponse = await fetch(`${API}/legited-item/${state}`);
+    //         const itemData = await itemDataResponse.json();
+    //         setItemData(itemData)
+    //         console.log(itemData)
 
-        }catch(err){
-            console.log(err)
-        }
+    //     }catch(err){
+    //         console.log(err)
+    //     }
 
+    // }
+
+    // useEffect(()=>{
+    //     getItemData()
+    // }, [])
+
+
+    const getDate = () =>{
+        const a = new Date(state?.authDate * 1);
+        const months = ['Sty','Lut','Mrz','Kw','Maj','Cz','Lip','Sier','Wrz','Paź','Lis','Gr'];
+        const year = a.getFullYear();
+        const month = months[a.getMonth()];
+        const date = a.getDate();
+        const hour = a.getHours().toString().padStart(2, '0');
+        const min = a.getMinutes().toString().padStart(2, '0');
+        const sec = a.getSeconds().toString().padStart(2, '0');
+        const time = date + '\xa0' + month + '\xa0' + year + '\xa0' + hour + ':' + min + ':' + sec ;
+        return time;
+        return 1
     }
-
-    useEffect(()=>{
-        getItemData()
-    }, [])
 
 
 
     return(
-        <div className="central-page">
-            <div className="not-found">
+        <div className="certificate-page">
+            <div className="item-auth-failed">
+            <div className="auth-card">
+                <h1>Nie udało się zweryfikować</h1>
+                <div className="auth-data">
+                    <p>Próba weryfikacji: {getDate()}</p>
+                    <p className="auth-item-id">ID: {state?.itemsData?.id}</p>
+                </div>
+                <div className="auth-item">
+                    <div className="image-overlay">
+                                Spróbuj ponownie
+                    </div>
+                    <div className="image">
+                       
+                        <img src={state?.itemsData?.image} alt="auth item" />
+                    </div>
+                    <div className="auth-item-info">
+                        <p className="auth-item-name">{state?.itemsData?.name}</p>
+                        <p className="auth-item-sku">{state?.itemsData?.sku}</p>
+                        <p className="auth-item-owner">Właściel: <span className="auth-item-owner-nickname">{state?.itemsData?.nickname}</span></p>
+                        <p className='auth-item-registered'>Zarejestrowane <span className='register-date'>{state?.itemsData?.legited_at?.slice(0, 10).split('-').reverse().join('.')}</span></p>
+                    </div>
+    
+                </div>
+                {/* <p>401 key not found</p> */}
+            </div>
+
+
+
+
                 {/* {
                     error === '410' ?
                     <>
@@ -71,7 +116,7 @@ export const AuthFailed = (props) =>{
                         </h2>
                     </>
                 } */}
-                <ItemAuthPassed/>
+                {/* <ItemAuthPassed/> */}
         
            
             </div>
