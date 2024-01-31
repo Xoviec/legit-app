@@ -15,19 +15,24 @@ export const AuthFailed = (props) =>{
 
     const [searchParams] = useSearchParams();
     const [data, setData] = useState(state)
+    const [itemsData, setItemData] = useState(state?.itemsData)
 
     const error = searchParams.get("error")
+
+
+    const idFromPath = searchParams.get('id');
+
 
 
 
 
     const getItemData = async () =>{
 
+
         try{
-            const itemDataResponse = await fetch(`${API}/legited-item/${state}`);
+            const itemDataResponse = await fetch(`${API}/legited-item/${idFromPath}`);
             const itemData = await itemDataResponse.json();
-            setData(itemData)
-            console.log(itemData)
+            setItemData(itemData)
 
         }catch(err){
             console.log(err)
@@ -36,6 +41,7 @@ export const AuthFailed = (props) =>{
     }
 
     useEffect(()=>{
+
         if(!state){
             getItemData()
         }
@@ -59,6 +65,8 @@ export const AuthFailed = (props) =>{
 
     console.log('data', data)
 
+    console.log('itemdata', itemsData)
+
 
     return(
         <div className="certificate-page">
@@ -67,7 +75,7 @@ export const AuthFailed = (props) =>{
                 <h1>Nie udało się zweryfikować</h1>
                 <div className="auth-data">
                     <p>Próba weryfikacji: {getDate()}</p>
-                    <p className="auth-item-id">ID: {data?.itemsData?.id}</p>
+                    <p className="auth-item-id">ID: {itemsData?.id}</p>
                 </div>
                 <div className="auth-item">
                     <div className="image-overlay">
@@ -75,13 +83,13 @@ export const AuthFailed = (props) =>{
                     </div>
                     <div className="image">
                        
-                        <img src={data?.itemsData?.image} alt="auth item" />
+                        <img src={itemsData?.image} alt="auth item" />
                     </div>
                     <div className="auth-item-info">
-                        <p className="auth-item-name">{data?.itemsData?.name}</p>
-                        <p className="auth-item-sku">{data?.itemsData?.sku}</p>
-                        <p className="auth-item-owner">Właściel: <span className="auth-item-owner-nickname">{data?.itemsData?.nickname}</span></p>
-                        <p className='auth-item-registered'>Zarejestrowane <span className='register-date'>{data?.itemsData?.legited_at?.slice(0, 10).split('-').reverse().join('.')}</span></p>
+                        <p className="auth-item-name">{itemsData?.name}</p>
+                        <p className="auth-item-sku">{itemsData?.sku}</p>
+                        <p className="auth-item-owner">Właściel: <span className="auth-item-owner-nickname">{itemsData?.nickname}</span></p>
+                        <p className='auth-item-registered'>Zarejestrowane <span className='register-date'>{itemsData?.legited_at?.slice(0, 10).split('-').reverse().join('.')}</span></p>
                     </div>
     
                 </div>
