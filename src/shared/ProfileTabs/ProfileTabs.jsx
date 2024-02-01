@@ -4,10 +4,9 @@ import './ProfileTabs.css';
 import { Link, useLocation } from 'react-router-dom';
 import { format, formatDistance, formatRelative, subDays } from 'date-fns'
 import { pl } from 'date-fns/locale'
-
-import { MyAvatar } from './Avatar';
-import { CommentsAvatar } from './commentsAvatar';
-import { ItemDialog } from './ItemDialog';
+import { MyAvatar } from '../Avatar/Avatar';
+import { CommentsAvatar } from '../Avatar/commentsAvatar';
+import { ItemDialog } from '../Dialog/ItemDialog';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useRef } from 'react';

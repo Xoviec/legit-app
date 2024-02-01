@@ -1,4 +1,4 @@
-import { MyAvatar } from "../shared/Avatar"
+import { MyAvatar } from "../../../shared/Avatar/Avatar"
 import { Link } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import {Autoplay} from 'swiper/modules'

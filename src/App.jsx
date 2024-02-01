@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from './components/supabaseClient';
 import { User } from '@supabase/supabase-js';
 import { Register } from './components/Register/register';
-import { Login } from './components/login';
+import { Login } from './components/Register/login';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Script } from './script';

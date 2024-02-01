@@ -1,5 +1,5 @@
-import instagram from '../../instagram.svg'
-import logo from '../../Legited logo.svg'
+import instagram from '../../../instagram.svg'
+import logo from '../../../Legited logo.svg'
 
 
 export const Footer = () =>{

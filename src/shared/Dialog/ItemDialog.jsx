@@ -1,10 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
-import { CommentsAvatar } from './commentsAvatar';
+import { CommentsAvatar } from '../Avatar/commentsAvatar';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { supabase } from '../components/supabaseClient';
-
+import { supabase } from '../../components/supabaseClient';
 import * as Dialog from '@radix-ui/react-dialog';
 import { Cross2Icon } from '@radix-ui/react-icons';
 import './ItemDialog.css'

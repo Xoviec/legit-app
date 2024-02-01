@@ -1,9 +1,9 @@
 import { useSearchParams, useLocation } from "react-router-dom";
-import gone from '../410.svg'
-import unauthorized from '../401.svg'
-import notFound from '../404.svg'
-import badRequest from '../400.svg'
-import { ItemAuthPassed } from "../components/ItemAuthPassed";
+import gone from '../../410.svg'
+import unauthorized from '../../401.svg'
+import notFound from '../../404.svg'
+import badRequest from '../../400.svg'
+import { ItemAuthPassed } from "./AuthPassed";
 import { useEffect, useState } from 'react';
 
 

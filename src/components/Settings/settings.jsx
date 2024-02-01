@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
-import FileUploadForm from '../FileUploadForm'
+import FileUploadForm from './FileUploadForm'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
@@ -95,7 +95,6 @@ export const Settings = () =>{
                 }
               })
             const publicUserData = await publicUserResponse.json();
-            console.log(publicUserData[0])
             setPublicUser(publicUserData[0])
             setFormData((prevData) => ({
                 ...prevData,
@@ -111,20 +110,8 @@ export const Settings = () =>{
 
     const updateNicknameCheck = async (e) => {
 
-    
-        // e.preventDefault()
-
-        // console.log('dupa bupa')
-
 
         return new Promise(async (resolve, reject) => {
-
-                // const newNickname = await availableNicknameCheck(formData.nickname)
-
-                // console.log('XDD')
-    
-                // console.log(newNickname)
-    
     
                 if (formData.nickname.length === 0) {
                     setErrorData((prevData) => ({
@@ -133,17 +120,11 @@ export const Settings = () =>{
                     }));
                     reject('Niedozwolony nick');
                 }         
-                // else if(isNicknameTaken){
-                //     console.log('nick zajety')                
-                //     reject('Podany nick jest zajęty');
-                // }
+
                 else {
                    resolve('Success')
                    console.log('zmiana nicku zdiała')
                 }
-
-            // console.log(err)
-
         });
 
     };
@@ -264,39 +245,33 @@ export const Settings = () =>{
 
         const response = await fetch(`${API}/search-user?nickname=${formData.nickname}`);
         const data = await response.json()
-        console.log(data)
-    
 
         try{
-
-        
-
             if(data.length !== 0 && (data[0]?.id !== publicUser.id)){
-
                 updateFailed('Nickname zajęty')
-
             }
             else{
-                const results = await Promise.all([
-                    checkPasswordChangeCheck(),
-                    updateEmailCheck(),
-                    updateNicknameCheck(e),
-                ])
-                .then(
-                    updateDescription(),
-                    updateNickname(),
-                    updateEmail(),
-                    passwordChange(),
-                )
-                .then(
-                    updateDataSuccess()
-
-                )
+                try{
+                    const results = await Promise.all([
+                        checkPasswordChangeCheck(),
+                        updateEmailCheck(),
+                        updateNicknameCheck(e),
+                    ])
+                    .then((res)=>{
+                        console.log(res)
+                        updateDescription()
+                        updateNickname()
+                        updateEmail()
+                        passwordChange()
+                        updateDataSuccess()
+                    })
+                }catch(err){
+                    updateFailed(err)
+                }
             }
 
         }catch(err){
             updateFailed(err)
-            console.log(err)
         }
     }
 
@@ -333,7 +308,7 @@ export const Settings = () =>{
                     reject('Hasło powinno mieć minimum 6 znaków');
                 }
             } else {
-                resolve(); // Jeśli nowe hasło nie zostało podane, resolve bez błędu.
+                resolve("Success"); // Jeśli nowe hasło nie zostało podane, resolve bez błędu.
             }
         });
     };

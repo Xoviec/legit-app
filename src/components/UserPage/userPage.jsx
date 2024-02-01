@@ -3,10 +3,10 @@ import { useLocation, useParams } from 'react-router-dom';
 
 import axios from 'axios';
 import { useEffect, useState } from 'react';
-import { supabase } from '../components/supabaseClient';
-import { ProfileTabs } from '../shared/ProfileTabs';
-import { MyAvatar } from '../shared/Avatar';
-import { UserRanking } from '../components/UserRanking';
+import { supabase } from '../supabaseClient';
+import { ProfileTabs } from '../../shared/ProfileTabs/ProfileTabs';
+import { MyAvatar } from '../../shared/Avatar/Avatar';
+import { UserRanking } from '../Layout/Sidebar/UserRanking';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 

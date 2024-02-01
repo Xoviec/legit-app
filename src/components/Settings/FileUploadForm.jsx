@@ -56,17 +56,11 @@ const FileUploadForm = (props) => {
   return (
     
     <form onSubmit={handleFormSubmit} encType="multipart/form-data" className='upload-form'>
-
       <div className="avatar-preview-container">
         <img className='avatar-preview' src={!filePreview ? props.avatar : filePreview} alt="" />
-      
         <label className='choose-avatar-btn' htmlFor="avatar-input">Wybierz plik</label>
       </div>
-
       <input className='hidden' id='avatar-input' type="file" accept="image/png, image/jpeg" onChange={handleFileChange} />
-   
-
-
       {
         file && 
 

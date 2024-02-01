@@ -2,25 +2,25 @@ import React, {useState} from "react";
 import {Route, Routes, useLocation, useNavigate, replace} from 'react-router-dom';
 
 import App from "./App";
-import { Login } from "./components/login";
+import { Login } from "./components/Register/login";
 import { Register } from "./components/Register/register";
 import { LoggedCheck } from "./components/Register/LoggedCheck";
-import { UserPage } from "./Routes/userPage";
+import { UserPage } from "./components/UserPage/userPage";
 import { Settings } from "./components/Settings/settings";
 import {Mainpage} from "./components/MainPage/Main";
-import { Navbar } from "./Navbar";
+import { Navbar } from "./components/Layout/Navbar/Navbar";
 import { useEffect } from "react";
 import { NotLoggedCheck } from "./components/Register/NotLoggedCheck";
 import { AdminCheck } from "./components/Admin/AdminCheck";
 import { AdminPanel } from "./components/Admin/AdminPanel";
-import { NotFound } from "./Routes/NotFound";
-import { Privacy } from "./Routes/Privacy";
-import { Terms } from "./Routes/Terms";
-import { Rodo } from "./Routes/Rodo";
-import { Footer } from "./components/Layout/Footer";
-import { UserRanking } from "./components/UserRanking";
-import { LegitedItem } from "./Routes/Legited-item";
-import { AuthFailed } from "./Routes/AuthFailed";
+import { NotFound } from "./components/PageNotFound/NotFound";
+import { Privacy } from "./components/InfoPages/Privacy";
+import { Terms } from "./components/InfoPages/Terms";
+import { Rodo } from "./components/InfoPages/Rodo";
+import { Footer } from "./components/Layout/Footer/Footer";
+import { UserRanking } from "./components/Layout/Sidebar/UserRanking";
+import { LegitedItem } from "./components/Item Authentication/LegitedItem";
+import { AuthFailed } from "./components/Item Authentication/AuthFailed";
 
 export const Main = () =>{
 

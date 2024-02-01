@@ -1,6 +1,6 @@
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { ItemAuthPassed } from '../components/ItemAuthPassed';
+import { AuthPassed } from './AuthPassed';
 
 
 export const LegitedItem = () =>{
@@ -129,7 +129,7 @@ export const LegitedItem = () =>{
                 {isScanSuccess ? 
                 <>
                    
-                   <ItemAuthPassed authDate={authDate} data={itemData}/>
+                   <AuthPassed authDate={authDate} data={itemData}/>
                     
                 </>
                 : <p>Nieudana</p>}

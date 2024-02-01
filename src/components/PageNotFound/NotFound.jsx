@@ -1,4 +1,4 @@
-import notFound from '../404.svg'
+import notFound from '../../404.svg'
 
 export const NotFound = () =>{
 

@@ -1,6 +1,6 @@
 import { useLocation } from 'react-router-dom';
 
-export const ItemAuthPassed = ({data, authDate}) => {
+export const AuthPassed = ({data, authDate}) => {
 
 
     const {state} = useLocation();

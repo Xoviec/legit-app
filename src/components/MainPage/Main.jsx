@@ -4,12 +4,12 @@ import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
 import { User } from '@supabase/supabase-js';
 import { Register } from '../Register/register';
-import { Login } from '../login';
+import { Login } from '../Register/login';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { ProfileTabs } from '../../shared/ProfileTabs';
-import { MyAvatar } from '../../shared/Avatar';
-import { UserRanking } from '../UserRanking';
+import { ProfileTabs } from '../../shared/ProfileTabs/ProfileTabs';
+import { MyAvatar } from '../../shared/Avatar/Avatar';
+import { UserRanking } from '../Layout/Sidebar/UserRanking';
 import { MainNotLogged } from '../MainPageNotLoggedd/MainNotLogged';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
