@@ -1,6 +1,7 @@
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { AuthPassed } from './AuthPassed';
+import { NFCTagNotRegisteredYet } from './NFCTagNotRegisteredYet';
 
 
 export const LegitedItem = () =>{
@@ -25,6 +26,7 @@ export const LegitedItem = () =>{
     const[authError, setAuthError] = useState()
     const[authDate, setAuthDate] = useState()
     const[itemData, setItemData] = useState()
+    const[xuidKey, setXuidKey] = useState()
 
  
     const AuthLink = async () =>{
@@ -63,8 +65,18 @@ export const LegitedItem = () =>{
             console.log(ixk_curl)
             const promise = await fetch('https://t.ixkio.com/traceback?ixc=Gnuxzv&ts=' + ixk_ts + '&ixr=' + i.get('ixr') + '&ixu=' + ixk_curl, options);
             const promiseData = await promise.json()
+
+            setXuidKey(promiseData['ixkdd-xuid'])
             setIsDataLoaded(true)
-            if(promiseData.status === 'key_fail'){
+            if(promiseData.status === 'key_pass' && !promiseData['ixkdd-cuid']){ //tag nie jest przypisany
+                setIsScanSuccess(false)
+                return
+            }
+            // else if(promiseData.status === 'key_fail' && !promiseData['ixkdd-cuid']){
+            //     navigate('/404', { replace: true})
+            //     return
+            // }
+            else if(promiseData.status === 'key_fail'){
                 setIsScanSuccess(false)
                 setAuthError(promiseData.qserror)
                 switch(promiseData.qserror){
@@ -84,6 +96,7 @@ export const LegitedItem = () =>{
             }
             else{
                 setIsScanSuccess(true)
+
             }
             console.log(promiseData)
 
@@ -99,16 +112,24 @@ export const LegitedItem = () =>{
 
     const getItemData = async () =>{
 
-        try{
-            const itemDataResponse = await fetch(`${API}/legited-item/${itemIdFromPath}`);
-            const itemData = await itemDataResponse.json();
-            setItemData(itemData)
-            console.log(itemData)
-            return itemData
-
-        }catch(err){
-            console.log(err)
+        if(itemIdFromPath){
+            try{
+                const itemDataResponse = await fetch(`${API}/legited-item/${itemIdFromPath}`);
+                const itemData = await itemDataResponse.json();
+                setItemData(itemData)
+                console.log(itemData)
+                return itemData
+    
+            }catch(err){
+                console.log(err)
+            }
         }
+        else{
+            setItemData('Not registered')
+            return('Not registered')
+        }
+
+
 
     }
 
@@ -132,8 +153,13 @@ export const LegitedItem = () =>{
                    <AuthPassed authDate={authDate} data={itemData}/>
                     
                 </>
-                : <p>Nieudana</p>}
-                {authError}
+                : 
+                
+                <NFCTagNotRegisteredYet xuid={xuidKey}/>
+                
+                
+                }
+                {/* {authError} */}
 
                 </>
 

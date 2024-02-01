@@ -21,6 +21,7 @@ import { Footer } from "./components/Layout/Footer/Footer";
 import { UserRanking } from "./components/Layout/Sidebar/UserRanking";
 import { LegitedItem } from "./components/Item Authentication/LegitedItem";
 import { AuthFailed } from "./components/Item Authentication/AuthFailed";
+import { NFCTagNotRegisteredYet } from "./components/Item Authentication/NFCTagNotRegisteredYet";
 
 export const Main = () =>{
 
@@ -101,9 +102,15 @@ export const Main = () =>{
 
 
             <Route path='/legited-item/:id' element={<LegitedItem/>} />
-            <Route path='/legited-item/:/*' element={<NotFound/>} />
+            <Route path='/legited-item/:*' element={<NotFound/>} />
+            <Route path='/legited-item*' element={<LegitedItem/>} />
+            {/* <Route path='/legited-item/:/*' element={<NotFound/>} /> p        Po upłynięciu czasu certyfikatu pokazuje się not found 404              */} 
+
+
             <Route path='/auth-failed' element={<AuthFailed/>}/>
+            {/* <Route path='/unregistered-tag' element={<NFCTagNotRegisteredYet/>}/> */}
  
+
 
             <Route element={<AdminCheck />}>
                 <Route path='/adminpanel' element={<AdminPanel/>}/>
