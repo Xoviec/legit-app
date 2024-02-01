@@ -239,10 +239,7 @@ export const UserPage = (key) =>{
                             :
                             <div>
                                 <h1>Nie znaleziono uzytkownika</h1>
-                                
                             </div>
-                        
-                        
                     }
                     
                     {

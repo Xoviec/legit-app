@@ -7,6 +7,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import logo from '../../Legited logo.svg'
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
+import { NavbarSimple } from '../Layout/NavbarSimple/NavbarSimple';
 
 
 
@@ -220,13 +221,9 @@ export const AdminPanel = () =>{
 
     return(
         <div className='admin-panel'>
-          <div className="login-nav">
-            <Link to='/main'>
-                <div className="logo">
-                    <img src={logo} alt="" />   
-                </div>    
-            </Link>
-          </div>
+
+          <NavbarSimple/>
+
 
             <ToastContainer
                     position="bottom-right"

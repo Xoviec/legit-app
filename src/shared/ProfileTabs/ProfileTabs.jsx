@@ -12,6 +12,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useRef } from 'react';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { DisplayItemCard } from '../DisplayItemCard/DisplayItemCard';
+import { DisplayItemCardSkeleton } from '../Skeleton/DisplayCardSkeleton/DisplayItemCardSkeleton';
 
 export const ProfileTabs = (props) => {
   
@@ -74,39 +76,14 @@ export const ProfileTabs = (props) => {
         pauseOnHover
         theme="light"
       />       
-          {/* <p className='item-counter'> przedmiotów</p> */}
           <div className="items-container">
               {
                 props?.userItemsList?.map((item)=>(
-                  <div className='item' key={item.id}>
-                        {
-                        location.pathname === '/main' &&
-
-                        <div className="item-hover-button">
-                          <ItemDialog notify={notify} tradeError={tradeError} item={item}/>
-                      </div>
-                      }
-                
-                    <div className="image">
-                      <img src={item.image} alt="" />
-                    </div>
-                    <p className='item-name'>{item.name}</p> 
-                    <p className='item-registered'>Zarejestrowane <span className='register-date'>{item.legited_at.slice(0, 10).split('-').reverse().join('.')}</span></p>
-                  </div>
+                  <DisplayItemCard item={item} notify={notify} tradeError={tradeError}/>
                 ))
                 ||
                 Array.from(Array(9).keys()).map((num)=>(
-                  <div className='item item-skeleton' key={num}>
-                    <div className="image">
-                      <Skeleton width={200} height={100}  />
-                    </div>
-                    <p className='item-name'>
-                      <Skeleton width={180}/>
-                    </p> 
-                    <p className='item-registered'>
-                    <Skeleton width={240}/>
-                    </p>
-                  </div>
+                  <DisplayItemCardSkeleton num={num}/>
                 ))
 
               }

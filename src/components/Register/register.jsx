@@ -5,6 +5,7 @@ import * as Tabs from '@radix-ui/react-tabs';
 import logo from '../../Legited logo.svg'
 import { Link } from 'react-router-dom';
 import { useEffect } from "react";
+import { NavbarSimple } from "../Layout/NavbarSimple/NavbarSimple";
 
 
 export const Register = () =>{
@@ -179,16 +180,7 @@ export const Register = () =>{
         <>
 
         <div className="login-page">
-            <div className="login-nav">
-                <Link to='/main'>
-                    <div className="logo">
-                        <img src={logo} alt="" />   
-                    </div>    
-                </Link>
-
-            </div>
-
-        
+            <NavbarSimple/>
             <Tabs.Root className="login-root" defaultValue="login" value={activeTab} onValueChange={switchQueryParams} >
                 <Tabs.List className="TabsList" aria-label="Manage your account">
                     <Tabs.Trigger className="TabsTrigger login-trigger" value="register">
