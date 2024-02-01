@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
-import logo from '../Legited logo.svg'
-import iphoneScreen from '../ip14pro.png'
+import logo from '../../Legited logo.svg'
+import iphoneScreen from '../../ip14pro.png'
 
 
 export const MainNotLogged = ()=>{

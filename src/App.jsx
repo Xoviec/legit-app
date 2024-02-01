@@ -2,7 +2,7 @@ import './App.css';
 import React, { useEffect, useState } from 'react';
 import { supabase } from './components/supabaseClient';
 import { User } from '@supabase/supabase-js';
-import { Register } from './Routes/register';
+import { Register } from './components/Register/register';
 import { Login } from './components/login';
 import { Link } from 'react-router-dom';
 import axios from 'axios';

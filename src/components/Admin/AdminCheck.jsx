@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { supabase } from './supabaseClient';
+import { supabase } from '../supabaseClient';
 
 const API = process.env.REACT_APP_API;
 

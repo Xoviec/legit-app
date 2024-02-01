@@ -1,16 +1,16 @@
 // import logo from './logo.svg';
-import './Main.css';
+import '../../Main.css';
 import React, { useEffect, useState } from 'react';
-import { supabase } from '../components/supabaseClient';
+import { supabase } from '../supabaseClient';
 import { User } from '@supabase/supabase-js';
-import { Register } from './register';
-import { Login } from '../components/login';
+import { Register } from '../Register/register';
+import { Login } from '../login';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
-import { ProfileTabs } from '../shared/ProfileTabs';
-import { MyAvatar } from '../shared/Avatar';
-import { UserRanking } from '../components/UserRanking';
-import { MainNotLogged } from '../components/MainNotLogged';
+import { ProfileTabs } from '../../shared/ProfileTabs';
+import { MyAvatar } from '../../shared/Avatar';
+import { UserRanking } from '../UserRanking';
+import { MainNotLogged } from '../MainPageNotLoggedd/MainNotLogged';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 

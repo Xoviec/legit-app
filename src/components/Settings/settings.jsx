@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { supabase } from '../components/supabaseClient';
-import FileUploadForm from '../components/FileUploadForm'
+import { supabase } from '../supabaseClient';
+import FileUploadForm from '../FileUploadForm'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';

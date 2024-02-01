@@ -3,21 +3,21 @@ import {Route, Routes, useLocation, useNavigate, replace} from 'react-router-dom
 
 import App from "./App";
 import { Login } from "./components/login";
-import { Register } from "./Routes/register";
-import { Anonymous } from "./components/anonymous";
+import { Register } from "./components/Register/register";
+import { LoggedCheck } from "./components/Register/LoggedCheck";
 import { UserPage } from "./Routes/userPage";
-import { Settings } from "./Routes/settings";
-import {Mainpage} from "./Routes/Main";
+import { Settings } from "./components/Settings/settings";
+import {Mainpage} from "./components/MainPage/Main";
 import { Navbar } from "./Navbar";
 import { useEffect } from "react";
-import { LoggedCheck } from "./components/loggedCheck";
-import { AdminCheck } from "./components/adminCheck";
-import { AdminPanel } from "./Routes/AdminPanel";
+import { NotLoggedCheck } from "./components/Register/NotLoggedCheck";
+import { AdminCheck } from "./components/Admin/AdminCheck";
+import { AdminPanel } from "./components/Admin/AdminPanel";
 import { NotFound } from "./Routes/NotFound";
 import { Privacy } from "./Routes/Privacy";
 import { Terms } from "./Routes/Terms";
 import { Rodo } from "./Routes/Rodo";
-import { Footer } from "./components/Footer";
+import { Footer } from "./components/Layout/Footer";
 import { UserRanking } from "./components/UserRanking";
 import { LegitedItem } from "./Routes/Legited-item";
 import { AuthFailed } from "./Routes/AuthFailed";
@@ -95,7 +95,7 @@ export const Main = () =>{
 
 
 
-            <Route element={<LoggedCheck />}>
+            <Route element={<NotLoggedCheck />}>
                 <Route path='/settings' element={<Settings/>}/>
             </Route>
 
@@ -116,7 +116,7 @@ export const Main = () =>{
         
 
 
-            <Route element={<Anonymous />}>
+            <Route element={<LoggedCheck />}>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Register />} />
             </Route>

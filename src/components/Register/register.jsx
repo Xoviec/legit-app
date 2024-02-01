@@ -1,8 +1,8 @@
 import { useState } from "react"
-import { supabase } from "../components/supabaseClient"
+import { supabase } from "../supabaseClient"
 import { useNavigate, useSearchParams} from 'react-router-dom';
 import * as Tabs from '@radix-ui/react-tabs';
-import logo from '../Legited logo.svg'
+import logo from '../../Legited logo.svg'
 import { Link } from 'react-router-dom';
 import { useEffect } from "react";
 

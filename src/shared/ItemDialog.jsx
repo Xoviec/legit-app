@@ -75,18 +75,11 @@ export const ItemDialog = (props) =>{
                 currentOwner: currentOwner,
                 newOwner: newOwner.id,
                 verifyID: user.id
-
-            
             })
-
             .then(
               props.notify(newOwner.nickname),
               setNewOwner()
             )
-
-            
-
-        
         }
         catch(error){
             props.tradeError()
@@ -95,7 +88,6 @@ export const ItemDialog = (props) =>{
     }
     else{
       props.tradeError()
-
         console.log("coś poszło nie tak")
         
     }

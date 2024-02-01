@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { supabase } from '../components/supabaseClient';
+import { supabase } from '../supabaseClient';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import logo from '../Legited logo.svg'
+import logo from '../../Legited logo.svg'
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
 

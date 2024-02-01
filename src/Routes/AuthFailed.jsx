@@ -16,15 +16,8 @@ export const AuthFailed = (props) =>{
     const [searchParams] = useSearchParams();
     const [data, setData] = useState(state)
     const [itemsData, setItemData] = useState(state?.itemsData)
-
     const error = searchParams.get("error")
-
-
     const idFromPath = searchParams.get('id');
-
-
-
-
 
     const getItemData = async () =>{
 
