@@ -101,10 +101,10 @@ export const Main = () =>{
             </Route>
 
 
-            <Route path='/legited-item/:id' element={<LegitedItem/>} />
-            <Route path='/legited-item/:*' element={<NotFound/>} />
-            <Route path='/legited-item*' element={<LegitedItem/>} />
-            {/* <Route path='/legited-item/:/*' element={<NotFound/>} /> p        Po upłynięciu czasu certyfikatu pokazuje się not found 404              */} 
+            <Route path='/verify/:id' element={<LegitedItem/>} />
+            <Route path='/verify/:*' element={<NotFound/>} />
+            <Route path='/verify*' element={<LegitedItem/>} />
+            {/* <Route path='/verify/:/*' element={<NotFound/>} /> p        Po upłynięciu czasu certyfikatu pokazuje się not found 404              */} 
 
 
             <Route path='/auth-failed' element={<AuthFailed/>}/>
