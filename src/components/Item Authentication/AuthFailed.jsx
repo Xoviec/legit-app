@@ -1,4 +1,4 @@
-import { useSearchParams, useLocation } from "react-router-dom";
+import { useSearchParams, useLocation, useNavigate } from "react-router-dom";
 import gone from '../../410.svg'
 import unauthorized from '../../401.svg'
 import notFound from '../../404.svg'
@@ -12,6 +12,7 @@ export const AuthFailed = (props) =>{
 
     const API = process.env.REACT_APP_API
     const {state} = useLocation();
+    const navigate = useNavigate();
 
     const [searchParams] = useSearchParams();
     const [data, setData] = useState(state)
@@ -20,8 +21,7 @@ export const AuthFailed = (props) =>{
     const idFromPath = searchParams.get('id');
 
     const getItemData = async () =>{
-
-
+        
         try{
             const itemDataResponse = await fetch(`${API}/legited-item/${idFromPath}`);
             const itemData = await itemDataResponse.json();
@@ -35,7 +35,11 @@ export const AuthFailed = (props) =>{
 
     useEffect(()=>{
 
-        if(!state){
+        if(!state && !idFromPath){
+            navigate('/404')
+            return        
+        }
+        else if(!state && idFromPath){
             getItemData()
         }
     }, [])
