@@ -1,13 +1,14 @@
 import { Link } from 'react-router-dom';
 import logo from '../../Legited logo.svg'
 import iphoneScreen from '../../ip14pro.png'
+import './MainNotLogged.css'
 
 
 export const MainNotLogged = ()=>{
 
     return(
-        <div className="welcomer">
-            <div className="content">
+        <div className="hero">
+            <div className="hero-text">
                 {/* <h1>Legited</h1> */}
                 {/* <img src={logo} alt="legited-logo" />    */}
 
@@ -17,15 +18,13 @@ export const MainNotLogged = ()=>{
                     <button className='btn-join'>Dołącz</button>
                     <button className='btn-how'>Jak to działa?</button>
                 </div>
-    
-
                 {/* <Link to='/register'>
                     <span>Dołącz </span>  
                 </Link> */}
 
                     {/* aby wykorzystać wszystkie funkcje! */}
             </div>
-            <div className="image-container">
+            <div className="hero-image-container">
                 <img src={iphoneScreen} alt="" />
             </div>
     

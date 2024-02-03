@@ -143,49 +143,7 @@ video {
   font-size: 1.8rem;
 }
 
-.footer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  background-color:var(--secondary-bg-color);
-  height: 11rem;
-  text-align: center;
-  font-size: 0.7rem;
-  /* padding-bottom: max(env(safe-area-inset-bottom), 1rem); */
-  font-weight: 500;
-}
-@supports (padding-bottom: max(0px)) {
-  .footer {
-    /* padding-bottom: max(env(safe-area-inset-bottom), 20px); */
-  }
-}
 
-.footer .logo{
-  width: 7rem;
-}
-
-.footer .instagram-logo{
-  display: block;
-  height: 1.6rem;
-  width: 1.6rem;
-}
-
-.copyright {
-  margin: 0;
-}
-
-.info{
-  display: flex;
-  align-items: center;
-  color:var(--main-text-color);
-  gap: 1rem;
-}
-
-.info a{
-  color:var(--main-text-color);
-
-}
 
 .cursor {
   display: inline-block;

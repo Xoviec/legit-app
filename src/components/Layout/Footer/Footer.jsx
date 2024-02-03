@@ -1,6 +1,6 @@
 import instagram from '../../../instagram.svg'
 import logo from '../../../Legited logo.svg'
-
+import './Footer.css'
 
 export const Footer = () =>{
 
@@ -13,7 +13,7 @@ export const Footer = () =>{
             </a>
 
       
-            <div className="info">
+            <div className="footer-text">
                 <a href="/privacy">Polityka prywatności</a>
                 <a href="/terms">Regulamin</a>
                 <a className='instagram-logo' href="https://instagram.com/legited.app" target="_blank">

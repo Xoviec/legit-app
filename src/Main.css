@@ -729,139 +729,7 @@ h1{
 
 } */
 
-.welcomer{
-  max-width: 1500px;
-  position: relative;
-  display: flex;
-  /* flex-direction: column; */
-  /* align-items: center; */
-  justify-content: center;
-  text-align: left;
-  min-height: 40rem;
-  flex: 1 1;
-  padding: 1rem;
-  color: var(--main-text-color);
-}
 
-
-/* .welcomer::after{
-  
-  padding: 1rem;
-  content: '';
-  position: absolute;
-  background-image: url('../background.png');
-  background-repeat: no-repeat;
-  background-size: cover; */
-  /* background-attachment: fixed; */
-  /* background-position: -176%; */
-  /* width: 100%;
-  height: 100%;
-  left: 0;
-  opacity: 0.2;
-} */
-
-.welcomer img{
-  /* height: 6rem;
-  margin-top: 6rem; */
-  width: 20rem;
-  filter: drop-shadow(7px 7px 8px #444444);
-
-}
-
-
-.welcomer .content{
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding-top: 6rem;
-}
-
-
-
-/* .welcomer h1{
-  color: var(--legited-dark-green);
-  margin-top: 6rem;
-} */
-
-.content h1{
-  font-size: 46px;
-  color: var(--main-text-color);
-  font-weight: 600;
-  max-width: 90%;
-}
-
-.content  h2{
-  font-weight: 400;
-  font-size: 20px;
-  color: #5b5b5b;
-}
-
-.welcomer p{
-  position: relative;
-  font-size: 46px;
-  font-weight: 500;
-  z-index: 1;
-  max-width: 90%;
-}
-
-
-
-.welcomer span{
-  color: var(--legited-light-green);
-}
-
-
-.buttons{
-  margin-top: 0.5rem;
-  display: flex;
-  gap: 0.5rem;
-  font-size: 20px;
-  font-weight: 500;
-}
-
-.welcomer .btn-join{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--legited-dark-green);
-  color: var(--main-bg-color);
-  height: 2.7rem;
-  box-sizing: border-box;
-  border: 1px solid var(--legited-dark-green);
-  border-radius: 0.8rem;
-  transition: 0.4s;
-  padding: 1px 15px;
-  transition: 0.4s;
-  cursor: pointer;
-
-}
-
-.btn-join:hover{
-  background-color:var(--legited-light-green);
-  border-color: var(--legited-light-green);
-  color: var(--main-bg-color);
-}
-
-.welcomer .btn-how{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  /* background-color:var(--main-text-color); */
-  /* color: var(--main-bg-color); */
-  height: 2.7rem;
-  box-sizing: border-box;
-  border: 1px solid var(--secondary-bg-color);
-  border-radius: 0.8rem;
-  transition: 0.4s;
-  padding: 1px 15px;
-  transition: 0.4s;
-  cursor: pointer;
-}
-
-.btn-how:hover{
-  background-color: var(--secondary-bg-color);
-  color: var(--main-text-color);
-}
 
 
 
@@ -1190,13 +1058,13 @@ td{
 
 
 
-  .welcomer{
+  .hero{
     flex-direction: column;
     align-items: center;
     gap: 3rem;
   }
 
-  .welcomer .content{
+  .hero .content{
     padding-top: 0;
     align-items: center;
     text-align: center;
