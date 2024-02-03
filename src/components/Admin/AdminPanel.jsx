@@ -8,6 +8,7 @@ import logo from '../../Legited logo.svg'
 import { format } from "date-fns";
 import { pl } from "date-fns/locale";
 import { NavbarSimple } from '../Layout/NavbarSimple/NavbarSimple';
+import { Table } from './Table';
 
 
 
@@ -96,6 +97,9 @@ export const AdminPanel = () =>{
           try{
             const legitedItemsRes = await fetch(`${API}/legited-items`); // szuka wszystkich uzytkownikow
             const legitedItemsData = await legitedItemsRes.json();
+            legitedItemsData.map((item)=>(
+              item.legited_at = format(item.legited_at, "yyyy-MM-dd")
+            ))
             setLegitedItemsList(legitedItemsData)
             console.log(legitedItemsData)
           }catch(err){
@@ -219,6 +223,29 @@ export const AdminPanel = () =>{
       }
 
 
+      const tables = [
+        {
+          Title: 'All items list',
+          Columns:[
+            'name',
+            'id',
+            'sku',
+            'brand'
+          ],
+          Items: itemsList
+        },
+        {
+          Title: 'Legited items list',
+          Columns:[
+            'current_owner_nickname',
+            'item_name',
+            'id',
+            'legited_at'
+          ],
+          Items: legitedItemsList
+        }
+      ]
+
     return(
         <div className='admin-panel'>
 
@@ -297,58 +324,12 @@ export const AdminPanel = () =>{
             <button type='submit'>Przypisz</button>
         </form>
       </div>
-      <table className="items-table">
-        <thead >
-          <tr className="table-row">
-            <td>Item Name</td>
-            <td className='id-cell'>Item ID</td>
-            <td>SKU</td>
-            <td>Brand</td>
-          </tr>
-         
-        </thead>
-        <tbody>
-          {
-              
-              itemsList?.map((item)=>(
-              <tr className="table-row">
-                  <td>{item.name}</td>
-                  <td className='id-cell'>{item.id}</td>
-                  <td>{item.sku}</td>
-                  <td>{item.brand}</td>
-              </tr>
-              ))
-          }
-        </tbody>
 
-      </table>
 
-      <table className="items-table">
-        <thead >
-          <tr className="table-row">
-            <td>Item Owner</td>
-            <td>Name </td>
-            <td className='id-cell'>Register ID</td>
-            <td>Register date</td>
-          </tr>
-         
-        </thead>
-        <tbody>
-          {
-              
-              legitedItemsList?.map((item)=>(
-              <tr className="table-row">
-                  <td>{item.current_owner_nickname}</td>
-                  <td>{item.item_name}</td>
-                  <td className='id-cell'>{item.id}</td>
-                  <td>{format(item.legited_at, "yyyy-MM-dd")}</td>
-              </tr>
-              ))
-          }
-        </tbody>
+      {tables.map((table)=>(
+        <Table title={table.Title} columns={table.Columns} items={table.Items}/>
+      ))}
 
-      </table>
-  
       
     </div>
     )
