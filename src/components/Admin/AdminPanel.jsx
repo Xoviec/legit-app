@@ -265,19 +265,21 @@ export const AdminPanel = () =>{
             'current_owner_nickname',
             'item_name',
             'id',
-            'legited_at'
+            'legited_at',
           ],
-          items: legitedItemsList?.sort(function(a, b) {
-                    let keyA = new Date(a.legited_at),
-                      keyB = new Date(b.legited_at);
-                    // Compare the 2 dates
-                    if (keyA < keyB) return 1;
-                    if (keyA > keyB) return -1;
-                    return 0;
-                  })
-          
+          items: legitedItemsList
         }
       ]
+
+
+      // ?.sort(function(a, b) {
+      //   let keyA = new Date(a.legited_at),
+      //     keyB = new Date(b.legited_at);
+      //   if (keyA < keyB) return 1;
+      //   if (keyA > keyB) return -1;
+      //   return 0;
+      // })
+
 
     return(
         <div className='admin-panel'>

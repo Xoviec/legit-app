@@ -582,12 +582,18 @@ app.get('/legited-items', async function (req, res){
 
             }))
 
+            fullData.sort(function(a, b) {
+                  let keyA = new Date(a.legited_at),
+                    keyB = new Date(b.legited_at);
+                  if (keyA < keyB) return 1;
+                  if (keyA > keyB) return -1;
+                  return 0;
+                })
+
+            latestData = fullData.slice(0,10)
 
 
-
-
-
-        res.status(200).send(fullData)
+        res.status(200).send(latestData)
     }catch(err){
         console.log(err)
     }
