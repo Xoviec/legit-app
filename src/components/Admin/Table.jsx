@@ -4,6 +4,10 @@ export const Table = (props) =>{
 
     console.log(props.items)
 
+    if(props.pagination){
+        props.pagination('ch8i')
+    }
+
     return(
         <table>
             <thead >

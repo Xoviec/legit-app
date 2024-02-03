@@ -26,7 +26,9 @@ export const AdminPanel = () =>{
     const[newOwner, setNewOwner] = useState()
     const[assignedItem, setAssignedItem] = useState()
     const[legitedItemsList, setLegitedItemsList] = useState()
+    const[legitedItemsListCurrentPage, setLegitedItemsListCurrentPage] = useState(1)
     const[jwt, setJwt] = useState()
+
 
 
 
@@ -68,16 +70,6 @@ export const AdminPanel = () =>{
       
           setUser(user)
     
-        
-          // try{
-          //   const publicUserResponse = await fetch(`${API}/secret/${user.id}`); //dane uzytkownika
-          //   const publicUserData = await publicUserResponse.json();
-          //   setPublicUser(publicUserData[0])
-          // }catch(userDataError){
-          //   console.log(userDataError)
-          // }
-    
-    
           try {
             const usersDataResponse = await fetch(`${API}/nicknames`); // szuka wszystkich uzytkownikow
             const usersData = await usersDataResponse.json();
@@ -95,7 +87,7 @@ export const AdminPanel = () =>{
           }
 
           try{
-            const legitedItemsRes = await fetch(`${API}/legited-items`); // szuka wszystkich uzytkownikow
+            const legitedItemsRes = await fetch(`${API}/legited-items?page=${legitedItemsListCurrentPage}`); // szuka wszystkich uzytkownikow
             const legitedItemsData = await legitedItemsRes.json();
             legitedItemsData.map((item)=>(
               item.legited_at = format(item.legited_at, "yyyy-MM-dd HH:mm:ss")
@@ -242,6 +234,12 @@ export const AdminPanel = () =>{
       
       console.log(itemsList);
 
+      const changeLegitedItemsPage = (num) =>{
+
+        setLegitedItemsListCurrentPage((prev)=>prev+num)
+        console.log(num)
+      }
+      
       const tables = [
         {
           title: 'All items list',
@@ -267,7 +265,8 @@ export const AdminPanel = () =>{
             'id',
             'legited_at',
           ],
-          items: legitedItemsList
+          items: legitedItemsList,
+          pagination: changeLegitedItemsPage
         }
       ]
 

@@ -558,6 +558,8 @@ app.post('/register-item', async function(req, res){
 
 app.get('/legited-items', async function (req, res){
 
+    const page = parseInt(req.query.page);
+
     try{
         const { data, error } = await supabase.from('legited_items')
             .select()
@@ -590,7 +592,10 @@ app.get('/legited-items', async function (req, res){
                   return 0;
                 })
 
-            latestData = fullData.slice(0,10)
+            latestData = fullData.slice(
+                (page-1)*10,
+                page*10
+                )
 
 
         res.status(200).send(latestData)
