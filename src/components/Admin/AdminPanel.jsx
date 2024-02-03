@@ -98,7 +98,7 @@ export const AdminPanel = () =>{
             const legitedItemsRes = await fetch(`${API}/legited-items`); // szuka wszystkich uzytkownikow
             const legitedItemsData = await legitedItemsRes.json();
             legitedItemsData.map((item)=>(
-              item.legited_at = format(item.legited_at, "yyyy-MM-dd")
+              item.legited_at = format(item.legited_at, "yyyy-MM-dd HH:mm:ss")
             ))
             setLegitedItemsList(legitedItemsData)
             console.log(legitedItemsData)
@@ -223,26 +223,59 @@ export const AdminPanel = () =>{
       }
 
 
+      function compareByName(a, b) {
+        return a.name - b.name;
+      }
+
+
+      console.log(itemsList)
+     
+
+      // itemsList?.sort(function(a, b) {
+      //   var keyA = (a.name),
+      //     keyB = (b.name);
+      //   // Compare the 2 dates
+      //   if (keyA < keyB) return -1;
+      //   if (keyA > keyB) return 1;
+      //   return 0;
+      // });
+      
+      console.log(itemsList);
+
       const tables = [
         {
-          Title: 'All items list',
-          Columns:[
+          title: 'All items list',
+          columns:[
             'name',
-            'id',
             'sku',
+            'id',
             'brand'
           ],
-          Items: itemsList
+          items: itemsList?.sort(function(a, b) {
+                let keyA = (a.name),
+                  keyB = (b.name);
+                if (keyA < keyB) return -1;
+                if (keyA > keyB) return 1;
+                return 0;
+              })
         },
         {
-          Title: 'Legited items list',
-          Columns:[
+          title: 'Legited items list',
+          columns:[
             'current_owner_nickname',
             'item_name',
             'id',
             'legited_at'
           ],
-          Items: legitedItemsList
+          items: legitedItemsList?.sort(function(a, b) {
+                    let keyA = new Date(a.legited_at),
+                      keyB = new Date(b.legited_at);
+                    // Compare the 2 dates
+                    if (keyA < keyB) return 1;
+                    if (keyA > keyB) return -1;
+                    return 0;
+                  })
+          
         }
       ]
 
@@ -326,9 +359,11 @@ export const AdminPanel = () =>{
       </div>
 
 
-      {tables.map((table)=>(
-        <Table title={table.Title} columns={table.Columns} items={table.Items}/>
-      ))}
+      {
+        tables.map((table)=>(
+          <Table {...table}/>
+        ))
+      }
 
       
     </div>

@@ -1,0 +1,20 @@
+table{
+    width: 70rem;
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+table tr{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem 0 0.5rem 0;
+    background-color: rgb(217 255 217 / 14%);
+    border-bottom: 1px solid var(--legited-dark-green);
+}
+
+
+td:nth-child(3){
+    flex: 2 1;
+}
