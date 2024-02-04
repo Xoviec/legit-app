@@ -903,7 +903,7 @@ td{
 
 .certificate-page h1{
   text-align: center;
-  font-size: 30px;
+  font-size: 27px;
 }
 
 .item-auth-passed{
@@ -928,13 +928,11 @@ td{
   align-items: center;
   border: 1px solid var(--secondary-bg-color);
   background-color: #ffffff;
-  padding: 3rem;
+  padding: 2rem;
 
 }
 
 .auth-data{
-
-
   margin-top: 1rem;
   text-align: center;
   display: flex;
@@ -951,11 +949,17 @@ td{
 }
 
 .item-auth-passed h1{
+  padding: 7px;
+  border-radius: 5px;
   color: var(--legited-dark-green);
+  background-color: color(display-p3 0.859 0.94 0.879);
 }
 
 .item-auth-failed h1{
   color: var(--danger-color);
+  border-radius: 5px;
+  padding: 7px;
+  background-color: color(display-p3 0.94 0.86 0.86);
 }
 
 .auth-item-id{
@@ -969,8 +973,6 @@ td{
   justify-content: center;
   gap: 2rem;
   position: relative;
-  padding: 1rem;
-
 }
 
 .auth-item-info{

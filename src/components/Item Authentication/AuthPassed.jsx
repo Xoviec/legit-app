@@ -24,7 +24,7 @@ export const AuthPassed = ({data, authDate}) => {
     return(
         <div className="item-auth-passed">
             <div className="auth-card">
-                <h1>Zweryfikowano pomyślnie!</h1>
+                <h1>🎉 Zweryfikowano pomyślnie!</h1>
                 <div className="auth-data">
                     <p>Data weryfikacji: {getDate()}</p>
                     <p className="auth-item-id">ID: {data?.id}</p>

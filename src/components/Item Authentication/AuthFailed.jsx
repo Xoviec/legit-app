@@ -76,7 +76,7 @@ export const AuthFailed = (props) =>{
                 </div>
                 <div className="auth-item">
                     <div className="image-overlay">
-                                Spróbuj ponownie
+                                {/* Spróbuj ponownie */}
                     </div>
                     <div className="image">
                        
