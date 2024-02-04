@@ -38,7 +38,7 @@
   }
   
   
-  .hero .hero-text{
+  .hero-text{
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -131,3 +131,51 @@
     background-color: var(--secondary-bg-color);
     color: var(--main-text-color);
   }
+
+
+  @media only screen and (max-width: 877px) {
+
+
+    .hero{
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .hero-text{
+      padding-top: 0;
+      align-items: center;
+    }
+
+    .hero-text h1, h2{
+      font-size: 30px;
+      text-align: center;
+    }
+
+    .hero .buttons{
+      margin-top: 2rem;
+      font-size: 20px;
+    }
+  
+
+    .hero .content{
+      padding-top: 0;
+      align-items: center;
+      text-align: center;
+    }
+  
+    .content h1{
+      max-width: 100%;
+    }
+}
+
+
+
+@media only screen and (max-width: 550px) {
+
+  .content h1{
+    font-size: 30px;
+    background-color: red;
+  }
+
+}

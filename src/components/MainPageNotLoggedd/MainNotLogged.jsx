@@ -13,7 +13,8 @@ export const MainNotLogged = ()=>{
                 {/* <img src={logo} alt="legited-logo" />    */}
 
                 <h1>Uwierzytelnianie oraz permanentny legit check na Twoje sneakersy za pomocą tagów NFC</h1>
-                {/* <h2>Jeszcze nie wiem co tu napisać, ale na pewno tu coś będzie</h2> */}
+                {/* <h1>Permanentne LC na Twoje sneakersy</h1> */}
+                {/* <h2>Z łatwością uwierzytelnij swoje buty za pomocą tagów NFC</h2> */}
                 <div className="buttons">
                     <button className='btn-join'>Dołącz</button>
                     <button className='btn-how'>Jak to działa?</button>
