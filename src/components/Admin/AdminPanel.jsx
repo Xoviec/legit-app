@@ -257,21 +257,28 @@ export const AdminPanel = () =>{
               break
             }
         }
-
-        // setLegitedItemsList()
-
-        // setLegitedItemsListCurrentPage((prev)=>prev+num)
-        // console.log(num)
       }
 
       console.log(itemsList);
 
       const changeItemsPage = (num) =>{
 
-        console.log('dupa XD', num)
       }
       
       const tables = [
+        {
+          title: 'Legited items list',
+          columns:[
+            'current_owner_nickname',
+            'item_name',
+            'id',
+            'legited_at',
+          ],
+          items: legitedItemsList,
+          pagination: changeLegitedItemsPage,
+          maxPage: legitedItemsListPageLimit,
+          currentPage: legitedItemsListCurrentPage
+        },
         {
           title: 'All items list',
           columns:[
@@ -287,29 +294,8 @@ export const AdminPanel = () =>{
                 if (keyA > keyB) return 1;
                 return 0;
               }),
-          // pagination: changeItemsPage
-        },
-        {
-          title: 'Legited items list',
-          columns:[
-            'current_owner_nickname',
-            'item_name',
-            'id',
-            'legited_at',
-          ],
-          items: legitedItemsList,
-          pagination: changeLegitedItemsPage
         }
       ]
-
-
-      // ?.sort(function(a, b) {
-      //   let keyA = new Date(a.legited_at),
-      //     keyB = new Date(b.legited_at);
-      //   if (keyA < keyB) return 1;
-      //   if (keyA > keyB) return -1;
-      //   return 0;
-      // })
 
 
     return(

@@ -32,12 +32,11 @@ export const Table = (props) =>{
                                             {row[column]} 
                                         </td>
                                 ))
-                         
                             }
                         </tr>
                     ))
                     ||
-                    Array.from(Array(10).keys()).map((num)=>(
+                    Array.from(Array(20).keys()).map((num)=>(
                         <tr className="table-row">
                         {
                             Array.from(Array(props?.columns.length).keys()).map((num)=>(
@@ -48,18 +47,21 @@ export const Table = (props) =>{
                      
                         }
                     </tr>
-                        // <td>{num}</td>
-                      ))
+                    ))
                 }
+                    {
+                        props.pagination && 
+
+                        <tr className="pagination-buttons">
+                            <p>Strona {props?.currentPage} z {props?.maxPage}</p>
+                            <button onClick={(()=>props.pagination(-1))}>{`<-`}</button>
+                            <button onClick={(()=>props.pagination(1))}>{`->`}</button>
+                        </tr>
+
+                    }
             </tbody>
         </table>
-            {
-                props.pagination && 
-                <div className="pagination-buttons">
-                    <button onClick={(()=>props.pagination(-1))}>{`<-`}</button>
-                    <button onClick={(()=>props.pagination(1))}>{`->`}</button>
-                </div>
-            }
+        
         </>
     )
 }

@@ -584,9 +584,9 @@ app.get('/legited-items', async function (req, res){
 
             }))
 
-            const resultsPerPage = 10
+            const resultsPerPage = 20
             const dataLength = fullData.length
-            const pageLimit = Math.ceil(dataLength/10)
+            const pageLimit = Math.ceil(dataLength/resultsPerPage)
 
 
             fullData.sort(function(a, b) {
