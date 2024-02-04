@@ -584,6 +584,11 @@ app.get('/legited-items', async function (req, res){
 
             }))
 
+            const resultsPerPage = 10
+            const dataLength = fullData.length
+            const pageLimit = Math.ceil(dataLength/10)
+
+
             fullData.sort(function(a, b) {
                   let keyA = new Date(a.legited_at),
                     keyB = new Date(b.legited_at);
@@ -593,12 +598,18 @@ app.get('/legited-items', async function (req, res){
                 })
 
             latestData = fullData.slice(
-                (page-1)*10,
-                page*10
+                (page-1)* resultsPerPage,
+                page* resultsPerPage
                 )
 
+            const response = {
+                data: latestData,
+                dataLength: dataLength,
+                pageLimit: pageLimit
+            }
 
-        res.status(200).send(latestData)
+
+        res.status(200).send(response)
     }catch(err){
         console.log(err)
     }

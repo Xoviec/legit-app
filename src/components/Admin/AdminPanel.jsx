@@ -27,6 +27,7 @@ export const AdminPanel = () =>{
     const[assignedItem, setAssignedItem] = useState()
     const[legitedItemsList, setLegitedItemsList] = useState()
     const[legitedItemsListCurrentPage, setLegitedItemsListCurrentPage] = useState(1)
+    const[legitedItemsListPageLimit, setLegitedItemsListPageLimit] = useState()
     const[jwt, setJwt] = useState()
 
 
@@ -89,10 +90,12 @@ export const AdminPanel = () =>{
           try{
             const legitedItemsRes = await fetch(`${API}/legited-items?page=${legitedItemsListCurrentPage}`); // szuka wszystkich uzytkownikow
             const legitedItemsData = await legitedItemsRes.json();
-            legitedItemsData.map((item)=>(
+
+            legitedItemsData.data.map((item)=>(
               item.legited_at = format(item.legited_at, "yyyy-MM-dd HH:mm:ss")
             ))
-            setLegitedItemsList(legitedItemsData)
+            setLegitedItemsList(legitedItemsData.data)
+            setLegitedItemsListPageLimit(legitedItemsData.pageLimit)
             console.log(legitedItemsData)
           }catch(err){
             console.log(error)
@@ -102,7 +105,7 @@ export const AdminPanel = () =>{
         fetchData()
 
 
-      }, []);
+      }, [legitedItemsListCurrentPage]);
 
 
 
@@ -236,8 +239,36 @@ export const AdminPanel = () =>{
 
       const changeLegitedItemsPage = (num) =>{
 
-        setLegitedItemsListCurrentPage((prev)=>prev+num)
-        console.log(num)
+        switch(num){
+          case 1:
+            {
+              if(legitedItemsListCurrentPage < legitedItemsListPageLimit){
+                setLegitedItemsList()
+                setLegitedItemsListCurrentPage((prev)=>prev+num)
+              }
+              break
+            }
+          case -1:
+            {
+              if(legitedItemsListCurrentPage > 1){
+                setLegitedItemsList()
+                setLegitedItemsListCurrentPage((prev)=>prev+num)
+              }
+              break
+            }
+        }
+
+        // setLegitedItemsList()
+
+        // setLegitedItemsListCurrentPage((prev)=>prev+num)
+        // console.log(num)
+      }
+
+      console.log(itemsList);
+
+      const changeItemsPage = (num) =>{
+
+        console.log('dupa XD', num)
       }
       
       const tables = [
@@ -255,7 +286,8 @@ export const AdminPanel = () =>{
                 if (keyA < keyB) return -1;
                 if (keyA > keyB) return 1;
                 return 0;
-              })
+              }),
+          // pagination: changeItemsPage
         },
         {
           title: 'Legited items list',
