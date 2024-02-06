@@ -129,8 +129,6 @@ export const UserPage = (key) =>{
     
 
 
-    console.log('state', stateUsernameFromPath)
-    console.log(usernameFromPath)
 
     const handleUpdateFoundUsers = async (e) =>{
             const response = await fetch(`${API}/search-users?letters=${e.target.value}`);

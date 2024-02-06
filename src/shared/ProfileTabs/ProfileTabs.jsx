@@ -75,15 +75,17 @@ export const ProfileTabs = (props) => {
         draggable
         pauseOnHover
         theme="light"
+
+
       />       
           <div className="items-container">
               {
                 props?.userItemsList?.map((item)=>(
-                  <DisplayItemCard item={item} notify={notify} tradeError={tradeError}/>
+                  <DisplayItemCard key={item.id} item={item} notify={notify} tradeError={tradeError}/>
                 ))
                 ||
-                Array.from(Array(9).keys()).map((num)=>(
-                  <DisplayItemCardSkeleton num={num}/>
+                Array.from(Array(9).keys()).map((num,i)=>(
+                  <DisplayItemCardSkeleton key={i} num={num}/>
                 ))
 
               }

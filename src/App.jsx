@@ -7,6 +7,9 @@ import { Login } from './components/Register/login';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { Script } from './script';
+import { MainNotLogged } from './components/MainPageNotLoggedd/MainNotLogged';
+import { NavbarSimple } from './components/Layout/NavbarSimple/NavbarSimple';
+import { SoonText } from './components/MainPageNotLoggedd/SoonText';
 
 
 function App() {
@@ -24,7 +27,14 @@ function App() {
     />
   </head>
   <body>
-    <div className="header-wrapper">
+
+    <NavbarSimple isDemo={true}/>
+    <div className="central-page">
+
+    <MainNotLogged SoonText={<SoonText/>}/>
+    </div>
+
+    {/* <div className="header-wrapper">
       <header className="header">
 
         <img
@@ -39,15 +49,15 @@ function App() {
           </p>
         </div>
       </header>
-    </div>
-    <main className="main">
+    </div> */}
+    {/* <main className="main">
       <div className="box">
         <span className="heading-secondary">Już wkrótce</span>
         {/* <span className="cursor blink"></span> */}
         {/* <p className="paragraph">.....</p> */}
    
-      </div>
-    </main>
+      {/* </div> */}
+    {/* </main> */} 
     <footer className="footer">
       <div className="copyright">
         © <span id="currentYear"></span> Legited. All rights reserved.

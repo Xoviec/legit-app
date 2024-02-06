@@ -4,7 +4,7 @@ import iphoneScreen from '../../ip14pro.png'
 import './MainNotLogged.css'
 
 
-export const MainNotLogged = ()=>{
+export const MainNotLogged = ({SoonText})=>{
 
     return(
         <div className="hero">
@@ -15,10 +15,15 @@ export const MainNotLogged = ()=>{
                 <h1>Uwierzytelnianie oraz permanentny legit check na Twoje sneakersy za pomocą tagów NFC</h1>
                 {/* <h1>Permanentne LC na Twoje sneakersy</h1> */}
                 {/* <h2>Z łatwością uwierzytelnij swoje buty za pomocą tagów NFC</h2> */}
-                <div className="buttons">
-                    <button className='btn-join'>Dołącz</button>
-                    <button className='btn-how'>Jak to działa?</button>
-                </div>
+                {
+                    SoonText
+                    ||
+                    <div className="buttons">
+                        <button className='btn-join'>Dołącz</button>
+                        <button className='btn-how'>Jak to działa?</button>
+                    </div>
+                }
+                
                 {/* <Link to='/register'>
                     <span>Dołącz </span>  
                 </Link> */}

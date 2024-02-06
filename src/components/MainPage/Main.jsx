@@ -67,7 +67,6 @@ const path = location.pathname
     try{
       const userItemsListResponse = await fetch(`${API}/user-items/${nickNameFromLocalStorage}`);
       const userItemsData = await userItemsListResponse.json()
-      console.log(userItemsData)
       setUserItemsList(userItemsData)
     }catch(userItemsError){
       console.log(userItemsError)
