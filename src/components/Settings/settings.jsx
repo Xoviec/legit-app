@@ -370,18 +370,18 @@ export const Settings = () =>{
 
                 <form className='change-nickname' onSubmit={handleSubmit} onChange={handleInputChange}>
                     <p>Nickname</p>
-                    <input className={`${(isSaved && !errorData.nickname) && `border-success `} nickname-input`} type="text" value={formData.nickname} name='nickname'/>
+                    <input className={`${(isSaved && !errorData.nickname) && `border-success `} nickname-input`} type="text" defaultValue={formData.nickname} name='nickname'/>
                 
                     <p>Opis</p>
-                    <textarea className={`${(isSaved && !errorData.description) && `border-success `} nickname-input`} type="text" value={formData.description} name='description'/>
+                    <textarea className={`${(isSaved && !errorData.description) && `border-success `} nickname-input`} type="text" defaultValue={formData.description} name='description'/>
                
                     <p>Email</p>
-                    <input className={`${(isSaved && !errorData.email) && `border-success `} nickname-input`} type="text" value={formData.email} name='email'/>
+                    <input className={`${(isSaved && !errorData.email) && `border-success `} nickname-input`} type="text" defaultValue={formData.email} name='email'/>
                 
                     <p>Nowe hasło</p>
-                    <input className={`${(isSaved && !errorData.newPassword) && `border-success `} nickname-input`} type="text" value={formData.newPassword} name='newPassword'/>
+                    <input className={`${(isSaved && !errorData.newPassword) && `border-success `} nickname-input`} type="text" defaultValue={formData.newPassword} name='newPassword'/>
                     <p>Potwierdź haslo</p>
-                    <input className={`${(isSaved && !errorData.newPassword) && `border-success `} nickname-input`} type="text" value={formData.confirmPassword} name='confirmPassword'/>
+                    <input className={`${(isSaved && !errorData.newPassword) && `border-success `} nickname-input`} type="text" defaultValue={formData.confirmPassword} name='confirmPassword'/>
                   
                     <button className='settings-save-btn' type='submit'>zapisz</button>
 

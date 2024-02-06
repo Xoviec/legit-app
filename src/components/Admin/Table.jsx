@@ -5,7 +5,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 export const Table = (props) =>{
 
-    console.log(props.items)
+    console.log(props)
 
 
     return(

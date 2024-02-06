@@ -560,9 +560,16 @@ app.get('/legited-items', async function (req, res){
 
     const page = parseInt(req.query.page);
 
+    const resultsPerPage = 20
+
     try{
-        const { data, error } = await supabase.from('legited_items')
-            .select()
+        const { data, count, error } = await supabase.from('legited_items')
+            .select('*', {count: 'exact'})
+            .order('legited_at', { ascending: false })
+            .range((page-1)*resultsPerPage, page*resultsPerPage-1)
+
+
+
 
 
             const fullData = await Promise.all(data.map( async(item, i) =>{
@@ -584,27 +591,13 @@ app.get('/legited-items', async function (req, res){
 
             }))
 
-            const resultsPerPage = 20
-            const dataLength = fullData.length
-            const pageLimit = Math.ceil(dataLength/resultsPerPage)
 
+            const pageLimit = Math.ceil(count/resultsPerPage)
 
-            fullData.sort(function(a, b) {
-                  let keyA = new Date(a.legited_at),
-                    keyB = new Date(b.legited_at);
-                  if (keyA < keyB) return 1;
-                  if (keyA > keyB) return -1;
-                  return 0;
-                })
-
-            latestData = fullData.slice(
-                (page-1)* resultsPerPage,
-                page* resultsPerPage
-                )
 
             const response = {
-                data: latestData,
-                dataLength: dataLength,
+                data: fullData,
+                dataLength: count,
                 pageLimit: pageLimit
             }
 
