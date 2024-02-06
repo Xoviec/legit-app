@@ -91,9 +91,12 @@ export const AdminPanel = () =>{
             const legitedItemsRes = await fetch(`${API}/legited-items?page=${legitedItemsListCurrentPage}`); // szuka wszystkich uzytkownikow
             const legitedItemsData = await legitedItemsRes.json();
 
-            legitedItemsData.data.map((item)=>(
+            legitedItemsData.data.map((item)=>{
               item.legited_at = format(item.legited_at, "yyyy-MM-dd HH:mm:ss")
-            ))
+              item.owners_history.map((previousOwnerItem)=>{
+                previousOwnerItem.registerDate = format(previousOwnerItem.registerDate, "yyyy-MM-dd HH:mm:ss")
+              })
+            })
             setLegitedItemsList(legitedItemsData.data)
             setLegitedItemsListPageLimit(legitedItemsData.pageLimit)
             console.log(legitedItemsData)
@@ -277,7 +280,8 @@ export const AdminPanel = () =>{
           items: legitedItemsList,
           pagination: changeLegitedItemsPage,
           maxPage: legitedItemsListPageLimit,
-          currentPage: legitedItemsListCurrentPage
+          currentPage: legitedItemsListCurrentPage,
+          dropDown: true
         },
         {
           title: 'All items list',

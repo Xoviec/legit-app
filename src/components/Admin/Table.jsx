@@ -25,6 +25,7 @@ export const Table = (props) =>{
             <tbody>
                 {
                     props?.items?.map((row)=>(
+                        <>
                         <tr className="table-row">
                             {
                                 props?.columns?.map((column)=>(
@@ -34,6 +35,13 @@ export const Table = (props) =>{
                                 ))
                             }
                         </tr>
+                            {
+                                row?.owners_history?.length > 1 && 
+                                row.owners_history.slice(0, -1).map((user)=>(
+                                    <tr>Poprzedni własciciel: {user.ownerID} od {user.registerDate}</tr>
+                                ))
+                            }
+                        </>
                     ))
                     ||
                     Array.from(Array(20).keys()).map((num)=>(

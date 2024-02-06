@@ -569,7 +569,20 @@ app.get('/legited-items', async function (req, res){
             .range((page-1)*resultsPerPage, page*resultsPerPage-1)
 
 
+            data.map(async (data) => {
+                if (data.owners_history.length > 1) {
+                    await Promise.all(data.owners_history.slice(0, -1).map(async (user) => {
+                        const { data: userData, error: userError } = await supabase
+                            .from('users')
+                            .select('nickname')
+                            .eq('id', user.ownerID)
 
+                        user.ownerID=userData[0].nickname
+                    }));
+                }
+            });
+            
+            
 
 
             const fullData = await Promise.all(data.map( async(item, i) =>{
