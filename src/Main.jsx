@@ -103,7 +103,7 @@ export const Main = () =>{
 
             <Route path='/verify/:id' element={<LegitedItem/>} />
             <Route path='/verify/:/*' element={<NotFound/>} />
-            <Route path='/verify*' element={<LegitedItem/>} />
+            <Route path='/verify/*' element={<LegitedItem/>} />
             {/* <Route path='/verify/:/*' element={<NotFound/>} /> p        Po upłynięciu czasu certyfikatu pokazuje się not found 404              */} 
 
 

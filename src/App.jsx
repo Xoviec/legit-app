@@ -20,13 +20,7 @@ function App() {
 
   return (
     <>
-    <head>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-  </head>
-  <body>
+
 
     <NavbarSimple isDemo={true}/>
     <div className="central-page">
@@ -63,7 +57,6 @@ function App() {
         © <span id="currentYear"></span> Legited. All rights reserved.
       </div>
     </footer>
-  </body>
       {/* <p className='info'>Page designed by Lorinnio</p> */}
 
     </>
