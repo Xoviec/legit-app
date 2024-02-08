@@ -1,6 +1,7 @@
 import './Table.css'
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import * as Accordion from '@radix-ui/react-accordion';
 
 
 export const Table = (props) =>{
@@ -10,38 +11,59 @@ export const Table = (props) =>{
 
     return(
         <>
-        
+        <Accordion.Root collapsible>
         <table>
             <thead >
                 <tr className="table-row">
                     {
                         props?.columns?.map((column)=>(
-                            <td>{column}</td>
+                            <th>{column}</th>
                         )) 
                     
                     }
                 </tr>
             </thead>
             <tbody>
+                
                 {
-                    props?.items?.map((row)=>(
-                        <>
-                        <tr className="table-row">
-                            {
-                                props?.columns?.map((column)=>(
-                                        <td>
-                                            {row[column]} 
-                                        </td>
-                                ))
-                            }
-                        </tr>
-                            {
-                                row?.owners_history?.length > 1 && 
-                                row.owners_history.slice(0, -1).map((user)=>(
-                                    <tr>Poprzedni własciciel: {user.ownerID} od {user.registerDate}</tr>
-                                ))
-                            }
-                        </>
+                    props?.items?.map((row, i)=>(
+
+                        <Accordion.Item value={i} className='wisła to stara kurwa' asChild>
+
+                            <>
+
+                            <Accordion.Trigger asChild>
+                                <tr className="table-row">
+                                    {
+                                        props?.columns?.map((column)=>(
+                                                <td>
+                                                    {row[column]} 
+                                                </td>
+                                        ))
+                                    }
+
+                                </tr>
+                            </Accordion.Trigger>
+                                {
+                                    row?.owners_history?.length > 1 && 
+                                    row.owners_history.slice(0, -1).map((user)=>(
+
+                                        <Accordion.Content className='no co tam halo' asChild>
+
+                                        <tr className='dziwka'>
+                                            <td>{user.ownerID}</td>
+                                            <td>{user.registerDate}</td>
+                                            {/* Poprzedni własciciel: {user.ownerID} od {user.registerDate} */}
+                                        </tr>
+                                        </Accordion.Content>
+
+                                    ))
+                                }
+
+                            </>
+
+                    </Accordion.Item>
+
                     ))
                     ||
                     Array.from(Array(20).keys()).map((num)=>(
@@ -61,15 +83,18 @@ export const Table = (props) =>{
                         props.pagination && 
 
                         <tr className="pagination-buttons">
-                            <p>Strona {props?.currentPage} z {props?.maxPage}</p>
-                            <button onClick={(()=>props.pagination(-1))}>{`<-`}</button>
-                            <button onClick={(()=>props.pagination(1))}>{`->`}</button>
+                            <td>
+                                <p>Strona {props?.currentPage} z {props?.maxPage}</p>
+                                <button onClick={(()=>props.pagination(-1))}>{`<-`}</button>
+                                <button onClick={(()=>props.pagination(1))}>{`->`}</button>
+                            </td>
+
                         </tr>
 
                     }
             </tbody>
         </table>
-        
+        </Accordion.Root>
         </>
     )
 }

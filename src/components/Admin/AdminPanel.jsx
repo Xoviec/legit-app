@@ -66,7 +66,6 @@ export const AdminPanel = () =>{
           const { data: { user } } = await supabase.auth.getUser()
           const { data: {session}, error } = await supabase.auth.getSession()
     
-          console.log(user)
           setJwt(session.access_token)
       
           setUser(user)
@@ -79,8 +78,7 @@ export const AdminPanel = () =>{
     
             setUserList(usersData)
             setItemsList(itemsData)
-            console.log(user.email)
-            console.log(user.id)
+
     
     
           } catch (error) {
@@ -129,7 +127,6 @@ export const AdminPanel = () =>{
         const response = await fetch(`${API}/search-users?letters=${nickname}`);
         const data = await response.json();
 
-        console.log(data)
         setFoundUsers(data)
 
         try{
@@ -226,7 +223,6 @@ export const AdminPanel = () =>{
       }
 
 
-      console.log(itemsList)
      
 
       // itemsList?.sort(function(a, b) {

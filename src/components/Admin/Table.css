@@ -25,3 +25,13 @@ td:nth-child(3){
     gap: 1rem;
     border-bottom: none;
 }
+
+.table-row{
+    flex-wrap: wrap;
+}
+
+.dziwka{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+}
