@@ -16,8 +16,8 @@ export const Table = (props) =>{
             <thead >
                 <tr className="table-row">
                     {
-                        props?.columns?.map((column)=>(
-                            <th>{column}</th>
+                        props?.columns?.map((column, columnIndex)=>(
+                            <th key={columnIndex}>{column}</th>
                         )) 
                     
                     }
@@ -28,15 +28,15 @@ export const Table = (props) =>{
                 {
                     props?.items?.map((row, i)=>(
 
-                        <Accordion.Item value={i} className='wisła to stara kurwa' asChild>
+                        <Accordion.Item key={row.id} value={i} className='hmm' asChild>
 
                             <>
 
                             <Accordion.Trigger asChild>
                                 <tr className="table-row">
                                     {
-                                        props?.columns?.map((column)=>(
-                                                <td>
+                                        props?.columns?.map((column, columnIndex)=>(
+                                                <td key={columnIndex}>
                                                     {row[column]} 
                                                 </td>
                                         ))
@@ -48,13 +48,12 @@ export const Table = (props) =>{
                                     row?.owners_history?.length > 1 && 
                                     row.owners_history.slice(0, -1).map((user)=>(
 
-                                        <Accordion.Content className='no co tam halo' asChild>
-
-                                        <tr className='dziwka'>
-                                            <td>{user.ownerID}</td>
-                                            <td>{user.registerDate}</td>
-                                            {/* Poprzedni własciciel: {user.ownerID} od {user.registerDate} */}
-                                        </tr>
+                                        <Accordion.Content key={user.registerDate} asChild>
+                                            <tr>
+                                                <td>{user.ownerID}</td>
+                                                <td>{user.registerDate}</td>
+                                                {/* Poprzedni własciciel: {user.ownerID} od {user.registerDate} */}
+                                            </tr>
                                         </Accordion.Content>
 
                                     ))
@@ -66,11 +65,11 @@ export const Table = (props) =>{
 
                     ))
                     ||
-                    Array.from(Array(20).keys()).map((num)=>(
-                        <tr className="table-row">
+                    Array.from(Array(20).keys()).map((num, skeletonIndex)=>(
+                        <tr className="table-row" key={skeletonIndex}>
                         {
-                            Array.from(Array(props?.columns.length).keys()).map((num)=>(
-                                    <td>
+                            Array.from(Array(props?.columns.length).keys()).map((num, skeletonIndex)=>(
+                                    <td key={skeletonIndex}>
                                         <Skeleton width={180}/>
                                     </td>
                             ))

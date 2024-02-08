@@ -380,7 +380,7 @@ export const AdminPanel = () =>{
 
       {
         tables.map((table)=>(
-          <Table {...table}/>
+          <Table key={table.title} {...table}/>
         ))
       }
 

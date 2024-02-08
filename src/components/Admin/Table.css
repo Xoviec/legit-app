@@ -30,8 +30,3 @@ td:nth-child(3){
     flex-wrap: wrap;
 }
 
-.dziwka{
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-}
