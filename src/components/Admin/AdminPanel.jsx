@@ -358,7 +358,8 @@ export const AdminPanel = () =>{
          
 
             <span>Uzytkownik</span>
-            <input type="text" placeholder='Xoviec' name='ownerHistory' value={ownerId}/>
+            <input type="text" placeholder='Xoviec' name='ownerHistory'  value={ownerId}/> 
+             {/* //Te value wyżej do wypierdolenia, chyba lepiej użyć useRef i zmieniać w funkcji wartość zeby błedu nie było, to samo w drugim form   */}
             {
             foundUsers?.length > 0 && (
                 <div className="pre-list">
