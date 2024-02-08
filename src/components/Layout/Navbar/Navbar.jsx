@@ -46,7 +46,6 @@ export const Navbar = () =>{
         setIsNavActive(false)
         handleUpdateFoundUsers('')
         navigate(`/Users/${userProfile}`
-        // , { replace: false }
         );
         searchRef.current.value = ''
     }

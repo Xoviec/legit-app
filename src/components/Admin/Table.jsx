@@ -46,13 +46,12 @@ export const Table = (props) =>{
                             </Accordion.Trigger>
                                 {
                                     row?.owners_history?.length > 1 && 
-                                    row.owners_history.slice(0, -1).map((user)=>(
+                                    row.owners_history.map((user)=>(
 
                                         <Accordion.Content className='accordion-content'  key={user.registerDate} asChild>
                                             <tr >
                                                 <td>{user.ownerID}</td>
                                                 <td>{user.registerDate}</td>
-                                                {/* Poprzedni własciciel: {user.ownerID} od {user.registerDate} */}
                                             </tr>
                                         </Accordion.Content>
 

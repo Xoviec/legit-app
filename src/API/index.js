@@ -571,7 +571,7 @@ app.get('/legited-items', async function (req, res){
 
             data.map(async (data) => {
                 if (data.owners_history.length > 1) {
-                    await Promise.all(data.owners_history.slice(0, -1).map(async (user) => {
+                    await Promise.all(data.owners_history.reverse().map(async (user) => { //data.owners_history.slice(0, -1).map było jeśli chcemy wyjebać tego najnowszego, ale lepiej zostawić bo widać date od kiedy jest ownerem
                         const { data: userData, error: userError } = await supabase
                             .from('users')
                             .select('nickname')
