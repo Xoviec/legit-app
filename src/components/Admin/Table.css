@@ -32,14 +32,19 @@ td:nth-child(3){
 
 .accordion-content{
     overflow: hidden;
+    padding: 0;
+}
+
+.accordion-content td{
+    padding: 0.5rem 0 0.5rem 0;
 }
 
 .accordion-content[data-state='open'] {
-    animation: slideDown 3000ms cubic-bezier(0.87, 0, 0.13, 1);
+    animation: slideDown 300ms cubic-bezier(0.87, 0, 0.13, 1);
   }
   
 .accordion-content[data-state='closed'] {
-    animation: slideUp 3000ms cubic-bezier(0.87, 0, 0.13, 1);
+    animation: slideUp 300ms cubic-bezier(0.87, 0, 0.13, 1);
 }
 
 
@@ -50,9 +55,11 @@ td:nth-child(3){
 @keyframes slideDown {
     from {
       height: 0;
+      border-bottom: none;
     }
     to {
       height: var(--radix-accordion-content-height);
+
     }
   }
   
@@ -62,5 +69,6 @@ td:nth-child(3){
     }
     to {
       height: 0;
+      border-bottom: none;
     }
   }
