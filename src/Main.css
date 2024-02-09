@@ -1060,6 +1060,13 @@ td{
 @media only screen and (max-width: 877px) {
 
 
+  .central-page{
+    margin-top: 1.5rem;
+
+  }
+
+  
+
   .settings-container{
     width: 95%;
   }
@@ -1072,6 +1079,41 @@ td{
 
   nav{
     position: relative;
+    height: 3.25rem;
+    flex-wrap: nowrap;
+    padding: 0 15px;
+    
+  }
+
+  .nav-links{
+    position: absolute;
+    flex-direction: column;
+    top: 3.25rem;
+    left: 0;
+    width: 100%;
+    gap: 1rem;
+    padding-top: 1rem;
+    /* display: none; */
+    background-color: var(--main-bg-color);
+    z-index: 2;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--secondary-bg-color);
+  }
+
+  .monogram{
+    display: block;
+  }
+
+  .logo img{
+    height: 2rem;
+  }
+
+  .nav-simple .logo{
+    height: 4rem;
+  }
+
+  .logo{
+    height: 2rem;
   }
 
   Swiper{
@@ -1082,16 +1124,17 @@ td{
   .burger{
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    height: 5rem;
+    justify-content: center;
+    gap: 6px;
+    height: 3.25rem;
     justify-content: center;
     align-items: flex-end;
   }
 
   .burger span{
     display: block;
-    height: 1px;
-    width: 2rem;
+    height: 2px;
+    width: 1.4rem;
     background-color: var(--legited-dark-green);
   }
 
@@ -1130,24 +1173,9 @@ td{
     display: block;
   }
 
-  .monogram{
-    display: block;
-  }
 
-  .nav-links{
-    position: absolute;
-    flex-direction: column;
-    top: 5rem;
-    left: 0;
-    width: 100%;
-    gap: 1rem;
-    padding-top: 1rem;
-    /* display: none; */
-    background-color: var(--main-bg-color);
-    z-index: 2;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--secondary-bg-color);
-  }
+
+
 
 
   .disabled{

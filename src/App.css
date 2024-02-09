@@ -181,6 +181,7 @@ nav{
   justify-content: space-between;
   height: 5rem;
   padding: 0 48px 0 48px;
+  border-bottom: 1px solid var(--secondary-bg-color);
 }
 
 nav .logo{

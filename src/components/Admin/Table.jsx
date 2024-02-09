@@ -33,10 +33,10 @@ export const Table = (props) =>{
                             <>
 
                             <Accordion.Trigger asChild>
-                                <tr className="table-row">
+                                <tr className={`table-row `}>
                                     {
                                         props?.columns?.map((column, columnIndex)=>(
-                                                <td key={columnIndex}>
+                                                <td className={(row?.owners_history && !(row?.owners_history?.length > 1)) && `og-owner`} key={columnIndex}>
                                                     {row[column]} 
                                                 </td>
                                         ))
@@ -54,12 +54,9 @@ export const Table = (props) =>{
                                                 <td>{user.registerDate}</td>
                                             </tr>
                                         </Accordion.Content>
-
                                     ))
                                 }
-
                             </>
-
                     </Accordion.Item>
 
                     ))

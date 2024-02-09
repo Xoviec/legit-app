@@ -30,6 +30,14 @@ td:nth-child(3){
     flex-wrap: wrap;
 }
 
+.og-owner{
+}
+
+.og-owner:first-child::before{
+    content: '#1 ';
+    color: goldenrod;
+}
+
 .accordion-content{
     overflow: hidden;
     padding: 0;
