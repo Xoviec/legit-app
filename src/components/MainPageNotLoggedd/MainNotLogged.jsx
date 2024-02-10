@@ -19,7 +19,9 @@ export const MainNotLogged = ({SoonText})=>{
                     SoonText
                     ||
                     <div className="buttons">
-                        <button className='btn-join'>Dołącz</button>
+                        <Link to='/login?activeTab=register' >
+                            <button className='btn-join'>Dołącz</button>
+                        </Link>
                         <button className='btn-how'>Jak to działa?</button>
                     </div>
                 }
