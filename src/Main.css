@@ -120,8 +120,6 @@ a:active {
   height: 2.7rem;
   box-sizing: border-box;
   background-color: var(--main-bg-color);
-  border: 1px solid var(--secondary-bg-color);
-  /* border-radius: 0.5rem; */
   font-size: 25px;
   font-size: 18px;
   font-weight: 400;
@@ -131,16 +129,18 @@ a:active {
   width: 100%;
   padding: 0 15px 0 15px;
   height: 100%;
+  box-sizing: border-box;
+  border: 1px solid var(--secondary-bg-color);
 }
 
 .found-users{
   background-color: #fff;
   border: 1px solid var(--secondary-bg-color);
+  border-top: none;
   position: absolute;
   display: flex;
   flex-direction: column;
   width: 100%;
-  /* background-color: bisque; */
   overflow-y: scroll;
   z-index: 2;
   max-height: 20rem;
