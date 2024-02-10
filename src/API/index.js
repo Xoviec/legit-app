@@ -562,6 +562,7 @@ app.get('/legited-items', async function (req, res){
 
     const resultsPerPage = 20
 
+    
     try{
         const { data, count, error } = await supabase.from('legited_items')
             .select('*', {count: 'exact'})
@@ -569,7 +570,18 @@ app.get('/legited-items', async function (req, res){
             .range((page-1)*resultsPerPage, page*resultsPerPage-1)
 
 
-            data.map(async (data) => {
+            const pageLimit = Math.ceil(count/resultsPerPage)
+
+
+
+            if(!data){
+                res.sendStatus(400)
+                
+            }else{
+
+
+
+            data?.map(async (data) => {
                 if (data.owners_history.length > 1) {
                     await Promise.all(data.owners_history.reverse().map(async (user) => { //data.owners_history.slice(0, -1).map było jeśli chcemy wyjebać tego najnowszego, ale lepiej zostawić bo widać date od kiedy jest ownerem
                         const { data: userData, error: userError } = await supabase
@@ -585,7 +597,7 @@ app.get('/legited-items', async function (req, res){
             
 
 
-            const fullData = await Promise.all(data.map( async(item, i) =>{
+            const fullData = await Promise.all(data?.map( async(item, i) =>{
                 const { data: userData, error: userError } = await supabase
                     .from('users')
                     .select('nickname')
@@ -605,7 +617,6 @@ app.get('/legited-items', async function (req, res){
             }))
 
 
-            const pageLimit = Math.ceil(count/resultsPerPage)
 
 
             const response = {
@@ -616,6 +627,8 @@ app.get('/legited-items', async function (req, res){
 
 
         res.status(200).send(response)
+    }
+    
     }catch(err){
         console.log(err)
     }
