@@ -35,9 +35,7 @@ export const Table = (props) =>{
                                 <tr className={`table-row `}>
                                     {
                                         props?.columns?.map((column, columnIndex)=>(
-                                                <td key={columnIndex} 
-                                                // className={(row?.owners_history && !(row?.owners_history?.length > 1)) && `og-owner`} do poprawy bo bład wypierdala
-                                                >
+                                                <td key={columnIndex} className={(row?.owners_history && !(row?.owners_history?.length > 1)) ? `og-owner` : undefined} >
                                                     {row[column]} 
                                                 </td>
                                         ))
