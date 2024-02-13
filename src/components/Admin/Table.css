@@ -14,10 +14,17 @@ table tr{
     border-bottom: 1px solid var(--legited-dark-green);
 }
 
+th{
+  text-align: center;
+  flex: 1 1;
+}
 
-td:nth-child(3){
+
+td:nth-child(3), th:nth-child(3){
     flex: 2 1;
 }
+
+
 
 .pagination-buttons{
     display: flex;
