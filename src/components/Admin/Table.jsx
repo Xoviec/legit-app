@@ -6,7 +6,6 @@ import * as Accordion from '@radix-ui/react-accordion';
 
 export const Table = (props) =>{
 
-    console.log(props)
 
 
     return(
@@ -36,7 +35,9 @@ export const Table = (props) =>{
                                 <tr className={`table-row `}>
                                     {
                                         props?.columns?.map((column, columnIndex)=>(
-                                                <td className={(row?.owners_history && !(row?.owners_history?.length > 1)) && `og-owner`} key={columnIndex}>
+                                                <td key={columnIndex} 
+                                                // className={(row?.owners_history && !(row?.owners_history?.length > 1)) && `og-owner`} do poprawy bo bład wypierdala
+                                                >
                                                     {row[column]} 
                                                 </td>
                                         ))

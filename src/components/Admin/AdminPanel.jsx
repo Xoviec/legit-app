@@ -26,6 +26,7 @@ export const AdminPanel = () =>{
     const[newOwner, setNewOwner] = useState()
     const[assignedItem, setAssignedItem] = useState()
     const[legitedItemsList, setLegitedItemsList] = useState()
+    const[cachedLegitedItemsList, setCachedLegitedItemsList] = useState([])
     const[legitedItemsListCurrentPage, setLegitedItemsListCurrentPage] = useState(1)
     const[legitedItemsListPageLimit, setLegitedItemsListPageLimit] = useState()
     const[jwt, setJwt] = useState()
@@ -59,6 +60,69 @@ export const AdminPanel = () =>{
         });
 
 
+
+
+
+        const handleCachePage = (page, data) =>{
+
+          const newCachedPage = {
+            page: page,
+            data: data
+          }
+          const newCachedLegitedItemsList = [...cachedLegitedItemsList, newCachedPage]
+          setCachedLegitedItemsList(newCachedLegitedItemsList)
+
+        }
+
+        const getCachedPage = (page) =>{
+
+          const isPageCached = cachedLegitedItemsList.find((data)=>data.page === page)
+          if(isPageCached){
+            return isPageCached
+          }
+          else{
+            return false
+          }
+
+        }
+
+
+        const fetchLegitedItemsData = async () =>{
+
+          try{
+              const legitedItemsRes = await fetch(`${API}/legited-items?page=${legitedItemsListCurrentPage}`); // szuka wszystkich uzytkownikow
+              const legitedItemsData = await legitedItemsRes.json();
+
+              legitedItemsData.data.map((item)=>{
+                item.legited_at = format(item.legited_at, "yyyy-MM-dd HH:mm:ss")
+                item.owners_history.map((previousOwnerItem)=>{
+                  previousOwnerItem.registerDate = format(previousOwnerItem.registerDate, "yyyy-MM-dd HH:mm:ss")
+                })
+              })
+              setLegitedItemsList(legitedItemsData.data)
+              setLegitedItemsListPageLimit(legitedItemsData.pageLimit)
+              handleCachePage(legitedItemsListCurrentPage, legitedItemsData.data)
+            }catch(err){
+              console.log(err)
+            }
+
+        }
+
+    useEffect(()=>{
+
+
+      if(getCachedPage(legitedItemsListCurrentPage)){
+        const newData = getCachedPage(legitedItemsListCurrentPage)
+        setLegitedItemsList(newData.data)
+
+      }
+      else{
+        fetchLegitedItemsData()
+
+      }
+
+    }, [legitedItemsListCurrentPage])
+
     useEffect(() => {
 
         const fetchData = async () => {
@@ -67,7 +131,6 @@ export const AdminPanel = () =>{
           const { data: {session}, error } = await supabase.auth.getSession()
     
           setJwt(session.access_token)
-      
           setUser(user)
     
           try {
@@ -75,38 +138,15 @@ export const AdminPanel = () =>{
             const usersData = await usersDataResponse.json();
             const itemsResponse = await fetch(`${API}/items`); //wszystkie itemy
             const itemsData = await itemsResponse.json();
-    
             setUserList(usersData)
             setItemsList(itemsData)
 
-    
-    
           } catch (error) {
             console.error('Error fetching data:', error);
           }
-
-          try{
-            const legitedItemsRes = await fetch(`${API}/legited-items?page=${legitedItemsListCurrentPage}`); // szuka wszystkich uzytkownikow
-            const legitedItemsData = await legitedItemsRes.json();
-
-            legitedItemsData.data.map((item)=>{
-              item.legited_at = format(item.legited_at, "yyyy-MM-dd HH:mm:ss")
-              item.owners_history.map((previousOwnerItem)=>{
-                previousOwnerItem.registerDate = format(previousOwnerItem.registerDate, "yyyy-MM-dd HH:mm:ss")
-              })
-            })
-            setLegitedItemsList(legitedItemsData.data)
-            setLegitedItemsListPageLimit(legitedItemsData.pageLimit)
-            console.log(legitedItemsData)
-          }catch(err){
-            console.log(error)
-          }
         };
-
         fetchData()
-
-
-      }, [legitedItemsListCurrentPage]);
+      }, []);
 
 
 
@@ -135,6 +175,7 @@ export const AdminPanel = () =>{
             console.log(err)
         }
 }
+
 
       const handleRegisterChange = (e) =>{
         //zmiana state do szukania usera
@@ -234,7 +275,6 @@ export const AdminPanel = () =>{
       //   return 0;
       // });
       
-      console.log(itemsList);
 
       const changeLegitedItemsPage = (num) =>{
 
@@ -258,7 +298,6 @@ export const AdminPanel = () =>{
         }
       }
 
-      console.log(itemsList);
 
       const changeItemsPage = (num) =>{
 

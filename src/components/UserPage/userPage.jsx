@@ -122,7 +122,6 @@ export const UserPage = (key) =>{
         };
 
 
-        getMostItems()
         getUserDataFromDB()
         getProfileData()
     }, [nickname])
