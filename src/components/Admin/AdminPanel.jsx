@@ -262,18 +262,6 @@ export const AdminPanel = () =>{
       function compareByName(a, b) {
         return a.name - b.name;
       }
-
-
-     
-
-      // itemsList?.sort(function(a, b) {
-      //   var keyA = (a.name),
-      //     keyB = (b.name);
-      //   // Compare the 2 dates
-      //   if (keyA < keyB) return -1;
-      //   if (keyA > keyB) return 1;
-      //   return 0;
-      // });
       
 
       const changeLegitedItemsPage = (num) =>{
@@ -298,11 +286,6 @@ export const AdminPanel = () =>{
         }
       }
 
-
-      const changeItemsPage = (num) =>{
-
-      }
-      
       const tables = [
         {
           title: 'Legited items list',
