@@ -13,6 +13,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 
 export const UserPage = (key) =>{
 
+
     const { v4: uuidv4 } = require('uuid');
 
 
@@ -33,7 +34,6 @@ export const UserPage = (key) =>{
     const[mostItems, setMostItems] = useState()
     const[userNotFound, setUserNotFound] = useState(false)
     const[stateUsernameFromPath, setStateUserNameFromPath] = useState(usernameFromPath)
-
 
 
 
@@ -82,7 +82,7 @@ export const UserPage = (key) =>{
         }
     }
 
-    const clearData = ()=>{
+    const clearData = ()=>{ //nie pamietam po co tutaj to dałem, było na początku useEffecta,wywaliłem bo przy nawigacji odświeały się itemy
 
         setUserItemsList(undefined)
         setDisplayUser(undefined)
@@ -93,7 +93,6 @@ export const UserPage = (key) =>{
     useEffect(()=>{
 
 
-        clearData()
 
         setStateUserNameFromPath(usernameFromPath)
         setUserNotFound(false)
