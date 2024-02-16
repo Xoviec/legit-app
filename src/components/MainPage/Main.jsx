@@ -2,34 +2,23 @@
 import '../../Main.css';
 import React, { useEffect, useState } from 'react';
 import { supabase } from '../supabaseClient';
-import { User } from '@supabase/supabase-js';
-import { Register } from '../Register/register';
-import { Login } from '../Register/login';
 import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import { ProfileTabs } from '../../shared/ProfileTabs/ProfileTabs';
 import { MyAvatar } from '../../shared/Avatar/Avatar';
-import { UserRanking } from '../Layout/Sidebar/UserRanking';
 import { MainNotLogged } from '../MainPageNotLoggedd/MainNotLogged';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-export const Mainpage =()=> {
+export const Mainpage = () => {
 
-
-// supabase.auth.getUser()
 
 const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
 const nickNameFromLocalStorage = item?.user.user_metadata.full_name
 
-
-
 const location = useLocation();
 
 const path = location.pathname
-
-
-
 
   const [user, setUser] = useState(null)
   const [publicUser, setPublicUser] = useState()
@@ -91,7 +80,6 @@ const path = location.pathname
               'jwt': (session.access_token),
             }
           })
-        // const publicUserResponse = await fetch(`${API}/secret/${user.id}`); //dane uzytkownika
         const publicUserData = await publicUserResponse.json();
         setPublicUser(publicUserData[0])
       }catch(userDataError){
@@ -112,35 +100,8 @@ const path = location.pathname
     getUserItems()
     getMostItems()
   }, [path]);
-
-
-  const handleAddItem = async (e) =>{
-    e.preventDefault()
-    if(user){
-      const data = 
-      {
-        'name': e.target.name.value,
-        'brand': e.target.brand.value,
-        'sku': e.target.sku.value,
-      }
-      setItemsList((prevItemsList) => [...prevItemsList, data]);
-
-      try{
-        await axios.post(`${API}/items`, {
-          itemData: data,
-          accountType: publicUser.account_type,
-        });
-      }catch(err){
-        console.log(err)
-        setItemsList((previousArr) => (previousArr.slice(0, -1)));
-      }
-    }
-  }
-
   
-
   return (
-    
 
     <>
         {

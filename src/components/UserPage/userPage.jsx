@@ -93,6 +93,9 @@ export const UserPage = (key) =>{
     useEffect(()=>{
 
 
+        console.log("pizda piździsko esss", userItemsList)
+        console.log(displayUser?.nickname)
+
 
         setStateUserNameFromPath(usernameFromPath)
         setUserNotFound(false)

@@ -14,13 +14,12 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { DisplayItemCard } from '../DisplayItemCard/DisplayItemCard';
 import { DisplayItemCardSkeleton } from '../Skeleton/DisplayCardSkeleton/DisplayItemCardSkeleton';
+import { memo } from 'react';
 
-export const ProfileTabs = (props) => {
+export const ProfileTabs = memo((props) => {
   
   const location = useLocation();
   const textareaRef = useRef()
-
-
 
   const notify = (nickname) => toast.success(`Przedmiot przesłany pomyślnie do uzytkownika ${nickname}`, {
     position: "bottom-right",
@@ -166,7 +165,7 @@ export const ProfileTabs = (props) => {
       </Tabs.Content>
     </Tabs.Root>
   );
-}
+})
 
 
 
