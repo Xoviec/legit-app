@@ -9,6 +9,7 @@ import { MyAvatar } from '../../shared/Avatar/Avatar';
 import { UserRanking } from '../Layout/Sidebar/UserRanking';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { useQuery } from '@tanstack/react-query' 
 
 
 export const UserPage = (key) =>{
@@ -90,42 +91,67 @@ export const UserPage = (key) =>{
 
     }
 
+    const getProfileData = async (nickname) => {
+
+        return axios
+            .get(`${API}/nicknames/${usernameFromPath}`)
+            .then(res=>res.data)
+            
+            // const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
+            // const userItemsListResponse = await fetch(`${API}/user-items/${usernameFromPath}`);
+            // const userItemsList = await userItemsListResponse.json()
+            // const data = await response.json();
+            // console.log('xd')
+            // return data
+        // try {
+        //     const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
+        //     const userItemsListResponse = await fetch(`${API}/user-items/${usernameFromPath}`);
+        //     const userItemsList = await userItemsListResponse.json()
+        //     const data = await response.json();
+
+        //     try{
+        //         const commentsResponse = await fetch(`${API}/get-comments/${data[0].id}`);
+        //         const commentsData = await commentsResponse.json();
+        //         setCommentsList(commentsData)
+    
+        //     }catch(err){
+        //         console.log(err)
+        //     }
+        //     setUserItemsList(userItemsList)
+        //     setDisplayUser(data[0])
+        // } catch (error) {
+        //     setUserNotFound(true)
+        //     console.error('Błąd podczas pobierania danych:', error);
+        // }
+    };
+
+    const {
+        status,
+        error,
+        data: profile,
+      } = useQuery({
+        queryKey: [usernameFromPath],
+        queryFn: getProfileData,
+      })
+
+      console.log(profile && profile[0].nickname)
+      console.log(error)
+      console.log(status)
+
     useEffect(()=>{
 
 
-        console.log("pizda piździsko esss", userItemsList)
         console.log(displayUser?.nickname)
 
 
         setStateUserNameFromPath(usernameFromPath)
         setUserNotFound(false)
 
-        const getProfileData = async (nickname) => {
-            try {
-                const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
-                const userItemsListResponse = await fetch(`${API}/user-items/${usernameFromPath}`);
-                const userItemsList = await userItemsListResponse.json()
-                const data = await response.json();
 
-                try{
-                    const commentsResponse = await fetch(`${API}/get-comments/${data[0].id}`);
-                    const commentsData = await commentsResponse.json();
-                    setCommentsList(commentsData)
-        
-                }catch(err){
-                    console.log(err)
-                }
-                setUserItemsList(userItemsList)
-                setDisplayUser(data[0])
-            } catch (error) {
-                setUserNotFound(true)
-                console.error('Błąd podczas pobierania danych:', error);
-            }
-        };
 
 
         getUserDataFromDB()
-        getProfileData()
+        // getProfileData()
     }, [nickname])
     
 
@@ -232,7 +258,7 @@ export const UserPage = (key) =>{
                         !userNotFound ?
                             <div className="user-info">
                                 <MyAvatar user={displayUser}/>
-                                <h1>{ displayUser?.nickname || <Skeleton width={200} className='skeleton' containerClassName="skeleton" /> } </h1>
+                                <h1>{ profile && profile[0]?.nickname || <Skeleton width={200} className='skeleton' containerClassName="skeleton" /> } </h1>
                                 <Skeleton />
                             </div>
                             :

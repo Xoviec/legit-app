@@ -6,15 +6,18 @@ import {Main} from './Main'
 import reportWebVitals from './reportWebVitals';
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
-
-
+const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+
       {/* <App /> */}
       <Main/>
+    </QueryClientProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

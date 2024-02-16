@@ -9,6 +9,7 @@ import { MyAvatar } from '../../shared/Avatar/Avatar';
 import { MainNotLogged } from '../MainPageNotLoggedd/MainNotLogged';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
+import { useQuery } from '@tanstack/react-query' 
 
 export const Mainpage = () => {
 
@@ -51,6 +52,7 @@ const path = location.pathname
 
   } 
 
+
   const getUserItems = async () =>{
 
     try{
@@ -63,6 +65,14 @@ const path = location.pathname
   }
 
 
+  // const {
+  //   status,
+  //   error,
+  //   data: items,
+  // } = useQuery({
+  //   queryKey: ['main'],
+  //   queryFn: getUserItems(),
+  // })
 
   useEffect(() => {
 
