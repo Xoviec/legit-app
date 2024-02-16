@@ -71,17 +71,19 @@ export const UserPage = (key) =>{
       } 
     
 
-    const getComments = async () =>{
+    // const getComments = async () =>{
 
-        try{
-            const response = await fetch(`${API}/get-comments/${usernameFromPath}`);
-            const data = await response.json();
-            setCommentsList(data)
+    //     try{
+    //         const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
+    //         const data = await response.json();
+    //         const commentsResponse = await fetch(`${API}/get-comments/${data[0].id}`);
+    //         const commentsData = await commentsResponse.json();
+    //         setCommentsList(commentsData)
 
-        }catch(err){
-            console.log(err)
-        }
-    }
+    //     }catch(err){
+    //         console.log(err)
+    //     }
+    // }
 
     const clearData = ()=>{ //nie pamietam po co tutaj to dałem, było na początku useEffecta,wywaliłem bo przy nawigacji odświeały się itemy
 
@@ -91,11 +93,35 @@ export const UserPage = (key) =>{
 
     }
 
-    const getProfileData = async (nickname) => {
+    const getItems = async (nickname) => {
 
-        return axios
-            .get(`${API}/nicknames/${usernameFromPath}`)
-            .then(res=>res.data)
+
+        return await fetch(`${API}/user-items/${usernameFromPath}`)
+            .then(res=>res.json())
+    };
+
+    const getProfile = async() =>{
+
+        return await fetch(`${API}/nicknames/${usernameFromPath}`)
+            .then(res=>res.json())
+            .then(res=>res[0])
+
+    }
+
+    const getComments = async () =>{
+
+        const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
+        const data = await response.json();
+
+
+        return await fetch(`${API}/get-comments/${data[0].id}`)
+            .then(res=>res.json())
+
+    }
+
+        // return axios
+        //     .get(`${API}/user-items/${usernameFromPath}`)
+        //     .then(res=>res.data)
             
             // const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
             // const userItemsListResponse = await fetch(`${API}/user-items/${usernameFromPath}`);
@@ -123,20 +149,39 @@ export const UserPage = (key) =>{
         //     setUserNotFound(true)
         //     console.error('Błąd podczas pobierania danych:', error);
         // }
-    };
 
     const {
-        status,
-        error,
-        data: profile,
+        status: itemsStatus,
+        error: itemsError,
+        data: itemsData,
       } = useQuery({
-        queryKey: [usernameFromPath],
-        queryFn: getProfileData,
+        queryKey: ['items',usernameFromPath],
+        queryFn: getItems,
       })
 
-      console.log(profile && profile[0].nickname)
-      console.log(error)
-      console.log(status)
+    const {
+        status: profileStatus,
+        error: profileError,
+        data: profileData,
+      } = useQuery({
+        queryKey: ['profile', usernameFromPath],
+        queryFn: getProfile,
+      })
+
+      const {
+        status: commentsStatus,
+        error: commentsError,
+        data: commentsData,
+      } = useQuery({
+        queryKey: ['comments', usernameFromPath],
+        queryFn: getComments,
+      })
+
+
+    //   console.log(commentsData)
+
+
+    console.log(commentsList)
 
     useEffect(()=>{
 
@@ -149,7 +194,7 @@ export const UserPage = (key) =>{
 
 
 
-
+        getComments()
         getUserDataFromDB()
         // getProfileData()
     }, [nickname])
@@ -257,8 +302,8 @@ export const UserPage = (key) =>{
                     {
                         !userNotFound ?
                             <div className="user-info">
-                                <MyAvatar user={displayUser}/>
-                                <h1>{ profile && profile[0]?.nickname || <Skeleton width={200} className='skeleton' containerClassName="skeleton" /> } </h1>
+                                <MyAvatar user={profileData}/>
+                                <h1>{profileData?.nickname || <Skeleton width={200} className='skeleton' containerClassName="skeleton" /> } </h1>
                                 <Skeleton />
                             </div>
                             :
@@ -268,12 +313,12 @@ export const UserPage = (key) =>{
                     }
                     
                     {
-                        displayUser?.description && <><p className='user-about'>O mnie:</p> <p>{displayUser?.description}</p></>
+                        profileData?.description && <><p className='user-about'>O mnie:</p> <p>{profileData?.description}</p></>
                     }
                     {
                         !userNotFound &&
 
-                        <ProfileTabs  handleDeleteComment={handleDeleteComment} handleAddComment={handleAddComment} viewer={user} userItemsList={userItemsList} comments={commentsList}/>
+                        <ProfileTabs  handleDeleteComment={handleDeleteComment} handleAddComment={handleAddComment} viewer={user} userItemsList={itemsData} comments={commentsData}/>
 
                     }
                 </div>
