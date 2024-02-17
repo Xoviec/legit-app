@@ -9,7 +9,7 @@ import { MyAvatar } from '../../shared/Avatar/Avatar';
 import { UserRanking } from '../Layout/Sidebar/UserRanking';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { useQuery } from '@tanstack/react-query' 
+import { useQuery, useMutation } from '@tanstack/react-query' 
 
 
 export const UserPage = (key) =>{
@@ -69,6 +69,42 @@ export const UserPage = (key) =>{
         setMostItems(mostItemsData)
     
       } 
+      
+
+      const addComment = ({comment_by, comment_on, content, id}) =>{
+        return axios.post(`${API}/add-comment`, {
+            comment_by,
+            comment_on,
+            content,
+            id
+        });
+    }
+    const addCommentMutation = useMutation({
+        mutationFn: addComment,
+        onSuccess: (data, variables, context) =>{
+            console.log('działa')
+        }
+    })
+
+
+
+    const handleMutateComment = (e) =>{
+        e.preventDefault()
+
+        const commentContent = e.target.comment.value
+        const newCommentID = uuidv4()
+
+
+        addCommentMutation.mutate({
+            comment_by: user.id,
+            comment_on: profileData.id,
+            content: commentContent,
+            id: newCommentID
+        })
+        
+    }
+
+
     
 
     // const getComments = async () =>{
@@ -155,7 +191,7 @@ export const UserPage = (key) =>{
         error: itemsError,
         data: itemsData,
       } = useQuery({
-        queryKey: ['items',usernameFromPath],
+        queryKey: ['items', usernameFromPath],
         queryFn: getItems,
       })
 
@@ -177,6 +213,10 @@ export const UserPage = (key) =>{
         queryFn: getComments,
       })
 
+
+      useEffect(()=>{
+        setCommentsList(commentsData)
+    }, [commentsData])
 
     //   console.log(commentsData)
 
@@ -214,29 +254,8 @@ export const UserPage = (key) =>{
         }
     }
 
-    const handleTradeItem = async (item) =>{
-        
-        const currentOwner = item.current_owner
-
-        if(item.id && currentOwner && newOwner && newOwner!==currentOwner){
-            try{
-                await axios.post(`${API}/change-owner`, {
-                    registerID: item.id,
-                    currentOwner: currentOwner,
-                    newOwner: newOwner,
-                    verifyID: user.id
-                });
-            setNewOwner()
-            }catch(error){
-                console.log(error.response ? error.response.data.error : error)
-            }
-        }
-        else{
-            console.log("coś poszło nie tak")
-        }
-    }
     
-    const handleAddComment = async (e) =>{
+    const handleAddComment = async (e) =>{ //Nie ma display user
 
         const newCommentID = uuidv4()
 
@@ -247,7 +266,7 @@ export const UserPage = (key) =>{
             avatar: user.avatar,
             comment_by_nickname: user.nickname,
             comment_by: user.id,
-            comment_on: displayUser.id,
+            comment_on: profileData.id,
             content: commentContent,
             id: newCommentID,
             created_at: new Date()
@@ -264,7 +283,7 @@ export const UserPage = (key) =>{
 
             await axios.post(`${API}/add-comment`, {
                 comment_by: user.id,
-                comment_on: displayUser.id,
+                comment_on: profileData.id,
                 content: commentContent,
                 id: newCommentID
             });
@@ -318,7 +337,7 @@ export const UserPage = (key) =>{
                     {
                         !userNotFound &&
 
-                        <ProfileTabs  handleDeleteComment={handleDeleteComment} handleAddComment={handleAddComment} viewer={user} userItemsList={itemsData} comments={commentsData}/>
+                        <ProfileTabs  handleDeleteComment={handleDeleteComment} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsList}/>
 
                     }
                 </div>
