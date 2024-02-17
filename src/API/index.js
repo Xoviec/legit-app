@@ -801,6 +801,9 @@ app.get('/get-comments/:id', async function (req, res){
 
 app.post('/add-comment', async function (req, res){
 
+    if(req.body.comment_by && req.body.comment_on && req.body.content && req.body.id){
+
+
     try{
         const { error } = await supabase
         .from('comments')
@@ -821,6 +824,10 @@ app.post('/add-comment', async function (req, res){
 
     }catch(err){
         console.log(err)
+    }
+    }
+    else{
+        res.sendStatus(400)
     }
 
 })
