@@ -83,6 +83,9 @@ export const UserPage = (key) =>{
         mutationFn: addComment,
         onSuccess: (data, variables, context) =>{
             console.log('działa')
+        },
+        onError: (err) =>{
+            console.log(err)
         }
     })
 
