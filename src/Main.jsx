@@ -30,21 +30,24 @@ export const Main = () =>{
 
     const API = process.env.REACT_APP_API
 
+
     const location = useLocation();
 
+    const myPath = location.pathname
 
-    // const getMostItems = async () =>{
-    //     try{
-    //       const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
-    //       const mostItemsData = await mostItemsRes.json();
-    //       setMostItems(mostItemsData)
-    //     }catch(error){
-    //     }
+
+    const getMostItems = async () =>{
+        try{
+          const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
+          const mostItemsData = await mostItemsRes.json();
+          setMostItems(mostItemsData)
+        }catch(error){
+        }
     
-    //   } 
+      } 
 
       
-    // const[mostItems, setMostItems] = useState()
+    const[mostItems, setMostItems] = useState()
 
 
     const excludedRoutes = ['/', '/login', '/register', '/adminpanel',];
@@ -53,22 +56,24 @@ export const Main = () =>{
 
 
 
-
     //to ponizej przekierowuje uzytkownika na strone glowna po wpisaniu w url /users/swoj nick
     useEffect(()=>{
+
 
         const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
         const nameFromLocalStorage = item?.user.user_metadata.full_name
 
+
         if(location.pathname === `/Users/${nameFromLocalStorage}`){
             navigate('/main', { replace: true })
         }
-    }, [path])
+    }, [myPath])
 
 
 
     const isProfileRoute = () =>{
         return((location.pathname.startsWith('/Users')||location.pathname.startsWith('/main')))
+      
     }
 
     return(
