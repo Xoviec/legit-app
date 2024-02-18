@@ -59,19 +59,18 @@ export const Main = () =>{
 
 
     //to ponizej przekierowuje uzytkownika na strone glowna po wpisaniu w url /users/swoj nick
-    useEffect(()=>{
-        getMostItems()
+    // useEffect(()=>{
+    //     getMostItems()
 
-        if(location.pathname === `/Users/${nameFromLocalStorage}`){
-            navigate('/main', { replace: true })
-        }
-    }, [path])
+    //     if(location.pathname === `/Users/${nameFromLocalStorage}`){
+    //         navigate('/main', { replace: true })
+    //     }
+    // }, [path])
 
 
 
     const isProfileRoute = () =>{
         return((location.pathname.startsWith('/Users')||location.pathname.startsWith('/main')))
-      
     }
 
     return(

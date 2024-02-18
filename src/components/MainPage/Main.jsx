@@ -150,15 +150,6 @@ const path = location.pathname
       }catch(userDataError){
         console.log(userDataError)
       }
-
-
-      // try{
-      //   const commentsRes = await fetch(`${API}/get-comments/${user.id}`)
-      //   const commentsData = await commentsRes.json()
-      //   setComments(commentsData)
-      // }catch(commentsError){
-      //   console.log(commentsError)
-      // }
     };
 
     fetchData()
