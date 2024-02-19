@@ -44,6 +44,7 @@ function App() {
     <main className="main">
       <div className="box">
         <span className="heading-secondary">Już wkrótce</span>
+        
         {/* <span className="cursor blink"></span> */}
         {/* <p className="paragraph">.....</p> */}
    
