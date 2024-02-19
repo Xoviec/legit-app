@@ -14,11 +14,11 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      {/* <UserSessionProvider> */}
-        {/* <QueryClientProvider client={queryClient}> */}
+      <UserSessionProvider>
+        <QueryClientProvider client={queryClient}>
           <Main/>
-      {/* </QueryClientProvider> */}
-    {/* </UserSessionProvider> */}
+      </QueryClientProvider>
+    </UserSessionProvider>
     </BrowserRouter>
   </React.StrictMode>
 );
