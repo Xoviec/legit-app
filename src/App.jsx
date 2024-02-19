@@ -38,6 +38,7 @@ function App() {
             <i className="fas lock-icon fa-lock"></i>Dostęp tylko dla członków
           </p>
         </div>
+        
       </header>
     </div>
     <main className="main">
