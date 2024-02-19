@@ -79,7 +79,9 @@ export const Main = () =>{
     return(
         <>
 
-        {!excludedRoutes.includes(location.pathname) && <Navbar />}
+        {/* {!excludedRoutes.includes(location.pathname) && <Navbar />} */}
+
+        <Navbar/>
 
 
         <div className='central-page'>
@@ -130,7 +132,8 @@ export const Main = () =>{
 
          </Routes>
          </div>
-         {!excludedRoutes.includes(location.pathname) && <Footer />}
+         <Footer/>
+         {/* {!excludedRoutes.includes(location.pathname) && <Footer />} */}
         </>
     )
 }
