@@ -10,6 +10,8 @@ import { MainNotLogged } from '../MainPageNotLoggedd/MainNotLogged';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useQuery } from '@tanstack/react-query' 
+import { useSession, useUser } from '../Context/Context';
+
 
 export const Mainpage = () => {
 
@@ -21,7 +23,6 @@ const location = useLocation();
 
 const path = location.pathname
 
-  const [user, setUser] = useState(null)
   const [publicUser, setPublicUser] = useState()
   const [userList, setUserList] = useState()
   const [itemsList, setItemsList] = useState()
@@ -39,18 +40,8 @@ const path = location.pathname
 
   const API = process.env.REACT_APP_API
 
-
-  const getMostItems = async () =>{
-    try{
-      const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
-      const mostItemsData = await mostItemsRes.json();
-      setMostItems(mostItemsData)
-  
-    }catch(error){
-      console.log(error)
-    }
-
-  } 
+  const session = useSession()
+  const user = useUser()
 
 
   const getItems = async () =>{
@@ -65,10 +56,10 @@ const path = location.pathname
   } = useQuery({
     queryKey: ['items',nickNameFromLocalStorage],
     queryFn: getItems,
+    
   })
 
   const getComments = async () =>{
-    const { data: { user } } = await supabase.auth.getUser()
 
     return await fetch(`${API}/get-comments/${user.id}`)
       .then(res=>res.json())
@@ -81,14 +72,12 @@ const path = location.pathname
   } = useQuery({
     queryKey: ['comments',nickNameFromLocalStorage],
     queryFn: getComments,
+    enabled: !!user, // Fetch data only if user has a value
+
   })
 
 
   const getProfileData = async () =>{
-    const { data: { user } } = await supabase.auth.getUser()
-    const { data: {session}, error } = await supabase.auth.getSession()
-
-
 
     return await fetch(`${API}/secret/${user.id}`, {
       method: 'GET',
@@ -98,6 +87,7 @@ const path = location.pathname
     })
     .then(res=>res.json())
     .then(res=>res[0])
+    
   }
 
   const {
@@ -107,6 +97,8 @@ const path = location.pathname
   } = useQuery({
     queryKey: ['profileData',nickNameFromLocalStorage],
     queryFn: getProfileData,
+    enabled: !!user, // Fetch data only if user has a value
+
   })
   // const getUserItems = async () =>{
 
@@ -129,42 +121,29 @@ const path = location.pathname
   //   queryFn: getUserItems(),
   // })
 
-  useEffect(() => {
+  // useEffect(() => {
 
-    const fetchData = async () => {
-
-      const { data: { user } } = await supabase.auth.getUser()
-      const { data: {session}, error } = await supabase.auth.getSession()
-      console.log('sesja:', session)
-      setUser(user)
-
-      try{
-        const publicUserResponse = await fetch(`${API}/secret/${user.id}`, {
-            method: 'GET',
-            headers: {
-              'jwt': (session.access_token),
-            }
-          })
-        const publicUserData = await publicUserResponse.json();
-        setPublicUser(publicUserData[0])
-      }catch(userDataError){
-        console.log(userDataError)
-      }
+  //   const fetchData = async () => {
 
 
-      // try{
-      //   const commentsRes = await fetch(`${API}/get-comments/${user.id}`)
-      //   const commentsData = await commentsRes.json()
-      //   setComments(commentsData)
-      // }catch(commentsError){
-      //   console.log(commentsError)
-      // }
-    };
+  //     try{
+  //       const publicUserResponse = await fetch(`${API}/secret/${user?.id}`, {
+  //           method: 'GET',
+  //           headers: {
+  //             'jwt': (session?.access_token),
+  //           }
+  //         })
+  //       const publicUserData = await publicUserResponse.json();
+  //       setPublicUser(publicUserData[0])
+  //     }catch(userDataError){
+  //       console.log(userDataError)
+  //     }
 
-    fetchData()
-    // getUserItems()
-    getMostItems()
-  }, [path]);
+
+  //   };
+
+  //   fetchData()
+  // }, [path]);
   
   return (
 

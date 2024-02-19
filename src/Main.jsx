@@ -22,6 +22,8 @@ import { UserRanking } from "./components/Layout/Sidebar/UserRanking";
 import { LegitedItem } from "./components/Item Authentication/LegitedItem";
 import { AuthFailed } from "./components/Item Authentication/AuthFailed";
 import { NFCTagNotRegisteredYet } from "./components/Item Authentication/NFCTagNotRegisteredYet";
+import { useContext } from "react";
+import { UserSessionContext } from "./components/Context/Context";
 
 export const Main = () =>{
 
@@ -36,17 +38,7 @@ export const Main = () =>{
     const myPath = location.pathname
 
 
-    // const getMostItems = async () =>{
-    //     try{
-    //       const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
-    //       const mostItemsData = await mostItemsRes.json();
-    //       setMostItems(mostItemsData)
-    //     }catch(error){
-    //     }
-    
-    //   } 
 
-      
     const[mostItems, setMostItems] = useState()
 
 
