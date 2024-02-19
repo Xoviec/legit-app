@@ -46,6 +46,7 @@ function App() {
         <span className="heading-secondary">Już wkrótce</span>
         {/* <span className="cursor blink"></span> */}
         {/* <p className="paragraph">.....</p> */}
+        
    
       </div>
     </main>
