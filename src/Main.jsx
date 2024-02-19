@@ -117,8 +117,8 @@ export const Main = () =>{
                 <Route path='/adminpanel' element={<AdminPanel/>}/>
             </Route>
 
-            <Route path='/privacy' element={<Privacy/>}/>
-            <Route path='/terms' element={<Terms/>}/>
+            <Route path='/privacy' element={<Mainpage/>}/>
+            <Route path='/terms' element={<Mainpage/>}/>
             <Route path='/rodo' element={<Rodo/>}/>
             
         
