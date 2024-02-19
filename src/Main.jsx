@@ -90,7 +90,7 @@ export const Main = () =>{
             <Route path='/' element={<App/>}/>
 
         
-            <Route path='/main' element={<Mainpage/>}/>
+            <Route path='/main' element={<Privacy/>}/>
 
             <Route path='/users/:nickname' element={<UserPage/>} />
             <Route path='/users/:/*' element={<NotFound/>} />
@@ -117,8 +117,8 @@ export const Main = () =>{
                 <Route path='/adminpanel' element={<AdminPanel/>}/>
             </Route>
 
-            <Route path='/privacy' element={<Mainpage/>}/>
-            <Route path='/terms' element={<Mainpage/>}/>
+            <Route path='/privacy' element={<Privacy/>}/>
+            <Route path='/terms' element={<Terms/>}/>
             <Route path='/rodo' element={<Rodo/>}/>
             
         
