@@ -26,65 +26,15 @@ import { NFCTagNotRegisteredYet } from "./components/Item Authentication/NFCTagN
 export const Main = () =>{
 
 
-    const navigate = useNavigate();
-
-    // const API = process.env.REACT_APP_API
-
-
-    const location = useLocation();
-
-    const myPath = location.pathname
-
-
-    // const getMostItems = async () =>{
-    //     try{
-    //       const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
-    //       const mostItemsData = await mostItemsRes.json();
-    //       setMostItems(mostItemsData)
-    //     }catch(error){
-    //     }
-    
-    //   } 
-
-      
-    const[mostItems, setMostItems] = useState()
-
-
-    const excludedRoutes = ['/', '/login', '/register', '/adminpanel',];
-
-    const rankingRoutes = ['/main', '/Users']
-
-
-
-    //to ponizej przekierowuje uzytkownika na strone glowna po wpisaniu w url /users/swoj nick
-    useEffect(()=>{
-
-
-        const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
-        const nameFromLocalStorage = item?.user.user_metadata.full_name
-
-
-        if(location.pathname === `/Users/${nameFromLocalStorage}`){
-            navigate('/main', { replace: true })
-        }
-    }, [myPath])
-
-
-
-    const isProfileRoute = () =>{
-        return((location.pathname.startsWith('/Users')||location.pathname.startsWith('/main')))
-      
-    }
+   
 
     return(
         <>
 
         {/* {!excludedRoutes.includes(location.pathname) && <Navbar />} */}
 
-        <Navbar/>
 
 
-        <div className='central-page'>
         <Routes>
 
             <Route path='/' element={<App/>}/>
@@ -95,27 +45,6 @@ export const Main = () =>{
             <Route path='/users/:nickname' element={<UserPage/>} />
             <Route path='/users/:/*' element={<NotFound/>} />
 
-
-
-            <Route element={<NotLoggedCheck />}>
-                <Route path='/settings' element={<Settings/>}/>
-            </Route>
-
-
-            <Route path='/verify/:id' element={<LegitedItem/>} />
-            <Route path='/verify/:/*' element={<NotFound/>} />
-            <Route path='/verify/*' element={<LegitedItem/>} />
-            {/* <Route path='/verify/:/*' element={<NotFound/>} /> p        Po upłynięciu czasu certyfikatu pokazuje się not found 404              */} 
-
-
-            <Route path='/auth-failed' element={<AuthFailed/>}/>
-            {/* <Route path='/unregistered-tag' element={<NFCTagNotRegisteredYet/>}/> */}
- 
-
-
-            <Route element={<AdminCheck />}>
-                <Route path='/adminpanel' element={<AdminPanel/>}/>
-            </Route>
 
             <Route path='/privacy' element={<Privacy/>}/>
             <Route path='/terms' element={<Terms/>}/>
@@ -131,8 +60,6 @@ export const Main = () =>{
             <Route path='*'  element={<NotFound />} />
 
          </Routes>
-         </div>
-         <Footer/>
          {/* {!excludedRoutes.includes(location.pathname) && <Footer />} */}
         </>
     )
