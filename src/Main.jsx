@@ -90,7 +90,7 @@ export const Main = () =>{
             <Route path='/' element={<App/>}/>
 
         
-            <Route path='/main' element={<Privacy/>}/>
+            <Route path='/main' element={<Mainpage/>}/>
 
             <Route path='/users/:nickname' element={<UserPage/>} />
             <Route path='/users/:/*' element={<NotFound/>} />
