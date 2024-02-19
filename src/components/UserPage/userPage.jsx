@@ -10,6 +10,7 @@ import { UserRanking } from '../Layout/Sidebar/UserRanking';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useQuery, useMutation } from '@tanstack/react-query' 
+import { useSession, useUser } from '../Context/Context';
 
 
 export const UserPage = (key) =>{
@@ -26,7 +27,6 @@ export const UserPage = (key) =>{
     const usernameFromPath = pathSegments[2];
 
     const[displayUser, setDisplayUser] = useState() // user który jest wyswietlany na stronie
-    const[user, setUser] = useState('none') // user przeglądający strone 
     const[userItemsList, setUserItemsList] = useState()
     const[foundUsers, setFoundUsers] = useState()
     const[newOwner, setNewOwner] = useState()
@@ -37,29 +37,12 @@ export const UserPage = (key) =>{
     const[stateUsernameFromPath, setStateUserNameFromPath] = useState(usernameFromPath)
 
 
+    const session = useSession()
+    const user = useUser()
 
-    const getUserDataFromDB = async()=>{
 
-        
 
-        const { data: { user } } = await supabase.auth.getUser()
-        const { data: {session}, error } = await supabase.auth.getSession()
 
-        try{
-            const userResponse = await fetch(`${API}/secret/${user.id}`, {
-                method: 'GET',
-                headers: {
-                  'jwt': (session.access_token),
-                }
-              })
-            const usersDataResponse = await userResponse.json()
-            setUser(usersDataResponse[0])
-
-        }
-        catch(err){
-            console.log(err)
-        }
-    }
 
 
 
@@ -71,7 +54,50 @@ export const UserPage = (key) =>{
       } 
       
 
-      const addComment = ({comment_by, comment_on, content, id}) =>{
+      const handleDeleteComment = async ({event, id}) =>{
+
+
+
+
+        const newCommentList = commentsList.filter(((comment)=>comment.id !== id))
+        setCommentsList(newCommentList)
+        const reqData = {
+            id: id,
+            comment_by_id: user.id
+        }
+
+
+        return axios.delete(`${API}/delete-comment`, {
+            headers: {
+                Authorization: 'jwt-key'
+            },
+            data: reqData
+        })
+    }
+
+
+    const deleteCommentMutation = useMutation({
+        mutationFn: handleDeleteComment,
+        onSuccess: (data, variables, context) =>{
+            console.log('działa')
+        },
+        onError: (err) =>{
+            console.log(err)
+        }
+    })
+
+
+    const handleMutateCommentDelete = (e, id)=>{
+        e.preventDefault()
+
+        deleteCommentMutation.mutate({
+            event: e,
+            id
+        })
+    }
+
+
+    const addComment = ({comment_by, comment_on, content, id}) =>{
         return axios.post(`${API}/add-comment`, {
             comment_by,
             comment_on,
@@ -79,6 +105,8 @@ export const UserPage = (key) =>{
             id
         });
     }
+
+
     const addCommentMutation = useMutation({
         mutationFn: addComment,
         onSuccess: (data, variables, context) =>{
@@ -90,13 +118,11 @@ export const UserPage = (key) =>{
     })
 
 
-
     const handleMutateComment = (e) =>{
         e.preventDefault()
 
         const commentContent = e.target.comment.value
         const newCommentID = uuidv4()
-
 
         addCommentMutation.mutate({
             comment_by: user.id,
@@ -108,43 +134,18 @@ export const UserPage = (key) =>{
     }
 
 
-    
 
-    // const getComments = async () =>{
 
-    //     try{
-    //         const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
-    //         const data = await response.json();
-    //         const commentsResponse = await fetch(`${API}/get-comments/${data[0].id}`);
-    //         const commentsData = await commentsResponse.json();
-    //         setCommentsList(commentsData)
-
-    //     }catch(err){
-    //         console.log(err)
-    //     }
-    // }
-
-    const clearData = ()=>{ //nie pamietam po co tutaj to dałem, było na początku useEffecta,wywaliłem bo przy nawigacji odświeały się itemy
-
-        setUserItemsList(undefined)
-        setDisplayUser(undefined)
-        setCommentsList(undefined)
-
-    }
 
     const getItems = async (nickname) => {
-
-
         return await fetch(`${API}/user-items/${usernameFromPath}`)
             .then(res=>res.json())
     };
 
     const getProfile = async() =>{
-
         return await fetch(`${API}/nicknames/${usernameFromPath}`)
             .then(res=>res.json())
             .then(res=>res[0])
-
     }
 
     const getComments = async () =>{
@@ -157,37 +158,6 @@ export const UserPage = (key) =>{
             .then(res=>res.json())
 
     }
-
-        // return axios
-        //     .get(`${API}/user-items/${usernameFromPath}`)
-        //     .then(res=>res.data)
-            
-            // const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
-            // const userItemsListResponse = await fetch(`${API}/user-items/${usernameFromPath}`);
-            // const userItemsList = await userItemsListResponse.json()
-            // const data = await response.json();
-            // console.log('xd')
-            // return data
-        // try {
-        //     const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
-        //     const userItemsListResponse = await fetch(`${API}/user-items/${usernameFromPath}`);
-        //     const userItemsList = await userItemsListResponse.json()
-        //     const data = await response.json();
-
-        //     try{
-        //         const commentsResponse = await fetch(`${API}/get-comments/${data[0].id}`);
-        //         const commentsData = await commentsResponse.json();
-        //         setCommentsList(commentsData)
-    
-        //     }catch(err){
-        //         console.log(err)
-        //     }
-        //     setUserItemsList(userItemsList)
-        //     setDisplayUser(data[0])
-        // } catch (error) {
-        //     setUserNotFound(true)
-        //     console.error('Błąd podczas pobierania danych:', error);
-        // }
 
     const {
         status: itemsStatus,
@@ -220,29 +190,6 @@ export const UserPage = (key) =>{
       useEffect(()=>{
         setCommentsList(commentsData)
     }, [commentsData])
-
-    //   console.log(commentsData)
-
-
-    console.log(commentsList)
-
-    useEffect(()=>{
-
-
-        console.log(displayUser?.nickname)
-
-
-        setStateUserNameFromPath(usernameFromPath)
-        setUserNotFound(false)
-
-
-
-        getComments()
-        getUserDataFromDB()
-        // getProfileData()
-    }, [nickname])
-    
-
 
 
     const handleUpdateFoundUsers = async (e) =>{
@@ -297,26 +244,6 @@ export const UserPage = (key) =>{
         }
     }
 
-    const handleDeleteComment = async (event, id) =>{
-
-        event.preventDefault()
-        const newCommentList = commentsList.filter(((comment)=>comment.id !== id))
-        setCommentsList(newCommentList)
-        const reqData = {
-            id: id,
-            comment_by_id: user.id
-        }
-     try{
-        await axios.delete(`${API}/delete-comment`, {
-            headers: {
-                Authorization: 'jwt-key'
-            },
-            data: reqData
-        });
-        }catch(err){
-            console.log(err)
-        }
-    }
 
     return(
         <>
@@ -339,9 +266,7 @@ export const UserPage = (key) =>{
                     }
                     {
                         !userNotFound &&
-
-                        <ProfileTabs  handleDeleteComment={handleDeleteComment} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsList}/>
-
+                        <ProfileTabs  handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData}/>
                     }
                 </div>
         </>
