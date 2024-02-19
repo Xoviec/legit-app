@@ -1,24 +1,24 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import {Main} from './Main'
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { UserSessionProvider } from './components/Context/Context';
 
 const queryClient = new QueryClient();
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
+
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <UserSessionProvider>
-        <QueryClientProvider client={queryClient}>
-          {/* <App /> */}
+      {/* <UserSessionProvider> */}
+        {/* <QueryClientProvider client={queryClient}> */}
           <Main/>
-      </QueryClientProvider>
-    </UserSessionProvider>
+      {/* </QueryClientProvider> */}
+    {/* </UserSessionProvider> */}
     </BrowserRouter>
   </React.StrictMode>
 );
