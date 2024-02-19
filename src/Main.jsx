@@ -36,15 +36,15 @@ export const Main = () =>{
     const myPath = location.pathname
 
 
-    const getMostItems = async () =>{
-        try{
-          const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
-          const mostItemsData = await mostItemsRes.json();
-          setMostItems(mostItemsData)
-        }catch(error){
-        }
+    // const getMostItems = async () =>{
+    //     try{
+    //       const mostItemsRes = await fetch(`${API}/most-items`); // szuka wszystkich uzytkownikow
+    //       const mostItemsData = await mostItemsRes.json();
+    //       setMostItems(mostItemsData)
+    //     }catch(error){
+    //     }
     
-      } 
+    //   } 
 
       
     const[mostItems, setMostItems] = useState()
