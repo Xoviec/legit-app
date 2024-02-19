@@ -28,7 +28,7 @@ export const Main = () =>{
 
     const navigate = useNavigate();
 
-    const API = process.env.REACT_APP_API
+    // const API = process.env.REACT_APP_API
 
 
     const location = useLocation();
@@ -82,10 +82,7 @@ export const Main = () =>{
         {!excludedRoutes.includes(location.pathname) && <Navbar />}
 
 
-        <div className={ isProfileRoute() ? `central-page` :``}>
-        {/* {
-         isProfileRoute() && <UserRanking list={mostItems}/>
-        } */}
+        <div className='central-page'>
         <Routes>
 
             <Route path='/' element={<App/>}/>
