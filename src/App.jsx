@@ -26,7 +26,6 @@ function App() {
       </div>
     </footer>
       {/* <p className='info'>Page designed by Lorinnio</p> */}
-
     </>
   );
 }
