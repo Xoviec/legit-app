@@ -9,12 +9,13 @@ import { MyAvatar } from '../../shared/Avatar/Avatar';
 import { UserRanking } from '../Layout/Sidebar/UserRanking';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
-import { useQuery, useMutation } from '@tanstack/react-query' 
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query' 
 import { useSession, useUser } from '../Context/Context';
 
 
 export const UserPage = (key) =>{
 
+    const queryClient = useQueryClient();
 
     const { v4: uuidv4 } = require('uuid');
 
@@ -55,17 +56,10 @@ export const UserPage = (key) =>{
       
 
       const handleDeleteComment = async ({event, id}) =>{
-
-
-
-
-        const newCommentList = commentsList.filter(((comment)=>comment.id !== id))
-        setCommentsList(newCommentList)
         const reqData = {
             id: id,
             comment_by_id: user.id
         }
-
 
         return axios.delete(`${API}/delete-comment`, {
             headers: {
@@ -75,10 +69,19 @@ export const UserPage = (key) =>{
         })
     }
 
+    const handleMutateCommentDelete = (e, id)=>{
+        e.preventDefault()
+        deleteCommentMutation.mutate({
+            event: e,
+            id
+        })
+    }
+
 
     const deleteCommentMutation = useMutation({
         mutationFn: handleDeleteComment,
         onSuccess: (data, variables, context) =>{
+            queryClient.invalidateQueries({ queryKey: ['comments', usernameFromPath] });
             console.log('działa')
         },
         onError: (err) =>{
@@ -87,14 +90,7 @@ export const UserPage = (key) =>{
     })
 
 
-    const handleMutateCommentDelete = (e, id)=>{
-        e.preventDefault()
 
-        deleteCommentMutation.mutate({
-            event: e,
-            id
-        })
-    }
 
 
     const addComment = ({comment_by, comment_on, content, id}) =>{
@@ -110,6 +106,7 @@ export const UserPage = (key) =>{
     const addCommentMutation = useMutation({
         mutationFn: addComment,
         onSuccess: (data, variables, context) =>{
+            queryClient.invalidateQueries({ queryKey: ['comments', usernameFromPath] });
             console.log('działa')
         },
         onError: (err) =>{
