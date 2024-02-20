@@ -10,7 +10,7 @@ import { MainNotLogged } from '../MainPageNotLoggedd/MainNotLogged';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useQuery } from '@tanstack/react-query' 
-import { useSession, useUser } from '../Context/Context';
+import { useAdmin, useSession, useUser } from '../Context/Context';
 
 
 export const Mainpage = () => {
@@ -29,6 +29,8 @@ const path = location.pathname
 
   const session = useSession()
   const user = useUser()
+  const admin = useAdmin()
+
 
 
   const getItems = async () =>{

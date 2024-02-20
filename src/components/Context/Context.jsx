@@ -27,6 +27,11 @@ export const useSession = () =>{
     return session
 }
 
+export const useAdmin = () =>{
+    const { admin } = useContext(UserSessionContext)
+    return admin
+}
+
 
 export const UserSessionProvider = ({children}) =>{
 
@@ -35,6 +40,7 @@ export const UserSessionProvider = ({children}) =>{
 
     const [user, setUser] = useState(undefined)
     const [session, setSession] = useState(undefined)
+    const [admin, setAdmin] = useState(undefined)
 
 
     const [dupa, setDupa] = useState(true)
@@ -64,25 +70,31 @@ export const UserSessionProvider = ({children}) =>{
                   })
                 const usersDataResponse = await userResponse.json()
                 setUser(usersDataResponse[0])
-    
             }
             catch(err){
+                console.log(err)
+            }
+            try{
+                const isAdmin = await fetch(`${API}/admin-access`, {
+                    method: 'GET',
+                    headers: {
+                      'jwt': session.access_token,
+                    }
+                  })
+                setAdmin(isAdmin.ok)
+            }catch(err){
                 console.log(err)
             }
         }
         else{
             setSession('failed')
             setUser('failed')
+            setAdmin(false)
         }
-
-
     }
 
-
-
-
     return(
-        <UserSessionContext.Provider value={{user: user, session: session}}>
+        <UserSessionContext.Provider value={{user: user, session: session, admin: admin}}>
             <UserSessionUpdateContext.Provider value={handleChangeDupa}>
                 {children}
             </UserSessionUpdateContext.Provider>
