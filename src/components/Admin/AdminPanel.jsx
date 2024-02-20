@@ -9,6 +9,7 @@ import { format } from "date-fns";
 import { pl } from "date-fns/locale";
 import { NavbarSimple } from '../Layout/NavbarSimple/NavbarSimple';
 import { Table } from './Table';
+import { useSession, useUser } from '../Context/Context';
 
 
 
@@ -16,7 +17,6 @@ import { Table } from './Table';
 export const AdminPanel = () =>{
 
     const [itemsList, setItemsList] = useState()
-    const [user, setUser] = useState(null)
     const [publicUser, setPublicUser] = useState()
     const [userList, setUserList] = useState()
     const [ownerId, setOwnerId] = useState('')
@@ -29,9 +29,11 @@ export const AdminPanel = () =>{
     const[cachedLegitedItemsList, setCachedLegitedItemsList] = useState([])
     const[legitedItemsListCurrentPage, setLegitedItemsListCurrentPage] = useState(1)
     const[legitedItemsListPageLimit, setLegitedItemsListPageLimit] = useState()
-    const[jwt, setJwt] = useState()
 
 
+
+    const session = useSession()
+    const user = useUser()
 
 
     const API = process.env.REACT_APP_API
@@ -109,8 +111,6 @@ export const AdminPanel = () =>{
         }
 
     useEffect(()=>{
-
-
       if(getCachedPage(legitedItemsListCurrentPage)){
         const newData = getCachedPage(legitedItemsListCurrentPage)
         setLegitedItemsList(newData.data)
@@ -126,12 +126,7 @@ export const AdminPanel = () =>{
     useEffect(() => {
 
         const fetchData = async () => {
-    
-          const { data: { user } } = await supabase.auth.getUser()
-          const { data: {session}, error } = await supabase.auth.getSession()
-    
-          setJwt(session.access_token)
-          setUser(user)
+ 
     
           try {
             const usersDataResponse = await fetch(`${API}/nicknames`); // szuka wszystkich uzytkownikow
@@ -209,7 +204,7 @@ export const AdminPanel = () =>{
           try{
             await axios.post(`${API}/items`, {
               itemData: data,
-              jwt: jwt,
+              jwt: session.access_token,
             })
             itemRegisterSuccess(e.target.name.value)
                         
@@ -247,7 +242,7 @@ export const AdminPanel = () =>{
           try{
           const response = await axios.post(`${API}/register-item`, {
                 itemData: data,
-                jwt: jwt,
+                jwt: session.access_token,
               })
 
           itemAssignSuccess(ogItemIdVal, ownerId)

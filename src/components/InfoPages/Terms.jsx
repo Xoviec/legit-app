@@ -1,3 +1,5 @@
+import React, {useState} from "react";
+import {Route, Routes, useLocation, useNavigate, replace} from "react-router-dom";
 import './privacy.css'
 
 

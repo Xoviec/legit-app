@@ -23,19 +23,6 @@ const location = useLocation();
 
 const path = location.pathname
 
-  const [publicUser, setPublicUser] = useState()
-  const [userList, setUserList] = useState()
-  const [itemsList, setItemsList] = useState()
-  const [userItemsList, setUserItemsList] = useState()
-  const [ogItemIdVal, setOgItemIdVal] = useState('')
-  const [ownerId, setOwnerId] = useState('')
-  const [foundUsers, setFoundUsers] = useState()
-  const [foundItems, setFoundItems] = useState()
-  const[newOwner, setNewOwner] = useState()
-  const[assignedItem, setAssignedItem] = useState()
-  const[comments, setComments] = useState()
-  const[mostItems, setMostItems] = useState()
-  const[jwt, setJwt] = useState()
 
 
   const API = process.env.REACT_APP_API
@@ -61,8 +48,13 @@ const path = location.pathname
 
   const getComments = async () =>{
 
-    return await fetch(`${API}/get-comments/${user.id}`)
-      .then(res=>res.json())
+    if(user==='failed'){
+      return false
+    }
+    else{
+      return await fetch(`${API}/get-comments/${user.id}`)
+        .then(res=>res.json())
+    }
   }
 
   const {
@@ -79,15 +71,20 @@ const path = location.pathname
 
   const getProfileData = async () =>{
 
-    return await fetch(`${API}/secret/${user.id}`, {
-      method: 'GET',
-      headers: {
-        'jwt': (session.access_token),
+      if(user==='failed'){
+        return false
       }
-    })
-    .then(res=>res.json())
-    .then(res=>res[0])
-    
+      else{
+        return await fetch(`${API}/secret/${user.id}`, {
+          method: 'GET',
+          headers: {
+            'jwt': (session.access_token),
+          }
+        })
+        .then(res=>res.json())
+        .then(res=>res[0])
+      }
+      
   }
 
   const {
@@ -100,50 +97,6 @@ const path = location.pathname
     enabled: !!user, // Fetch data only if user has a value
 
   })
-  // const getUserItems = async () =>{
-
-  //   try{
-  //     const userItemsListResponse = await fetch(`${API}/user-items/${nickNameFromLocalStorage}`);
-  //     const userItemsData = await userItemsListResponse.json()
-  //     setUserItemsList(userItemsData)
-  //   }catch(userItemsError){
-  //     console.log(userItemsError)
-  //   }
-  // }
-
-
-  // const {
-  //   status,
-  //   error,
-  //   data: items,
-  // } = useQuery({
-  //   queryKey: ['main'],
-  //   queryFn: getUserItems(),
-  // })
-
-  // useEffect(() => {
-
-  //   const fetchData = async () => {
-
-
-  //     try{
-  //       const publicUserResponse = await fetch(`${API}/secret/${user?.id}`, {
-  //           method: 'GET',
-  //           headers: {
-  //             'jwt': (session?.access_token),
-  //           }
-  //         })
-  //       const publicUserData = await publicUserResponse.json();
-  //       setPublicUser(publicUserData[0])
-  //     }catch(userDataError){
-  //       console.log(userDataError)
-  //     }
-
-
-  //   };
-
-  //   fetchData()
-  // }, [path]);
   
   return (
 

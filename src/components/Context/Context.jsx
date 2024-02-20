@@ -52,22 +52,30 @@ export const UserSessionProvider = ({children}) =>{
     const getUser = async () =>{
         const { data: { user } } = await supabase.auth.getUser()
         const { data: {session}, error } = await supabase.auth.getSession()
-        setSession(session)
-
-        try{
-            const userResponse = await fetch(`${API}/secret/${user.id}`, {
-                method: 'GET',
-                headers: {
-                  'jwt': (session.access_token),
-                }
-              })
-            const usersDataResponse = await userResponse.json()
-            setUser(usersDataResponse[0])
-
+        
+        if(user){
+            setSession(session)
+            try{
+                const userResponse = await fetch(`${API}/secret/${user.id}`, {
+                    method: 'GET',
+                    headers: {
+                      'jwt': (session.access_token),
+                    }
+                  })
+                const usersDataResponse = await userResponse.json()
+                setUser(usersDataResponse[0])
+    
+            }
+            catch(err){
+                console.log(err)
+            }
         }
-        catch(err){
-            console.log(err)
+        else{
+            setSession('failed')
+            setUser('failed')
         }
+
+
     }
 
 

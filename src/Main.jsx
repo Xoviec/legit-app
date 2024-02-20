@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import {Route, Routes, useLocation, useNavigate, replace} from 'react-router-dom';
+import {Route, Routes, useLocation, useNavigate, replace} from "react-router-dom";
 
 import App from "./App";
 import { Login } from "./components/Register/login";
@@ -42,9 +42,9 @@ export const Main = () =>{
     const[mostItems, setMostItems] = useState()
 
 
-    const excludedRoutes = ['/', '/login', '/register', '/adminpanel',];
+    const excludedRoutes = ["/", "/login", "/register", "/adminpanel",];
 
-    const rankingRoutes = ['/main', '/Users']
+    const rankingRoutes = ["/main", "/Users"]
 
 
 
@@ -52,19 +52,19 @@ export const Main = () =>{
     useEffect(()=>{
 
 
-        const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
+        const item = JSON.parse(localStorage.getItem("sb-bpkpqswpimtoshzxozch-auth-token"));
         const nameFromLocalStorage = item?.user.user_metadata.full_name
 
 
         if(location.pathname === `/Users/${nameFromLocalStorage}`){
-            navigate('/main', { replace: true })
+            navigate("/main", { replace: true })
         }
     }, [myPath])
 
 
 
     const isProfileRoute = () =>{
-        return((location.pathname.startsWith('/Users')||location.pathname.startsWith('/main')))
+        return((location.pathname.startsWith("/Users")||location.pathname.startsWith("/main")))
       
     }
 
@@ -78,45 +78,45 @@ export const Main = () =>{
 
         <Routes>
 
-            <Route path='/' element={<App/>}/>
+            <Route path="/" element={<App/>}/>
 
         
-            <Route path='/main' element={<Mainpage/>}/>
+            <Route path="/main" element={<Mainpage/>}/>
 
-            <Route path='/users/:nickname' element={<UserPage/>} />
-            <Route path='/users/:/*' element={<NotFound/>} />
+            <Route path="/users/:nickname" element={<UserPage/>} />
+            <Route path="/users/:/*" element={<NotFound/>} />
 
 
 
             <Route element={<NotLoggedCheck />}>
-                <Route path='/settings' element={<Settings/>}/>
+                <Route path="/settings" element={<Settings/>}/>
             </Route>
 
 
-            <Route path='/verify/:id' element={<LegitedItem/>} />
-            <Route path='/verify/:/*' element={<NotFound/>} />
-            <Route path='/verify/*' element={<LegitedItem/>} />
-            {/* <Route path='/verify/:/*' element={<NotFound/>} /> p        Po upłynięciu czasu certyfikatu pokazuje się not found 404              */} 
+            <Route path="/verify/:id" element={<LegitedItem/>} />
+            <Route path="/verify/:/*" element={<NotFound/>} />
+            <Route path="/verify/*" element={<LegitedItem/>} />
+            {/* <Route path="/verify/:/*" element={<NotFound/>} /> p        Po upłynięciu czasu certyfikatu pokazuje się not found 404              */} 
 
 
-            <Route path='/auth-failed' element={<AuthFailed/>}/>
-            {/* <Route path='/unregistered-tag' element={<NFCTagNotRegisteredYet/>}/> */}
+            <Route path="/auth-failed" element={<AuthFailed/>}/>
+            {/* <Route path="/unregistered-tag" element={<NFCTagNotRegisteredYet/>}/> */}
  
 
 
             <Route element={<AdminCheck />}>
-                <Route path='/adminpanel' element={<AdminPanel/>}/>
+                <Route path="/adminpanel" element={<AdminPanel/>}/>
             </Route>
 
-            <Route path='/privacy' element={<Privacy/>}/>
-            <Route path='/terms' element={<Terms/>}/>
-            <Route path='/rodo' element={<Rodo/>}/>
+            <Route path="/privacy" element={<Privacy/>}/>
+            <Route path="/terms" element={<Terms/>}/>
+            <Route path="/rodo" element={<Rodo/>}/>
     
             <Route element={<LoggedCheck />}>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Register />} />
             </Route>
-            <Route path='*'  element={<NotFound />} />
+            <Route path="*" element={<NotFound />} />
 
          </Routes>
          </div>
