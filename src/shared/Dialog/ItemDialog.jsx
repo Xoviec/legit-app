@@ -9,6 +9,7 @@ import { Cross2Icon } from '@radix-ui/react-icons';
 import './ItemDialog.css'
 import { useRef } from 'react';
 import { useEffect } from 'react';
+import { useSession, useUser } from '../../components/Context/Context';
 
 
 export const ItemDialog = (props) =>{
@@ -18,20 +19,11 @@ export const ItemDialog = (props) =>{
   const inputRef = useRef()
   const[foundUsers, setFoundUsers] = useState()
   const[newOwner, setNewOwner] = useState('')
-  const[user, setUser] = useState()
 
 
-  const getUserData = async () =>{
+  const user = useUser()
+  const sesssion = useSession()
 
-    const { data: { user } } = await supabase.auth.getUser()
-
-    setUser(user)
-  }
-
-  useEffect(()=>{
-
-    getUserData()
-  }, [])
 
 
   const handleUpdateFoundUsers = async (e) =>{
