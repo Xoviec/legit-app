@@ -3,32 +3,17 @@ import { Navigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
 import { supabase } from '../supabaseClient';
 import {Route, Routes, useLocation, useNavigate, replace} from "react-router-dom";
-import { useSession, useUser } from "../Context/Context";
+import { useAdmin, useSession, useUser } from "../Context/Context";
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query' 
 
 
-const API = process.env.REACT_APP_API;
-
 export const AdminCheck = () => {
-    const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
-    const [dataLoaded, setDataLoaded] = useState(false);
-    const [hasAdminRole, setHasAdminRole] = useState()
 
-    const session = useSession()
 
-    const getData = async () =>{
+    const admin = useAdmin()
 
-        if(session==='failed'){
-            return false
-        }
-        else{
-            return await fetch(`${API}/admin-access`, {
-                method: 'GET',
-                headers: {
-                  'jwt': session.access_token,
-                }
-              })
-        }
+    const isAdmin = async () =>{
+      return admin
     }
 
     const {
@@ -39,8 +24,8 @@ export const AdminCheck = () => {
     
       } = useQuery({
         queryKey: ['adminCheck'],
-        queryFn: getData,
-        enabled: !!session, // Fetch data only if session has a value
+        queryFn: isAdmin,
+        enabled: admin !== undefined, // Fetch data only if session is defined
       })
 
 
@@ -49,7 +34,7 @@ export const AdminCheck = () => {
             <p>weryfikowanie...</p>
         )
       }
-      else if(!isPending && isAdminData.ok){
+      else if(!isPending && isAdminData){
         return <Outlet replace={true}/>
       }
       else{

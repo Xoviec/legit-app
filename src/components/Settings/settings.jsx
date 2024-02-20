@@ -5,6 +5,7 @@ import FileUploadForm from './FileUploadForm'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
+import { useSession, useUser } from '../Context/Context';
 
 
 export const Settings = () =>{
@@ -39,6 +40,10 @@ export const Settings = () =>{
         
 
     const API = process.env.REACT_APP_API
+
+
+    const user = useUser()
+    const session = useSession()
 
 
     const location = useLocation();

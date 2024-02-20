@@ -126,8 +126,6 @@ export const AdminPanel = () =>{
     useEffect(() => {
 
         const fetchData = async () => {
- 
-    
           try {
             const usersDataResponse = await fetch(`${API}/nicknames`); // szuka wszystkich uzytkownikow
             const usersData = await usersDataResponse.json();

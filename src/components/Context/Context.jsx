@@ -83,12 +83,12 @@ export const UserSessionProvider = ({children}) =>{
                   })
                 setAdmin(isAdmin.ok)
             }catch(err){
-                console.log(err)
+                return
             }
         }
         else{
-            setSession('failed')
-            setUser('failed')
+            setSession(false)
+            setUser(false)
             setAdmin(false)
         }
     }

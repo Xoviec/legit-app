@@ -90,18 +90,7 @@ export const Navbar = () =>{
                 </div>
 
                 <div className="rest">
-                {/* <Link to='/register'>
-                    <button>
-                        Jak to działa
-                    </button>
-                </Link>
-
-                <Link to='/login'>
-                    <button>
-                        O nas
-                    </button>
-                </Link> */}
-
+             
                 {
                     isLogged ?
                     (
