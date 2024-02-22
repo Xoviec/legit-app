@@ -1,42 +1,249 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+
+:root {
+  --vh: 100vh;
+  --vh: calc(100vh - env(safe-area-inset-bottom));
+  color: #180202;
+  background-color: #FAFAFA;
+
+
+  --main-bg-color: #FAFAFA;
+  --secondary-bg-color: #E6E6E5;
+  --main-text-color: #180202;
+  --legited-light-green: #259F87;
+  --legited-dark-green: #006340;
+  display: flex;
+  flex-direction: column-reverse;
+
+}
+
+body {
+  -webkit-tap-highlight-color: transparent; /* for removing the highlight */
+  font-family: 'Inter', sans-serif;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+  /* min-height: var(--vh); */
+  min-height: 100svh;
+}
+
+
+
+*,
+*:before,
+*:after {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+html {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+img,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+.header-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  /* height: 17rem; */
+  margin-top: 4rem;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 5rem;
+}
+
+.lock-icon {
+  margin-right: 1rem;
+}
+.login {
+  /* cursor: pointer; */
+}
+.login-text {
+  text-decoration: underline;
+  font-size: 0.8rem;
+  font-weight: 900;
   text-align: center;
 }
 
+.main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 5rem;
+}
+
 .logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+  height: 4rem;
+  cursor: pointer;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+.heading-secondary {
+  font-size: 2.8rem;
+  height: 1em;
+  overflow: hidden;
+  margin-bottom: 3rem;
+  font-weight: 800;
+}
+
+.paragraph {
+  font-size: 3.2rem;
+  margin-top: 3rem;
+  font-weight: 800;
+}
+.box {
+  text-align: center;
+  align-self: center;
+}
+.input-container {
+  display: flex;
+  align-items: center;
+  border: 0.1rem solid #000;
+  padding: 0rem 0rem 0rem 1rem;
+  width: 32rem;
+  position: relative;
+  border-radius: 1.5rem;
+  height: 4.5rem;
+  margin: 4rem auto 0 auto;
+}
+
+.input-container input[type="text"] {
+  flex: 1;
+  border: none;
+  outline: none;
+  font-size: 1.6rem;
+}
+
+.input-container button {
+  background-color: #006340;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  width: 4.4rem;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+  border-radius: 1.5rem;
+}
+.fas.fa-arrow-right {
+  font-size: 1.8rem;
+}
+
+
+
+.cursor {
+  display: inline-block;
+  width: 0.4rem;
+  height: 4rem;
+  background-color: #180202;
+  margin-left: 0.2rem;
+  vertical-align: -0.7rem;
+}
+
+.blink {
+  animation: blink-animation 1s steps(2, start) infinite;
+}
+
+@keyframes blink-animation {
   to {
-    transform: rotate(360deg);
+    visibility: hidden;
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
+@media only screen and (max-width: 750px) {
+  .header {
+    flex-direction: column;
+    gap: 3rem;
   }
 }
 
-.card {
-  padding: 2em;
+
+
+nav{
+  font-weight: 700;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  height: 5rem;
+  padding: 0 48px 0 48px;
+  border-bottom: 1px solid var(--secondary-bg-color);
 }
 
-.read-the-docs {
-  color: #888;
+nav .logo{
+  height: auto;
+}
+
+.nav-links{
+  display: flex;
+  flex: 1;
+}
+
+nav button{
+  font-size: 15px;
+  font-weight: 700;
+}
+
+nav img{
+  height: 4rem;
+}
+
+nav button{
+  background-color: transparent;
+  color: var(--legited-light-green);
+}
+
+.rest{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.btn-login{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-bg-color);
+  color: var(--main-text-color);
+  height: 2.7rem;
+  width: 8.3rem;
+  box-sizing: border-box;
+  border: 1px solid var(--main-text-color);
+  border-radius: 0.8rem;
+  transition: 0.4s;
+}
+
+.btn-register{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-text-color);
+  color: var(--main-bg-color);
+  height: 2.7rem;
+  width: 8.3rem;
+  border-radius: 0.8rem;
+  transition: 0.4s;
+
+}
+
+.btn-login:hover, .btn-register:hover{
+  scale: 1.02;
+}
+
+.main-page{
+  display: flex;
 }
