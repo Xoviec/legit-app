@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-// import logo from '../../../Legited logo.svg'
+import logo from '../../../assets/Legited logo.svg'
 
 export const NavbarSimple = ({isDemo}) =>{
 
@@ -7,7 +7,7 @@ export const NavbarSimple = ({isDemo}) =>{
         <div className="login-nav nav-simple">
             <Link to={!isDemo && `/main`}>
                 <div className="logo">
-                    {/* <img src={logo} alt="" />    */}
+                    <img src={logo} alt="" />   
                 </div>    
             </Link>
         </div>
