@@ -16,6 +16,7 @@ import { AuthFailed } from './Components/Item Authentication/AuthFailed'
 import { NotFound } from './Components/PageNotFound/NotFound'
 import { AdminCheck } from './Components/Admin/AdminCheck'
 import { AdminPanel } from './Components/Admin/AdminPanel'
+import { Footer } from './Components/Layout/Footer/Footer'
 
 function App() {
 
@@ -88,8 +89,9 @@ const isProfileRoute = () =>{
         <Route path="*" element={<NotFound />} />
 
       </Routes>
-
       </div>
+      {!excludedRoutes.includes(location.pathname) && <Footer />}
+
     </>
   )
 }
