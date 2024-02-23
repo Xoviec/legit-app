@@ -13,7 +13,7 @@ import { useSession, useUser } from '../.././Context/Context';
 
 export const ItemDialog = (props) =>{
 
-  const API = process.env.REACT_APP_API
+  const API = import.meta.env.VITE_API
 
   const inputRef = useRef()
   const[foundUsers, setFoundUsers] = useState()

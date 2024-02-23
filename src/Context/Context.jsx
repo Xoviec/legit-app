@@ -35,7 +35,7 @@ export const useAdmin = () =>{
 
 export const UserSessionProvider = ({children}) =>{
 
-    const API = import.meta.env.VITE_APP_API
+    const API = import.meta.env.VITE_API
 
 
     const [user, setUser] = useState(undefined)

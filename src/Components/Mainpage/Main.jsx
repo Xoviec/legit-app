@@ -21,11 +21,13 @@ const location = useLocation();
 
 const path = location.pathname
 
-  const API = import.meta.env.VITE_APP_API
+const API = import.meta.env.VITE_API
 
   console.log(API)
 
   const user = useUser()
+
+  console.log(user)
 
   const getItems = async () =>{
     return await fetch(`${API}/user-items/${nickNameFromLocalStorage}`)
@@ -65,6 +67,7 @@ const path = location.pathname
             item ? 
             (
             <div className="profile-container">
+              <Link to='/'>dddsad</Link>
             <div className="user-info">
                 <MyAvatar user={user}/>
                 <h1>{user?.nickname || <Skeleton width={200}/>}</h1>

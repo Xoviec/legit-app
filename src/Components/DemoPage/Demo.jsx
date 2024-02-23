@@ -8,7 +8,6 @@ import { SoonText } from '../MainPageNotLogged/SoonText';
 
 export const Demo = () =>{
 
-
   return (
     <>
     <NavbarSimple isDemo={true}/>
