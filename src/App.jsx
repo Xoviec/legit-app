@@ -11,6 +11,11 @@ import { UserPage } from './Components/UserPage/userPage'
 import { Navbar } from './Components/Layout/Navbar/Navbar'
 import {NotLoggedCheck} from './Components/Register/NotLoggedCheck'
 import { Settings } from './Components/Settings/settings'
+import { LegitedItem } from './Components/Item Authentication/LegitedItem'
+import { AuthFailed } from './Components/Item Authentication/AuthFailed'
+import { NotFound } from './Components/PageNotFound/NotFound'
+import { AdminCheck } from './Components/Admin/AdminCheck'
+import { AdminPanel } from './Components/Admin/AdminPanel'
 
 function App() {
 
@@ -67,7 +72,20 @@ const isProfileRoute = () =>{
 
         <Route element={<NotLoggedCheck />}>
                 <Route path="/settings" element={<Settings/>}/>
-            </Route>
+        </Route>
+
+        <Route path="/verify/:id" element={<LegitedItem/>} />
+        <Route path="/verify/:/*" element={<NotFound/>} />
+        <Route path="/verify/*" element={<LegitedItem/>} />
+        <Route path="/auth-failed" element={<AuthFailed/>}/>
+
+
+        <Route element={<AdminCheck />}>
+          <Route path="/adminpanel" element={<AdminPanel/>}/>
+        </Route>
+
+
+        <Route path="*" element={<NotFound />} />
 
       </Routes>
 
