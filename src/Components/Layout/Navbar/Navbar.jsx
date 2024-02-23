@@ -1,7 +1,7 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import logo from '../../../Legited logo.svg'
-import monogram from '../../../monogramPNG.png'
-import { supabase } from '../../supabaseClient';
+import logo from '../../../assets/Legited logo.svg'
+import monogram from '../../../assets/monogram.svg'
+import { supabase } from '../../../supabaseClient';
 import { useEffect, useState } from 'react';
 import { CommentsAvatar } from '../../../Shared/Avatar/commentsAvatar';
 import { useRef } from 'react';
@@ -14,7 +14,7 @@ export const Navbar = () =>{
     const location = useLocation();
     const navigate = useNavigate();
 
-    const API = process.env.REACT_APP_API
+    const API = import.meta.env.VITE_API
 
     const [foundUsers, setFoundUsers] = useState()
     const [isNavActive, setIsNavActive] = useState(false)
