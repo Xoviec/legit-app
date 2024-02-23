@@ -67,7 +67,6 @@ const API = import.meta.env.VITE_API
             item ? 
             (
             <div className="profile-container">
-              <Link to='/'>dddsad</Link>
             <div className="user-info">
                 <MyAvatar user={user}/>
                 <h1>{user?.nickname || <Skeleton width={200}/>}</h1>
