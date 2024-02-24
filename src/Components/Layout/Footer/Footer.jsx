@@ -10,9 +10,9 @@ export const Footer = () =>{
     return(
         <footer className="footer">
 
-            <a className='logo' href="/main">
+            <Link className='logo' to={`/main`} >
                 <img src={logo} alt="" />
-            </a>
+            </Link>
 
       
             <div className="footer-text">

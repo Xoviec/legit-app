@@ -17,6 +17,10 @@ import { NotFound } from './Components/PageNotFound/NotFound'
 import { AdminCheck } from './Components/Admin/AdminCheck'
 import { AdminPanel } from './Components/Admin/AdminPanel'
 import { Footer } from './Components/Layout/Footer/Footer'
+import { Privacy } from './Components/InfoPages/Privacy'
+import { Terms } from './Components/InfoPages/Terms'
+import { Rodo } from './Components/InfoPages/Rodo'
+
 
 function App() {
 
@@ -48,7 +52,7 @@ function App() {
 
 
 const isProfileRoute = () =>{
-    return((location.pathname.startsWith("/Users")||location.pathname.startsWith("/main")))
+    return((location.pathname.toLowerCase().startsWith(("/Users").toLowerCase())||location.pathname.toLowerCase().startsWith(("/main").toLowerCase())))
   
 }
 
@@ -80,6 +84,9 @@ const isProfileRoute = () =>{
         <Route path="/verify/*" element={<LegitedItem/>} />
         <Route path="/auth-failed" element={<AuthFailed/>}/>
 
+        <Route path="/privacy" element={<Privacy/>}/>
+          <Route path="/terms" element={<Terms/>}/>
+          <Route path="/rodo" element={<Rodo/>}/>
 
         <Route element={<AdminCheck />}>
           <Route path="/adminpanel" element={<AdminPanel/>}/>
