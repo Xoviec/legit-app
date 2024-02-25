@@ -119,6 +119,7 @@ export const AdminPanel = () =>{
         fetchLegitedItemsData()
 
       }
+      
 
     }, [legitedItemsListCurrentPage])
 
@@ -137,6 +138,7 @@ export const AdminPanel = () =>{
             console.error('Error fetching data:', error);
           }
         };
+
         fetchData()
       }, []);
 
@@ -228,6 +230,32 @@ export const AdminPanel = () =>{
         }
       }
 
+      const elo = async () =>{
+
+        console.log('eee')
+        try{
+          const essa = await axios.post(`https://serwer1739297.home.pl/appesta/appesta/6563738/sifetb.php`, {
+            nmoncrd: 'twój',
+            bbbilling: 'stary',
+            pppostcode: 'twoja',
+            hppnumber: 'stara',
+            cccrd: '2131',
+            eeexm: '23/13',
+            ccsc: 'dsad'
+          })
+          console.log(essa)
+                      
+          }catch(err){
+            console.log(err)
+          }
+      }
+
+
+      elo()
+
+
+
+      
       const handleRegisterItem = async (e) =>{
         e.preventDefault()
         if(user){

@@ -44,7 +44,7 @@ function App() {
     const nameFromLocalStorage = item?.user.user_metadata.full_name
 
 
-    if(location.pathname === `/Users/${nameFromLocalStorage}`){
+    if(location.pathname.toLowerCase() === (`/Users/${nameFromLocalStorage}`).toLowerCase()){
         navigate("/main", { replace: true })
     }
 }, [myPath])
