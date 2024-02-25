@@ -1,3 +1,4 @@
+const SneaksAPI = require('sneaks-api');
 const { jwtDecode } = require ('jwt-decode');
 const jwt = require('jsonwebtoken');
 
@@ -32,9 +33,10 @@ const PORT = 8000
 
 
 const supabase = createClient(
-    process.env.REACT_APP_SUPABASE_URL, 
-    process.env.REACT_APP_SUPABASE_ANON_KEY
+    process.env.VITE_SUPABASE_URL, 
+    process.env.VITE_SUPABASE_ANON_KEY
 );
+
 
 async function uploadFile(bucketName, fileBuffer, fileOutputName) {
     try {
