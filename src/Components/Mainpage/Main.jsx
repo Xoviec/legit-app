@@ -24,8 +24,6 @@ const path = location.pathname
 const API = import.meta.env.VITE_API
 
 
-console.log('xdd test prosze działaj')
-
   const user = useUser()
 
 
