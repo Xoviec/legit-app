@@ -21,7 +21,7 @@ const location = useLocation();
 
 const path = location.pathname
 
-console.log('test 4xd')
+console.log('test 5xd')
 const API = import.meta.env.VITE_API
 
 
