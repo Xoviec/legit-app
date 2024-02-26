@@ -20,6 +20,7 @@ import { Footer } from './Components/Layout/Footer/Footer'
 import { Privacy } from './Components/InfoPages/Privacy'
 import { Terms } from './Components/InfoPages/Terms'
 import { Rodo } from './Components/InfoPages/Rodo'
+import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
 
 
 function App() {
@@ -59,7 +60,7 @@ const isProfileRoute = () =>{
   return (
     <>
 
-
+<ScrollToTop/>
 {!excludedRoutes.includes(location.pathname) && <Navbar />}
 
 
