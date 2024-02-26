@@ -23,13 +23,9 @@ const path = location.pathname
 
 const API = import.meta.env.VITE_API
 
-  console.log(API)
-
-  console.log('test2')
 
   const user = useUser()
 
-  console.log(user)
 
   const getItems = async () =>{
     return await fetch(`${API}/user-items/${nickNameFromLocalStorage}`)
