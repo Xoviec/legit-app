@@ -18,9 +18,6 @@ RUN npm install -g nodemon
 COPY . .
 
 
-ENV PORT=8000
-
-
 # Eksponujemy port 8000
 EXPOSE 8000
 
