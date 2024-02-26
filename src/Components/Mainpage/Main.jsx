@@ -21,7 +21,9 @@ const location = useLocation();
 
 const path = location.pathname
 
+console.log('test xd')
 const API = import.meta.env.VITE_API
+
 
 
   const user = useUser()
