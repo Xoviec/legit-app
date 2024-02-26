@@ -25,6 +25,8 @@ const API = import.meta.env.VITE_API
 
   console.log(API)
 
+  console.log('test')
+
   const user = useUser()
 
   console.log(user)
