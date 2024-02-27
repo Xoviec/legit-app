@@ -48,8 +48,8 @@ async function uploadFile(bucketName, fileBuffer, fileOutputName) {
             .png ({ compressionLevel: 9 }) // Dostosuj szerokość według potrzeb
             .toBuffer();
 
-        const projectId = 'direct-subset-406517';
-        const keyFilename = path.join(__dirname, 'direct-subset-406517-b59aff2e65d5.json');
+        const projectId = 'glassy-chalice-415420';
+        const keyFilename = path.join(__dirname, 'glassy-chalice-415420-d31b54a58de0.json');
         const storage = new Storage({ projectId, keyFilename });
         const bucket = storage.bucket(bucketName);
 
@@ -402,7 +402,7 @@ app.post('/set-avatar', upload.single('file'), async (req, res) => {
     // console.log(req.body.userNickname)
     try {
         const uploadedFile = req.file.buffer;
-        const fileUrl = await uploadFile('legited-avatars', uploadedFile, `${userNickname}-avatar.webp`);
+        const fileUrl = await uploadFile('legited-avatars2', uploadedFile, `${userNickname}-avatar.webp`);
         console.log('Direct link to the uploaded file:', fileUrl);
         
         try{
