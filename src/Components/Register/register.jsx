@@ -69,7 +69,7 @@ export const Register = () =>{
     
                 }}}
             )
-            if(!error)navigate('/settings');
+            if(!error)navigate('/verify',{ replace: false,  state: {formData}});
 
             if (error) throw error
         }  catch(error){
