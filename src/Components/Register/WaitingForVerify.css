@@ -1,0 +1,9 @@
+.verify-container{
+    display: flex;
+    flex-direction: column;
+    width: 25rem;
+    padding: 1rem;
+    border: 1px solid var(--secondary-bg-color);
+    margin-top: 1rem;
+    background-color: #fff;
+}

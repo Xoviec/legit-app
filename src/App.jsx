@@ -9,6 +9,7 @@ import {LoggedCheck} from './Components/Register/LoggedCheck'
 import {Register} from './Components/Register/register'
 import { UserPage } from './Components/UserPage/userPage'
 import { Navbar } from './Components/Layout/Navbar/Navbar'
+import { NavbarSimple } from './Components/Layout/NavbarSimple/NavbarSimple'
 import {NotLoggedCheck} from './Components/Register/NotLoggedCheck'
 import { Settings } from './Components/Settings/settings'
 import { LegitedItem } from './Components/Item Authentication/LegitedItem'
@@ -21,6 +22,7 @@ import { Privacy } from './Components/InfoPages/Privacy'
 import { Terms } from './Components/InfoPages/Terms'
 import { Rodo } from './Components/InfoPages/Rodo'
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
+import { WaitingForVerify } from './Components/Register/WaitingForVerify'
 
 
 function App() {
@@ -36,7 +38,7 @@ function App() {
   const myPath = location.pathname
   const [count, setCount] = useState(0)
 
-  const excludedRoutes = ["/", "/login", "/register", "/adminpanel",];
+  const excludedRoutes = ["/", "/login", "/register", "/adminpanel","/verify"];
 
   useEffect(()=>{
 
@@ -74,6 +76,13 @@ const isProfileRoute = () =>{
         <Route element={<LoggedCheck />}>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Register />} />
+                <Route path="/verify" element={
+                  <>
+                              <NavbarSimple/>
+                              <WaitingForVerify/>
+                  </>
+                } />
+
         </Route>
 
         <Route element={<NotLoggedCheck />}>
