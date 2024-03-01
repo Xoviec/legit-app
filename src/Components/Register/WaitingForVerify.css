@@ -1,9 +1,29 @@
 .verify-container{
     display: flex;
     flex-direction: column;
+    align-items: center;
     width: 25rem;
     padding: 1rem;
     border: 1px solid var(--secondary-bg-color);
     margin-top: 1rem;
     background-color: #fff;
 }
+
+.verify-container img{
+    height: 4rem;
+    width: 4rem;
+}
+
+.verify-container h1{
+    font-size: 20px;
+}
+
+.verify-container p{
+    text-align: center;
+    margin-top: 1rem;
+}
+
+.email-address{
+    color: var(--legited-dark-green);
+}
+
