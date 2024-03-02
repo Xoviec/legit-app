@@ -7,7 +7,6 @@ import * as Accordion from '@radix-ui/react-accordion';
 export const Table = (props) =>{
 
 
-
     return(
         <>
         <Accordion.Root collapsible>

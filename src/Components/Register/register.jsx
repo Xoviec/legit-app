@@ -58,6 +58,7 @@ export const Register = () =>{
     const handleSubmitRegister = async (e) =>{
 
         // e.preventDefault()
+        const redirectTo = 'https://legited.app/login'
         try{
             const { data, error } = await supabase.auth.signUp(
                 {
@@ -67,7 +68,8 @@ export const Register = () =>{
                     data: {
                     full_name: formData.fullname,
     
-                }}}
+                }}},{redirectTo: redirectTo}
+                
             )
             if(!error)navigate('/verify',{ replace: false,  state: {formData}});
 

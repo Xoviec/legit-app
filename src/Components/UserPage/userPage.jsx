@@ -113,10 +113,7 @@ export const UserPage = (key) =>{
 
 
 
-    const getItems = async (nickname) => {
-        return await fetch(`${API}/user-items/${usernameFromPath}`)
-            .then(res=>res.json())
-    };
+
 
     const getProfile = async() =>{
         return await fetch(`${API}/nicknames/${usernameFromPath}`)
@@ -134,6 +131,11 @@ export const UserPage = (key) =>{
             .then(res=>res.json())
 
     }
+
+    const getItems = async (nickname) => {
+        return await fetch(`${API}/user-items/${usernameFromPath}`)
+            .then(res=>res.json())
+    };
 
     const {
         status: itemsStatus,

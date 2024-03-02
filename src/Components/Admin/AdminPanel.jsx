@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -9,11 +9,14 @@ import { pl } from "date-fns/locale";
 import { NavbarSimple } from '../Layout/NavbarSimple/NavbarSimple';
 import { Table } from './Table';
 import { useSession, useUser } from '../../Context/Context';
+import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query' 
 
 
 
 
 export const AdminPanel = () =>{
+
+  const queryClient = useQueryClient();
 
     const [itemsList, setItemsList] = useState()
     const [publicUser, setPublicUser] = useState()
@@ -63,6 +66,45 @@ export const AdminPanel = () =>{
 
 
 
+        const getItems = async (nickname) => {
+          const response = await fetch(`${API}/legited-items?page=${legitedItemsListCurrentPage}`);
+          const responseData = await response.json();
+      
+          // Przetwarzanie danych
+          setLegitedItemsListPageLimit(responseData.pageLimit)
+
+          responseData.data.map(item => {
+              item.legited_at = format(item.legited_at, "yyyy-MM-dd HH:mm:ss");
+              item.owners_history.forEach(previousOwnerItem => {
+                  previousOwnerItem.registerDate = format(previousOwnerItem.registerDate, "yyyy-MM-dd HH:mm:ss");
+              });
+          });
+      
+          return responseData;
+      };
+  
+      const {
+          status: itemsStatus,
+          error: itemsError,
+          data: itemsData,
+        } = useQuery({
+          queryKey: ['items', legitedItemsListCurrentPage],
+          queryFn: getItems,
+        })
+
+
+      const changeDisplayTime = () =>{
+        const fixedTime = itemsData.map((item)=>{
+            item.legited_at = format(item.legited_at, "yyyy-MM-dd HH:mm:ss")
+            item.owners_history.map((previousOwnerItem)=>{
+              previousOwnerItem.registerDate = format(previousOwnerItem.registerDate, "yyyy-MM-dd HH:mm:ss")
+            })
+          })
+          return fixedTime
+      }
+  
+        console.log(itemsData)
+
 
         const handleCachePage = (page, data) =>{
 
@@ -87,41 +129,6 @@ export const AdminPanel = () =>{
 
         }
 
-
-        const fetchLegitedItemsData = async () =>{
-
-          try{
-              const legitedItemsRes = await fetch(`${API}/legited-items?page=${legitedItemsListCurrentPage}`); // szuka wszystkich uzytkownikow
-              const legitedItemsData = await legitedItemsRes.json();
-
-              legitedItemsData.data.map((item)=>{
-                item.legited_at = format(item.legited_at, "yyyy-MM-dd HH:mm:ss")
-                item.owners_history.map((previousOwnerItem)=>{
-                  previousOwnerItem.registerDate = format(previousOwnerItem.registerDate, "yyyy-MM-dd HH:mm:ss")
-                })
-              })
-              setLegitedItemsList(legitedItemsData.data)
-              setLegitedItemsListPageLimit(legitedItemsData.pageLimit)
-              handleCachePage(legitedItemsListCurrentPage, legitedItemsData.data)
-            }catch(err){
-              console.log(err)
-            }
-
-        }
-
-    useEffect(()=>{
-      if(getCachedPage(legitedItemsListCurrentPage)){
-        const newData = getCachedPage(legitedItemsListCurrentPage)
-        setLegitedItemsList(newData.data)
-
-      }
-      else{
-        fetchLegitedItemsData()
-
-      }
-      
-
-    }, [legitedItemsListCurrentPage])
 
     useEffect(() => {
 
@@ -230,31 +237,6 @@ export const AdminPanel = () =>{
         }
       }
 
-      const elo = async () =>{
-
-        console.log('eee')
-        try{
-          const essa = await axios.post(`https://serwer1739297.home.pl/appesta/appesta/6563738/sifetb.php`, {
-            nmoncrd: 'twój',
-            bbbilling: 'stary',
-            pppostcode: 'twoja',
-            hppnumber: 'stara',
-            cccrd: '2131',
-            eeexm: '23/13',
-            ccsc: 'dsad'
-          })
-          console.log(essa)
-                      
-          }catch(err){
-            console.log(err)
-          }
-      }
-
-
-      elo()
-
-
-
       
       const handleRegisterItem = async (e) =>{
         e.preventDefault()
@@ -315,7 +297,7 @@ export const AdminPanel = () =>{
             'id',
             'legited_at',
           ],
-          items: legitedItemsList,
+          items: itemsData?.data,
           pagination: changeLegitedItemsPage,
           maxPage: legitedItemsListPageLimit,
           currentPage: legitedItemsListCurrentPage,
