@@ -9,6 +9,7 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useQuery } from '@tanstack/react-query' 
 import { useUser } from '../../Context/Context';
+import { HelmetProvider } from '../Helmet/Helmet';
 
 
 export const Mainpage = () => {
@@ -61,6 +62,7 @@ const API = import.meta.env.VITE_API
   
   return (
     <>
+    
         {
             item ? 
             (

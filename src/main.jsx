@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 
 import { UserSessionProvider } from './Context/Context.jsx'
+import { HelmetProvider } from './Components/Helmet/Helmet.jsx'
 
 const queryClient = new QueryClient();
 
@@ -15,6 +16,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     <BrowserRouter>
       <UserSessionProvider>
         <QueryClientProvider client={queryClient}>
+          <HelmetProvider/>
           <App />
         </QueryClientProvider>
       </UserSessionProvider>

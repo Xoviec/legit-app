@@ -10,6 +10,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query' 
 import { useSession, useUser } from '../../Context/Context';
 import { v4 as uuidv4 } from 'uuid';
+import { HelmetSpecified } from '../Helmet/HelmetSpecified';
 
 
 export const UserPage = (key) =>{
@@ -176,6 +177,7 @@ export const UserPage = (key) =>{
     return(
         <>
                 <div className="profile-container">
+                    <HelmetSpecified nickname={profileData?.nickname} desc={`${profileData?.nickname}, ${profileData?.description}`}/>
                     {
                         !userNotFound ?
                             <div className="user-info">
