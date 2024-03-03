@@ -108,11 +108,7 @@ export const Navbar = () =>{
                         <button onClick={logout} className='btn-register'>
                             Wyloguj się
                         </button>
-
-                        
                         </>
-
-
                         
                     )
                     :
