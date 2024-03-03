@@ -433,8 +433,6 @@ app.post('/items', async function (req, res){
     const token = req.body.jwt
 
     try{
-  
-
         const adminCheck = await isAdmin(token)
 
         if(adminCheck){
@@ -590,7 +588,7 @@ app.get('/legited-items', async function (req, res){
                             .select('nickname')
                             .eq('id', user.ownerID)
 
-                        user.ownerID=userData[0].nickname
+                        user.ownerID=userData[0]?.nickname
                     }));
                 }
             });

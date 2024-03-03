@@ -15,11 +15,13 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { DisplayItemCard } from '../DisplayItemCard/DisplayItemCard';
 import { DisplayItemCardSkeleton } from '../Skeleton/DisplayCardSkeleton/DisplayItemCardSkeleton';
 import { memo } from 'react';
+import { useUser } from '../../Context/Context';
 
 export const ProfileTabs = memo((props) => {
   
   const location = useLocation();
   const textareaRef = useRef()
+  const user = useUser()
 
   const notify = (nickname) => toast.success(`Przedmiot przesłany pomyślnie do uzytkownika ${nickname}`, {
     position: "bottom-right",
@@ -93,10 +95,11 @@ export const ProfileTabs = memo((props) => {
       <Tabs.Content className="TabsContent" value="tab2">
 
         {
-          location.pathname !== '/main' &&      
+          location.pathname !== '/main' && user &&      
 
           <div className='add-comment-section'> 
           <CommentsAvatar avatar={props?.viewer?.avatar} nickname={props?.viewer?.nickname}/>
+    
           <form className="add-comment-form" onSubmit={addComment}>
             <textarea ref={textareaRef} className='textarea-add-comment' placeholder='Dodaj komentarz' name='comment' type="text" />
             {/* <input placeholder='ocena 1-5' type="text" min={0} max={5} /> */}
@@ -116,20 +119,6 @@ export const ProfileTabs = memo((props) => {
                       <Link to={`/Users/${comment.comment_by_nickname}`}>
                           <p className='comment-author'>{comment.comment_by_nickname}</p>
                         </Link>
-                        {/* <p className='comment-date'>
-                            {
-                              comment.created_at
-                              .slice(0, 10)
-                              .split('-')
-                              .reverse()
-                              .join('.')
-                              }
-                              <span> </span>
-                              {
-                                comment.created_at
-                                .slice(11,16)
-                              }
-                          </p> */}
                           <div className="comment-date">
                             {
                               formatDistance(subDays(comment.created_at, 0), new Date(), { locale: pl })

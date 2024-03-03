@@ -232,8 +232,6 @@ export const AdminPanel = () =>{
         
       }
 
-      
-
       const changeLegitedItemsPage = (num) =>{
 
         switch(num){
