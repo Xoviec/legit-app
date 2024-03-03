@@ -95,7 +95,7 @@ export const ProfileTabs = memo((props) => {
       <Tabs.Content className="TabsContent" value="tab2">
 
         {
-          location.pathname !== '/main' && user &&      
+          location.pathname !== '/main' && user ?      
 
           <div className='add-comment-section'> 
           <CommentsAvatar avatar={props?.viewer?.avatar} nickname={props?.viewer?.nickname}/>
@@ -105,6 +105,11 @@ export const ProfileTabs = memo((props) => {
             {/* <input placeholder='ocena 1-5' type="text" min={0} max={5} /> */}
             <button type='submit'>Dodaj komentarz</button>
           </form>
+          </div>
+          :
+          !user && 
+          <div className='add-comment-section-not-logged'>
+            <p>Zaloguj się aby zamieścić komentarz</p>
           </div>
       
         }
