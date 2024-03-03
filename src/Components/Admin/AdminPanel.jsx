@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -63,14 +63,9 @@ export const AdminPanel = () =>{
         theme: "light",
         });
 
-
-
-
-        const getItems = async (nickname) => {
+        const getLegitedItems = async (nickname) => {
           const response = await fetch(`${API}/legited-items?page=${legitedItemsListCurrentPage}`);
           const responseData = await response.json();
-      
-          // Przetwarzanie danych
           setLegitedItemsListPageLimit(responseData.pageLimit)
 
           responseData.data.map(item => {
@@ -84,71 +79,28 @@ export const AdminPanel = () =>{
       };
   
       const {
+          status: legitedItemsStatus,
+          error: legitedItemsError,
+          data: legitedItemsData,
+        } = useQuery({
+          queryKey: ['legitedItems', legitedItemsListCurrentPage],
+          queryFn: getLegitedItems,
+        })
+  
+
+        const getItems = async () =>{
+          return await fetch(`${API}/items`)
+          .then(res=>res.json())
+        }
+
+        const {
           status: itemsStatus,
           error: itemsError,
           data: itemsData,
         } = useQuery({
-          queryKey: ['items', legitedItemsListCurrentPage],
+          queryKey: ['items'],
           queryFn: getItems,
         })
-
-
-      const changeDisplayTime = () =>{
-        const fixedTime = itemsData.map((item)=>{
-            item.legited_at = format(item.legited_at, "yyyy-MM-dd HH:mm:ss")
-            item.owners_history.map((previousOwnerItem)=>{
-              previousOwnerItem.registerDate = format(previousOwnerItem.registerDate, "yyyy-MM-dd HH:mm:ss")
-            })
-          })
-          return fixedTime
-      }
-  
-        console.log(itemsData)
-
-
-        const handleCachePage = (page, data) =>{
-
-          const newCachedPage = {
-            page: page,
-            data: data
-          }
-          const newCachedLegitedItemsList = [...cachedLegitedItemsList, newCachedPage]
-          setCachedLegitedItemsList(newCachedLegitedItemsList)
-
-        }
-
-        const getCachedPage = (page) =>{
-
-          const isPageCached = cachedLegitedItemsList.find((data)=>data.page === page)
-          if(isPageCached){
-            return isPageCached
-          }
-          else{
-            return false
-          }
-
-        }
-
-
-    useEffect(() => {
-
-        const fetchData = async () => {
-          try {
-            const usersDataResponse = await fetch(`${API}/nicknames`); // szuka wszystkich uzytkownikow
-            const usersData = await usersDataResponse.json();
-            const itemsResponse = await fetch(`${API}/items`); //wszystkie itemy
-            const itemsData = await itemsResponse.json();
-            setUserList(usersData)
-            setItemsList(itemsData)
-
-          } catch (error) {
-            console.error('Error fetching data:', error);
-          }
-        };
-
-        fetchData()
-      }, []);
-
 
 
     const handleSetFoundItem = (item) =>{
@@ -165,13 +117,10 @@ export const AdminPanel = () =>{
 
 
     const handleUpdateFoundUsers = async (nickname) =>{
-        const response = await fetch(`${API}/search-users?letters=${nickname}`);
-        const data = await response.json();
-
-        setFoundUsers(data)
-
         try{
-
+          const response = await fetch(`${API}/search-users?letters=${nickname}`);
+          const data = await response.json();
+          setFoundUsers(data)
         }catch(err){
             console.log(err)
         }
@@ -238,26 +187,37 @@ export const AdminPanel = () =>{
       }
 
       
-      const handleRegisterItem = async (e) =>{
-        e.preventDefault()
-        if(user){
-          const data = 
-          {
-            'ogItemId': assignedItem,
-            'ownerHistory': newOwner,
-          }
-          try{
-          const response = await axios.post(`${API}/register-item`, {
-                itemData: data,
-                jwt: session.access_token,
+      const registerItem = async ({itemData, jwt}) =>{
+ 
+          return await axios.post(`${API}/register-item`, {
+                itemData,
+                jwt,
               })
 
-          itemAssignSuccess(ogItemIdVal, ownerId)
-       
-          }catch(err){
-            console.log(err)
-          }
+      }
+
+      const registerItemMutation = useMutation({
+        mutationFn: registerItem,
+        onSuccess: ()=>{
+          queryClient.invalidateQueries({queryKey: ['legitedItems', legitedItemsListCurrentPage]})
+        },
+        onError: (err)=>{
+          console.log(err)
         }
+      })
+
+      const handleMutateRegisterItem = (e) =>{
+        e.preventDefault()
+        const data = 
+        {
+          'ogItemId': assignedItem,
+          'ownerHistory': newOwner,
+        } 
+        registerItemMutation.mutate({
+          itemData: data,
+          jwt: session.access_token
+        })
+        
       }
 
 
@@ -297,7 +257,7 @@ export const AdminPanel = () =>{
             'id',
             'legited_at',
           ],
-          items: itemsData?.data,
+          items: legitedItemsData?.data,
           pagination: changeLegitedItemsPage,
           maxPage: legitedItemsListPageLimit,
           currentPage: legitedItemsListCurrentPage,
@@ -311,7 +271,7 @@ export const AdminPanel = () =>{
             'id',
             'brand'
           ],
-          items: itemsList?.sort(function(a, b) {
+          items: itemsData?.sort(function(a, b) {
                 let keyA = (a.name),
                   keyB = (b.name);
                 if (keyA < keyB) return -1;
@@ -360,7 +320,7 @@ export const AdminPanel = () =>{
 
       <div className="item-register-form">
         <p className='register-form-title'>Przypisz przedmiot uzytkownikowi</p>
-        <form onChange={handleRegisterChange} onSubmit={handleRegisterItem}>
+        <form onChange={handleRegisterChange} onSubmit={handleMutateRegisterItem}>
             <span>Nazwa przedmiotu</span>
             <input type="text" placeholder='Yeezy 350' name='ogItemId' value={ogItemIdVal}/>
 
