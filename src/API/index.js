@@ -516,7 +516,7 @@ app.post('/register-item', async function(req, res){
 
     const token = req.body.jwt
 
-    if(!req.body.itemData.ogItemId || !req.body.itemData.ownerHistory){
+    if(!req.body?.itemData?.ogItemId || !req.body?.itemData?.ownerHistory){
         return res.status(400).send("Pola nie mogą być puste")
     }
 

@@ -5,7 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import logo from '../../assets/Legited logo.svg'
 import { format } from "date-fns";
-import { pl } from "date-fns/locale";
+import { da, pl } from "date-fns/locale";
 import { NavbarSimple } from '../Layout/NavbarSimple/NavbarSimple';
 import { Table } from './Table';
 import { useSession, useUser } from '../../Context/Context';
@@ -143,33 +143,7 @@ export const AdminPanel = () =>{
             }
         }
 
-    const handleAddItem = async (e) =>{
-        e.preventDefault()
-        if(user){
-          const data = 
-          {
-            'name': e.target.name.value,
-            'brand': e.target.brand.value,
-            'sku': e.target.sku.value,
-            'image': e.target.image.value
-          }
-          setItemsList((prevItemsList) => [...prevItemsList, data]);
 
-
-          try{
-            await axios.post(`${API}/items`, {
-              itemData: data,
-              jwt: session.access_token,
-            })
-            itemRegisterSuccess(e.target.name.value)
-                        
-            }catch(err){
-              console.log(err)
-              setItemsList((previousArr) => (previousArr.slice(0, -1)));
-            }
-            
-          }
-        }
 
 
       const handleUpdateFoundItems = async (item) =>{
@@ -186,14 +160,47 @@ export const AdminPanel = () =>{
         }
       }
 
+      const addItem = async ({itemData, jwt}) =>{
+            await axios.post(`${API}/items`, {
+              itemData,
+              jwt,
+            })
+
+        }
+
+        const addItemMutation = useMutation({
+          mutationFn: addItem,
+          onSuccess: (data,variable,context) => {
+            itemRegisterSuccess(variable.itemData.name)
+            queryClient.invalidateQueries({
+              queryKey: ['items'],
+            });
+          },
+          onError: (err) => {
+            console.log(err);
+          },
+        })
+
+
+        const handleMutateItem = (e) =>{
+          e.preventDefault()
+          const data = {
+            name: e.target.name.value,
+            brand: e.target.brand.value,
+            sku: e.target.sku.value,
+            image: e.target.image.value
+          }
+          addItemMutation.mutate({
+            itemData: data,
+            jwt: session.access_token
+          })
+        }
       
       const registerItem = async ({itemData, jwt}) =>{
- 
           return await axios.post(`${API}/register-item`, {
                 itemData,
                 jwt,
               })
-
       }
 
       const registerItemMutation = useMutation({
@@ -225,10 +232,6 @@ export const AdminPanel = () =>{
         
       }
 
-
-      function compareByName(a, b) {
-        return a.name - b.name;
-      }
       
 
       const changeLegitedItemsPage = (num) =>{
@@ -277,8 +280,8 @@ export const AdminPanel = () =>{
             'brand'
           ],
           items: itemsData?.sort(function(a, b) {
-                let keyA = (a.name),
-                  keyB = (b.name);
+                let keyA = (a.name.toLowerCase()),
+                  keyB = (b.name.toLowerCase());
                 if (keyA < keyB) return -1;
                 if (keyA > keyB) return 1;
                 return 0;
@@ -308,7 +311,7 @@ export const AdminPanel = () =>{
 
     <div className="item-register-form">
         <p className='register-form-title'>Dodaj nowy przedmiot</p>
-        <form onSubmit={handleAddItem}>
+        <form onSubmit={handleMutateItem}>
             <span>Nazwa przedmiotu</span>
             <input type="text" placeholder='Yeezy 350' name='name'/>
             <span>SKU </span>
