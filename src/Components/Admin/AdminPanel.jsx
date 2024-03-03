@@ -198,20 +198,25 @@ export const AdminPanel = () =>{
 
       const registerItemMutation = useMutation({
         mutationFn: registerItem,
-        onSuccess: ()=>{
-          queryClient.invalidateQueries({queryKey: ['legitedItems', legitedItemsListCurrentPage]})
+        onSuccess: (data,variable,context) => {
+          itemAssignSuccess(variable.itemData.ownerId, variable.itemData.ogItemIdVal);
+          queryClient.invalidateQueries({
+            queryKey: ['legitedItems', legitedItemsListCurrentPage],
+          });
         },
-        onError: (err)=>{
-          console.log(err)
-        }
-      })
+        onError: (err) => {
+          console.log(err);
+        },
+      });
 
       const handleMutateRegisterItem = (e) =>{
         e.preventDefault()
         const data = 
         {
-          'ogItemId': assignedItem,
-          'ownerHistory': newOwner,
+          ogItemId: assignedItem,
+          ownerHistory: newOwner,
+          ownerId,
+          ogItemIdVal
         } 
         registerItemMutation.mutate({
           itemData: data,
