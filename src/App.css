@@ -213,6 +213,21 @@ nav button{
   gap: 1rem;
 }
 
+.btn-admin{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--main-bg-color);
+  color: var(--legited-dark-green);
+  height: 2.7rem;
+  width: 8.3rem;
+  box-sizing: border-box;
+  border: 1px solid var(--legited-dark-green);
+  border-radius: 0.8rem;
+  transition: 0.4s;
+}
+
+
 .btn-login{
   display: flex;
   justify-content: center;
@@ -226,6 +241,8 @@ nav button{
   border-radius: 0.8rem;
   transition: 0.4s;
 }
+
+
 
 .btn-register{
   display: flex;

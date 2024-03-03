@@ -36,7 +36,7 @@ export const AdminCheck = () => {
         return <Outlet replace={true}/>
       }
       else{
-        return <Navigate to="/main" replace />; 
+        return <Navigate to="/main" replace={true} />; 
       }
 
 }

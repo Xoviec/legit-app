@@ -5,6 +5,7 @@ import { supabase } from '../../../supabaseClient';
 import { useEffect, useState } from 'react';
 import { CommentsAvatar } from '../../../Shared/Avatar/commentsAvatar';
 import { useRef } from 'react';
+import { useAdmin } from '../../../Context/Context';
 
 
 
@@ -13,6 +14,7 @@ export const Navbar = () =>{
 
     const location = useLocation();
     const navigate = useNavigate();
+    const admin = useAdmin()
 
     const API = import.meta.env.VITE_API
 
@@ -94,9 +96,24 @@ export const Navbar = () =>{
                 {
                     isLogged ?
                     (
+                        <>
+                        {
+                            admin && 
+                            <Link to='/adminpanel'>
+                                <button className='btn-admin'>
+                                    Legited+
+                                </button>
+                            </Link>
+                        }
                         <button onClick={logout} className='btn-register'>
                             Wyloguj się
                         </button>
+
+                        
+                        </>
+
+
+                        
                     )
                     :
                     (
