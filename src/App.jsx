@@ -23,6 +23,7 @@ import { Terms } from './Components/InfoPages/Terms'
 import { Rodo } from './Components/InfoPages/Rodo'
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
 import { WaitingForVerify } from './Components/Register/WaitingForVerify'
+import { HelmetProvider } from './Components/Helmet/Helmet'
 
 
 function App() {
@@ -39,6 +40,9 @@ function App() {
   const [count, setCount] = useState(0)
 
   const excludedRoutes = ["/", "/login", "/register", "/adminpanel","/verify"];
+  const userRoutes = "/Users"
+
+
 
   useEffect(()=>{
 
@@ -64,6 +68,10 @@ const isProfileRoute = () =>{
 
 <ScrollToTop/>
 {!excludedRoutes.includes(location.pathname) && <Navbar />}
+{!location.pathname.includes(userRoutes) && <HelmetProvider/>}
+
+
+
 
 
 <div className={ isProfileRoute() ? `central-page` :``}>

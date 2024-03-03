@@ -13,6 +13,7 @@ export const HelmetSpecified = ({nickname, desc}) =>{
             <meta property="og:image" content="../../assets/monogram.svg" />
             <meta property="og:url" content={`https://legited.app/Users/${nickname}`} />
             <meta property="og:description" content={desc} />
+            <meta property='og:site_name' content='Legited'/>
             <meta property='profile:username' content={nickname}/>
             <meta name="twitter:title" content={nickname} />
             <meta name="twitter:description" content={desc}/>
