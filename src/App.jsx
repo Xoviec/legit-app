@@ -39,7 +39,7 @@ function App() {
   const myPath = location.pathname
   const [count, setCount] = useState(0)
 
-  const excludedRoutes = ["/", "/login", "/register", "/adminpanel","/verify"];
+  const excludedRoutes = ["/", "/login", "/register", "/adminpanel","/confirm"];
   const userRoutes = "/Users"
 
 
