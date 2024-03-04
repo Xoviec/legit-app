@@ -1,8 +1,10 @@
-import { Helmet } from 'react-helmet';
+import { Helmet, HelmetProvider } from 'react-helmet-async';
 
 export const HelmetSpecified = ({nickname, desc}) =>{
 
     return(
+        <HelmetProvider>
+
 
        <Helmet>
             <title>{nickname}</title>
@@ -20,5 +22,8 @@ export const HelmetSpecified = ({nickname, desc}) =>{
             <meta name="twitter:image" content="../../assets/monogram.svg" />
             <meta name="twitter:card" content="summary_large_image" />
        </Helmet>
+
+       </HelmetProvider>
+
     )
 }
