@@ -71,7 +71,7 @@ export const Register = () =>{
                 }}},{redirectTo: redirectTo}
                 
             )
-            if(!error)navigate('/verify',{ replace: false,  state: {formData}});
+            if(!error)navigate('/confirm',{ replace: false,  state: {formData}});
 
             if (error) throw error
         }  catch(error){

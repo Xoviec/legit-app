@@ -84,7 +84,7 @@ const isProfileRoute = () =>{
         <Route element={<LoggedCheck />}>
                 <Route path="/register" element={<Register />} />
                 <Route path="/login" element={<Register />} />
-                <Route path="/verify" element={
+                <Route path="/confirm" element={
                   <>
                               <NavbarSimple/>
                               <WaitingForVerify/>

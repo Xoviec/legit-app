@@ -28,6 +28,7 @@ const API = import.meta.env.VITE_API
   const user = useUser()
 
 
+
   const getItems = async () =>{
     return await fetch(`${API}/user-items/${nickNameFromLocalStorage}`)
       .then(res=>res.json())

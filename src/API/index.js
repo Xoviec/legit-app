@@ -209,7 +209,9 @@ app.get('/secret/:id', async function (req, res){
     }
 })
 
-
+app.get('/test', function (req, res){
+    return res.status(200).send('działa')
+})
 // wszystkie itemy
 app.get('/items', async function (req, res) {
     const { data, error } = await supabase.from('items').select()
@@ -279,16 +281,23 @@ app.get('/admin-access', async function (req, res){
             console.log(data[0].account_type)
 
         if(data[0].account_type === 'admin'){
-            return res.status(200).send('Admin verified');
+            return res.status(200).send(true);
         }
-        else if(error){
-            res.sendStatus("error")
+        // else if(data[0].account_type !== 'admin' ){
+        //     return res.status(200).send('Admin verified');
 
-        }
+        // }
+        // else if(error){
+        //     res.sendStatus("error")
+
+        // }
         else{
-            res.status(403).send('Forbidden');
+            res.status(200).send(false);
         }
             
+        if(error){
+            res.sendStatus(401)
+        }
     
 
 

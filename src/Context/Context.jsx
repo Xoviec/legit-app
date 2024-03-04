@@ -81,7 +81,14 @@ export const UserSessionProvider = ({children}) =>{
                       'jwt': session.access_token,
                     }
                   })
-                setAdmin(isAdmin.ok)
+                  if (isAdmin.ok) {
+                    const isAdminResponse = await isAdmin.json();
+                    setAdmin(isAdminResponse);
+                    return
+                } else {
+                    setAdmin(false);
+                }
+                // setAdmin(isAdmin.ok)
             }catch(err){
                 return
             }
