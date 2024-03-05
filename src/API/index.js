@@ -210,7 +210,7 @@ app.get('/secret/:id', async function (req, res){
 })
 
 app.get('/test', function (req, res){
-    return res.status(200).send('działa es')
+    return res.status(200).send('działa essa')
 })
 // wszystkie itemy
 app.get('/items', async function (req, res) {
