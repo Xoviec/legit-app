@@ -9,6 +9,15 @@
       name="description"
       content="Web site created using create-react-app"
     />
+    <script>
+        window.onerror = function(message, source, lineno, colno, error) {
+          console.error('Wystąpił błąd:', message);
+          console.log(schemaOrgTypeDomain)
+          schemaOrgTypeDomain = undefined
+    
+    return true; // Zapobiegaj dalszej propagacji błędu
+};
+    </script>
     <link rel="apple-touch-icon" href="./Llogo.png" />
     <!-- <script defer src="https://t.ixkio.com/s/traceback.js?code=Gnuxzv"></script> -->
     <!--
