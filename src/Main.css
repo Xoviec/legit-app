@@ -977,10 +977,27 @@ td{
   position: relative;
 }
 
+auth-item image{
+  display: flex;
+  justify-content: center;
+}
+
 .auth-item-info{
   display: flex;
   flex-direction: column;
   /* padding-top: 5rem; */
+}
+
+.item-auth-passed .image{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.item-auth-failed .image{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .item-auth-passed .image img{
