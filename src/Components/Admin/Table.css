@@ -1,9 +1,15 @@
+
+.table{
+  overflow-x:auto;
+}
+
 table{
     width: 70rem;
     background-color: #fff;
     display: flex;
     flex-direction: column;
     padding: 1rem;
+    overflow-x:auto;
 }
 
 table tr{
@@ -22,6 +28,7 @@ th{
 
 td:nth-child(3), th:nth-child(3){
     flex: 2 1;
+    text-overflow: ellipsis;
 }
 
 
@@ -86,3 +93,25 @@ td:nth-child(3), th:nth-child(3){
       border-bottom: none;
     }
   }
+
+  /* @media only screen and (max-width: 1100px) {
+
+    .table{
+      width: 100%;
+      font-size: 12px;
+    }
+    table{
+      width: 100%;
+    }
+
+
+    td:nth-child(3), th:nth-child(3){
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      width: 50px;
+      padding: 0.5rem;
+    }
+
+
+  } */

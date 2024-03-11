@@ -8,7 +8,7 @@ export const Table = (props) =>{
 
 
     return(
-        <>
+        <div className='table'>
         <Accordion.Root collapsible>
         <table>
             <thead >
@@ -88,6 +88,6 @@ export const Table = (props) =>{
             </tbody>
         </table>
         </Accordion.Root>
-        </>
+        </div>
     )
 }
