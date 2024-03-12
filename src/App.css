@@ -175,6 +175,8 @@ video {
 
 nav{
   font-weight: 700;
+  position: fixed;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -182,6 +184,9 @@ nav{
   height: 5rem;
   padding: 0 48px 0 48px;
   border-bottom: 1px solid var(--secondary-bg-color);
+  background-color: var(--main-bg-color);
+  z-index: 99;
+
 }
 
 nav .logo{

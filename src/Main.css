@@ -171,10 +171,10 @@ a:active {
 }
 
 .central-page{
-  margin-top: 2.5rem;
+  margin-top: 5rem;
   display: flex;
   gap: 2rem;
-  min-height: calc(100svh - 7.5rem);
+  min-height: calc(100svh - 10rem);
   padding: 0 48px 0 48px;
   justify-content: center;
   /* margin-bottom: 2rem; */
@@ -874,7 +874,7 @@ td{
   justify-content: center;
   align-items: center;
   text-align: center;
-  height: calc(100svh - 5rem);
+  height: calc(100svh - 0rem);
   width: 100%;
   padding-bottom: 5rem;
   gap: 2rem;

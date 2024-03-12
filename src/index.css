@@ -170,19 +170,6 @@ a:active {
   color: var(--main-text-color);
 }
 
-.central-page{
-  margin-top: 2.5rem;
-  display: flex;
-  gap: 2rem;
-  min-height: calc(100svh - 7.5rem);
-  padding: 0 48px 0 48px;
-  justify-content: center;
-  /* margin-bottom: 2rem; */
-  /* max-height: calc(100svh - 7.5rem); */
-  /* margin-bottom: 5rem; */
-  /* height: 40rem; */
-}
-
 aside{
   position: relative;
   width: 20rem;
@@ -869,15 +856,7 @@ td{
 
 
 .not-found{
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  height: calc(100svh - 5rem);
-  width: 100%;
-  padding-bottom: 5rem;
-  gap: 2rem;
+/* jest w main css */
 }
 
 .not-found img{
