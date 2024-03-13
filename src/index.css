@@ -1040,6 +1040,10 @@ td{
 
   }
 
+  .certificate-page{
+    margin-top: 1.5rem;
+    min-height: calc(100svh - 4.75rem);
+  }
   
 
   .settings-container{
