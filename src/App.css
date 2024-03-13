@@ -185,7 +185,7 @@ nav{
   padding: 0 48px 0 48px;
   border-bottom: 1px solid var(--secondary-bg-color);
   background-color: var(--main-bg-color);
-  z-index: 99;
+  z-index: 3;
 
 }
 

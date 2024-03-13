@@ -601,10 +601,11 @@ h1{
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   gap: 1rem;
+  margin-top: 7.5rem;
   /* padding: 0px 48px 0px 48px; */
-  min-height: calc(100svh - 0rem);
+  min-height: calc(100svh - 7.5rem);
+
 }
 
 .settings-container{
@@ -1080,7 +1081,8 @@ auth-item image{
 
 
   .central-page{
-    margin-top: 1.5rem;
+    margin-top: 4.75rem;
+    min-height: calc(100svh - 4.75rem);
 
   }
 
@@ -1097,7 +1099,7 @@ auth-item image{
 
 
   nav{
-    position: relative;
+    position: fixed;
     height: 3.25rem;
     flex-wrap: nowrap;
     padding: 0 15px;
@@ -1159,7 +1161,8 @@ auth-item image{
 
   .settings{
     gap: 1rem;
-
+    margin-top: 4.5rem;
+    min-height: calc(100svh - 4.5rem);
   }
 
   .search-bar{

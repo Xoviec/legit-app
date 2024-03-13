@@ -1035,13 +1035,9 @@ td{
 @media only screen and (max-width: 877px) {
 
 
-  .central-page{
-    margin-top: 1.5rem;
-
-  }
 
   .certificate-page{
-    margin-top: 1.5rem;
+    margin-top: 4.75rem;
     min-height: calc(100svh - 4.75rem);
   }
   
@@ -1054,15 +1050,6 @@ td{
     width: 90%;
   }
 
-
-
-  nav{
-    position: relative;
-    height: 3.25rem;
-    flex-wrap: nowrap;
-    padding: 0 15px;
-    
-  }
 
   .nav-links{
     position: absolute;
@@ -1127,9 +1114,7 @@ td{
   }
 
  
-  .central-page {
-    flex-direction: column;
-  }
+ 
 
 
 
