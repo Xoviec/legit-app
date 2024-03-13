@@ -990,6 +990,7 @@ td{
   height: 100%;
   background: radial-gradient(circle, rgba(255,255,255,0.4) 31%, rgba(255,255,255,1) 100%);
   /* background-color: #259f871a; */
+  -webkit-backdrop-filter: blur(5px);
   backdrop-filter: blur(5px);
   z-index: 1;
 }
