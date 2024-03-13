@@ -1083,8 +1083,8 @@ auth-item image{
 
 
   .central-page{
-    margin-top: 0.75rem;
-    min-height: calc(100svh - 0.75rem);
+    margin-top: 4.75rem;
+    min-height: calc(100svh - 4.75rem);
 
   }
 
