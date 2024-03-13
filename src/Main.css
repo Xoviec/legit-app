@@ -171,12 +171,13 @@ a:active {
 }
 
 .central-page{
-  margin-top: 5rem;
+  margin-top: 7rem;
   display: flex;
   gap: 2rem;
-  min-height: calc(100svh - 10rem);
+  min-height: calc(100svh - 7rem);
   padding: 0 48px 0 48px;
   justify-content: center;
+  z-index: 99;
   /* margin-bottom: 2rem; */
   /* max-height: calc(100svh - 7.5rem); */
   /* margin-bottom: 5rem; */
@@ -603,7 +604,7 @@ h1{
   justify-content: center;
   gap: 1rem;
   /* padding: 0px 48px 0px 48px; */
-  min-height: calc(100svh - 5rem);
+  min-height: calc(100svh - 0rem);
 }
 
 .settings-container{
