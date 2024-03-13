@@ -869,7 +869,7 @@ td{
 }
 
 .certificate-page{
-  margin-top: 2.5rem;
+  margin-top: 7.5rem;
   display: flex;
   gap: 2rem;
   min-height: calc(100svh - 7.5rem);
