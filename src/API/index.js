@@ -376,7 +376,7 @@ app.get('/user-items/:nickname', async function(req, res) {
     };
     
     const fetchAllItemData = async (itemsData) => {
-        const itemDataArray = await Promise.all(itemsData.map(fetchItemData));
+        const itemDataArray = await Promise.all(itemsData?.map(fetchItemData));
         return itemDataArray;
     };
     
