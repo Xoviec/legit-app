@@ -24,6 +24,7 @@ import { Rodo } from './Components/InfoPages/Rodo'
 import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
 import { WaitingForVerify } from './Components/Register/WaitingForVerify'
 import { HelmetProvider } from './Components/Helmet/Helmet'
+import { HowItWorks } from './Components/HowItWorks/HowItWorks'
 
 
 function App() {
@@ -96,6 +97,7 @@ const isProfileRoute = () =>{
         <Route element={<NotLoggedCheck />}>
                 <Route path="/settings" element={<Settings/>}/>
         </Route>
+        <Route path="/how-it-works" element={<HowItWorks/>} />
 
         <Route path="/verify/:id" element={<LegitedItem/>} />
         <Route path="/verify/:/*" element={<NotFound/>} />
