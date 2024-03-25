@@ -1,5 +1,5 @@
 import instagram from '../../../assets/instagram.svg'
-import logo from '../../../assets/Legited logo.svg'
+import logo from '../../../assets/logo-legited.png'
 import './Footer.css'
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ export const Footer = () =>{
     return(
         <footer className="footer">
 
-            <Link className='logo' to={`/main`} >
+            <Link className='footer-logo' to={`/main`} >
                 <img src={logo} alt="" />
             </Link>
 

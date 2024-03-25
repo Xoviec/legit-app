@@ -24,6 +24,7 @@
     display: block;
     height: 1.6rem;
     width: 1.6rem;
+    max-width: 100%;
   }
   
   .copyright {
@@ -40,4 +41,9 @@
   .footer-text a{
     color:var(--main-text-color);
   
+  }
+
+  .footer-logo img{
+    height: 3rem;
+    width: auto;
   }
