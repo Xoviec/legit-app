@@ -1,28 +1,28 @@
-.kupka{
-    /* height: 3rem; */
-}
-
-.kupka img{
-    height: 3rem;
-    -webkit-mask-size: contain;
-    mask-size: contain;
-    transform: unset !important;
-    display: inline-block;
-    mask-size: contain;
-    -webkit-mask-size: contain;
-       
-
-}
-
-
 .how-it-works-page{
     margin-top: 7rem;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 2rem;
+    /* gap: 3rem; */
     min-height: calc(100svh - 7rem);
     padding: 0 48px 0 48px;
+}
+
+.how-it-works-page h1{
+    position: relative;
+    margin-bottom: 4rem;
+}
+
+
+.how-it-works-page h1::after{
+    content: " ";
+    left: 12.5%;
+    position: absolute;
+    bottom: -0.5rem;
+    height: 2px;
+    width: 75%;
+    background-color: var(--legited-dark-green)
+    
 }
 
 .steps-container{
@@ -60,6 +60,7 @@
 
 .step-title{
     font-size: 30px;
+    font-weight: 500;
 }
 
 .step-number{
@@ -87,4 +88,13 @@
 
 .step-description{
     text-align: center;
+}
+
+
+
+@media only screen and (max-width: 1024px) {
+    .steps-container{
+        flex-direction: column;
+        gap: 0.5rem;
+    }
 }
