@@ -23,7 +23,7 @@ export const Footer = () =>{
                     Regulamin
                 </Link>
                 <Link to={`/how-it-works`} >
-                    Jak to działa
+                    Jak to działa?
                 </Link>
 
 
