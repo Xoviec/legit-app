@@ -36,6 +36,7 @@
     align-items: center;
     color:var(--main-text-color);
     gap: 1rem;
+    margin-bottom: 1rem;
   }
   
   .footer-text a{

@@ -22,11 +22,15 @@ export const Footer = () =>{
                 <Link to={`/terms`} >
                     Regulamin
                 </Link>
-                <Link className='instagram-logo' to={`https://instagram.com/legited.app`}  target="_blank" >
-                    <img src={instagram} alt="" />
+                <Link to={`/how-it-works`} >
+                    Jak to działa
                 </Link>
 
+
             </div>
+            <Link className='instagram-logo' to={`https://instagram.com/legited.app`}  target="_blank" >
+                <img src={instagram} alt="" />
+            </Link>
           
       </footer>
     )
