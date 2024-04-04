@@ -20,6 +20,8 @@ export const ItemDialog = (props) =>{
   const inputRef = useRef()
   const[foundUsers, setFoundUsers] = useState()
   const[newOwner, setNewOwner] = useState('')
+  
+  const[checked, setChecked ] = useState(props.item.is_private)
 
 
   const user = useUser()
@@ -78,10 +80,12 @@ export const ItemDialog = (props) =>{
         
     }
   }
+  console.log(props.item)
 
   const handlePrivateChange = async (e) =>{
 
-    console.log(props.item.id)
+    setChecked((prev)=>!prev)
+
 
     try{
       await axios.post(`${API}/item-privacy`, {
@@ -145,7 +149,7 @@ export const ItemDialog = (props) =>{
                     <label className="Label" htmlFor="c1">
                       Prywatny
                     </label>
-                    <Checkbox.Root onCheckedChange={handlePrivateChange} className="CheckboxRoot" defaultChecked id="c1">
+                    <Checkbox.Root onCheckedChange={handlePrivateChange} className="CheckboxRoot" checked={checked} id="c1">
                       <Checkbox.Indicator className="CheckboxIndicator">
                         <CheckIcon />
                       </Checkbox.Indicator>
