@@ -9,6 +9,8 @@ import './ItemDialog.css'
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { useSession, useUser } from '../.././Context/Context';
+import { DividerHorizontalIcon, CheckIcon } from '@radix-ui/react-icons';
+import * as Checkbox from '@radix-ui/react-checkbox';
 
 
 export const ItemDialog = (props) =>{
@@ -124,12 +126,26 @@ export const ItemDialog = (props) =>{
                
                 </fieldset>
 
-                <div style={{ display: 'flex', marginTop: 25, justifyContent: 'flex-end' }}>
+                <div className='dialog-bottom'>
+
+
+                  <div className="private-check">
+                    <label className="Label" htmlFor="c1">
+                      Prywatny
+                    </label>
+                    <Checkbox.Root className="CheckboxRoot" defaultChecked id="c1">
+                      <Checkbox.Indicator className="CheckboxIndicator">
+                        <CheckIcon />
+                      </Checkbox.Indicator>
+                    </Checkbox.Root>
+                  </div>
+    
+
+
                   <Dialog.Close asChild>
                     <button onClick={()=>handleTradeItem(props.item)} className="Button green">
                       Prześlij
                     </button>
-
                   </Dialog.Close>
                   
                 </div>

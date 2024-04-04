@@ -330,18 +330,19 @@ app.get('/user-items/:nickname', async function(req, res) {
 
 
 
-            const {data, error} = (itemsOwner===viewerID) ? await supabase
-                .from('legited_items')
-                .select()
-                .eq('current_owner', itemsOwner)
+            const {data, error} = (itemsOwner===viewerID) ? 
+                await supabase
+                    .from('legited_items')
+                    .select()
+                    .eq('current_owner', itemsOwner)
 
-                :
+                    :
 
                 await supabase
                     .from('legited_items')
                     .select()
                     .eq('current_owner', itemsOwner)
-                .eq('is_private', 'false')
+                    .eq('is_private', 'false')
 
 
             console.log(error)
