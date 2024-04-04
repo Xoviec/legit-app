@@ -54,12 +54,6 @@ export const ItemDialog = (props) =>{
         
     const currentOwner = item.current_owner
 
-    console.log(item.id)
-
-    console.log(currentOwner)
-    console.log(newOwner)
-    console.log(user)
-
     if(item.id && currentOwner && newOwner?.id && newOwner?.id!==currentOwner){
         try{
             await axios.post(`${API}/change-owner`, {
@@ -83,6 +77,24 @@ export const ItemDialog = (props) =>{
         console.log("coś poszło nie tak")
         
     }
+  }
+
+  const handlePrivateChange = async (e) =>{
+
+    console.log(props.item.id)
+
+    try{
+      await axios.post(`${API}/item-privacy`, {
+          itemID: props.item.id,
+          isPrivate: e,
+      })
+
+  }
+  catch(error){
+      console.log(error.response ? error.response.data.error : error)
+  }
+
+    console.log(e)
   }
   
     return(
@@ -133,7 +145,7 @@ export const ItemDialog = (props) =>{
                     <label className="Label" htmlFor="c1">
                       Prywatny
                     </label>
-                    <Checkbox.Root className="CheckboxRoot" defaultChecked id="c1">
+                    <Checkbox.Root onCheckedChange={handlePrivateChange} className="CheckboxRoot" defaultChecked id="c1">
                       <Checkbox.Indicator className="CheckboxIndicator">
                         <CheckIcon />
                       </Checkbox.Indicator>

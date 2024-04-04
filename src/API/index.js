@@ -388,6 +388,30 @@ app.get('/user-items/:nickname', async function(req, res) {
     }
 });
 
+//zmiana prywatnosci itemka
+
+app.post('/item-privacy', async function(req, res){
+    const itemID = req.body.itemID
+    const isPrivate = req.body.isPrivate
+
+    console.log('is priwate', isPrivate)
+    
+    const { error } = await supabase
+        .from('legited_items')
+        .update({ is_private: isPrivate })
+        .eq('id', itemID)
+
+    if(error){
+        console.log(error)
+        res.sendStatus(500)
+    }
+    else{
+        res.sendStatus(201)
+    }
+})
+
+
+
 // dodanie avataru
 
 app.post('/set-avatar', upload.single('file'), async (req, res) => {
