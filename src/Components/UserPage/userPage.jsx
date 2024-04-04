@@ -15,6 +15,8 @@ import { HelmetSpecified } from '../Helmet/HelmetSpecified';
 
 export const UserPage = (key) =>{
 
+
+
     const queryClient = useQueryClient();
 
 
@@ -133,7 +135,13 @@ export const UserPage = (key) =>{
     }
 
     const getItems = async (nickname) => {
-        return await fetch(`${API}/user-items/${usernameFromPath}`)
+
+        return await fetch(`${API}/user-items/${usernameFromPath}`,{
+            method: 'GET',
+            headers:{
+                viewer: user.id
+            }
+        })
             .then(res=>res.json())
     };
 
@@ -173,7 +181,6 @@ export const UserPage = (key) =>{
 
     
     
-
     return(
         <>
                 <div className="profile-container">

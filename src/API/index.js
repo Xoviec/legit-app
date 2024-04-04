@@ -298,46 +298,23 @@ app.get('/admin-access', async function (req, res){
         if(error){
             res.sendStatus(401)
         }
-    
-
 
     } catch (error) {
       res.status(401).json({ error: 'Nieprawidłowy token JWT' });
     }
 
-    // try{
-    //     const decoded = jwtDecode(req.headers.jwt);
-
-    //     if(!decoded){
-    //         return res.status(403).send('No access, no jwt');
-    //     }
-    
-    //     const { data, error } = await supabase
-    //         .from('users')
-    //         .select('account_type')
-    //         .eq('id', decoded.sub);
-
-    //     if(data[0].account_type === 'admin'){
-    //         res.status(200).send('Admin verified');
-    //     }else{
-    //         res.status(403).send('Forbidden');
-    //     }
-
-
-    // }catch(error){
-    //     res.status(403).send('No access');
-    // }
 })
 
-// sneaks.getProductPrices("CD4487-100", function(err, product){
-//     console.log(product)
-// })
 
 
 // przedmioty uzytkownika
 app.get('/user-items/:nickname', async function(req, res) {
     const { nickname } = req.params;
     let itemsData = [];
+
+    const viewerID = req.headers.viewer;
+
+
 
     try {
         const { data: userItemsData, error: userItemsError } = await supabase
@@ -352,10 +329,20 @@ app.get('/user-items/:nickname', async function(req, res) {
         const itemsOwner = userItemsData[0]?.id
 
 
-            const {data, error} = await supabase
+
+            const {data, error} = (itemsOwner===viewerID) ? await supabase
                 .from('legited_items')
                 .select()
                 .eq('current_owner', itemsOwner)
+
+                :
+
+                await supabase
+                    .from('legited_items')
+                    .select()
+                    .eq('current_owner', itemsOwner)
+                .eq('is_private', 'false')
+
 
             console.log(error)
         
@@ -392,6 +379,7 @@ app.get('/user-items/:nickname', async function(req, res) {
         image: updatedItemsData[index].image,
 
     }));
+        console.log(itemsData)
         res.status(200).json(itemsData);
     } catch (error) {
         console.error(error);
