@@ -104,7 +104,7 @@ export const ItemDialog = (props) =>{
     return(
         <Dialog.Root>
             <Dialog.Trigger asChild>
-              <button className="trade-item-button">Prześlij przedmiot</button>
+              <button className="trade-item-button">Zarządzaj</button>
             </Dialog.Trigger>
             <Dialog.Portal>
               <Dialog.Overlay className="DialogOverlay" />

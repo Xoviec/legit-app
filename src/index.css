@@ -378,7 +378,7 @@ h1{
   background-color: var(--legited-dark-green);
   color: var(--main-bg-color);
   height: 2.7rem;
-  /* width: 8.3rem; */
+  width: 6rem;
   border-radius: 0.8rem;
   padding: 4px 8px 4px 8px;
   transition: 0.4s;
