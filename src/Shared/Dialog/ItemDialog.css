@@ -218,17 +218,19 @@ input {
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 2px 10px var(--black-a7);
+  box-shadow: 0 0 0 1px var(--legited-light-green);
 }
 .CheckboxRoot:hover {
-  background-color: var(--violet-3);
-}
-.CheckboxRoot:focus {
-  box-shadow: 0 0 0 2px black;
+  background-color: var(--green-4);
 }
 
 .CheckboxIndicator {
   color: var(--violet-11);
+}
+
+.private-check label{
+  width: auto;
+  text-align: left;
 }
 
 /* .Label {
