@@ -50,10 +50,11 @@ input {
   font-weight: 500;
   color: var(--mauve-12);
   font-size: 17px;
+  margin-bottom: 1.5rem;
 }
 
 .DialogDescription {
-  margin: 10px 0 20px;
+  /* margin: 10px 0 20px; */
   color: var(--mauve-11);
   font-size: 15px;
   line-height: 1.5;
@@ -119,6 +120,7 @@ input {
   gap: 20px;
   align-items: center;
   margin-bottom: 15px;
+  margin-top: 10px;
 }
 
 .Label {
@@ -195,7 +197,14 @@ input {
 
 .dialog-bottom{
   display: flex;
-  justify-content: space-between
+  justify-content: flex-end;
+}
+
+.privacy-row{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
 }
 
 .private-check{
@@ -227,6 +236,7 @@ input {
 .CheckboxIndicator {
   color: var(--violet-11);
 }
+
 
 .private-check label{
   width: auto;

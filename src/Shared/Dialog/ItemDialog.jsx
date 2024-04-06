@@ -109,15 +109,31 @@ export const ItemDialog = (props) =>{
             <Dialog.Portal>
               <Dialog.Overlay className="DialogOverlay" />
               <Dialog.Content className="DialogContent">
-                <Dialog.Title className="DialogTitle">Prześlij przedmiot</Dialog.Title>
+                <Dialog.Title className="DialogTitle">Zarządzaj</Dialog.Title>
+                <div className="privacy-row">
+                    <Dialog.Description className="DialogDescription">
+                      Ukryj przedmiot na profilu
+                    </Dialog.Description>
+                    <div className="private-check">
+                      {/* <label className="Label" htmlFor="c1">
+                        Prywatny
+                      </label> */}
+                      <Checkbox.Root onCheckedChange={handlePrivateChange} className="CheckboxRoot" checked={checked} id="c1">
+                        <Checkbox.Indicator className="CheckboxIndicator">
+                          <CheckIcon />
+                        </Checkbox.Indicator>
+                      </Checkbox.Root>
+                  </div>
+                </div>
                 <Dialog.Description className="DialogDescription">
-                  Wyślij przedmiot do innego uzytkownika. Pamiętaj, ze tej akcji nie mozna cofnąć.
+                  Wyślij przedmiot do innego uzytkownika
+                  {/* Pamiętaj, ze tej akcji nie mozna cofnąć. */}
                 </Dialog.Description>
                 <fieldset className="Fieldset">
-                  <label className="Label" htmlFor="name">
+                  {/* <label className="Label" htmlFor="name">
                     Wybierz uzytkownika
-                  </label>
-                  <input ref={inputRef} onChange={handleUpdateFoundUsers} className="Input" id="name" />
+                  </label> */}
+                  <input ref={inputRef} onChange={handleUpdateFoundUsers} className="Input" id="name" placeholder='Wybierz użytkownika'/>
                   {
                     foundUsers?.length > 0 && 
 
@@ -144,27 +160,14 @@ export const ItemDialog = (props) =>{
 
                 <div className='dialog-bottom'>
 
-
-                  <div className="private-check">
-                    <label className="Label" htmlFor="c1">
-                      Prywatny
-                    </label>
-                    <Checkbox.Root onCheckedChange={handlePrivateChange} className="CheckboxRoot" checked={checked} id="c1">
-                      <Checkbox.Indicator className="CheckboxIndicator">
-                        <CheckIcon />
-                      </Checkbox.Indicator>
-                    </Checkbox.Root>
-                  </div>
-    
-
-
                   <Dialog.Close asChild>
                     <button onClick={()=>handleTradeItem(props.item)} className="Button green">
                       Prześlij
                     </button>
                   </Dialog.Close>
-                  
                 </div>
+
+
                 <Dialog.Close asChild>
                   <button className="IconButton" aria-label="Close">
                     <Cross2Icon />
