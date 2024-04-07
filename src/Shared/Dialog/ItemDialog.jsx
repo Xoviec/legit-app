@@ -9,8 +9,9 @@ import './ItemDialog.css'
 import { useRef } from 'react';
 import { useEffect } from 'react';
 import { useSession, useUser } from '../.././Context/Context';
-import { DividerHorizontalIcon, CheckIcon } from '@radix-ui/react-icons';
+import { GearIcon, CheckIcon } from '@radix-ui/react-icons';
 import * as Checkbox from '@radix-ui/react-checkbox';
+
 
 
 export const ItemDialog = (props) =>{
@@ -103,8 +104,9 @@ export const ItemDialog = (props) =>{
   
     return(
         <Dialog.Root>
-            <Dialog.Trigger asChild>
+            <Dialog.Trigger >
               <button className="trade-item-button">Zarządzaj</button>
+              <button className='trade-item-button-mobile'><GearIcon/></button>
             </Dialog.Trigger>
             <Dialog.Portal>
               <Dialog.Overlay className="DialogOverlay" />

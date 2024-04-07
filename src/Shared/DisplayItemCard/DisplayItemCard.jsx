@@ -2,7 +2,6 @@ import { useLocation } from 'react-router-dom';
 import { ItemDialog } from '../Dialog/ItemDialog';
 
 
-
 export const DisplayItemCard = ({item, notify, tradeError}) =>{
 
     const location = useLocation();

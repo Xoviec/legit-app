@@ -385,6 +385,11 @@ h1{
   cursor: pointer;
 }
 
+.trade-item-button-mobile{
+  display: none;
+  transition: 0;
+
+}
 
 .item .image{
 
@@ -1138,11 +1143,6 @@ td{
     display: block;
   }
 
-
-
-
-
-
   .disabled{
     display: none;
   }
@@ -1155,6 +1155,33 @@ td{
   .settings-text{
     display: block;
   }
+
+
+  
+  .item-hover-button{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    height: 20%;
+    background-color: transparent;
+    backdrop-filter: none;
+    position: absolute;
+    transform: translateY(0);
+    transition: 0.5s;
+    padding-right: 1rem;
+  }
+  
+  
+  .trade-item-button{
+    display: none;
+  }
+
+  .trade-item-button-mobile{
+    display: flex;
+
+  }
+  
 }
 
 
