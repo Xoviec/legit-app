@@ -76,8 +76,6 @@ export const ProfileTabs = memo((props) => {
         draggable
         pauseOnHover
         theme="light"
-
-
       />       
           <div className="items-container">
               {

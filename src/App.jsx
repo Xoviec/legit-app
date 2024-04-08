@@ -25,6 +25,7 @@ import ScrollToTop from './Components/ScrollToTop/ScrollToTop'
 import { WaitingForVerify } from './Components/Register/WaitingForVerify'
 import { HelmetProvider } from './Components/Helmet/Helmet'
 import { HowItWorks } from './Components/HowItWorks/HowItWorks'
+import { Recovery } from './Components/Recovery/Recovery'
 
 
 function App() {
@@ -81,6 +82,7 @@ const isProfileRoute = () =>{
         
         <Route path='/main' element={<Mainpage/>}/>
         <Route path="/users/:nickname" element={<UserPage/>} />
+        
 
         <Route element={<LoggedCheck />}>
                 <Route path="/register" element={<Register />} />
@@ -93,6 +95,9 @@ const isProfileRoute = () =>{
                 } />
 
         </Route>
+
+
+        <Route path='/recovery' element={<Recovery/>}/>
 
         <Route element={<NotLoggedCheck />}>
                 <Route path="/settings" element={<Settings/>}/>
