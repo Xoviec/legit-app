@@ -495,8 +495,12 @@ h1{
   border-radius: 0.3rem;
   transition: 0.4s;
   box-sizing: border-box;
-  margin: 1.3rem 0 0.5rem 0;
+  margin: 1rem 0 0.5rem 0;
   cursor: pointer;
+}
+
+.login-tab a{
+
 }
 
 .login-tab form .forgot-password-button{
@@ -507,6 +511,8 @@ h1{
   margin: 5px 0 0 0;
   font-size: 13px;
   justify-content: flex-end;
+  text-align: right;
+  width: 100%;
 }
 
 .terms{

@@ -48,13 +48,15 @@ export const ForgotPassword = () =>{
             const { data, error } = await supabase.auth
                 .resetPasswordForEmail(formData.registerEmail)
 
-            if (error) throw error
-        }  catch(error){
-
-            if(formData.registerPassword.length < 6){
-                setLoginError('Hasło powinno zawierać przynajmniej 6 znaków')
+            
+            if(!error){
+                setLoginError()
+                // setSuccess('wysłano link do zresetowania hasła')
             }
-            else if(error.message === 'Unable to validate email address: invalid format'){
+
+            if (error) throw error
+         }  catch(error){
+            if(error.message === 'Unable to validate email address: invalid format'){
                 setLoginError("Wpisz poprawny adres e-mail")
             }
             else{
@@ -117,7 +119,7 @@ export const ForgotPassword = () =>{
                                 <p>Adres e-mail</p>
                                 <p className={`required-alert ${isRequiredRegister ? `${formData.registerEmail ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
                             </div>
-                            <input type="email" placeholder="########" name="registerEmail" value={formData.registerEmail}/>
+                            <input type="text" placeholder="user@legited.app" name="registerEmail" value={formData.registerEmail}/>
 
                             <button type="submit">Wyślij link resetujący</button>
                         </form>

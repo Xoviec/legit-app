@@ -215,7 +215,6 @@ export const Register = () =>{
                                 <p className={`required-alert ${isRequiredRegister ? `${formData.registerPassword ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
                             </div>
                             <input type="password" placeholder="########" name="registerPassword" value={formData.registerPassword}/>
-                            <button type="button" className="forgot-password-button">Nie pamiętasz hasła?</button>
                             <button type="submit">Zarejestruj się</button>
                             <p className="terms">
                         Rejestrując się, potwierdzasz przeczyatnie i akceptację <a className="terms-link" href="/terms">Regulamin serwisu.</a>  Przeczytaj <a className="terms-link" href="/privacy">Politykę prywatności </a>aby dowiedzieć się w jaki sposób przetwarzamy Twoje dane.
@@ -244,6 +243,10 @@ export const Register = () =>{
                                 <p className={`required-alert ${isRequiredLogin ? `${formData.loginPassword ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
                             </div>
                             <input type="password" placeholder="########" name="loginPassword" value={formData.loginPassword}/>
+                            <Link className="forgot-password-button" to='/forgot-password'>
+                                <button type="button" className="forgot-password-button">Nie pamiętasz hasła?</button>
+
+                            </Link>
 
                             <button type="submit">Zaloguj się</button>
                             <p className="terms">
