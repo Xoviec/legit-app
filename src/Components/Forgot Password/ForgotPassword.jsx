@@ -18,7 +18,7 @@ export const ForgotPassword = () =>{
 
     const [activeTab, setActiveTab] = useState('')
     const [loginError, setLoginError] = useState()
-
+    const [sentLinkSuccesss, setSentLinkSuccess] = useState()
 
 
 
@@ -51,6 +51,7 @@ export const ForgotPassword = () =>{
             
             if(!error){
                 setLoginError()
+                setSentLinkSuccess("Wysłano link do zresetowania hasła.")
                 // setSuccess('wysłano link do zresetowania hasła')
             }
 
@@ -114,6 +115,10 @@ export const ForgotPassword = () =>{
                         {
                             loginError && 
                             <div className="error-card">{loginError}</div>
+                        }
+                        {
+                            sentLinkSuccesss &&
+                            <div className="success-card">{sentLinkSuccesss}</div>
                         }
                             <div className="input-title">
                                 <p>Adres e-mail</p>

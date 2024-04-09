@@ -18,7 +18,7 @@ export const Recovery = () =>{
 
     const [activeTab, setActiveTab] = useState('')
     const [loginError, setLoginError] = useState()
-
+    const [successfullyChangedPassword,setSuccessfullyChangedPassword] = useState()
 
 
 
@@ -51,6 +51,8 @@ export const Recovery = () =>{
               
             if(!error){
                 console.log('zmieniono')
+                setSuccessfullyChangedPassword("Pomyslnie zmieniono hasło.")
+
             }
 
             if (error) throw error
@@ -68,35 +70,6 @@ export const Recovery = () =>{
             console.log(error.message)
         }
 
-    }
-
-
-    const handleSubmitLogin = async (e) =>{
-
-        // e.preventDefault()
-        try{
-            const { data, error } = await supabase.auth.signInWithPassword({
-                email: formData.loginEmail,
-                password: formData.loginPassword,
-              })
-
-
-
-
-            if(!error)navigate('/')
-            if (error) throw error
-        }  catch(error){
-            // alert(error.name)
-            // setLoginError('Zły adres email')
-            console.log(error.message)
-
-            if(error.message === 'Invalid login credentials'){
-                setLoginError('Złe dane logowania')
-            }
-            else{
-                setLoginError('Spróbuj ponownie później')
-            }
-        }
     }
 
 
@@ -153,6 +126,10 @@ export const Recovery = () =>{
                         {
                             loginError && 
                             <div className="error-card">{loginError}</div>
+                        }
+                        {
+                            successfullyChangedPassword &&
+                            <div className="success-card">{successfullyChangedPassword}</div>
                         }
                             <div className="input-title">
                                 <p>Utwórz nowe hasło</p>
