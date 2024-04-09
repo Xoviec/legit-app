@@ -215,7 +215,7 @@ export const Register = () =>{
                                 <p className={`required-alert ${isRequiredRegister ? `${formData.registerPassword ? `hidden`: ``}` : `hidden`}`}>This field is required</p>
                             </div>
                             <input type="password" placeholder="########" name="registerPassword" value={formData.registerPassword}/>
-
+                            <p>Nie pamiętasz hasła?</p>
                             <button type="submit">Zarejestruj się</button>
                             <p className="terms">
                         Rejestrując się, potwierdzasz przeczyatnie i akceptację <a className="terms-link" href="/terms">Regulamin serwisu.</a>  Przeczytaj <a className="terms-link" href="/privacy">Politykę prywatności </a>aby dowiedzieć się w jaki sposób przetwarzamy Twoje dane.
