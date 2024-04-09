@@ -1192,6 +1192,9 @@ td{
     transform: translateY(0);
     transition: 0.5s;
     padding-right: 1rem;
+    -webkit-backdrop-filter: none;
+    width: auto;
+    right: 0;
   }
   
   
