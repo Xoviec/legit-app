@@ -482,6 +482,8 @@ h1{
   padding: 5px;
 }
 
+
+
 .login-tab form button{
   display: flex;
   justify-content: center;
@@ -495,6 +497,16 @@ h1{
   box-sizing: border-box;
   margin: 1.3rem 0 0.5rem 0;
   cursor: pointer;
+}
+
+.login-tab form .forgot-password-button{
+  background-color: transparent;
+  color: var(--main-text-color);
+  height: auto;
+  width: auto;
+  margin: 5px 0 0 0;
+  font-size: 13px;
+  justify-content: flex-end;
 }
 
 .terms{
@@ -526,6 +538,10 @@ h1{
   color: #EE374A;
   font-weight: bold;
 }
+
+
+
+
 
 .hidden{
   display: none;

@@ -26,6 +26,7 @@ import { WaitingForVerify } from './Components/Register/WaitingForVerify'
 import { HelmetProvider } from './Components/Helmet/Helmet'
 import { HowItWorks } from './Components/HowItWorks/HowItWorks'
 import { Recovery } from './Components/Recovery/Recovery'
+import { ForgotPassword } from './Components/Forgot Password/ForgotPassword'
 
 
 function App() {
@@ -41,7 +42,7 @@ function App() {
   const myPath = location.pathname
   const [count, setCount] = useState(0)
 
-  const excludedRoutes = ["/", "/login", "/register", "/adminpanel","/confirm", "/recovery"];
+  const excludedRoutes = ["/", "/login", "/register", "/adminpanel","/confirm", "/recovery", "/forgot-password"];
   const userRoutes = "/Users"
 
 
@@ -98,6 +99,7 @@ const isProfileRoute = () =>{
 
 
         <Route path='/recovery' element={<Recovery/>}/>
+        <Route path='/forgot-password' element={<ForgotPassword/>}/>
 
         <Route element={<NotLoggedCheck />}>
                 <Route path="/settings" element={<Settings/>}/>

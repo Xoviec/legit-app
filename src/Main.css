@@ -467,45 +467,6 @@ h1{
   box-sizing: border-box;
 }
 
-.login-tab{
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  gap: 1rem;
-
-}
-
-.login-tab form{
-  display: flex;
-  flex-direction: column;
-  width: 80%;
-}
-
-.login-tab form input{
-  height: 2.7rem;
-  background-color: transparent;
-  outline: none;
-  box-sizing: border-box;
-  width: 100%;
-  background-color: var(--main-bg-color);
-  border: 1px solid var(--secondary-bg-color);
-  padding: 5px;
-}
-
-.login-tab form button{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background-color: var(--main-text-color);
-  color: var(--main-bg-color);
-  height: 2.7rem;
-  width: 100%;
-  border-radius: 0.3rem;
-  transition: 0.4s;
-  box-sizing: border-box;
-  margin: 1.3rem 0 0.5rem 0;
-  cursor: pointer;
-}
 
 .terms{
   font-size: 9px;
