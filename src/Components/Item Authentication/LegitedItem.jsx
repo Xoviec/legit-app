@@ -1,4 +1,4 @@
-import { useLocation, useParams, useNavigate } from 'react-router-dom';
+import { useLocation, useSearchParams, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { AuthPassed } from './AuthPassed';
 import { NFCTagNotRegisteredYet } from './NFCTagNotRegisteredYet';
@@ -13,9 +13,13 @@ export const LegitedItem = () =>{
 
 
     const location = useLocation();
-    const pathSegments = location.pathname.split('/');
-    const itemIdFromPath = pathSegments[2];
 
+
+    const [queryParameters] = useSearchParams()
+
+    console.log(queryParameters.get('id'))
+
+    const idFromParam = queryParameters.get('id')
 
     const navigate = useNavigate();
 
@@ -31,7 +35,7 @@ export const LegitedItem = () =>{
  
     const AuthLink = async () =>{
 
-        // const itemsData = await getItemData()
+        const itemsData = await getItemData()
 
         try{
             var i = new URLSearchParams(window.location.search);
@@ -65,20 +69,11 @@ export const LegitedItem = () =>{
             console.log(ixk_curl)
             const promise = await fetch('https://t.ixkio.com/traceback?ixc=Gnuxzv&ts=' + ixk_ts + '&ixr=' + i.get('ixr') + '&ixu=' + ixk_curl, options);
             const promiseData = await promise.json()
-            console.log(promiseData.ixkdd_extended)
-            const dupa = promiseData.ixkdd_extended
-
-            console.log(dupa['ixkdd-id'])
-
-            // console.log(promiseData.ixkdd_extended.ixkdd-item-id)
-            // const dupa = promiseData.ixkdd_extended
-            // console.log(dupa.ixkdd-id)
-            const itemsData = await getItemData(dupa['ixkdd-id'])
 
             console.log(promiseData)
             setXuidKey(promiseData['ixkdd-xuid'])
             setIsDataLoaded(true)
-            if(promiseData.status === 'key_pass' && !promiseData['ixkdd-cuid']){ //tag nie jest przypisany
+            if(promiseData.status === 'key_pass' && !promiseData.ixkdd_extended['ixkdd-id']){ //tag nie jest przypisany
                 setIsScanSuccess(false)
                 return
             }
@@ -115,11 +110,11 @@ export const LegitedItem = () =>{
 
 
 
-    const getItemData = async (itemID) =>{
+    const getItemData = async () =>{
 
-        if(itemID){
+        if(idFromParam){
             try{
-                const itemDataResponse = await fetch(`${API}/legited-item/${itemID}`);
+                const itemDataResponse = await fetch(`${API}/legited-item/${idFromParam}`);
                 const itemData = await itemDataResponse.json();
                 setItemData(itemData)
                 console.log(itemData)
