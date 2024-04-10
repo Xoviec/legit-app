@@ -31,7 +31,7 @@ export const LegitedItem = () =>{
  
     const AuthLink = async () =>{
 
-        const itemsData = await getItemData()
+        // const itemsData = await getItemData()
 
         try{
             var i = new URLSearchParams(window.location.search);
@@ -65,17 +65,23 @@ export const LegitedItem = () =>{
             console.log(ixk_curl)
             const promise = await fetch('https://t.ixkio.com/traceback?ixc=Gnuxzv&ts=' + ixk_ts + '&ixr=' + i.get('ixr') + '&ixu=' + ixk_curl, options);
             const promiseData = await promise.json()
+            console.log(promiseData.ixkdd_extended)
+            const dupa = promiseData.ixkdd_extended
 
+            console.log(dupa['ixkdd-id'])
+
+            // console.log(promiseData.ixkdd_extended.ixkdd-item-id)
+            // const dupa = promiseData.ixkdd_extended
+            // console.log(dupa.ixkdd-id)
+            const itemsData = await getItemData(dupa['ixkdd-id'])
+
+            console.log(promiseData)
             setXuidKey(promiseData['ixkdd-xuid'])
             setIsDataLoaded(true)
             if(promiseData.status === 'key_pass' && !promiseData['ixkdd-cuid']){ //tag nie jest przypisany
                 setIsScanSuccess(false)
                 return
             }
-            // else if(promiseData.status === 'key_fail' && !promiseData['ixkdd-cuid']){
-            //     navigate('/404', { replace: true})
-            //     return
-            // }
             else if(promiseData.status === 'key_fail'){
                 setIsScanSuccess(false)
                 setAuthError(promiseData.qserror)
@@ -108,13 +114,12 @@ export const LegitedItem = () =>{
     
 
 
-    console.log(itemIdFromPath)
 
-    const getItemData = async () =>{
+    const getItemData = async (itemID) =>{
 
-        if(itemIdFromPath){
+        if(itemID){
             try{
-                const itemDataResponse = await fetch(`${API}/legited-item/${itemIdFromPath}`);
+                const itemDataResponse = await fetch(`${API}/legited-item/${itemID}`);
                 const itemData = await itemDataResponse.json();
                 setItemData(itemData)
                 console.log(itemData)
@@ -128,9 +133,6 @@ export const LegitedItem = () =>{
             setItemData('Not registered')
             return('Not registered')
         }
-
-
-
     }
 
     useEffect(()=>{
