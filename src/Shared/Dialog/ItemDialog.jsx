@@ -101,7 +101,17 @@ export const ItemDialog = (props) =>{
 
     console.log(e)
   }
-  
+
+  console.log('dupa')
+  console.log(user.id)
+  console.log(props?.item)
+
+  if(props?.item?.current_owner !== user.id ){
+    return(
+      <>
+      </>
+    )
+  }  
     return(
         <Dialog.Root>
             <Dialog.Trigger >
@@ -117,9 +127,6 @@ export const ItemDialog = (props) =>{
                       Ukryj przedmiot na profilu
                     </Dialog.Description>
                     <div className="private-check">
-                      {/* <label className="Label" htmlFor="c1">
-                        Prywatny
-                      </label> */}
                       <Checkbox.Root onCheckedChange={handlePrivateChange} className="CheckboxRoot" checked={checked} id="c1">
                         <Checkbox.Indicator className="CheckboxIndicator">
                           <CheckIcon />

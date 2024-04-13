@@ -927,7 +927,7 @@ td{
 .auth-card{
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   border: 1px solid var(--secondary-bg-color);
   background-color: #ffffff;
   padding: 2rem;
@@ -973,7 +973,7 @@ td{
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 0 1.5rem 0.5rem 1.5rem;
+  padding: 0 0rem 0.5rem 0rem;
   gap: 2rem;
   position: relative;
 }

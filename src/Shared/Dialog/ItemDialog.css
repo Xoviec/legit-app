@@ -249,3 +249,17 @@ input {
   font-size: 15px;
   line-height: 1;
 } */
+
+.auth-card .trade-item-button{
+  display: flex;
+  width: 100%;
+  /* background-color: var(--legited-light-green); */
+  /* background-color: color(display-p3 0.859 0.94 0.879); */
+  background-color: var(--main-text-color);
+  border-radius: 5px;
+}
+.auth-card .trade-item-button-mobile{
+  display: none;
+  transition: 0;
+
+}

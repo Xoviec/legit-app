@@ -1,4 +1,5 @@
 import { useLocation } from 'react-router-dom';
+import { ItemDialog } from '../../Shared/Dialog/ItemDialog';
 
 export const AuthPassed = ({data, authDate}) => {
 
@@ -39,8 +40,8 @@ export const AuthPassed = ({data, authDate}) => {
                         <p className="auth-item-owner">Właściel: <span className="auth-item-owner-nickname">{data?.nickname}</span></p>
                         <p className='auth-item-registered'>Zarejestrowane <span className='register-date'>{data?.legited_at.slice(0, 10).split('-').reverse().join('.')}</span></p>
                     </div>
-    
                 </div>
+                <ItemDialog notify={console.log('xd')} tradeError={console.log('błąd')} item={data} />
             </div>
         </div>
     )

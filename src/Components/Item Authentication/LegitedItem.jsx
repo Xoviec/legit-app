@@ -106,9 +106,6 @@ export const LegitedItem = () =>{
         }
 
     }
-    
-
-
 
     const getItemData = async () =>{
 
@@ -130,6 +127,7 @@ export const LegitedItem = () =>{
         }
     }
 
+
     useEffect(()=>{
         AuthLink()
     }, [])
@@ -146,15 +144,10 @@ export const LegitedItem = () =>{
 
                 {isScanSuccess ? 
                 <>
-                   
                    <AuthPassed authDate={authDate} data={itemData}/>
-                    
                 </>
                 : 
-                
-                <NFCTagNotRegisteredYet xuid={xuidKey}/>
-                
-                
+                    <NFCTagNotRegisteredYet xuid={xuidKey}/>
                 }
                 {/* {authError} */}
 
