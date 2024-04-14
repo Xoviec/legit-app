@@ -151,7 +151,7 @@ export const UserPage = (key) =>{
         error: itemsError,
         data: itemsData,
       } = useQuery({
-        queryKey: ['items', usernameFromPath],
+        queryKey: ['items', usernameFromPath, sort],
         queryFn: getItems,
       })
 
@@ -204,7 +204,7 @@ export const UserPage = (key) =>{
                     }
                     {
                         !userNotFound &&
-                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData}/>
+                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData} />
                     }
                 </div>
         </>

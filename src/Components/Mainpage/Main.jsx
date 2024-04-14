@@ -28,6 +28,11 @@ const [order, setOrder] = useState('asc')
 const [sort, setSort] = useState('brand') // brand, name, legited_at, sku
 
 
+const changeSort = (i) =>{
+  setSort(i)
+}
+
+
   const user = useUser()
 
 
@@ -46,7 +51,7 @@ const [sort, setSort] = useState('brand') // brand, name, legited_at, sku
     error: itemsError,
     data: itemsData,
   } = useQuery({
-    queryKey: ['items',nickNameFromLocalStorage],
+    queryKey: ['items',nickNameFromLocalStorage, sort],
     queryFn: getItems,
     enabled: !!user
   })
@@ -86,7 +91,7 @@ const [sort, setSort] = useState('brand') // brand, name, legited_at, sku
             {
               user?.description && <><p className='user-about'>O mnie:</p> <p>{user?.description}</p></>
             }
-            <ProfileTabs userItemsList={itemsData} comments={commentsData}/>
+            <ProfileTabs userItemsList={itemsData} comments={commentsData} changeSort={changeSort}/>
           </div> 
             )
             :

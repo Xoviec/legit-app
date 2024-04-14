@@ -52,8 +52,8 @@ export const ProfileTabs = memo((props) => {
       props.handleAddComment(e)
       textareaRef.current.value = ''
     }
-
   }
+
 
   return(
     <Tabs.Root className="TabsRoot" defaultValue="tab1">
@@ -78,7 +78,8 @@ export const ProfileTabs = memo((props) => {
         pauseOnHover
         theme="light"
       />       
-      <SortMenu/>
+      <SortMenu changeSort={props.changeSort}/>
+
           <div className="items-container">
               {
                 props?.userItemsList?.map((item)=>(
