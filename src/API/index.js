@@ -317,18 +317,8 @@ app.get('/user-items/:nickname', async function(req, res) {
 
     const isAsending = (order==='asc')
 
-
-    console.log("sprawdzanko", sort)
-    console.log('jest?', isAsending)
-
     let itemsData = [];
-
-
-    // console.log("próba", ss)
-
     const viewerID = req.headers.viewer;
-
-
 
     try {
         const { data: userItemsData, error: userItemsError } = await supabase
@@ -341,9 +331,6 @@ app.get('/user-items/:nickname', async function(req, res) {
         }
 
         const itemsOwner = userItemsData[0]?.id
-
-
-
             const {data, error} = (itemsOwner===viewerID) ? 
                 await supabase
                     .from('legited_items')
@@ -384,8 +371,6 @@ app.get('/user-items/:nickname', async function(req, res) {
     
     const updatedItemsData = await fetchAllItemData(itemsData);
 
-
-
     itemsData = itemsData.map((item, index) => ({
         ...item,
         name: updatedItemsData[index].name,
@@ -394,8 +379,8 @@ app.get('/user-items/:nickname', async function(req, res) {
         image: updatedItemsData[index].image,
     }))
     .sort((a, b) => {
-        if (a[sort].toLowerCase() < b[sort].toLowerCase()) return -1;
-        if (a[sort].toLowerCase() > b[sort].toLowerCase()) return 1;
+        if (a[sort].toLowerCase() < b[sort].toLowerCase()) return isAsending ? -1 : 1;
+        if (a[sort].toLowerCase() > b[sort].toLowerCase()) return isAsending ? 1 : -1;
         return 0;
       });
 
