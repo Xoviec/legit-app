@@ -78,7 +78,7 @@ export const ProfileTabs = memo((props) => {
         pauseOnHover
         theme="light"
       />       
-      <SortMenu changeSort={props.changeSort} sort={props.sort}/>
+      <SortMenu changeSort={props.changeSort} sort={props.sort} order={props.order} handleOrderSwitch={props.handleOrderSwitch}/>
 
           <div className="items-container">
               {

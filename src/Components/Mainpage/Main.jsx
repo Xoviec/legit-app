@@ -32,6 +32,10 @@ const changeSort = (i) =>{
   setSort(i)
 }
 
+const handleOrderSwitch = () =>{
+  const newOrder = order === 'desc' ? 'asc' : 'desc'
+  setOrder(newOrder)
+}
 
   const user = useUser()
 
@@ -51,7 +55,7 @@ const changeSort = (i) =>{
     error: itemsError,
     data: itemsData,
   } = useQuery({
-    queryKey: ['items',nickNameFromLocalStorage, sort],
+    queryKey: ['items',nickNameFromLocalStorage, sort, order],
     queryFn: getItems,
     enabled: !!user
   })
@@ -91,7 +95,7 @@ const changeSort = (i) =>{
             {
               user?.description && <><p className='user-about'>O mnie:</p> <p>{user?.description}</p></>
             }
-            <ProfileTabs userItemsList={itemsData} comments={commentsData} changeSort={changeSort} sort={sort}/>
+            <ProfileTabs userItemsList={itemsData} comments={commentsData} changeSort={changeSort} sort={sort} order={order} handleOrderSwitch={handleOrderSwitch}/>
           </div> 
             )
             :

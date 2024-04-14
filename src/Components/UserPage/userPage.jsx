@@ -31,14 +31,19 @@ export const UserPage = (key) =>{
     const[commentsList, setCommentsList] = useState()
     const[userNotFound, setUserNotFound] = useState(false)
     const[sort, setSort] = useState('brand') // brand, name, legited_at, sku
-
+    const[order, setOrder] = useState('asc')
 
     const session = useSession()
     const user = useUser()
 
     const changeSort = (i) =>{
         setSort(i)
-      }
+    }
+
+    const handleOrderSwitch = () =>{
+        const newOrder = order === 'desc' ? 'asc' : 'desc'
+        setOrder(newOrder)
+    }
 
       const handleDeleteComment = async ({event, id}) =>{
         const reqData = {
@@ -153,7 +158,7 @@ export const UserPage = (key) =>{
         error: itemsError,
         data: itemsData,
       } = useQuery({
-        queryKey: ['items', usernameFromPath, sort],
+        queryKey: ['items', usernameFromPath, sort, order],
         queryFn: getItems,
       })
 
@@ -204,7 +209,7 @@ export const UserPage = (key) =>{
                     }
                     {
                         !userNotFound &&
-                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData} changeSort={changeSort} sort={sort}/>
+                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData} changeSort={changeSort} sort={sort} order={order} handleOrderSwitch={handleOrderSwitch}/>
                     }
                 </div>
         </>
