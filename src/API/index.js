@@ -309,8 +309,22 @@ app.get('/admin-access', async function (req, res){
 
 // przedmioty uzytkownika
 app.get('/user-items/:nickname', async function(req, res) {
+
+
     const { nickname } = req.params;
+    const { order, sort='name' } = req.query
+
+
+    const isAsending = (order==='asc')
+
+
+    console.log("sprawdzanko", sort)
+    console.log('jest?', isAsending)
+
     let itemsData = [];
+
+
+    // console.log("próba", ss)
 
     const viewerID = req.headers.viewer;
 
@@ -378,10 +392,15 @@ app.get('/user-items/:nickname', async function(req, res) {
         brand: updatedItemsData[index].brand,
         sku: updatedItemsData[index].sku,
         image: updatedItemsData[index].image,
+    }))
+    .sort((a, b) => {
+        if (a[sort].toLowerCase() < b[sort].toLowerCase()) return -1;
+        if (a[sort].toLowerCase() > b[sort].toLowerCase()) return 1;
+        return 0;
+      });
 
-    }));
-        console.log(itemsData)
-        res.status(200).json(itemsData);
+    res.status(200).json(itemsData);
+
     } catch (error) {
         console.error(error);
         res.status(500).send('Wystąpił błąd podczas pobierania danych użytkownika.');
@@ -599,56 +618,46 @@ app.get('/legited-items', async function (req, res){
                 res.sendStatus(400)
                 
             }else{
+                    data?.map(async (data) => {
+                        if (data.owners_history.length > 1) {
+                            await Promise.all(data.owners_history.reverse().map(async (user) => { //data.owners_history.slice(0, -1).map było jeśli chcemy wyjebać tego najnowszego, ale lepiej zostawić bo widać date od kiedy jest ownerem
+                                const { data: userData, error: userError } = await supabase
+                                    .from('users')
+                                    .select('nickname')
+                                    .eq('id', user.ownerID)
 
-
-
-            data?.map(async (data) => {
-                if (data.owners_history.length > 1) {
-                    await Promise.all(data.owners_history.reverse().map(async (user) => { //data.owners_history.slice(0, -1).map było jeśli chcemy wyjebać tego najnowszego, ale lepiej zostawić bo widać date od kiedy jest ownerem
+                                user.ownerID=userData[0]?.nickname
+                            }));
+                        }
+                    });
+                    
+                    const fullData = await Promise.all(data?.map( async(item, i) =>{
                         const { data: userData, error: userError } = await supabase
                             .from('users')
                             .select('nickname')
-                            .eq('id', user.ownerID)
+                            .eq('id', item.current_owner)
 
-                        user.ownerID=userData[0]?.nickname
-                    }));
+                        const { data: itemData, error: itemError } = await supabase
+                            .from('items')
+                            .select('name')
+                            .eq('id', item.og_item_id)
+
+                        return{
+                            ...item,
+                            current_owner_nickname: userData[0].nickname,
+                            item_name: itemData[0].name
+                        }
+
+                    }))
+
+                    const response = {
+                        data: fullData,
+                        dataLength: count,
+                        pageLimit: pageLimit
+                    }
+
+                    res.status(200).send(response)
                 }
-            });
-            
-            
-
-
-            const fullData = await Promise.all(data?.map( async(item, i) =>{
-                const { data: userData, error: userError } = await supabase
-                    .from('users')
-                    .select('nickname')
-                    .eq('id', item.current_owner)
-
-                const { data: itemData, error: itemError } = await supabase
-                    .from('items')
-                    .select('name')
-                    .eq('id', item.og_item_id)
-
-                return{
-                    ...item,
-                    current_owner_nickname: userData[0].nickname,
-                    item_name: itemData[0].name
-                }
-
-            }))
-
-
-
-
-            const response = {
-                data: fullData,
-                dataLength: count,
-                pageLimit: pageLimit
-            }
-
-
-        res.status(200).send(response)
-    }
     
     }catch(err){
         console.log(err)
