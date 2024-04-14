@@ -144,7 +144,7 @@ export const UserPage = (key) =>{
 
     const getItems = async (nickname) => {
 
-        return await fetch(`${API}/user-items/${usernameFromPath}?sort=${sort}`,{
+        return await fetch(`${API}/user-items/${usernameFromPath}?sort=${sort}&order=${order}`,{
             method: 'GET',
             headers:{
                 viewer: user.id
