@@ -78,8 +78,6 @@ export const ProfileTabs = memo((props) => {
         pauseOnHover
         theme="light"
       />       
-
-
       <SortMenu/>
           <div className="items-container">
               {
