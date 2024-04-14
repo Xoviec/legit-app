@@ -36,7 +36,9 @@ export const UserPage = (key) =>{
     const session = useSession()
     const user = useUser()
 
-
+    const changeSort = (i) =>{
+        setSort(i)
+      }
 
       const handleDeleteComment = async ({event, id}) =>{
         const reqData = {
@@ -180,8 +182,6 @@ export const UserPage = (key) =>{
 
 
 
-    console.log('dupa', `${API}/user-items/${usernameFromPath}?sort=${sort}`)
-    
     return(
         <>
                 <div className="profile-container">
@@ -204,7 +204,7 @@ export const UserPage = (key) =>{
                     }
                     {
                         !userNotFound &&
-                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData} />
+                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData} changeSort={changeSort} sort={sort}/>
                     }
                 </div>
         </>

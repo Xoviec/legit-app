@@ -5,7 +5,7 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons
 import './SortMenu.css';
 
 
-export const SortMenu = ({changeSort}) =>{
+export const SortMenu = ({changeSort, sort}) =>{
 
 
 
@@ -16,7 +16,7 @@ export const SortMenu = ({changeSort}) =>{
     return(
 
         <div className="sort-menu">
-            <Select.Root defaultValue="name" onValueChange={handleChangeSort}>
+            <Select.Root defaultValue={sort} onValueChange={handleChangeSort}>
                 <Select.Trigger className="SelectTrigger" aria-label="Sorting">
                 <Select.Value placeholder="Sortuj" />
                 <Select.Icon className="SelectIcon">

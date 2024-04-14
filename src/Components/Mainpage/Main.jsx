@@ -91,7 +91,7 @@ const changeSort = (i) =>{
             {
               user?.description && <><p className='user-about'>O mnie:</p> <p>{user?.description}</p></>
             }
-            <ProfileTabs userItemsList={itemsData} comments={commentsData} changeSort={changeSort}/>
+            <ProfileTabs userItemsList={itemsData} comments={commentsData} changeSort={changeSort} sort={sort}/>
           </div> 
             )
             :
