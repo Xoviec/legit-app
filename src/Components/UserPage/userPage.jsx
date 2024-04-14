@@ -30,6 +30,7 @@ export const UserPage = (key) =>{
 
     const[commentsList, setCommentsList] = useState()
     const[userNotFound, setUserNotFound] = useState(false)
+    const[sort, setSort] = useState('brand') // brand, name, legited_at, sku
 
 
     const session = useSession()
@@ -136,7 +137,7 @@ export const UserPage = (key) =>{
 
     const getItems = async (nickname) => {
 
-        return await fetch(`${API}/user-items/${usernameFromPath}`,{
+        return await fetch(`${API}/user-items/${usernameFromPath}?sort=${sort}`,{
             method: 'GET',
             headers:{
                 viewer: user.id
@@ -179,7 +180,7 @@ export const UserPage = (key) =>{
 
 
 
-    
+    console.log('dupa', `${API}/user-items/${usernameFromPath}?sort=${sort}`)
     
     return(
         <>
@@ -203,7 +204,7 @@ export const UserPage = (key) =>{
                     }
                     {
                         !userNotFound &&
-                        <ProfileTabs  handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData}/>
+                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData}/>
                     }
                 </div>
         </>

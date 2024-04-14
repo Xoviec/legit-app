@@ -24,12 +24,15 @@ const path = location.pathname
 
 const API = import.meta.env.VITE_API
 
+const [order, setOrder] = useState('asc')
+const [sort, setSort] = useState('brand') // brand, name, legited_at, sku
+
 
   const user = useUser()
 
 
   const getItems = async () => {
-    return await fetch(`${API}/user-items/${nickNameFromLocalStorage}`,{
+    return await fetch(`${API}/user-items/${nickNameFromLocalStorage}?sort=${sort}&order=${order}`,{
         method: 'GET',
         headers:{
             viewer: user.id

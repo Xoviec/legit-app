@@ -312,8 +312,10 @@ app.get('/user-items/:nickname', async function(req, res) {
 
 
     const { nickname } = req.params;
-    const { order, sort='name' } = req.query
+    const { order='asc', sort='name' } = req.query
 
+
+    console.log('sort', sort)
 
     const isAsending = (order==='asc')
 

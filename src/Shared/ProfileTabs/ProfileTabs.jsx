@@ -16,6 +16,7 @@ import { DisplayItemCard } from '../DisplayItemCard/DisplayItemCard';
 import { DisplayItemCardSkeleton } from '../Skeleton/DisplayCardSkeleton/DisplayItemCardSkeleton';
 import { memo } from 'react';
 import { useUser } from '../../Context/Context';
+import { SortMenu } from '../../Components/SortMenu/SortMenu';
 
 export const ProfileTabs = memo((props) => {
   
@@ -77,6 +78,9 @@ export const ProfileTabs = memo((props) => {
         pauseOnHover
         theme="light"
       />       
+
+
+      <SortMenu/>
           <div className="items-container">
               {
                 props?.userItemsList?.map((item)=>(
