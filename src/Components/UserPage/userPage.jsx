@@ -215,7 +215,6 @@ export const UserPage = (key) =>{
                         !userNotFound ?
                             <div className="user-info">
                                 <MyAvatar user={profileData}/>
-                                <p>{itemsCountRef.current}</p>
                                 <h1>{profileData?.nickname || <Skeleton width={200} className='skeleton' containerClassName="skeleton" /> } </h1>
                                 <Skeleton />
                             </div>
