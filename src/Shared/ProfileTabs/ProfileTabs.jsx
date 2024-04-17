@@ -23,6 +23,7 @@ export const ProfileTabs = memo((props) => {
   const location = useLocation();
   const textareaRef = useRef()
   const user = useUser()
+  
 
   const notify = (nickname) => toast.success(`Przedmiot przesłany pomyślnie do uzytkownika ${nickname}`, {
     position: "bottom-right",
@@ -53,7 +54,6 @@ export const ProfileTabs = memo((props) => {
       textareaRef.current.value = ''
     }
   }
-
 
   return(
     <Tabs.Root className="TabsRoot" defaultValue="tab1">

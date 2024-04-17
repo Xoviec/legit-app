@@ -102,11 +102,8 @@ export const ItemDialog = (props) =>{
     console.log(e)
   }
 
-  console.log('dupa')
-  console.log(user.id)
-  console.log(props?.item)
 
-  if(props?.item?.current_owner !== user.id ){
+  if(props?.item?.current_owner !== user?.id ){
     return(
       <>
       </>

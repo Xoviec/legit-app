@@ -11,6 +11,7 @@ import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query'
 import { useSession, useUser } from '../../Context/Context';
 import { v4 as uuidv4 } from 'uuid';
 import { HelmetSpecified } from '../Helmet/HelmetSpecified';
+import { useRef } from 'react';
 
 
 export const UserPage = (key) =>{
@@ -28,10 +29,13 @@ export const UserPage = (key) =>{
     const pathSegments = location.pathname.split('/');
     const usernameFromPath = pathSegments[2];
 
+    const itemsCountRef = useRef()
+
     const[commentsList, setCommentsList] = useState()
     const[userNotFound, setUserNotFound] = useState(false)
     const[sort, setSort] = useState('brand') // brand, name, legited_at, sku
     const[order, setOrder] = useState('asc')
+    
 
     const session = useSession()
     const user = useUser()
@@ -150,17 +154,31 @@ export const UserPage = (key) =>{
                 viewer: user.id
             }
         })
+
             .then(res=>res.json())
+
+
     };
 
     const {
         status: itemsStatus,
         error: itemsError,
         data: itemsData,
+        isSuccess: essa
       } = useQuery({
         queryKey: ['items', usernameFromPath, sort, order],
         queryFn: getItems,
       })
+
+      useEffect(() => {
+        if (itemsData) {
+            // Aktualizacja wartości odniesienia na podstawie danych itemsData
+            itemsCountRef.current = itemsData.length;
+            console.log(itemsCountRef.current);
+        }
+    }, [essa, itemsData]);
+    
+      
 
     const {
         status: profileStatus,
@@ -169,6 +187,7 @@ export const UserPage = (key) =>{
       } = useQuery({
         queryKey: ['profile', usernameFromPath],
         queryFn: getProfile,
+        
       })
 
       const {
@@ -187,6 +206,7 @@ export const UserPage = (key) =>{
 
 
 
+
     return(
         <>
                 <div className="profile-container">
@@ -195,6 +215,7 @@ export const UserPage = (key) =>{
                         !userNotFound ?
                             <div className="user-info">
                                 <MyAvatar user={profileData}/>
+                                <p>{itemsCountRef.current}</p>
                                 <h1>{profileData?.nickname || <Skeleton width={200} className='skeleton' containerClassName="skeleton" /> } </h1>
                                 <Skeleton />
                             </div>
@@ -209,7 +230,7 @@ export const UserPage = (key) =>{
                     }
                     {
                         !userNotFound &&
-                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData} changeSort={changeSort} sort={sort} order={order} handleOrderSwitch={handleOrderSwitch}/>
+                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData} changeSort={changeSort} sort={sort} order={order} handleOrderSwitch={handleOrderSwitch} itetmsCount={itemsCountRef}/>
                     }
                 </div>
         </>
