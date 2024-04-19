@@ -148,16 +148,13 @@ export const UserPage = (key) =>{
 
     const getItems = async (nickname) => {
 
-        return await fetch(`${API}/user-items/${usernameFromPath}?sort=${sort}&order=${order}`,{
+        return await fetch(`${API}/user-items/${usernameFromPath}`,{
             method: 'GET',
             headers:{
                 viewer: user.id
             }
         })
-
-            .then(res=>res.json())
-
-
+        .then(res=>res.json())
     };
 
     const {
@@ -166,7 +163,7 @@ export const UserPage = (key) =>{
         data: itemsData,
         isSuccess: essa
       } = useQuery({
-        queryKey: ['items', usernameFromPath, sort, order],
+        queryKey: ['items', usernameFromPath],
         queryFn: getItems,
       })
 
@@ -177,8 +174,6 @@ export const UserPage = (key) =>{
             console.log(itemsCountRef.current);
         }
     }, [essa, itemsData]);
-    
-      
 
     const {
         status: profileStatus,
@@ -203,9 +198,9 @@ export const UserPage = (key) =>{
       useEffect(()=>{
         setCommentsList(commentsData)
     }, [commentsData])
+ 
 
-
-
+    console.log(itemsData)
 
     return(
         <>
@@ -229,7 +224,15 @@ export const UserPage = (key) =>{
                     }
                     {
                         !userNotFound &&
-                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} userItemsList={itemsData} comments={commentsData} changeSort={changeSort} sort={sort} order={order} handleOrderSwitch={handleOrderSwitch} itetmsCount={itemsCountRef}/>
+                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} 
+                        
+                        userItemsList={
+                                itemsData?.sort((a,b)=>{
+                                    if (a[sort].toLowerCase() < b[sort].toLowerCase()) return (order === 'asc') ? -1 : 1;
+                                    if (a[sort].toLowerCase() > b[sort].toLowerCase()) return (order === 'asc') ? 1 : -1;
+                                })
+                        } 
+                        comments={commentsData} changeSort={changeSort} sort={sort} order={order} handleOrderSwitch={handleOrderSwitch} itetmsCount={itemsCountRef}/>
                     }
                 </div>
         </>

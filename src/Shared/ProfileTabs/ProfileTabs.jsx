@@ -100,10 +100,8 @@ export const ProfileTabs = memo((props) => {
 
           <div className='add-comment-section'> 
           <CommentsAvatar avatar={props?.viewer?.avatar} nickname={props?.viewer?.nickname}/>
-    
           <form className="add-comment-form" onSubmit={addComment}>
             <textarea ref={textareaRef} className='textarea-add-comment' placeholder='Dodaj komentarz' name='comment' type="text" />
-            {/* <input placeholder='ocena 1-5' type="text" min={0} max={5} /> */}
             <button type='submit'>Dodaj komentarz</button>
           </form>
           </div>

@@ -37,9 +37,11 @@ export const SortMenu = ({changeSort, sort, order, handleOrderSwitch}) =>{
                     <Select.Viewport className="SelectViewport">
                     <Select.Group>
                         <Select.Label className="SelectLabel">Sortowanie</Select.Label>
-                        <SelectItem value="name">Name</SelectItem>
-                        <SelectItem value="brand">Brand</SelectItem>
-                        <SelectItem value="squ">SQU</SelectItem>
+                        <SelectItem value="name">Nazwa</SelectItem>
+                        <SelectItem value="brand">Marka</SelectItem>
+                        <SelectItem value="sku">SKU</SelectItem>
+                        <SelectItem value="legited_at">Data rejestracji</SelectItem>
+
                     </Select.Group>
                     </Select.Viewport>
                     <Select.ScrollDownButton className="SelectScrollButton">
