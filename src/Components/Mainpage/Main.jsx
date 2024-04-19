@@ -41,7 +41,7 @@ const handleOrderSwitch = () =>{
 
 
   const getItems = async () => {
-    return await fetch(`${API}/user-items/${nickNameFromLocalStorage}?sort=${sort}&order=${order}`,{
+    return await fetch(`${API}/user-items/${nickNameFromLocalStorage}`,{
         method: 'GET',
         headers:{
             viewer: user.id
@@ -55,7 +55,7 @@ const handleOrderSwitch = () =>{
     error: itemsError,
     data: itemsData,
   } = useQuery({
-    queryKey: ['items',nickNameFromLocalStorage, sort, order],
+    queryKey: ['items',nickNameFromLocalStorage],
     queryFn: getItems,
     enabled: !!user
   })
@@ -95,7 +95,19 @@ const handleOrderSwitch = () =>{
             {
               user?.description && <><p className='user-about'>O mnie:</p> <p>{user?.description}</p></>
             }
-            <ProfileTabs userItemsList={itemsData} comments={commentsData} changeSort={changeSort} sort={sort} order={order} handleOrderSwitch={handleOrderSwitch}/>
+            <ProfileTabs 
+              userItemsList={
+                  itemsData?.sort((a,b)=>{
+                      if (a[sort].toLowerCase() < b[sort].toLowerCase()) return (order === 'asc') ? -1 : 1;
+                      if (a[sort].toLowerCase() > b[sort].toLowerCase()) return (order === 'asc') ? 1 : -1;
+                  })
+                } 
+              comments={commentsData}
+              changeSort={changeSort}
+              sort={sort}
+              order={order}
+              handleOrderSwitch={handleOrderSwitch}
+            />
           </div> 
             )
             :
