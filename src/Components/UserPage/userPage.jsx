@@ -8,7 +8,7 @@ import { MyAvatar } from '../../Shared/Avatar/Avatar';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query' 
-import { useSession, useUser } from '../../Context/Context';
+import { useItemsSearch, useSession, useUser } from '../../Context/Context';
 import { v4 as uuidv4 } from 'uuid';
 import { HelmetSpecified } from '../Helmet/HelmetSpecified';
 import { useRef } from 'react';
@@ -24,6 +24,7 @@ export const UserPage = (key) =>{
 
     const API = import.meta.env.VITE_API
     const { nickname } = useParams();
+    const itemsSearch = useItemsSearch()
 
     const location = useLocation();
     const pathSegments = location.pathname.split('/');
@@ -233,6 +234,7 @@ export const UserPage = (key) =>{
                                         if (a[sort].toLowerCase() < b[sort].toLowerCase()) return (order === 'asc') ? -1 : 1;
                                         if (a[sort].toLowerCase() > b[sort].toLowerCase()) return (order === 'asc') ? 1 : -1;
                                     })
+                                    .filter((item)=>item.name.toLowerCase().includes(itemsSearch))
                             } 
                             comments={commentsData}
                             changeSort={changeSort}

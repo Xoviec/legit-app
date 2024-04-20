@@ -17,6 +17,10 @@ export const useDupaUpdate = () =>{
     return useContext(UserSessionUpdateContext)
 }
 
+
+
+
+
 export const useUser = () =>{
     const { user } = useContext(UserSessionContext);
     return user
@@ -32,6 +36,16 @@ export const useAdmin = () =>{
     return admin
 }
 
+export const useItemsSearch = () =>{
+    const { itemsSearch } = useContext(UserSessionContext)
+    return itemsSearch
+}
+
+export const useItemsSearchUpdate = () =>{
+    return useContext(UserSessionUpdateContext)
+}
+
+
 
 export const UserSessionProvider = ({children}) =>{
 
@@ -45,6 +59,11 @@ export const UserSessionProvider = ({children}) =>{
 
     const [dupa, setDupa] = useState(true)
     const [essa, setEssa] = useState('uuu sigma')
+    const [itemsSearch, setItemsSearch] = useState('')
+
+    const handleChangeItemsSearch = (newVal) =>{
+        setItemsSearch(newVal)
+    }
 
     const handleChangeDupa = () =>{
         setDupa(false)
@@ -101,8 +120,8 @@ export const UserSessionProvider = ({children}) =>{
     }
 
     return(
-        <UserSessionContext.Provider value={{user: user, session: session, admin: admin}}>
-            <UserSessionUpdateContext.Provider value={handleChangeDupa}>
+        <UserSessionContext.Provider value={{user: user, session: session, admin: admin, itemsSearch: itemsSearch}}>
+            <UserSessionUpdateContext.Provider value={{handleChangeDupa, handleChangeItemsSearch}}>
                 {children}
             </UserSessionUpdateContext.Provider>
         </UserSessionContext.Provider>

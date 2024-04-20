@@ -81,8 +81,6 @@ export const ItemDialog = (props) =>{
         
     }
   }
-  console.log(props.item)
-
   const handlePrivateChange = async (e) =>{
 
     setChecked((prev)=>!prev)

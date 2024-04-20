@@ -3,6 +3,7 @@ import * as Select from '@radix-ui/react-select';
 import classnames from 'classnames';
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import './SortMenu.css';
+import { useItemsSearch, useItemsSearchUpdate } from "../../Context/Context";
 
 
 export const SortMenu = ({changeSort, sort, order, handleOrderSwitch, changeSetSearchItem}) =>{
@@ -13,10 +14,21 @@ export const SortMenu = ({changeSort, sort, order, handleOrderSwitch, changeSetS
         changeSort(e)
     }
 
+    const itemsSearch = useItemsSearch()
+
+
+    const { handleChangeItemsSearch } = useItemsSearchUpdate();
+
+    // Przykładowe zdarzenie, które zmienia wartość itemsSearch
+    const handleSearchChange = (e) => {
+      // Wywołaj funkcję handleChangeItemsSearch i przekaż nową wartość
+      handleChangeItemsSearch(e.target.value);
+    };
+
     return(
 
         <div className="sort-menu">
-          <input type="text" placeholder="Wyszukaj" onChange={changeSetSearchItem}/>
+          <input value={itemsSearch} type="text" placeholder="Wyszukaj" onChange={handleSearchChange}/>
             <button className='order-sort'
             onClick={handleOrderSwitch}
             >

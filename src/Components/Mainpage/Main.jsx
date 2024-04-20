@@ -8,7 +8,7 @@ import { MainNotLogged } from '../MainPageNotLogged/MainNotLogged';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useQuery } from '@tanstack/react-query' 
-import { useUser } from '../../Context/Context';
+import { useItemsSearch, useUser } from '../../Context/Context';
 import { HelmetProvider } from '../Helmet/Helmet';
 
 
@@ -46,6 +46,7 @@ const handleOrderSwitch = () =>{
 }
 
   const user = useUser()
+  const itemsSearch = useItemsSearch()
 
 
   const getItems = async () => {
@@ -109,7 +110,7 @@ const handleOrderSwitch = () =>{
                       if (a[sort].toLowerCase() < b[sort].toLowerCase()) return (order === 'asc') ? -1 : 1;
                       if (a[sort].toLowerCase() > b[sort].toLowerCase()) return (order === 'asc') ? 1 : -1;
                   })
-                  .filter((item)=>item.name.toLowerCase().includes(searchItem))
+                  .filter((item)=>item.name.toLowerCase().includes(itemsSearch))
                 } 
               comments={commentsData}
               changeSort={changeSort}

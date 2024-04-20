@@ -27,6 +27,7 @@ import { HelmetProvider } from './Components/Helmet/Helmet'
 import { HowItWorks } from './Components/HowItWorks/HowItWorks'
 import { Recovery } from './Components/Recovery/Recovery'
 import { ForgotPassword } from './Components/Forgot Password/ForgotPassword'
+import { useItemsSearchUpdate } from './Context/Context'
 
 
 function App() {
@@ -38,6 +39,7 @@ function App() {
 
 
   const location = useLocation();
+  const { handleChangeItemsSearch } = useItemsSearchUpdate()
 
   const myPath = location.pathname
   const [count, setCount] = useState(0)
@@ -49,7 +51,7 @@ function App() {
 
   useEffect(()=>{
 
-
+    handleChangeItemsSearch('')
     const item = JSON.parse(localStorage.getItem("sb-bpkpqswpimtoshzxozch-auth-token"));
     const nameFromLocalStorage = item?.user.user_metadata.full_name
 
