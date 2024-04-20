@@ -224,15 +224,22 @@ export const UserPage = (key) =>{
                     }
                     {
                         !userNotFound &&
-                        <ProfileTabs handleDeleteComment={handleMutateCommentDelete} handleAddComment={handleMutateComment} viewer={user} 
-                        
-                        userItemsList={
-                                itemsData?.sort((a,b)=>{
-                                    if (a[sort].toLowerCase() < b[sort].toLowerCase()) return (order === 'asc') ? -1 : 1;
-                                    if (a[sort].toLowerCase() > b[sort].toLowerCase()) return (order === 'asc') ? 1 : -1;
-                                })
-                        } 
-                        comments={commentsData} changeSort={changeSort} sort={sort} order={order} handleOrderSwitch={handleOrderSwitch} itetmsCount={itemsCountRef}/>
+                        <ProfileTabs 
+                            handleDeleteComment={handleMutateCommentDelete}
+                            handleAddComment={handleMutateComment}
+                            viewer={user} 
+                            userItemsList={
+                                    itemsData?.sort((a,b)=>{
+                                        if (a[sort].toLowerCase() < b[sort].toLowerCase()) return (order === 'asc') ? -1 : 1;
+                                        if (a[sort].toLowerCase() > b[sort].toLowerCase()) return (order === 'asc') ? 1 : -1;
+                                    })
+                            } 
+                            comments={commentsData}
+                            changeSort={changeSort}
+                            sort={sort} order={order}
+                            handleOrderSwitch={handleOrderSwitch}
+                            itetmsCount={itemsCountRef}
+                        />
                     }
                 </div>
         </>

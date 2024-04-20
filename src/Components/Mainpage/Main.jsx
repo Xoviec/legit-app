@@ -26,7 +26,15 @@ const API = import.meta.env.VITE_API
 
 const [order, setOrder] = useState('asc')
 const [sort, setSort] = useState('brand') // brand, name, legited_at, sku
+const [searchItem, setSearchItem] = useState('')
 
+
+const changeSetSearchItem = (e) =>{
+
+  console.log(e.target.value)
+  setSearchItem(e.target.value)
+
+}
 
 const changeSort = (i) =>{
   setSort(i)
@@ -101,12 +109,14 @@ const handleOrderSwitch = () =>{
                       if (a[sort].toLowerCase() < b[sort].toLowerCase()) return (order === 'asc') ? -1 : 1;
                       if (a[sort].toLowerCase() > b[sort].toLowerCase()) return (order === 'asc') ? 1 : -1;
                   })
+                  .filter((item)=>item.name.toLowerCase().includes(searchItem))
                 } 
               comments={commentsData}
               changeSort={changeSort}
               sort={sort}
               order={order}
               handleOrderSwitch={handleOrderSwitch}
+              changeSetSearchItem={changeSetSearchItem}
             />
           </div> 
             )

@@ -5,7 +5,7 @@ import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons
 import './SortMenu.css';
 
 
-export const SortMenu = ({changeSort, sort, order, handleOrderSwitch}) =>{
+export const SortMenu = ({changeSort, sort, order, handleOrderSwitch, changeSetSearchItem}) =>{
 
 
 
@@ -16,10 +16,11 @@ export const SortMenu = ({changeSort, sort, order, handleOrderSwitch}) =>{
     return(
 
         <div className="sort-menu">
+          <input type="text" placeholder="Wyszukaj" onChange={changeSetSearchItem}/>
             <button className='order-sort'
             onClick={handleOrderSwitch}
             >
-              {order==='asc' ? 'Ascending' : 'Descending'}
+              {order==='asc' ? 'Rosnąco' : 'Malejąco'}
               {order==='asc' ? <ChevronUpIcon /> : <ChevronDownIcon />}
             </button>
             <Select.Root defaultValue={sort} onValueChange={handleChangeSort}>

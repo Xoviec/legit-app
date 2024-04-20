@@ -140,6 +140,19 @@ width: 6rem;
 }
 
 .order-sort:hover{
-background-color: var(--main-text-color);
-color: var(--main-bg-color);
+    background-color: var(--main-text-color);
+    color: var(--main-bg-color);
+}
+
+
+.sort-menu input{
+    background-color: #fff;
+    border: 1px solid var(--secondary-bg-color);
+    height: 2rem;
+    padding: 0 0.5rem 0 0.5rem;
+    font-size: 13px;
+}
+
+.sort-menu input::placeholder{
+    font-size: 13px;
 }
