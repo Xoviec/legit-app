@@ -6,8 +6,7 @@ import './SortMenu.css';
 import { useItemsSearch, useItemsSearchUpdate } from "../../Context/Context";
 
 
-export const SortMenu = ({changeSort, sort, order, handleOrderSwitch, changeSetSearchItem}) =>{
-
+export const SortMenu = ({changeSort, sort, order, handleOrderSwitch }) =>{
 
 
     const handleChangeSort = (e) =>{
@@ -16,12 +15,9 @@ export const SortMenu = ({changeSort, sort, order, handleOrderSwitch, changeSetS
 
     const itemsSearch = useItemsSearch()
 
-
     const { handleChangeItemsSearch } = useItemsSearchUpdate();
 
-    // Przykładowe zdarzenie, które zmienia wartość itemsSearch
     const handleSearchChange = (e) => {
-      // Wywołaj funkcję handleChangeItemsSearch i przekaż nową wartość
       handleChangeItemsSearch(e.target.value);
     };
 

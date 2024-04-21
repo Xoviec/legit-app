@@ -183,8 +183,16 @@ export const UserPage = (key) =>{
       } = useQuery({
         queryKey: ['profile', usernameFromPath],
         queryFn: getProfile,
-        
       })
+
+
+      useEffect(()=>{
+
+        if(profileError){
+            setUserNotFound(true)
+        }
+      }, [profileError])
+
 
       const {
         status: commentsStatus,
