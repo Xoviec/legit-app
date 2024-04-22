@@ -134,6 +134,8 @@ export const UserPage = (key) =>{
         return await fetch(`${API}/nicknames/${usernameFromPath}`)
             .then(res=>res.json())
             .then(res=>res[0])
+
+            
     }
 
     const getComments = async () =>{
@@ -183,15 +185,18 @@ export const UserPage = (key) =>{
       } = useQuery({
         queryKey: ['profile', usernameFromPath],
         queryFn: getProfile,
+    
       })
 
 
-      useEffect(()=>{
 
-        if(profileError){
-            setUserNotFound(true)
-        }
-      }, [profileError])
+    //   console.log(profileStatus)
+    //   useEffect(()=>{
+
+    //     if(profileError){
+    //         setUserNotFound(true)
+    //     }
+    //   }, [profileError])
 
 
       const {
@@ -216,7 +221,7 @@ export const UserPage = (key) =>{
                 <div className="profile-container">
                     <HelmetSpecified nickname={profileData?.nickname} desc={`${profileData?.nickname}, ${profileData?.description}`}/>
                     {
-                        !userNotFound ?
+                        !(profileStatus==='error') ?
                             <div className="user-info">
                                 <MyAvatar user={profileData}/>
                                 <h1>{profileData?.nickname || <Skeleton width={200} className='skeleton' containerClassName="skeleton" /> } </h1>
@@ -232,7 +237,7 @@ export const UserPage = (key) =>{
                         profileData?.description && <><p className='user-about'>O mnie:</p> <p>{profileData?.description}</p></>
                     }
                     {
-                        !userNotFound &&
+                        !(profileStatus==='error') ?
                         <ProfileTabs 
                             handleDeleteComment={handleMutateCommentDelete}
                             handleAddComment={handleMutateComment}
@@ -250,6 +255,8 @@ export const UserPage = (key) =>{
                             handleOrderSwitch={handleOrderSwitch}
                             itetmsCount={itemsCountRef}
                         />
+                        :
+                        null
                     }
                 </div>
         </>
