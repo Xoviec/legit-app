@@ -190,15 +190,6 @@ export const UserPage = (key) =>{
 
 
 
-    //   console.log(profileStatus)
-    //   useEffect(()=>{
-
-    //     if(profileError){
-    //         setUserNotFound(true)
-    //     }
-    //   }, [profileError])
-
-
       const {
         status: commentsStatus,
         error: commentsError,
