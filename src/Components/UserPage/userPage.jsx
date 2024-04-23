@@ -127,22 +127,16 @@ export const UserPage = (key) =>{
 
 
 
-
-
-
     const getProfile = async() =>{
         return await fetch(`${API}/nicknames/${usernameFromPath}`)
             .then(res=>res.json())
-            .then(res=>res[0])
-
-            
-    }
+            .then(res =>  res[0] ? res[0] : null);
+s        }
 
     const getComments = async () =>{
 
         const response = await fetch(`${API}/nicknames/${usernameFromPath}`);
         const data = await response.json();
-
 
         return await fetch(`${API}/get-comments/${data[0].id}`)
             .then(res=>res.json())
@@ -170,13 +164,7 @@ export const UserPage = (key) =>{
         queryFn: getItems,
       })
 
-      useEffect(() => {
-        if (itemsData) {
-            // Aktualizacja wartości odniesienia na podstawie danych itemsData
-            itemsCountRef.current = itemsData.length;
-            console.log(itemsCountRef.current);
-        }
-    }, [essa, itemsData]);
+
 
     const {
         status: profileStatus,
@@ -205,14 +193,13 @@ export const UserPage = (key) =>{
     }, [commentsData])
  
 
-    console.log(itemsData)
 
     return(
         <>
                 <div className="profile-container">
                     <HelmetSpecified nickname={profileData?.nickname} desc={`${profileData?.nickname}, ${profileData?.description}`}/>
                     {
-                        !(profileStatus==='error') ?
+                        !(profileData === null) ?
                             <div className="user-info">
                                 <MyAvatar user={profileData}/>
                                 <h1>{profileData?.nickname || <Skeleton width={200} className='skeleton' containerClassName="skeleton" /> } </h1>
@@ -228,7 +215,7 @@ export const UserPage = (key) =>{
                         profileData?.description && <><p className='user-about'>O mnie:</p> <p>{profileData?.description}</p></>
                     }
                     {
-                        !(profileStatus==='error') ?
+                        !(profileData === null) ?
                         <ProfileTabs 
                             handleDeleteComment={handleMutateCommentDelete}
                             handleAddComment={handleMutateComment}
