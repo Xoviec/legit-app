@@ -49,7 +49,7 @@ export const SortMenu = ({changeSort, sort, order, handleOrderSwitch }) =>{
                         <SelectItem value="name">Nazwa</SelectItem>
                         <SelectItem value="brand">Marka</SelectItem>
                         <SelectItem value="sku">SKU</SelectItem>
-                        <SelectItem value="legited_at">Data rejestracji</SelectItem>
+                        <SelectItem value="id">ID</SelectItem>
 
                     </Select.Group>
                     </Select.Viewport>

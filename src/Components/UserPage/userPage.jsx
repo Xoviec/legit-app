@@ -193,6 +193,7 @@ s        }
     }, [commentsData])
  
 
+    console.log(itemsData)
 
     return(
         <>
@@ -225,7 +226,7 @@ s        }
                                         if (a[sort].toLowerCase() < b[sort].toLowerCase()) return (order === 'asc') ? -1 : 1;
                                         if (a[sort].toLowerCase() > b[sort].toLowerCase()) return (order === 'asc') ? 1 : -1;
                                     })
-                                    .filter((item)=>item.name.toLowerCase().includes(itemsSearch))
+                                    .filter((item)=>item[sort].toLowerCase().includes(itemsSearch))
                             } 
                             comments={commentsData}
                             changeSort={changeSort}
