@@ -116,7 +116,8 @@ export const ItemDialog = (props) =>{
             <Dialog.Portal>
               <Dialog.Overlay className="DialogOverlay" />
               <Dialog.Content className="DialogContent">
-                <Dialog.Title className="DialogTitle">Zarządzaj</Dialog.Title>
+                <Dialog.Title className="DialogTitle">{props.item.name}</Dialog.Title>
+                <span className='item-id'> {props.item.id}</span>
                 <div className="privacy-row">
                     <Dialog.Description className="DialogDescription">
                       Ukryj przedmiot na profilu

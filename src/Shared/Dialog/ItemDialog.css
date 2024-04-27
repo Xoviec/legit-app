@@ -50,7 +50,11 @@ input {
   font-weight: 500;
   color: var(--mauve-12);
   font-size: 17px;
-  margin-bottom: 1.5rem;
+}
+
+.item-id{
+  font-size: 9px;
+  color: rgb(181, 181, 181);
 }
 
 .DialogDescription {
@@ -204,6 +208,7 @@ input {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 1.5rem;
   margin-bottom: 1rem;
 }
 

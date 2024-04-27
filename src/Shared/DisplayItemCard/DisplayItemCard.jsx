@@ -22,6 +22,7 @@ export const DisplayItemCard = ({item, notify, tradeError}) =>{
                 </div>
                 <p className='item-name'>{item.name}</p> 
                 <p className='item-registered'>Zarejestrowane <span className='register-date'>{item.legited_at.slice(0, 10).split('-').reverse().join('.')}</span></p>
+
             </div>
         )
 }
