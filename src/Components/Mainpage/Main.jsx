@@ -61,8 +61,10 @@ const handleOrderSwitch = () =>{
   })
 
   const getComments = async () =>{
-      return await fetch(`${API}/get-comments/${user.id}`)
-        .then(res=>res.json())
+
+    const data = await fetch(`${API}/get-comments/${user.id}`)
+    const res = data.json()
+      return res
   }
 
   const {

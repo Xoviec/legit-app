@@ -81,7 +81,7 @@ const isProfileRoute = () =>{
 
 <div className={ isProfileRoute() ? `central-page` :``}>
       <Routes>
-        <Route path="/" element={<Demo/>}/>
+        <Route path="/" element={<Mainpage/>}/>
         
         <Route path='/main' element={<Mainpage/>}/>
         <Route path="/users/:nickname" element={<UserPage/>} />
