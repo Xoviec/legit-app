@@ -13,7 +13,7 @@ export const WaitingForVerify = () =>{
     useEffect(()=>{
 
         if(!state){
-            navigate('/main',{replace:true})
+            navigate('/',{replace:true})
         }
 
     }, [])
