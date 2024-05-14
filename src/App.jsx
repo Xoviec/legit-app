@@ -44,7 +44,7 @@ function App() {
   const myPath = location.pathname
   const [count, setCount] = useState(0)
 
-  const excludedRoutes = ["/", "/login", "/register", "/adminpanel","/confirm", "/recovery", "/forgot-password"];
+  const excludedRoutes = ["", "/login", "/register", "/adminpanel","/confirm", "/recovery", "/forgot-password"];
   const userRoutes = "/Users"
 
 
@@ -64,7 +64,7 @@ function App() {
 
 
 const isProfileRoute = () =>{
-    return((location.pathname.toLowerCase().startsWith(("/Users").toLowerCase())||location.pathname.toLowerCase().startsWith(("/main").toLowerCase())))
+    return((location.pathname.toLowerCase().startsWith(("/Users").toLowerCase())||location.pathname.toLowerCase().startsWith(("/").toLowerCase())))
   
 }
 
