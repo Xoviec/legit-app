@@ -178,10 +178,7 @@ a:active {
   padding: 0 48px 0 48px;
   justify-content: center;
   z-index: 99;
-  /* margin-bottom: 2rem; */
-  /* max-height: calc(100svh - 7.5rem); */
-  /* margin-bottom: 5rem; */
-  /* height: 40rem; */
+
 }
 
 aside{
