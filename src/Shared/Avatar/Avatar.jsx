@@ -15,7 +15,7 @@ export const MyAvatar = (props) => {
         alt="Colm Tuite"
       />
       <Avatar.Fallback className="AvatarFallback" delayMs={0}>
-        {props?.user?.nickname[0]}
+        {props && props.users.nickname[0]}
       </Avatar.Fallback>
     </Avatar.Root>
 

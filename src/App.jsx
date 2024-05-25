@@ -64,7 +64,7 @@ function App() {
 
 
 const isProfileRoute = () =>{
-    return((location.pathname.toLowerCase().startsWith(("/Users").toLowerCase())||location.pathname.toLowerCase().startsWith(("/").toLowerCase())))
+    return((location.pathname.toLowerCase().startsWith(("/Users").toLowerCase())||location.pathname.toLowerCase() === (("/").toLowerCase())||location.pathname.toLowerCase() === (("/main").toLowerCase())))
   
 }
 
