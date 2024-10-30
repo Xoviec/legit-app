@@ -2,6 +2,7 @@ import { useContext, useState } from "react"
 import { createContext } from "react"
 import { supabase } from '../supabaseClient';
 import { useEffect } from "react";
+import axios from "axios";
 
 
 
@@ -45,6 +46,11 @@ export const useItemsSearchUpdate = () =>{
     return useContext(UserSessionUpdateContext)
 }
 
+export const useUserData = () =>{
+    const { userData } = useContext(UserSessionContext)
+    return userData
+ }
+
 
 
 export const UserSessionProvider = ({children}) =>{
@@ -60,6 +66,7 @@ export const UserSessionProvider = ({children}) =>{
     const [dupa, setDupa] = useState(true)
     const [essa, setEssa] = useState('uuu sigma')
     const [itemsSearch, setItemsSearch] = useState('')
+    const [userData, setUserData] = useState()
 
     const handleChangeItemsSearch = (newVal) =>{
         setItemsSearch(newVal)
@@ -69,9 +76,16 @@ export const UserSessionProvider = ({children}) =>{
         setDupa(false)
     }
 
+    const handleSetUserData = (data) =>{
+        setUserData(data)
+        localStorage.setItem("userData", JSON.stringify(data));
+    }
 
     useEffect(()=>{
         getUser()
+        const saved = localStorage.getItem("userData");
+        const initialValue = JSON.parse(saved);
+        setUserData(initialValue)
     }, [])
 
     const getUser = async () =>{
@@ -120,8 +134,8 @@ export const UserSessionProvider = ({children}) =>{
     }
 
     return(
-        <UserSessionContext.Provider value={{user: user, session: session, admin: admin, itemsSearch: itemsSearch}}>
-            <UserSessionUpdateContext.Provider value={{handleChangeDupa, handleChangeItemsSearch}}>
+        <UserSessionContext.Provider value={{user: user, session: session, admin: admin, itemsSearch: itemsSearch, userData}}>
+            <UserSessionUpdateContext.Provider value={{handleChangeDupa, handleChangeItemsSearch, handleSetUserData}}>
                 {children}
             </UserSessionUpdateContext.Provider>
         </UserSessionContext.Provider>

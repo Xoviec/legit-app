@@ -3,33 +3,27 @@ import * as Select from '@radix-ui/react-select';
 import classnames from 'classnames';
 import { CheckIcon, ChevronDownIcon, ChevronUpIcon } from '@radix-ui/react-icons';
 import './SortMenu.css';
-import { useItemsSearch, useItemsSearchUpdate } from "../../Context/Context";
+import { useItemsSearchUpdate } from "../../Context/Context";
+import { useSearchParams } from "react-router-dom";
 
 
 export const SortMenu = ({changeSort, sort, order, handleOrderSwitch }) =>{
-
 
     const handleChangeSort = (e) =>{
         changeSort(e)
     }
 
-    const itemsSearch = useItemsSearch()
-
     const { handleChangeItemsSearch } = useItemsSearchUpdate();
-
-    const handleSearchChange = (e) => {
-      handleChangeItemsSearch(e.target.value);
-    };
+    const [searchParams, setSearchParams]= useSearchParams({order:"asc", sortBy: "brand"})
 
     return(
 
         <div className="sort-menu">
-          <input value={itemsSearch} type="text" placeholder="Wyszukaj" onChange={handleSearchChange}/>
             <button className='order-sort'
             onClick={handleOrderSwitch}
             >
-              {order==='asc' ? 'Rosnąco' : 'Malejąco'}
-              {order==='asc' ? <ChevronUpIcon /> : <ChevronDownIcon />}
+              {searchParams.get("order")==='asc' ? 'Rosnąco' : 'Malejąco'}
+              {searchParams.get("order")==='asc' ? <ChevronUpIcon /> : <ChevronDownIcon />}
             </button>
             <Select.Root defaultValue={sort} onValueChange={handleChangeSort}>
                 <Select.Trigger className="SelectTrigger" aria-label="Sorting">

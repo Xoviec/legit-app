@@ -32,10 +32,10 @@ export const ItemDialog = (props) =>{
 
   const handleUpdateFoundUsers = async (e) =>{
     console.log(e.target.value)
-        const response = await fetch(`${API}/search-users?letters=${e.target.value}`);
+        const response = await fetch(`http://localhost:3030/searchUser/${e.target.value}`);
         const data = await response.json();
         console.log(data)
-        setFoundUsers(data)
+        setFoundUsers(data.users)
 
     try{
 
@@ -57,13 +57,16 @@ export const ItemDialog = (props) =>{
         
     const currentOwner = item.current_owner
 
-    if(item.id && currentOwner && newOwner?.id && newOwner?.id!==currentOwner){
+    console.log("KURWA", item.item_id)
+    console.log("dziwekzka", newOwner.id)
+
+    // if(item.id && currentOwner && newOwner?.id && newOwner?.id!==currentOwner){
         try{
-            await axios.post(`${API}/change-owner`, {
-                registerID: item.id,
-                currentOwner: currentOwner,
-                newOwner: newOwner.id,
-                verifyID: user.id
+            await axios.put(`http://localhost:3030/sendItem/${item.id}`, {
+                // registerID: item.id,
+                // currentOwner: currentOwner,
+                newOwnerId: newOwner.id,
+                // verifyID: user.id
             })
             .then(
               props.notify(newOwner.nickname),
@@ -74,12 +77,12 @@ export const ItemDialog = (props) =>{
             props.tradeError()
             console.log(error.response ? error.response.data.error : error)
         }
-    }
-    else{
-      props.tradeError()
-        console.log("coś poszło nie tak")
+    // }
+    // else{
+    //   props.tradeError()
+    //     console.log("coś poszło nie tak")
         
-    }
+    // }
   }
   const handlePrivateChange = async (e) =>{
 

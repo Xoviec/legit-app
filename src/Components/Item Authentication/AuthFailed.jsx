@@ -53,13 +53,6 @@ export const AuthFailed = (props) =>{
         return time;
     }
 
-
-
-    console.log('data', data)
-
-    console.log('itemdata', itemsData)
-
-
     return(
         <div className="certificate-page">
             <div className="item-auth-failed">

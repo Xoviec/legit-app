@@ -15,14 +15,16 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { DisplayItemCard } from '../DisplayItemCard/DisplayItemCard';
 import { DisplayItemCardSkeleton } from '../Skeleton/DisplayCardSkeleton/DisplayItemCardSkeleton';
 import { memo } from 'react';
-import { useUser } from '../../Context/Context';
+import { useUser, useUserData } from '../../Context/Context';
 import { SortMenu } from '../../Components/SortMenu/SortMenu';
 
 export const ProfileTabs = memo((props) => {
   
   const location = useLocation();
   const textareaRef = useRef()
-  const user = useUser()
+  // const user = useUser()
+  const user = useUserData()
+
   
 
   const notify = (nickname) => toast.success(`Przedmiot przesłany pomyślnie do uzytkownika ${nickname}`, {
@@ -54,15 +56,14 @@ export const ProfileTabs = memo((props) => {
       textareaRef.current.value = ''
     }
   }
-
   return(
     <Tabs.Root className="TabsRoot" defaultValue="tab1">
       <Tabs.List className="TabsList" aria-label="Manage your account">
         <Tabs.Trigger className="TabsTrigger" value="tab1">
-          Przedmioty ({props?.userItemsList?.length})
+          Przedmioty ({props?.userItemsList?.total_count})
         </Tabs.Trigger>
         <Tabs.Trigger className="TabsTrigger" value="tab2">
-          Komentarze ({props?.comments?.length})
+          Komentarze ({props?.comments?.total_count})
         </Tabs.Trigger>
       </Tabs.List>
       <Tabs.Content className="TabsContent" value="tab1">
@@ -82,7 +83,7 @@ export const ProfileTabs = memo((props) => {
 
           <div className="items-container">
               {
-                props?.userItemsList?.map((item)=>(
+                props?.userItemsList?.items?.map((item)=>(
                   <DisplayItemCard key={item.id} item={item} notify={notify} tradeError={tradeError}/>
                 ))
                 ||
@@ -114,14 +115,14 @@ export const ProfileTabs = memo((props) => {
         }
         
         {
-          props?.comments?.map((comment)=>(
+          props?.comments?.comments?.map((comment)=>(
               <div key={comment.id} className='comment-tab'>
                 <div className="comment-data">
                   <CommentsAvatar avatar={comment.avatar} nickname={comment.comment_by_nickname}/>
                     <div className="comment-right-side">
                     <div className="comment-info">
-                      <Link to={`/Users/${comment.comment_by_nickname}`}>
-                          <p className='comment-author'>{comment.comment_by_nickname}</p>
+                      <Link to={`/Users/${comment.nickname}`}>
+                          <p className='comment-author'>{comment.nickname}</p>
                         </Link>
                           <div className="comment-date">
                             {

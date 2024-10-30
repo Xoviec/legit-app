@@ -27,7 +27,7 @@ import { HelmetProvider } from './Components/Helmet/Helmet'
 import { HowItWorks } from './Components/HowItWorks/HowItWorks'
 import { Recovery } from './Components/Recovery/Recovery'
 import { ForgotPassword } from './Components/Forgot Password/ForgotPassword'
-import { useItemsSearchUpdate } from './Context/Context'
+import { useItemsSearchUpdate, useUserData } from './Context/Context'
 
 
 function App() {
@@ -46,17 +46,15 @@ function App() {
 
   const excludedRoutes = ["", "/login", "/register", "/adminpanel","/confirm", "/recovery", "/forgot-password"];
   const userRoutes = "/Users"
-
+  const userData = useUserData()
 
 
   useEffect(()=>{
 
     handleChangeItemsSearch('')
     const item = JSON.parse(localStorage.getItem("sb-bpkpqswpimtoshzxozch-auth-token"));
-    const nameFromLocalStorage = item?.user.user_metadata.full_name
 
-
-    if(location.pathname.toLowerCase() === (`/Users/${nameFromLocalStorage}`).toLowerCase()){
+    if(location.pathname.toLowerCase() === (`/Users/${userData?.nickname}`).toLowerCase()){
         navigate("/main", { replace: true })
     }
 }, [myPath])
@@ -103,9 +101,9 @@ const isProfileRoute = () =>{
         <Route path='/recovery' element={<Recovery/>}/>
         <Route path='/forgot-password' element={<ForgotPassword/>}/>
 
-        <Route element={<NotLoggedCheck />}>
+        {/* <Route element={<NotLoggedCheck />}> */}
                 <Route path="/settings" element={<Settings/>}/>
-        </Route>
+        {/* </Route> */}
         <Route path="/how-it-works" element={<HowItWorks/>} />
 
         <Route path="/verify/:id" element={<LegitedItem/>} />

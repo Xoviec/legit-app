@@ -6,8 +6,8 @@ import { useEffect, useState } from 'react';
 import { CommentsAvatar } from '../../../Shared/Avatar/commentsAvatar';
 import { useRef } from 'react';
 import { useAdmin } from '../../../Context/Context';
-
-
+import { useUserData,UserSessionUpdateContext } from '../../../Context/Context';
+import { useContext } from 'react';
 
 
 export const Navbar = () =>{
@@ -15,6 +15,8 @@ export const Navbar = () =>{
     const location = useLocation();
     const navigate = useNavigate();
     const admin = useAdmin()
+    const userData = useUserData()
+    const {handleSetUserData} = useContext(UserSessionUpdateContext)
 
     const API = import.meta.env.VITE_API
 
@@ -24,17 +26,14 @@ export const Navbar = () =>{
     const searchRef = useRef();
 
     const logout = async()=>{
-        await supabase.auth.signOut()
+        handleSetUserData("")
         window.location.reload(true);
       }
-
-
     const handleUpdateFoundUsers = async (nickname) =>{
-        const response = await fetch(`${API}/search-users?letters=${nickname}`);
+        const response = await fetch(`http://localhost:3030/searchUser/${nickname}`);
         const data = await response.json();
 
-        console.log(data)
-        setFoundUsers(data)
+        setFoundUsers(data.users)
 
         try{
 
@@ -51,8 +50,6 @@ export const Navbar = () =>{
         );
         searchRef.current.value = ''
     }
-
-    const isLogged = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
 
     return(
         <nav>
@@ -75,14 +72,11 @@ export const Navbar = () =>{
                 foundUsers?.length > 0 && (
                     <div className="pre-list">
                     <div className="found-users">
-                        {foundUsers.map((user) => (
+                        {searchRef.current.value.length > 0 && foundUsers.map((user) => (
                             <button onClick={(()=>changeUserPage(user.nickname))} className='found-user' key={user.id}>
                                 <CommentsAvatar avatar={user.avatar} nickname={user.nickname}/>
                                 <p>{user.nickname}</p>
                             </button>
-
-                        // </Link>
-    
                         ))}
                     </div>
                     </div>
@@ -94,14 +88,14 @@ export const Navbar = () =>{
                 <div className="rest">
              
                 {
-                    isLogged ?
+                    userData ?
                     (
                         <>
                         {
-                            admin && 
+                            userData.accountType === "admin" && 
                             <Link to='/adminpanel'>
                                 <button className='btn-admin'>
-                                    Legited+
+                                    Admin panel
                                 </button>
                             </Link>
                         }
@@ -115,7 +109,6 @@ export const Navbar = () =>{
                     (
                         <>
                             <Link to='/login?activeTab=login'
-                            //  replace={false}
                              >
                                 <button className='btn-login'>
                                     Zaloguj się

@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 // import logo from '../../Legited logo.svg'
 import iphoneScreen from '../../assets/ip14pro.png'
 import './MainNotLogged.css'
+import { useDupa, useDupaUpdate } from '../../Context/Context';
 
 
 export const MainNotLogged = ({SoonText})=>{

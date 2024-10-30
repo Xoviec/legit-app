@@ -6,9 +6,6 @@ export const AuthPassed = ({data, authDate}) => {
 
     const {state} = useLocation();
 
-    console.log(state)
-
-
     const getDate = () =>{
         const a = new Date(authDate * 1);
         const months = ['Sty','Lut','Mrz','Kw','Maj','Cz','Lip','Sier','Wrz','Paź','Lis','Gr'];

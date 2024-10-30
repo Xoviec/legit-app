@@ -19,14 +19,6 @@ export const ForgotPassword = () =>{
     const [activeTab, setActiveTab] = useState('')
     const [loginError, setLoginError] = useState()
     const [sentLinkSuccesss, setSentLinkSuccess] = useState()
-
-
-
-
-    console.log('aktiw', activeTab)
-
-
-    
     const [formData, setFormData] = useState(
         {
             fullname: '',
@@ -36,25 +28,14 @@ export const ForgotPassword = () =>{
             loginPassword: ''
         }
     )
-
-
-
-    // Tutaj to normalnie ma byc pierowotnie
     const handleSubmitRegister = async (e) =>{
-
-        // e.preventDefault()
-        const redirectTo = 'https://legited.app/main'
         try{
             const { data, error } = await supabase.auth
                 .resetPasswordForEmail(formData.registerEmail)
-
-            
             if(!error){
                 setLoginError()
                 setSentLinkSuccess("Wysłano link do zresetowania hasła.")
-                // setSuccess('wysłano link do zresetowania hasła')
             }
-
             if (error) throw error
          }  catch(error){
             if(error.message === 'Unable to validate email address: invalid format'){
@@ -69,17 +50,12 @@ export const ForgotPassword = () =>{
     }
 
 
-    
-
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData((prevData) => ({
           ...prevData,
           [name]: value.replace(/\s+/g, '')
         }));
-    
-        console.log(formData)
       };
 
       const handleRegisterSubmit = (e) =>{
@@ -93,11 +69,6 @@ export const ForgotPassword = () =>{
           }
           e.preventDefault()
     }
-
-
-
-
-   
 
     return(
         <>

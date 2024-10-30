@@ -64,16 +64,9 @@ export const AdminPanel = () =>{
         });
 
         const getLegitedItems = async (nickname) => {
-          const response = await fetch(`${API}/legited-items?page=${legitedItemsListCurrentPage}`);
-          const responseData = await response.json();
-          setLegitedItemsListPageLimit(responseData.pageLimit)
-
-          responseData.data.map(item => {
-              item.legited_at = format(item.legited_at, "yyyy-MM-dd HH:mm:ss");
-              item.owners_history.forEach(previousOwnerItem => {
-                  previousOwnerItem.registerDate = format(previousOwnerItem.registerDate, "yyyy-MM-dd HH:mm:ss");
-              });
-          });
+          return await fetch(`http://localhost:3030/legitedItems`)
+          .then(res=>res.json())
+          .then(res=>res.items)
       
           return responseData;
       };
@@ -86,11 +79,11 @@ export const AdminPanel = () =>{
           queryKey: ['legitedItems', legitedItemsListCurrentPage],
           queryFn: getLegitedItems,
         })
-  
 
         const getItems = async () =>{
-          return await fetch(`${API}/items`)
+          return await fetch(`http://localhost:3030/getAllItems`)
           .then(res=>res.json())
+          .then(res=>res.items)
         }
 
         const {
@@ -118,9 +111,9 @@ export const AdminPanel = () =>{
 
     const handleUpdateFoundUsers = async (nickname) =>{
         try{
-          const response = await fetch(`${API}/search-users?letters=${nickname}`);
+          const response = await fetch(`http://localhost:3030/searchUser/${nickname}`);
           const data = await response.json();
-          setFoundUsers(data)
+          setFoundUsers(data.users)
         }catch(err){
             console.log(err)
         }
@@ -128,14 +121,11 @@ export const AdminPanel = () =>{
 
 
       const handleRegisterChange = (e) =>{
-        //zmiana state do szukania usera
             if(e.target.name==='ownerHistory'){
-            console.log(e.target.value)
             setOwnerId(e.target.value)
             handleUpdateFoundUsers(e.target.value)
             handleUpdateFoundItems()
             }
-            //zmiana state do szukania itemu 
             else{
             setOgItemIdVal(e.target.value)
             handleUpdateFoundItems(e.target.value)
@@ -143,30 +133,27 @@ export const AdminPanel = () =>{
             }
         }
 
-
+        
 
 
       const handleUpdateFoundItems = async (item) =>{
-        const response = await fetch(`${API}/search-items?letters=${item}`);
-        const data = await response.json();
-    
-        console.log(data)
-        setFoundItems(data)
+ 
         
         try{
-        
+          const response = await fetch(`http://localhost:3030/getItems/${item}`);
+          const data = await response.json();
+          setFoundItems(data.items)
         }catch(err){
             console.log(err)
         }
       }
 
-      const addItem = async ({itemData, jwt}) =>{
-            await axios.post(`${API}/items`, {
-              itemData,
-              jwt,
-            })
-
-        }
+      const addItem = async ({itemData}) =>{
+        console.log('dupa', {...itemData})
+        await axios.post(`http://localhost:3030/itemCreate`,{
+          ...itemData
+        })
+      }
 
         const addItemMutation = useMutation({
           mutationFn: addItem,
@@ -180,7 +167,6 @@ export const AdminPanel = () =>{
             console.log(err);
           },
         })
-
 
         const handleMutateItem = (e) =>{
           e.preventDefault()
@@ -197,10 +183,11 @@ export const AdminPanel = () =>{
         }
       
       const registerItem = async ({itemData, jwt}) =>{
-          return await axios.post(`${API}/register-item`, {
-                itemData,
-                jwt,
-              })
+        console.log("kurwa halo", itemData)
+          return await axios.post(`http://localhost:3030/itemRegister`, {
+            itemId: itemData.ogItemId,
+            ownerId: itemData.ownerHistory
+          })
       }
 
       const registerItemMutation = useMutation({
@@ -232,42 +219,16 @@ export const AdminPanel = () =>{
         
       }
 
-      const changeLegitedItemsPage = (num) =>{
-
-        switch(num){
-          case 1:
-            {
-              if(legitedItemsListCurrentPage < legitedItemsListPageLimit){
-                setLegitedItemsList()
-                setLegitedItemsListCurrentPage((prev)=>prev+num)
-              }
-              break
-            }
-          case -1:
-            {
-              if(legitedItemsListCurrentPage > 1){
-                setLegitedItemsList()
-                setLegitedItemsListCurrentPage((prev)=>prev+num)
-              }
-              break
-            }
-        }
-      }
-
       const tables = [
         {
           title: 'Legited items list',
           columns:[
-            'current_owner_nickname',
-            'item_name',
+            'owner',
+            'name',
             'id',
             'legited_at',
           ],
-          items: legitedItemsData?.data,
-          pagination: changeLegitedItemsPage,
-          maxPage: legitedItemsListPageLimit,
-          currentPage: legitedItemsListCurrentPage,
-          dropDown: true
+          items: legitedItemsData,
         },
         {
           title: 'All items list',
@@ -277,23 +238,14 @@ export const AdminPanel = () =>{
             'id',
             'brand'
           ],
-          items: itemsData?.sort(function(a, b) {
-                let keyA = (a.name.toLowerCase()),
-                  keyB = (b.name.toLowerCase());
-                if (keyA < keyB) return -1;
-                if (keyA > keyB) return 1;
-                return 0;
-              }),
+          items: itemsData
         }
       ]
 
 
     return(
         <div className='admin-panel'>
-
           <NavbarSimple/>
-
-
             <ToastContainer
                     position="bottom-right"
                     autoClose={5000}
@@ -322,8 +274,6 @@ export const AdminPanel = () =>{
         </form>
     </div>
 
-
-
       <div className="item-register-form">
         <p className='register-form-title'>Przypisz przedmiot uzytkownikowi</p>
         <form onChange={handleRegisterChange} onSubmit={handleMutateRegisterItem}>
@@ -344,12 +294,8 @@ export const AdminPanel = () =>{
                 </div>
             )
             }
-
-         
-
             <span>Uzytkownik</span>
             <input type="text" placeholder='Xoviec' name='ownerHistory'  value={ownerId}/> 
-             {/* //Te value wyżej do wypierdolenia, chyba lepiej użyć useRef i zmieniać w funkcji wartość zeby błedu nie było, to samo w drugim form   */}
             {
             foundUsers?.length > 0 && (
                 <div className="pre-list">
@@ -367,15 +313,11 @@ export const AdminPanel = () =>{
             <button type='submit'>Przypisz</button>
         </form>
       </div>
-
-
       {
         tables.map((table)=>(
           <Table key={table.title} {...table}/>
         ))
       }
-
-      
     </div>
     )
 }

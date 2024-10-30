@@ -1,38 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { Navigate } from "react-router-dom";
 import { Outlet } from "react-router-dom";
-import { useSession, useUser, useAdmin } from '../../Context/Context';
+import { useSession, useUser, useAdmin, useUserData } from '../../Context/Context';
 import { useQuery, useQueryClient, useMutation } from '@tanstack/react-query' 
 
 
 export const AdminCheck = () => {
 
+    const user = useUserData()
 
-    const admin = useAdmin()
+    console.log("tu", user)
 
-    const isAdmin = async () =>{
-      return admin
-    }
-
-    const {
-        status: isAdminStatus,
-        error: isAdminError,
-        data: isAdminData,
-        isPending,
-    
-      } = useQuery({
-        queryKey: ['adminCheck'],
-        queryFn: isAdmin,
-        enabled: admin !== undefined, // Fetch data only if session is defined
-      })
-
-
-      if(isPending){
+      if(!user){
         return(
             <p>weryfikowanie...</p>
         )
       }
-      else if(!isPending && isAdminData){
+      else if(user.accountType === "admin"){
         return <Outlet replace={true}/>
       }
       else{

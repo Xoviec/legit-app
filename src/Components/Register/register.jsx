@@ -6,7 +6,10 @@ import logo from '../../assets/Legited logo.svg'
 import { Link } from 'react-router-dom';
 import { useEffect } from "react";
 import { NavbarSimple } from "../Layout/NavbarSimple/NavbarSimple";
-
+import { useMutation } from '@tanstack/react-query';
+import { useContext } from "react";
+import axios from 'axios';
+import {UserSessionUpdateContext, useUserData } from "../../Context/Context";
 
 export const Register = () =>{
 
@@ -20,7 +23,8 @@ export const Register = () =>{
     const [activeTab, setActiveTab] = useState('')
     const [loginError, setLoginError] = useState()
 
-
+    const userData = useUserData()
+    const {handleSetUserData} = useContext(UserSessionUpdateContext)
 
     useEffect(()=>{
         if(searchParams.get("activeTab")==='login'){
@@ -36,12 +40,6 @@ export const Register = () =>{
 
     }, [])
 
-
-    console.log('aktiw', activeTab)
-
-
-    console.log( searchParams.get("activeTab"))
-    
     const [formData, setFormData] = useState(
         {
             fullname: '',
@@ -52,73 +50,61 @@ export const Register = () =>{
         }
     )
 
+    const addItem = async (userData) => {
+        await axios.post('http://localhost:3000/register', userData);
+      };
+      
+      const addItemMutation = useMutation({
+        mutationFn: addItem,
+        onSuccess: (data, variable, context) => {
+          itemRegisterSuccess(variable.nickname); 
+          queryClient.invalidateQueries({
+            queryKey: ['items'],
+          });
+        },
+        onError: (err) => {
+          console.log(err);
+        },
+      });
 
-
-    // Tutaj to normalnie ma byc pierowotnie
-    const handleSubmitRegister = async (e) =>{
-
-        // e.preventDefault()
-        const redirectTo = 'https://legited.app/login'
-        try{
-            const { data, error } = await supabase.auth.signUp(
-                {
-                email: formData.registerEmail,
-                password: formData.registerPassword,
-                options: {
-                    data: {
-                    full_name: formData.fullname,
+      const handleSubmitRegister = async (e) => {
+        try {
+          const response = await axios.post('http://localhost:3030/register', {
+            email: formData.registerEmail,
+            password: formData.registerPassword,
+            nickname: formData.fullname,
+          });
     
-                }}},{redirectTo: redirectTo}
-                
-            )
-            if(!error)navigate('/confirm',{ replace: false,  state: {formData}});
-
-            if (error) throw error
-        }  catch(error){
-
-            if(formData.registerPassword.length < 6){
-                setLoginError('Hasło powinno zawierać przynajmniej 6 znaków')
-            }
-            else if(error.message === 'Unable to validate email address: invalid format'){
-                setLoginError("Wpisz poprawny adres e-mail")
-            }
-            else{
-                setLoginError('Spróbuj ponownie później')
-            }
-            console.log(error.message)
+          if (response.status === 201) {
+            handleSetUserData(response.data.data)
+            setActiveTab('login')
+          }
+        } catch (error) {
+          console.log(error);
         }
+      };
 
-    }
-
-
-    const handleSubmitLogin = async (e) =>{
-
-        // e.preventDefault()
-        try{
-            const { data, error } = await supabase.auth.signInWithPassword({
+    const handleSubmitLogin = async (e) => {
+        try {
+            const response = await axios.post('http://localhost:3030/login', {
                 email: formData.loginEmail,
-                password: formData.loginPassword,
-              })
-
-
-
-
-            if(!error)navigate('/')
-            if (error) throw error
-        }  catch(error){
-            // alert(error.name)
-            // setLoginError('Zły adres email')
-            console.log(error.message)
-
-            if(error.message === 'Invalid login credentials'){
-                setLoginError('Złe dane logowania')
+                password: formData.loginPassword
+            });
+    
+            if (response.status === 200) {
+                handleSetUserData(response.data.userData)
+                navigate('/main', { replace: true });
             }
-            else{
-                setLoginError('Spróbuj ponownie później')
+        } catch (error) {
+            if (error.response && error.response.data.error.includes('email')) {
+                setLoginError('Nieprawidłowy email lub hasło.');
+            } else {
+                setLoginError('Wystąpił błąd. Spróbuj ponownie później.');
             }
+    
+            console.log(error.message);
         }
-    }
-
+    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -126,8 +112,6 @@ export const Register = () =>{
           ...prevData,
           [name]: value.replace(/\s+/g, '')
         }));
-    
-        console.log(formData)
       };
 
       const handleRegisterSubmit = (e) =>{
@@ -154,33 +138,24 @@ export const Register = () =>{
           e.preventDefault()
     }
 
-
     const switchQueryParams = () => {
-
         setLoginError()
-    
         switch(activeTab){
             case 'login':
                 setActiveTab('register')
-
                 searchParams.set("activeTab", 'register')
                 setSearchParams(searchParams, {replace: true})
                 break
             case 'register':
                 setActiveTab('login')
-
                 searchParams.set("activeTab", 'login')
                 setSearchParams(searchParams, {replace: true})
-
                 break;
-
         }
       };
 
-
     return(
         <>
-
         <div className="login-page">
             <NavbarSimple/>
             <Tabs.Root className="login-root" defaultValue="login" value={activeTab} onValueChange={switchQueryParams} >
@@ -189,7 +164,7 @@ export const Register = () =>{
                     Rejestracja
                     </Tabs.Trigger>
                     <Tabs.Trigger className="TabsTrigger login-trigger" value="login">
-                    Logowanie
+                    Logowanie 
                     </Tabs.Trigger>
                 </Tabs.List>
                     <Tabs.Content className="login-tab" value="register">
@@ -245,9 +220,7 @@ export const Register = () =>{
                             <input type="password" placeholder="########" name="loginPassword" value={formData.loginPassword}/>
                             <Link className="forgot-password-button" to='/forgot-password'>
                                 <button type="button" className="forgot-password-button">Nie pamiętasz hasła?</button>
-
                             </Link>
-
                             <button type="submit">Zaloguj się</button>
                             <p className="terms">
                                 Logując się akceptujesz
@@ -255,7 +228,6 @@ export const Register = () =>{
                                 oraz 
                                     <a className="terms-link" href="/privacy"> Politykę Prywatności. </a> 
                             </p>
-                
                         </form>
                         <p className="login-form-footer-text">Nie masz konta? <span className="login-switch-tab" onClick={switchQueryParams}>Zarejestruj się</span></p>
                     </Tabs.Content>

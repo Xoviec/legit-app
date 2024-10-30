@@ -1,19 +1,21 @@
 // import logo from './logo.svg';
 import '../../Main.css';
 import React, { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { ProfileTabs } from '../../Shared/ProfileTabs/ProfileTabs';
 import { MyAvatar } from '../../Shared/Avatar/Avatar';
 import { MainNotLogged } from '../MainPageNotLogged/MainNotLogged';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { useQuery } from '@tanstack/react-query' 
-import { useItemsSearch, useUser } from '../../Context/Context';
+import { useItemsSearch, useUser, useUserData } from '../../Context/Context';
 import { HelmetProvider } from '../Helmet/Helmet';
 
 
 export const Mainpage = () => {
 
+
+  const user = useUserData()
 
 const item = JSON.parse(localStorage.getItem('sb-bpkpqswpimtoshzxozch-auth-token'));
 const nickNameFromLocalStorage = item?.user.user_metadata.full_name
@@ -26,22 +28,25 @@ const API = import.meta.env.VITE_API
 
 const [order, setOrder] = useState('asc')
 const [sort, setSort] = useState('brand') // brand, name, legited_at, sku
+const [searchParams, setSearchParams]= useSearchParams({order:"asc", sortBy: "brand"})
 
 const changeSort = (i) =>{
-  setSort(i)
+  searchParams.set("sortBy", i)
+  setSearchParams(searchParams, {replace: true})
 }
 
 const handleOrderSwitch = () =>{
-  const newOrder = order === 'desc' ? 'asc' : 'desc'
-  setOrder(newOrder)
+  const newOrder = searchParams.get("order") === 'desc' ? 'asc' : 'desc'
+  searchParams.set("order", newOrder)
+  setSearchParams(searchParams, {replace: true})
 }
 
-  const user = useUser()
+  // const user = useUser()
   const itemsSearch = useItemsSearch()
 
 
   const getItems = async () => {
-    return await fetch(`${API}/user-items/${nickNameFromLocalStorage}`,{
+        return await fetch(`http://localhost:3030/userItems/${user.nickname}?order=${searchParams.get("order")}&sortBy=${searchParams.get("sortBy")}`, {
         method: 'GET',
         headers:{
             viewer: user.id
@@ -50,19 +55,20 @@ const handleOrderSwitch = () =>{
     .then(res=>res.json())
 };
 
+
+
   const {
     status: itemsStatus,
     error: itemsError,
     data: itemsData,
   } = useQuery({
-    queryKey: ['items',nickNameFromLocalStorage],
+    queryKey: ['items',nickNameFromLocalStorage, searchParams.get("order"), searchParams.get("groupBy")],
     queryFn: getItems,
     enabled: !!user
   })
 
   const getComments = async () =>{
-
-    const data = await fetch(`${API}/get-comments/${user.id}`)
+    const data = await fetch(`http://localhost:3030/comments/${user.nickname}`)
     const res = data.json()
       return res
   }
@@ -77,13 +83,12 @@ const handleOrderSwitch = () =>{
     enabled: !!user, // Fetch data only if user has a value
   })
 
-
   
   return (
     <>
     
         {
-            item ? 
+            user ? 
             (
             <div className="profile-container">
             <div className="user-info">
@@ -99,12 +104,7 @@ const handleOrderSwitch = () =>{
             }
             <ProfileTabs 
               userItemsList={
-                  itemsData?.sort((a,b)=>{
-                      if (a[sort].toLowerCase() < b[sort].toLowerCase()) return (order === 'asc') ? -1 : 1;
-                      if (a[sort].toLowerCase() > b[sort].toLowerCase()) return (order === 'asc') ? 1 : -1;
-                  })
-                  .filter((item)=>item[sort].toLowerCase().includes(itemsSearch))
-                } 
+                  itemsData} 
               comments={commentsData}
               changeSort={changeSort}
               sort={sort}
