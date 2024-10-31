@@ -31,3 +31,23 @@ password: "" (brak hasła)
 `cd src/api` 
 
 `node index.js`
+
+# Konta do zalogowania
+
+User: user1 user1
+
+Admin: admin1 admin1
+
+# Opis aplikacji
+
+aplikacja pierwotnie służąca do weryfikacji obuwia za pomocą tagów NFC, wspiera możliwość dzielenia się swoją kolekcją obuwia oraz śledzenia profili innych użytkowników
+
+## Kluczowe funkcjonalności:
+
+- rejestracja
+- logowanie
+- Zamieszczanie komentarzy
+- usuwanie komentarzy
+- edycja nickname oraz opisu profilu
+- rejestracja przedmiotów jako admin
+- przesylanie przedmiotów
