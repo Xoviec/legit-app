@@ -73,12 +73,10 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_user_items`(
 BEGIN
     DECLARE total_count INT DEFAULT 0;
 
-    -- Pobranie całkowitej liczby przedmiotów użytkownika o podanym pseudonimie
     SELECT COUNT(*) INTO total_count
     FROM legited_items
     WHERE current_owner = (SELECT id FROM users WHERE nickname = p_nickname);
 
-    -- Przygotowanie dynamicznego zapytania SQL do pobrania listy przedmiotów
     SET @sql_query = CONCAT('
         SELECT 
             legited_items.id,
@@ -95,13 +93,11 @@ BEGIN
         ORDER BY ', p_sortBy, ' ', p_order
     );
 
-    -- Wykonanie zapytania z dynamicznym sortowaniem
     PREPARE stmt FROM @sql_query;
     SET @nickname = p_nickname;
     EXECUTE stmt USING @nickname;
     DEALLOCATE PREPARE stmt;
 
-    -- Zwrócenie liczby przedmiotów
     SELECT total_count AS total_count;
 END ;;
 DELIMITER ;

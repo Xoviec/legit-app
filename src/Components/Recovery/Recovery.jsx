@@ -50,7 +50,6 @@ export const Recovery = () =>{
               })
               
             if(!error){
-                console.log('zmieniono')
                 setSuccessfullyChangedPassword("Pomyslnie zmieniono hasło.")
 
             }

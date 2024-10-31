@@ -55,8 +55,6 @@ app.post("/createComment", function(req, res){
     const {commentBy, commentOn, content} = req.body
     const newUUID = uuidv4()
 
-    console.log("tutaj", commentBy, commentOn, content)
-
     if (!commentBy || !commentOn || content.length<=0) {
         return res.status(400).send({ error: "CommentOn, content and commentBy are required." });
     }

@@ -1,8 +1,33 @@
-# React + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Wymagania
 
-Currently, two official plugins are available:
+package npm, Git, mySQL Workbench, Xampp
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+
+
+
+# Wymagania
+
+package npm, Git, mySQL Workbench, Xampp
+
+## Instalacja
+1. Pobranie repozytorium
+2. Przełączenie się na branch `migration-to-sql`
+3. Instalacja => npm install
+4. Uruchomienie frontendu => npm run dev
+5. Uruchomienie MySQL DATABASE 
+6. Konfiguracja MySQL connection =>
+hostname: "localhost"
+
+port: "3306"
+
+username: "root"
+
+password: "" (brak hasła)
+
+7. Import bazy danych z folderu `src/SQL`
+
+8. Uruchomienie backendu:
+`cd src/api` 
+
+`node index.js`

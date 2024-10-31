@@ -54,19 +54,9 @@ export const ItemDialog = (props) =>{
 
 
   const handleTradeItem = async (item) =>{
-        
-    const currentOwner = item.current_owner
-
-    console.log("KURWA", item.item_id)
-    console.log("dziwekzka", newOwner.id)
-
-    // if(item.id && currentOwner && newOwner?.id && newOwner?.id!==currentOwner){
         try{
             await axios.put(`http://localhost:3030/sendItem/${item.id}`, {
-                // registerID: item.id,
-                // currentOwner: currentOwner,
                 newOwnerId: newOwner.id,
-                // verifyID: user.id
             })
             .then(
               props.notify(newOwner.nickname),
@@ -77,18 +67,9 @@ export const ItemDialog = (props) =>{
             props.tradeError()
             console.log(error.response ? error.response.data.error : error)
         }
-    // }
-    // else{
-    //   props.tradeError()
-    //     console.log("coś poszło nie tak")
-        
-    // }
   }
   const handlePrivateChange = async (e) =>{
-
     setChecked((prev)=>!prev)
-
-
     try{
       await axios.post(`${API}/item-privacy`, {
           itemID: props.item.id,
@@ -99,7 +80,6 @@ export const ItemDialog = (props) =>{
   catch(error){
       console.log(error.response ? error.response.data.error : error)
   }
-
     console.log(e)
   }
 

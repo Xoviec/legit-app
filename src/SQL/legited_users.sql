@@ -61,10 +61,8 @@ DELIMITER ;;
 BEFORE DELETE ON users
 FOR EACH ROW
 BEGIN
-    -- Usuń komentarze powiązane z użytkownikiem
     DELETE FROM comments WHERE comment_by = OLD.id;
 
-    -- Ustaw current_owner na NULL w legited_items
     UPDATE legited_items 
     SET current_owner = NULL 
     WHERE current_owner = OLD.id;
