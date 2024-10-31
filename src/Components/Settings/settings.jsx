@@ -48,8 +48,6 @@ export const Settings = () =>{
     const session = useSession()
     const {handleSetUserData} = useContext(UserSessionUpdateContext)
 
-    console.log("ejj", handleSetUserData)
-
     const location = useLocation();
     const props = location.state;
 

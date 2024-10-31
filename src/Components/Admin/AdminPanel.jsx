@@ -149,7 +149,6 @@ export const AdminPanel = () =>{
       }
 
       const addItem = async ({itemData}) =>{
-        console.log('dupa', {...itemData})
         await axios.post(`http://localhost:3030/itemCreate`,{
           ...itemData
         })
@@ -183,7 +182,6 @@ export const AdminPanel = () =>{
         }
       
       const registerItem = async ({itemData, jwt}) =>{
-        console.log("kurwa halo", itemData)
           return await axios.post(`http://localhost:3030/itemRegister`, {
             itemId: itemData.ogItemId,
             ownerId: itemData.ownerHistory

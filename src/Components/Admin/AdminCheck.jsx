@@ -9,8 +9,6 @@ export const AdminCheck = () => {
 
     const user = useUserData()
 
-    console.log("tu", user)
-
       if(!user){
         return(
             <p>weryfikowanie...</p>
