@@ -56,6 +56,7 @@ export const ProfileTabs = memo((props) => {
       textareaRef.current.value = ''
     }
   }
+
   return(
     <Tabs.Root className="TabsRoot" defaultValue="tab1">
       <Tabs.List className="TabsList" aria-label="Manage your account">
@@ -111,11 +112,13 @@ export const ProfileTabs = memo((props) => {
           <div className='add-comment-section-not-logged'>
             <p>Zaloguj się aby zamieścić komentarz</p>
           </div>
+
       
         }
         
         {
-          props?.comments?.comments?.map((comment)=>(
+          props?.comments?.comments?.map((comment)=>{
+            return(
               <div key={comment.id} className='comment-tab'>
                 <div className="comment-data">
                   <CommentsAvatar avatar={comment.avatar} nickname={comment.comment_by_nickname}/>
@@ -131,7 +134,7 @@ export const ProfileTabs = memo((props) => {
                             <span> temu</span>
                           </div>
                           {
-                            comment?.comment_by===props?.viewer?.id && 
+                            comment?.comment_by===user.userId && 
 
                             <div className="delete">
                               <button className='button-delete' onClick={(event)=>props.handleDeleteComment(event, comment.id)}>
@@ -154,7 +157,7 @@ export const ProfileTabs = memo((props) => {
               <div>
                 xD
               </div>
-          ))
+          )})
         }
       </Tabs.Content>
     </Tabs.Root>

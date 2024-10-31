@@ -7,14 +7,6 @@ const app = express();
 app.use(cors())
 app.use(express.json());
 
-app.get('/', function(req, res){
-    let sql = "SELECT * FROM new_table"
-    connection.query(sql, function(err,results){
-        if(err)throw err;
-        res.status(200).send({ data: results });
-    })
-});
-
 app.post('/register', function(req, res) {
     const { email, nickname, password } = req.body;
     const newUUID = uuidv4()
@@ -36,9 +28,6 @@ app.post('/register', function(req, res) {
 
 app.post('/login', function(req, res) {
     const { email, password } = req.body;
-
-    console.log('kurwa')
-    console.log(email, password)
 
     if (!email || !password) {
         return res.status(400).send({ error: 'Email i hasło są wymagane.' });
@@ -66,9 +55,9 @@ app.post("/createComment", function(req, res){
     const {commentBy, commentOn, content} = req.body
     const newUUID = uuidv4()
 
-    console.log(commentBy, commentOn)
+    console.log("tutaj", commentBy, commentOn, content)
 
-    if (!commentBy || !commentOn) {
+    if (!commentBy || !commentOn || content.length<=0) {
         return res.status(400).send({ error: "CommentOn, content and commentBy are required." });
     }
 
@@ -180,7 +169,7 @@ app.get("/comments/:nickname", function(req, res) {
     const { nickname } = req.params;
 
     let sql = `
-        SELECT comments.id, comments.comment_on, comments.content, comments.created_at, 
+        SELECT comments.id, comments.comment_on, comments.content, comments.created_at, comment_by, 
                users.id AS user_id, users.nickname, users.email
         FROM comments 
         INNER JOIN users ON comments.comment_by = users.id

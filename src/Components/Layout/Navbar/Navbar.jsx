@@ -53,7 +53,7 @@ export const Navbar = () =>{
 
     return(
         <nav>
-            <Link to='/'>
+            <Link to='/main'>
                 <div className="logo">
                     <img src={logo} alt="legited-logo" />   
                     <img src={monogram} alt="legited-logo" className='monogram' />   
