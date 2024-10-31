@@ -37,6 +37,9 @@ app.post('/register', function(req, res) {
 app.post('/login', function(req, res) {
     const { email, password } = req.body;
 
+    console.log('kurwa')
+    console.log(email, password)
+
     if (!email || !password) {
         return res.status(400).send({ error: 'Email i hasło są wymagane.' });
     }
@@ -44,6 +47,8 @@ app.post('/login', function(req, res) {
 
     connection.query(sql, [email, password], function(err, results) {
         if (err) {
+            console.log(err)
+
             return res.status(500).send({ error: "Błąd serwera" });
         }
 
