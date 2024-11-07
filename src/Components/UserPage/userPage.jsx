@@ -158,7 +158,6 @@ s        }
         status: itemsStatus,
         error: itemsError,
         data: itemsData,
-        isSuccess: essa
       } = useQuery({
         queryKey: ['items', usernameFromPath, searchParams.get("order"), searchParams.get("sortBy")],
         queryFn: getItems,

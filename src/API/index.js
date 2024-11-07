@@ -29,6 +29,7 @@ app.post('/register', function(req, res) {
 app.post('/login', function(req, res) {
     const { email, password } = req.body;
 
+     console.log(email, password)
     if (!email || !password) {
         return res.status(400).send({ error: 'Email i hasło są wymagane.' });
     }

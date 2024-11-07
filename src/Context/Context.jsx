@@ -4,23 +4,8 @@ import { supabase } from '../supabaseClient';
 import { useEffect } from "react";
 import axios from "axios";
 
-
-
-
 export const UserSessionContext = createContext()
 export const UserSessionUpdateContext = createContext()
-
-export const useDupa = () =>{
-    const { val1 } = useContext(UserSessionContext);
-    return val1;}
-
-export const useDupaUpdate = () =>{
-    return useContext(UserSessionUpdateContext)
-}
-
-
-
-
 
 export const useUser = () =>{
     const { user } = useContext(UserSessionContext);
@@ -51,8 +36,6 @@ export const useUserData = () =>{
     return userData
  }
 
-
-
 export const UserSessionProvider = ({children}) =>{
 
     const API = import.meta.env.VITE_API
@@ -63,17 +46,11 @@ export const UserSessionProvider = ({children}) =>{
     const [admin, setAdmin] = useState(undefined)
 
 
-    const [dupa, setDupa] = useState(true)
-    const [essa, setEssa] = useState('uuu sigma')
     const [itemsSearch, setItemsSearch] = useState('')
     const [userData, setUserData] = useState()
 
     const handleChangeItemsSearch = (newVal) =>{
         setItemsSearch(newVal)
-    }
-
-    const handleChangeDupa = () =>{
-        setDupa(false)
     }
 
     const handleSetUserData = (data) =>{
@@ -121,7 +98,6 @@ export const UserSessionProvider = ({children}) =>{
                 } else {
                     setAdmin(false);
                 }
-                // setAdmin(isAdmin.ok)
             }catch(err){
                 return
             }
@@ -135,7 +111,7 @@ export const UserSessionProvider = ({children}) =>{
 
     return(
         <UserSessionContext.Provider value={{user: user, session: session, admin: admin, itemsSearch: itemsSearch, userData}}>
-            <UserSessionUpdateContext.Provider value={{handleChangeDupa, handleChangeItemsSearch, handleSetUserData}}>
+            <UserSessionUpdateContext.Provider value={{ handleChangeItemsSearch, handleSetUserData}}>
                 {children}
             </UserSessionUpdateContext.Provider>
         </UserSessionContext.Provider>

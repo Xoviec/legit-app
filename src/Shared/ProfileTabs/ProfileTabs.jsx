@@ -22,10 +22,7 @@ export const ProfileTabs = memo((props) => {
   
   const location = useLocation();
   const textareaRef = useRef()
-  // const user = useUser()
   const user = useUserData()
-
-  
 
   const notify = (nickname) => toast.success(`Przedmiot przesłany pomyślnie do uzytkownika ${nickname}`, {
     position: "bottom-right",
@@ -112,10 +109,7 @@ export const ProfileTabs = memo((props) => {
           <div className='add-comment-section-not-logged'>
             <p>Zaloguj się aby zamieścić komentarz</p>
           </div>
-
-      
         }
-        
         {
           props?.comments?.comments?.map((comment)=>{
             return(

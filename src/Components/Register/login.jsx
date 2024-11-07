@@ -26,17 +26,6 @@ export const Login = ({handleSetUser}) =>{
     }
 
 
-    const essa = async()=>{
-        const { data: { user } } = await supabase.auth.getUser()
-        const { data, error } = await supabase.auth.getSession()
-    
-
-        // handleSetUser(user)
-    
-        console.log(user)
-        console.log(data)
-      }
-    
     
 
     const handleSubmit = async (e) =>{
@@ -47,10 +36,6 @@ export const Login = ({handleSetUser}) =>{
                 email: formData.email,
                 password: formData.password,
               })
-
-
-
-            essa()
             if(!error)navigate('/')
             if (error) throw error
         }  catch(error){

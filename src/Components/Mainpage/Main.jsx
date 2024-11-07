@@ -41,9 +41,6 @@ const handleOrderSwitch = () =>{
   setSearchParams(searchParams, {replace: true})
 }
 
-  // const user = useUser()
-  const itemsSearch = useItemsSearch()
-
 
   const getItems = async () => {
         return await fetch(`http://localhost:3030/userItems/${user.nickname}?order=${searchParams.get("order")}&sortBy=${searchParams.get("sortBy")}`, {
@@ -62,7 +59,7 @@ const handleOrderSwitch = () =>{
     error: itemsError,
     data: itemsData,
   } = useQuery({
-    queryKey: ['items',nickNameFromLocalStorage, searchParams.get("order"), searchParams.get("groupBy")],
+    queryKey: ['items',nickNameFromLocalStorage, searchParams.get("order"), searchParams.get("sortBy")],
     queryFn: getItems,
     enabled: !!user
   })
