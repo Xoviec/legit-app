@@ -229,19 +229,16 @@ app.get("/getItems/:items?", function(req, res) {
     const { items } = req.params;
 
     console.log(items)
-    // Podstawowy SQL do wyszukiwania użytkowników
     let sql = `
         SELECT items.id, items.name, items.sku, items.brand, items.image
         FROM items
         WHERE 1 = 1
     `;
 
-    // Jeśli istnieje nickname w parametrach, dodajemy filtr wyszukiwania z LIKE
     if (items) {
         sql += " AND items.name LIKE ?";
     }
 
-    // Wykonanie zapytania do bazy danych
     connection.query(sql, [`%${items}%`].filter(Boolean), function(err, results) {
         if (err) {
             console.log(err)
@@ -265,12 +262,10 @@ app.get("/searchUser/:nickname?", function(req, res) {
         WHERE 1 = 1
     `;
 
-    // Jeśli istnieje nickname w parametrach, dodajemy filtr wyszukiwania z LIKE
     if (nickname) {
         sql += " AND users.nickname LIKE ?";
     }
 
-    // Wykonanie zapytania do bazy danych
     connection.query(sql, [`%${nickname}%`].filter(Boolean), function(err, results) {
         if (err) {
             console.log(err)
@@ -288,7 +283,6 @@ app.get("/searchUser/:nickname?", function(req, res) {
 app.get('/userItems2', (req, res) => {
     const { nickname, sortBy = 'name', order = 'ASC' } = req.query;
 
-    // Wywołanie procedury `get_user_items` z trzema argumentami
     connection.query(
         'CALL get_user_items(?, ?, ?)',
         [nickname, sortBy, order],
@@ -297,8 +291,8 @@ app.get('/userItems2', (req, res) => {
                 return res.status(500).json({ error: 'Błąd serwera' });
             }
             
-            const total_count = results[1][0].total_count; // Wynik z SELECT total_count
-            const items = results[0]; // Wyniki z dynamicznego zapytania SQL
+            const total_count = results[1][0].total_count;
+            const items = results[0]; 
             
             res.status(200).json({ total_count, items });
         }
@@ -357,7 +351,7 @@ app.get("/legitedItems", function(req, res) {
             return res.status(500).send({ error: "Błąd serwera" });
         }
 
-        res.status(200).send({ items: results[0] }); // Procedura zwraca wyniki jako pierwszy element tablicy `results`
+        res.status(200).send({ items: results[0] }); 
     });
 });
 
@@ -371,7 +365,7 @@ app.put("/updateNickname/:id", function(req, res) {
         return res.status(400).send({ error: "Brak nickname w żądaniu" });
     }
 
-    // Najpierw sprawdź, czy nickname jest już zajęty przez innego użytkownika
+    
     const checkNicknameSql = `SELECT id FROM users WHERE nickname = ? AND id != ?`;
     
     connection.query(checkNicknameSql, [nickname, id], function(err, results) {
@@ -383,7 +377,7 @@ app.put("/updateNickname/:id", function(req, res) {
             return res.status(400).send({ error: "Ten nickname jest już zajęty przez innego użytkownika" });
         }
 
-        // Jeśli nickname jest dostępny, wykonaj aktualizację
+        
         const updateNicknameSql = `UPDATE users SET nickname = ? WHERE id = ?`;
 
         connection.query(updateNicknameSql, [nickname, id], function(err, result) {
